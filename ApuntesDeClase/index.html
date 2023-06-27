@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+
+    <title>JavaScript Fundamentals</title>
+</head>
+
+<style>
+    .coloreado{
+        color:aqua;
+    }
+    #emailHelp{
+        color: white;
+    }
+
+    body{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+</style>
+
+<body>
+
+    <h1>Acá veremos lo que tienes para contarnos 🥵</h1>
+    <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">¡Qué veremos en la clase de hoy 🤞!</h4>
+        <hr />
+        <ul>
+            <li>Definir Storage.</li>
+            <li>Identificar y diferenciar localStorage y sessionStorage.</li>
+            <li>
+            Definir JSON y entender su alcance y utilidad en cada situación.
+            </li>
+        </ul>
+    </div>
+
+    <div id="container"> 
+        <h1>Hola, bienvenidos a la clase de Javascript 🤯</h1>
+        <h3 id="subtitulo">Esto es un titulo</h3>
+        <p id="bienvenida" class="texto">Hola Bienvenidos 🤑</p>
+        <p id="temaClase" class="texto">En la clase de hoy veremos, modelo de objetos del documento (DOM).</p>
+        <p class="texto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, enim.</p>
+        <p id="frase">Acá veremos lo que tienes para contarnos 🥵</p>
+        <!-- li*3>a -->
+        <!-- <ul>
+            <li><a href="#">Enlace 1</a></li>
+            <li><a href="#">Enlace 2</a></li>
+            <li><a href="#">Enlace 3</a></li>
+        </ul> -->
+
+        <ul id="paises">
+            <li>Esta es la lista de paises:</li>
+        </ul> 
+
+        <form id="formulario_HTML">
+            <div class="mb-3">
+                <label for="apellidos" class="form-label">Apellidos</label>
+                <input type="text" class="form-control" id="apellidos" />
+            </div>
+    
+            <div class="mb-3">
+                <label for="nombres" class="form-label">Nombres</label>
+                <input type="text" class="form-control" id="nombres" />
+            </div>
+    
+            <div class="mb-3">
+                <label for="ocupacion" class="form-label">Ocupación</label>
+                <select id="ocupacion" class="form-select">
+                    <option value="0">Seleccione una opción</option>
+                </select>
+            </div>
+        
+            <div class="mb-3">
+                <label for="correo" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="correo" aria-describedby="emailHelp"/>
+                <div id="emailHelp" class="form-text">
+                    No lo compartiremos con nadie.
+                </div>
+            </div>
+
+            <div class="form-check">
+                <input value="" class="form-check-input" type="checkbox" id="participar" checked/>
+                <label class="form-check-label" for="participar">¿Quiere boucher de bienvenida?</label>
+            </div>
+
+            <!-- <button type="button" class="btn btn-primary" id="btnInscribir"></button> -->
+            <button type="submit" class="btn btn-primary" id="btnInscribir">Inscribir</button>
+
+            <!-- Ejercicio 3 de eventos, que es lo mismo que el ejercicio 1 y 2, pero en HTML en lugar de JS -->
+            <!-- <button type="button" class="btn btn-primary" id="btnInscribir" onclick="alert('Hola Mundo!');">Inscribir</button> //Esto va en el HTML, NO en el documento .js -->
+        </form>
+        
+        <div id="listaParticipantes"></div>
+    </div>
+
+
+    <!-- <div id="main"></div>  Este div pertenece al ejercicio 14 de DOM--> 
+
+
+
+    <!-- <script src="./scripts/UDEMY-excercise9.js"></script> -->
+    <!-- <script src="./scripts/ActividadesDeClase.js"></script> -->
+    <script src="./main.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+</body>
+</html>

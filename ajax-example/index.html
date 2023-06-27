@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejemplo de Peticiones</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h3>Listado de Usuarios recuperados</h3>
+
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-primary">Consultar</button>
+        </div>
+      </div>
+
+      <button
+        id="showSearchingUsers"
+        style="display: none"
+        class="btn btn-primary mt-2"
+        type="button"
+        disabled
+      >
+        <span
+          class="spinner-grow spinner-grow-sm"
+          role="status"
+          aria-hidden="false"
+        ></span>
+        Recuperando datos...
+      </button>
+
+      <table class="table mt-3">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Correo electrónico</th>
+            <th scope="col">Usuario</th>
+            <th scope="col">Sitio</th>
+          </tr>
+        </thead>
+        <tbody id="usersTableBody">
+          <!-- <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="container">
+      <h3>Listado de Posteos</h3>
+
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-primary">Consultar</button>
+        </div>
+      </div>
+
+      <button
+        id="showSearchingPosts"
+        style="display: none"
+        class="btn btn-primary mt-2"
+        type="button"
+        disabled
+      >
+        <span
+          class="spinner-grow spinner-grow-sm"
+          role="status"
+          aria-hidden="false"
+        ></span>
+        Recuperando datos...
+      </button>
+
+      <div class="container">
+        <ul id="postsContainer"></ul>
+      </div>
+    </div>
+
+    <div class="container" id="bodyUsers">
+
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+      integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+[
+    {
+        "id": 1,
+        "name": "Saúl",
+        "email": "saul.profe.chaman@coder.com.ar"
+    },
+    {
+        "id": 2,
+        "name": "Pamela",
+        "email": "saul.profe.chaman@coder.com.ar"
+    },
+    {
+        "id": 3,
+        "name": "Braulio",
+        "email": "saul.profe.chaman@coder.com.ar"
+    },
+    {
+        "id": 4,
+        "name": "Josefina",
+        "email": "saul.profe.chaman@coder.com.ar"
+    },
+    {
+        "id": 5,
+        "name": "Antonio",
+        "email": "saul.profe.chaman@coder.com.ar"
+    }
+
+]
