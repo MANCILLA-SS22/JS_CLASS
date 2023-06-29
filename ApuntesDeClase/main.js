@@ -4,8 +4,106 @@ console.log("Hola, bienvenidos a la clase de Javascript 🤯"); console.log("\n"
 //         $$$$$$$$$$$$$$$ UDEMY $$$$$$$$$$$$$$$
 
 
+/* // Exercise for Data Structures, Modern Operators and Strings
+// Suppose we get data from a web service about a certain game ('game' variable on next page). In this challenge we're gonna work with that data. Your tasks:
 
-//         $$$$$$$$$$$$$$$ Funciones $$$$$$$$$$$$$$$
+const game = {
+    team1: 'Bayern Munich',
+    team2: 'Borrussia Dortmund',
+    players: [
+        ['Neuer','Pavard','Martinez','Alaba','Davies','Kimmich','Goretzka','Coman','Muller','Gnarby','Lewandowski'],
+        ['Burki','Schulz','Hummels','Akanji','Hakimi','Weigl','Witsel','Hazard','Brandt','Sancho','Gotze']
+    ],
+    score: '4:0',
+    scored: ['Lewandowski', 'Gnarby', 'Lewandowski','Hummels'],
+    date: 'Nov 9th, 2017',
+    odds: {
+        team1: 1.33,
+        x: 3.25,
+        team2: 6.5,
+    }
+    
+};
+
+const gameEvents = new Map([
+    [17, '⚽ GOAL'],
+    [36, '� Substitution'],
+    [47, '⚽ GOAL'],
+    [61, '� Substitution'],
+    [64, '� Yellow card'],
+    [69, '� Red card'],
+    [70, '� Substitution'],
+    [72, '� Substitution'],
+    [76, '⚽ GOAL'],
+    [80, '⚽ GOAL'],
+    [92, '� Yellow card'],
+]);
+
+//1. Create one player array for each team (variables 'players1' and'players2')
+const [players1,players2] = game.players;       //console.log(players1, players2);
+
+//2. The first player in any player array is the goalkeeper and the others are field players. For Bayern Munich (team 1) create one variable ('gk') with the goalkeeper's name, and one array ('fieldPlayers') with all the remaining 10 field players
+const [gk, ...fieldPlayers] = players1;         //console.log(gk, fieldPlayers);
+
+//3. Create an array 'allPlayers' containing all players of both teams (22 players)
+const allPlayers = [...players1, ...players1];  //console.log(allPlayers);
+
+//4. During the game, Bayern Munich (team 1) used 3 substitute players. So create a new array ('players1Final') containing all the original team1 players plus 'Thiago', 'Coutinho' and 'Perisic'
+const players1Final = ['Thiago', 'Coutinho', 'Perisic', ...players1]; //console.log(players1Final);
+
+//5. Based on the game.odds object, create one variable for each odd (called 'team1', 'draw' and 'team2')
+const {team1, x:draw, team2} = game.odds;   //console.log(team1, draw, team2);
+
+//6. Write a function ('printGoals') that receives an arbitrary number of player names (not an array) and prints each of them to the console, along with the number of goals that were scored in total (number of player names passed in)
+function printGoals(...players){ //Debemos desestructurar lo que mandamos a esta funcion tambien porque, al ser 4 elementos los que recibe, y si no hacemos eso, entonces unicamente se enviara el primer elemento y no los demas. 
+    //console.log(players, "and "+ `${players.length}` + " goals were scored");
+}
+printGoals(...game.scored);
+
+//7. The team with the lower odd is more likely to win. Print to the console which team is more likely to win, without using an if/else statement or the ternary operator. 
+let res = game.team2 > game.team1 && "Team 2 is more likely to win!!";  //console.log(res);
+let res2 = game.team2 < game.team1 && "Team 1 is more likely to win!!";  //console.log(res2);
+
+//8. Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
+for (const [i, player] of game.scored.entries()) {
+    //console.log(`Goal ${i + 1}: ${player}`);
+}
+
+//9. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, you can go check if you don't remember)
+let average = 0;
+for (const odd of Object.values(game.odds)) {
+    average = average + odd/3;
+}
+//console.log(average);
+
+//10. Print the 3 odds to the console, but in a nice formatted way, exactly like this: Odd of victory Bayern Munich: 1.33, Odd of draw: 3.25, Odd of victory Borrussia Dortmund: 6.5
+//    Get the team names directly from the game object, don't hardcode them (except for "draw"). Hint: Note how the odds and the game objects have the same property names
+for (const [team, odd] of Object.entries(game.odds)) {
+    let res = ( team === "x" ? "draw" : ("victory "+ game[team]) ); // team retorna un string, en este caso, sera team1 y team2. Pero, al ser ambos de tipo STRING, quiere decir que vienen de esta forma "team1" y "team2". Por eso al final queda game[team], si necesidad de poner los "".
+    //console.log(`Odd of ${res}: ${odd}`);
+}
+
+//11. Create an object called 'scorers' which contains the names of the players who scored as properties, and the number of goals as the value: { Gnarby: 1, Hummels: 1, Lewi: 2}
+const scorers = {};
+for (const player of game.scored) {
+    scorers[player] ? scorers[player]++ : (scorers[player] = 1);//En la primer y segunda iteracion no existe nada. No es hasta la tercera iteracion cuando ahi se repite "Lewandowski", por lo que ahora en este caso, se le suma 1.
+}
+console.log(scorers);
+
+// 12. Create an array 'events' of the different game events that happened (no duplicates)
+
+
+// 13. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from the game events log.
+
+
+// 14. Compute and log the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
+
+
+// 15. Loop over 'gameEvents' and log each element to the console, marking whether it's in the first half or second half (after 45 min) of the game: [FIRST HALF] 17: ⚽ GOAL
+ */
+
+
+//         $$$$$$$$$$$$$$$ Funciones y funciones de orde superior $$$$$$$$$$$$$$$
 
 
 /* //Ejemplo 1: Definicion de mi funcion
@@ -146,181 +244,6 @@ let descuento = 50;
 let nuevoPrecio = resta( suma(precioProducto, iva(precioProducto)), descuento );
 console.log(nuevoPrecio); */
 
-
-//         $$$$$$$$$$$$$$$ Objetos $$$$$$$$$$$$$$$
-
-
-/*     //Ejemplo 1: Definicion de caracteristicas para un objeto y como podemos ver los datos dentro del objeto
-let unPaciente = {DNI: "11222333", apellidos: "Mancilla", nombre: "German", edad: 36, altura: 170, peso: 72, generoBiologico: "Masculino", tipoSangre: "A+"};
-console.log("El objeto contiene estos datos: ", unPaciente);
-console.log("El paciente se llama: ", unPaciente.nombre);         //Forma 1 de seleccionar una variable de un objeto
-console.log("El paciente se apellida: ", unPaciente["apellidos"]);//Forma 2 de seleccionar una variable de un objeto */
-
-/*     //Elemplo 2: Aignacion de valores
-let unPaciente = {DNI: "11222333", apellidos: "Mancilla", nombre: "German", edad: 36, altura: 170, peso: 72, generoBiologico: "Masculino", tipoSangre: "A+"};
-unPaciente.apellidos = "res";
-unPaciente.nombre = "SS22";
-unPaciente.DNI = 44555666;
-unPaciente["edad"] = 33;
-console.log("Los datos actualizados son: ", unPaciente); */
-
-/*     //Ejemplo 3: Definicion de un objeto sin datos definidos para sus propiedades.
-let unPaciente = {DNI: undefined, apellidos: undefined, nombre: undefined, edad: undefined, altura: undefined, peso: undefined, generoBiologico: undefined, tipoSangre: undefined};
-unPaciente.apellidos = "res";
-unPaciente.nombre = "SS22";
-unPaciente.DNI = 44555666;
-unPaciente["edad"] = 33;
-console.log("Los datos actualizados son: ", unPaciente); */
-
-/*     //Ejemplo 4: Definicion de una funcion constructora para un objeto
-function paciente(DNI, apellidos, nombre, edad, altura, peso, generoBiologico, tipoSangre){
-this.DNI = DNI;
-this.apellidos = apellidos;
-this.nombre = nombre;
-this.edad = edad;
-this.altura = altura; 
-this.peso = peso;
-this.generoBiologico = generoBiologico;
-this.tipoSangre = tipoSangre;
-this.obraSocial = undefined;};
-
-let paciente1 = new paciente("44555666","Cosme","Pricilla",undefined,183,65,"femenino",undefined);
-console.log("Los datos actualizados son: ", paciente1); */
-
-/*     //Ejemplo 5: Ejemplo de aplicacion de metodos de un objeto
-function producto(nombre, precio, cantidad){
-    //propiedades
-    this.nombre = nombre;
-    this.precio = parseFloat(precio);
-    this.cantidad = parseInt(cantidad);
-    this.hayInventario = !!parseInt(cantidad); //this.hayInvenatrio = hayInventario; (ambas son correctas)
-    
-    //. !parseInt(cantidad) --> es un valor booleano, si el n�mero es 10, se convierte en false, si es 0 se convierte en true.
-    //   Pero nosotros necesitamos el valor equivalente real, si ingres� 10 quiero que sea true, si ingres� 0 quiero que sea false. Por ello es que agregamos dos negaciones !!
-    //. !!parseInt(cantidad) --> lo que conseguimos con la !! es consegui el inverso de un elemento inverso. O sea, el valor booleano true de un elemento.
-    //   Podemos definir un par�metro como (hayInventario) y en este pasar desde la funci�n constructora a partir de la palabra reservada new. Tener en cuenta que esta segunda opci�n nos "obliga" a manejar este dato y su valor durante la carga de los datos que el usuario indique.    
-    
-    //metodos
-    this.toString = function(){
-        return this.nombre;
-    };
-
-    this.Stock = (cantidadIncrementada) => {
-        return this.cantidad += this.cantidad + parseInt(cantidadIncrementada);
-    };
-
-    this.comprar = (cantidadComprada) => {
-        return this.cantidad -= parseInt(cantidadComprada);
-    };
-};
-
-let nombre = "Carne";
-let precio = "200";
-let cantidad = "5";
-let unProducto1 = new producto(nombre, precio, cantidad);
-console.log("Los valores que cargaste para el producto son: ", unProducto1); */
-
-/*     //Ejemplo 6: Uso de las construcciones IN y FOR-IN
-function paciente(DNI, apellidos, nombre, edad){
-this.DNI = DNI;
-this.apellidos = apellidos;
-this.nombre = nombre;
-this.edad = edad;
-};
-
-let paciente1 = new paciente("44555666", "Cosme", "Pricilla", 24);
-
-console.log("Existe la propiedad DNI dentro del objeto?", {resultado: "DNI" in paciente1});
-//console.log("Existe la propiedad DNI dentro del objeto?", "DNI" in paciente1); //Esto es lo mismo que la linea de arriba
-
-console.log("Existe la propiedad obraSocial dentro del objeto?", {resultado: "obraSocial" in paciente1});
-//console.log("Existe la propiedad obraSocial dentro del objeto?", "obraSocial" in paciente1); //Esto es lo mismo que la linea de arriba
-
-for(const iter in paciente1){ //Despues del const podemos poner cualquier nombre, el cual servira para iterar y buscar todas las propiedades del objeto.
-    console.log("La propiedad ("+iter + ") tiene el valor de: "+ paciente1[iter]);
-} */ 
-
-/*     //Ejemplo 7: Ejemplo practico con objetos y funciones 
-
-const jonas = {
-    firstName: 'Jonas',
-    lastName: 'Schmedtmann',
-    birthYeah: 1991,
-    job: 'teacher',
-    friends: ['Michael', 'Peter', 'Steven'],
-    hasDriversLicense: true,
-
-    calcAge0: function (birthYeah) {
-        return 2037 - birthYeah;
-    },
-
-    calcAge1: function () {
-        return 3000 - this.birthYeah;
-    },
-    
-    calcAge2: function () {
-        return this.age = 4000 - this.birthYeah;
-    },
-    getSummary: function () {
-        return `${this.firstName} is a ${this.calcAge2() - this.birthYeah}years old ${jonas.job}, and he has ${this.hasDriversLicense ? 'a' : 'no'} driver's license.`
-    //  return `${jonas.firstName} is a ${this.calcAge2()}-year old ${jonas.job}, and he has ${jonas.hasDriversLicense ? 'a' : 'no'} driver's license.`
-    }
-};
-
-console.log(jonas);
-console.log("res1: ",jonas.calcAge0(1991));
-console.log("res2: ",jonas.calcAge1());
-console.log("res3: ",jonas.calcAge2());
-console.log("res4: ",jonas.age);
-console.log("res5: ",jonas.getSummary()); 
-
-const measureKelvin = function () {
-    const measurement = {type: 'temp', unit: 'celsius', value: parseInt(100),};
-    console.table(measurement);
-    const kelvin = measurement.value + 273;
-    return kelvin;
-};
-
-console.log(measureKelvin()); */
-
-/*     //Ejemplo 8: Definicion de una clase y uso de los metodos dentro de una clase
-
-class producto{
-    //Metodo constructor de una clase
-    constructor(nombre, precio, cantidad){
-        this.nombre = nombre;
-        this.precio = parseFloat(precio);
-        this.cantidad = parseInt(cantidad);
-        this.hayInventario = !!parseInt(cantidad); //this.hayInvenatrio = hayInventario; (ambas son correctas)
-    };
-
-    //Metodos y funciones
-    nombreProducto() {
-        return this.nombre;
-    }
-
-    incrementarStock(cantidadIncrementada) {
-        this.cantidad = this.cantidad + parseInt(cantidadIncrementada);
-    }
-
-    comprar(cantidadComprada){
-        this.cantidad = this.cantidad - parseInt(cantidadComprada);
-    }
-}
-
-let unProducto = new producto("Papa", 400, 50);
-console.log("Los datos del producto son: ", unProducto);
-console.log("El nombre del producto es: "+ unProducto.nombreProducto());
-
-unProducto.incrementarStock(10);
-console.log("Compre 10 kilos mas de papa y ahora tengo: ", unProducto);
-unProducto.comprar(40); 
-console.log("Compre 40 kilos mas de papa y ahora tengo:", unProducto); */
-
-
-//         $$$$$$$$$$$$$$$ Funciones de orden superior I $$$$$$$$$$$$$$$
-
-
 /* //Ejemplo 1: Desarrollo de una funcion para conseguir la abstraccion de la suma consecutiva de numeros dentro de un rango.
 
 let total = 0;
@@ -407,6 +330,218 @@ porCadaElemento(numeros, acumular);
 console.log("El valor total de la suma de los elementos de "+ numeros.toString()+ " es: "+ total+"."); */
 
 
+//         $$$$$$$$$$$$$$$ Objetos $$$$$$$$$$$$$$$
+
+
+/* // Ejemplo 1: Definicion de caracteristicas para un objeto y como podemos ver los datos dentro del objeto
+let unPaciente = {DNI: "11222333", apellidos: "Mancilla", nombre: "German", edad: 36, altura: 170, peso: 72, generoBiologico: "Masculino", tipoSangre: "A+"};
+console.log("El objeto contiene estos datos: ", unPaciente);
+console.log("El paciente se llama: ", unPaciente.nombre);         //Forma 1 de seleccionar una variable de un objeto
+console.log("El paciente se apellida: ", unPaciente["apellidos"]);//Forma 2 de seleccionar una variable de un objeto */
+
+/* // Elemplo 2: Aignacion de valores
+let unPaciente = {DNI: "11222333", apellidos: "Mancilla", nombre: "German", edad: 36, altura: 170, peso: 72, generoBiologico: "Masculino", tipoSangre: "A+"};
+unPaciente.apellidos = "res";
+unPaciente.nombre = "SS22";
+unPaciente.DNI = 44555666;
+unPaciente["edad"] = 33;
+console.log("Los datos actualizados son: ", unPaciente); */
+
+/* // Ejemplo 3: Definicion de un objeto sin datos definidos para sus propiedades.
+let unPaciente = {DNI: undefined, apellidos: undefined, nombre: undefined, edad: undefined, altura: undefined, peso: undefined, generoBiologico: undefined, tipoSangre: undefined};
+unPaciente.apellidos = "res";
+unPaciente.nombre = "SS22";
+unPaciente.DNI = 44555666;
+unPaciente["edad"] = 33;
+console.log("Los datos actualizados son: ", unPaciente); */
+
+/* // Ejemplo 4: Definicion de una funcion constructora para un objeto
+function paciente(DNI, apellidos, nombre, edad, altura, peso, generoBiologico, tipoSangre){
+this.DNI = DNI;
+this.apellidos = apellidos;
+this.nombre = nombre;
+this.edad = edad;
+this.altura = altura; 
+this.peso = peso;
+this.generoBiologico = generoBiologico;
+this.tipoSangre = tipoSangre;
+this.obraSocial = undefined;};
+
+let paciente1 = new paciente("44555666","Cosme","Pricilla",undefined,183,65,"femenino",undefined);
+console.log("Los datos actualizados son: ", paciente1); */
+
+/* // Ejemplo 5: Ejemplo de aplicacion de metodos de un objeto
+function producto(nombre, precio, cantidad){
+    //propiedades
+    this.nombre = nombre;
+    this.precio = parseFloat(precio);
+    this.cantidad = parseInt(cantidad);
+    this.hayInventario = !!parseInt(cantidad); //this.hayInvenatrio = hayInventario; (ambas son correctas)
+    
+    //. !parseInt(cantidad) --> es un valor booleano, si el n�mero es 10, se convierte en false, si es 0 se convierte en true.
+    //   Pero nosotros necesitamos el valor equivalente real, si ingres� 10 quiero que sea true, si ingres� 0 quiero que sea false. Por ello es que agregamos dos negaciones !!
+    //. !!parseInt(cantidad) --> lo que conseguimos con la !! es consegui el inverso de un elemento inverso. O sea, el valor booleano true de un elemento.
+    //   Podemos definir un par�metro como (hayInventario) y en este pasar desde la funci�n constructora a partir de la palabra reservada new. Tener en cuenta que esta segunda opci�n nos "obliga" a manejar este dato y su valor durante la carga de los datos que el usuario indique.    
+    
+    //metodos
+    this.toString = function(){
+        return this.nombre;
+    };
+
+    this.Stock = (cantidadIncrementada) => {
+        return this.cantidad += this.cantidad + parseInt(cantidadIncrementada);
+    };
+
+    this.comprar = (cantidadComprada) => {
+        return this.cantidad -= parseInt(cantidadComprada);
+    };
+};
+
+let nombre = "Carne";
+let precio = "200";
+let cantidad = "5";
+let unProducto1 = new producto(nombre, precio, cantidad);
+console.log("Los valores que cargaste para el producto son: ", unProducto1); */
+
+/* // Ejemplo 6: Uso de las construcciones IN y FOR-IN
+function paciente(DNI, apellidos, nombre, edad){
+this.DNI = DNI;
+this.apellidos = apellidos;
+this.nombre = nombre;
+this.edad = edad;
+};
+
+let paciente1 = new paciente("44555666", "Cosme", "Pricilla", 24);
+
+console.log("Existe la propiedad DNI dentro del objeto?", {resultado: "DNI" in paciente1});
+//console.log("Existe la propiedad DNI dentro del objeto?", "DNI" in paciente1); //Esto es lo mismo que la linea de arriba
+
+console.log("Existe la propiedad obraSocial dentro del objeto?", {resultado: "obraSocial" in paciente1});
+//console.log("Existe la propiedad obraSocial dentro del objeto?", "obraSocial" in paciente1); //Esto es lo mismo que la linea de arriba
+
+for(const iter in paciente1){ //Despues del const podemos poner cualquier nombre, el cual servira para iterar y buscar todas las propiedades del objeto.
+    console.log("La propiedad ("+iter + ") tiene el valor de: "+ paciente1[iter]);
+} */ 
+
+/* // Ejemplo 7: Ejemplo practico con objetos y funciones 
+
+const jonas = {
+    firstName: 'Jonas',
+    lastName: 'Schmedtmann',
+    birthYeah: 1991,
+    job: 'teacher',
+    friends: ['Michael', 'Peter', 'Steven'],
+    hasDriversLicense: true,
+
+    calcAge0: function (birthYeah) {
+        return 2037 - birthYeah;
+    },
+
+    calcAge1: function () {
+        return 3000 - this.birthYeah;
+    },
+    
+    calcAge2: function () {
+        return this.age = 4000 - this.birthYeah;
+    },
+    getSummary: function () {
+        return `${this.firstName} is a ${this.calcAge2() - this.birthYeah}years old ${jonas.job}, and he has ${this.hasDriversLicense ? 'a' : 'no'} driver's license.`
+    //  return `${jonas.firstName} is a ${this.calcAge2()}-year old ${jonas.job}, and he has ${jonas.hasDriversLicense ? 'a' : 'no'} driver's license.`
+    }
+};
+
+console.log(jonas);
+console.log("res1: ",jonas.calcAge0(1991));
+console.log("res2: ",jonas.calcAge1());
+console.log("res3: ",jonas.calcAge2());
+console.log("res4: ",jonas.age);
+console.log("res5: ",jonas.getSummary()); 
+
+const measureKelvin = function () {
+    const measurement = {type: 'temp', unit: 'celsius', value: parseInt(100),};
+    console.table(measurement);
+    const kelvin = measurement.value + 273;
+    return kelvin;
+};
+
+console.log(measureKelvin()); */
+
+/* // Ejemplo 8: Definicion de una clase y uso de los metodos dentro de una clase
+
+class producto{
+    //Metodo constructor de una clase
+    constructor(nombre, precio, cantidad){
+        this.nombre = nombre;
+        this.precio = parseFloat(precio);
+        this.cantidad = parseInt(cantidad);
+        this.hayInventario = !!parseInt(cantidad); //this.hayInvenatrio = hayInventario; (ambas son correctas)
+    };
+
+    //Metodos y funciones
+    nombreProducto() {
+        return this.nombre;
+    }
+
+    incrementarStock(cantidadIncrementada) {
+        this.cantidad = this.cantidad + parseInt(cantidadIncrementada);
+    }
+
+    comprar(cantidadComprada){
+        this.cantidad = this.cantidad - parseInt(cantidadComprada);
+    }
+}
+
+let unProducto = new producto("Papa", 400, 50);
+console.log("Los datos del producto son: ", unProducto);
+console.log("El nombre del producto es: "+ unProducto.nombreProducto());
+
+unProducto.incrementarStock(10);
+console.log("Compre 10 kilos mas de papa y ahora tengo: ", unProducto);
+unProducto.comprar(40); 
+console.log("Compre 40 kilos mas de papa y ahora tengo:", unProducto); */
+
+/* // Ejemplo 9: Literales de objeto mejoradas
+
+const weekdays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+
+const openingHours = {
+        [weekdays[3]]: {open: 12,close: 22,},
+        [weekdays[4]]: {open: 11,close: 23,},
+        [weekdays[5]]: {open: 0,close: 24,},
+    };
+
+    console.log(openingHours);
+
+const restaurant = {
+    Name: 'Classico-Italiano',
+    location: 'Via Angelo Tavanti 23, Firenze, Italy',
+    categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+    starterMenu: ['Focaccia', 'Bruschetta', 'Garlic-Bread', 'Caprese-Salad'],
+    mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+    info: [
+        {id: 1, nombre: "german"},
+        {id: 2, nombre: "mancilla"}
+    ],
+    fecharegistro: new Date(),
+    poseeTaarjetaCredito: false, 
+    poseeVehiculo: true,
+
+    openingHours, //openingHours: openingHours,    Ambas son lo mismo
+
+    order(starterIndex, mainIndex){  //order: function(starterIndex, mainIndex){   Ambas son lo mismo
+        return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+    },
+
+    orderDelivery({time, address, mainIndex, starterIndex}){
+        return console.log(`Desestructuracion de un objecto usando funcion --> Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`);
+    },
+
+    orderDeliveryX2({time="20:00", address, mainIndex=0, starterIndex=1}){
+        return console.log(`Desestructuracion de un objecto usando funcion X2--> Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`);
+    }
+}; */
+
+
 //         $$$$$$$$$$$$$$$ Arrays $$$$$$$$$$$$$$$
 
 
@@ -434,37 +569,71 @@ let nombre = "karla";
 VECTOR_DE_CADENAS[2] = nombre;
 console.log("Los nuevos nombres dentro del array son: ",VECTOR_DE_CADENAS); */
 
-/* //Ejemplo 4: Conocer la cantidad de elementos que tiene nuestro array con  |.length()|
+/* //Ejemplo 4: Recorrer un array con |for-of|
+const restaurant = {
+    name: 'Classico Italiano',
+    location: 'Via Angelo Tavanti 23, Firenze, Italy',
+    categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+    starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+    mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+    openingHours: {
+        thu: {open: 12,close: 22,},
+        fri: {open: 11,close: 23,},
+        sat: {open: 0, close: 24,}, // Open 24 hours
+    },
+};
+
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+// for (const res of menu) {
+//     console.log(res);
+// }
+
+// for (const item of menu.entries()) {
+//     console.log(item);
+// }
+
+for (const item of menu.entries()) {
+    console.log(`${item[0] + 1}: ${item[1]}`);
+}
+
+console.log("\n");
+
+for (const [i, el] of menu.entries()) {
+    console.log(`${i + 1}: ${el}`);
+} */
+
+/* //Ejemplo 5: Conocer la cantidad de elementos que tiene nuestro array con  |.length()|
 const VECTOR_DE_CADENAS = ["german", "mancilla", "chavez"];
 console.log("Cuantos elementos tengo en mi array?", VECTOR_DE_CADENAS.length);
 console.log("Cual es la posicion de mi ultimo elemento dentro de mi array?", VECTOR_DE_CADENAS.length-1) */
 
-/* //Ejemplo 5: Como anadir elementos a un array con  |.push()|
+/* //Ejemplo 6: Como anadir elementos a un array con  |.push()|
 let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez"];
 let nombre = "karla";
 VECTOR_DE_CADENAS.push(nombre);
 console.log("Los nuevos nombres dentro del array son: ",VECTOR_DE_CADENAS); */
 
-/* //Ejemplo 6: Como anadir elementos al principio de un array con |.unshift()|
+/* //Ejemplo 7: Como anadir elementos al principio de un array con |.unshift()|
 let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez"];
 let nombre = "karla";
 VECTOR_DE_CADENAS.unshift(nombre);
 console.log("Los nuevos nombres dentro del array son: ",VECTOR_DE_CADENAS); */
 
-/* //Ejemplo 7: Como eliminar elementos en la primer posicion de un array con |.shift|
+/* //Ejemplo 8: Como eliminar elementos en la primer posicion de un array con |.shift|
 let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior"];
 let elementoRecuperado = VECTOR_DE_CADENAS.shift();
 console.log("El elemento recuperado es: ",elementoRecuperado);
 console.log("Los nuevos nombres dentro del array son: ",VECTOR_DE_CADENAS); */
 
-/* //Ejemplo 8: Como eliminar elementos en la ultima posicion de un array con |.pop()|
+/* //Ejemplo 9: Como eliminar elementos en la ultima posicion de un array con |.pop()|
 
 let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior"];
 let elementoRecuperado = VECTOR_DE_CADENAS.pop();
 console.log("El elemento recuperado es: ",elementoRecuperado);
 console.log("Los nuevos nombres dentro del array son: ",VECTOR_DE_CADENAS); */
 
-/* //Ejemplo 9: Como eliminar y eliminar uno o mas elementos de un array con |.splice()|
+/* //Ejemplo 10: Como eliminar y eliminar uno o mas elementos de un array con |.splice()|
 let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior"];
 let elementoRecuperado = VECTOR_DE_CADENAS.splice(1,2); //1 = la posicion - 2 = cantidad de numeros a eliminar a partir de 1
 console.log("Los elementos removidos dentro del array son ",elementoRecuperado);
@@ -478,23 +647,23 @@ let elementoRecuperado1 = VECTOR_DE_CADENAS1.splice(1,0, "karla", "res"); //1 = 
 console.log("Los nuevos nombres dentro del array son: ",VECTOR_DE_CADENAS1);
 console.log("Los elementos removidos dentro del array son ", elementoRecuperado1); */
 
-/* //Ejemplo 10: Obtener una cadena con cada uno de sus elementos concatenados, separados con un caracter o cadena especial con |.join()|.
+/* //Ejemplo 11: Obtener una cadena con cada uno de sus elementos concatenados, separados con un caracter o cadena especial con |.join()|.
 let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior"];
 let resultadoDelJoin = VECTOR_DE_CADENAS.join(", ");
 console.log("Los nuevos nombres dentro del array son: ",VECTOR_DE_CADENAS);
 console.log("La cadena generada con nombres es: ",resultadoDelJoin); */
 
-/* //Ejemplo 12: Combinar los elementos de dos arrays con |.concat()|
+/* //Ejemplo 13: Combinar los elementos de dos arrays con |.concat()|
 let VECTOR_DE_CADENAS1 = ["german", "mancilla", "chavez"], VECTOR_DE_CADENAS2 = ["Karla", "beatriz", "marquez"];
 let resultadoDelJoin = VECTOR_DE_CADENAS1.concat(VECTOR_DE_CADENAS2);
 console.log("La cadena generada con nombres es: ",resultadoDelJoin); */
 
-/* //Ejemplo 13: Tomar un conjunto de elementos de dentro de un array y generar un nuevo array con ellos con |.slice()|
+/* //Ejemplo 14: Tomar un conjunto de elementos de dentro de un array y generar un nuevo array con ellos con |.slice()|
 let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior", "karla"];
 let resultadoDelSlice = VECTOR_DE_CADENAS.slice(2, 5); //2 = esta posicion no se toma, sino la siguiente. 5 = limite que se toma en cuenta
 console.log("La cadena generada con nombres es: ",resultadoDelSlice); */
 
-/* //Ejemplo 14: Conocer la posicion de un elemento dentro de un array (si existe o no) con |.indexof()|
+/* //Ejemplo 15: Conocer la posicion de un elemento dentro de un array (si existe o no) con |.indexof()|
 let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior"];
 let posicionDeMancilla = VECTOR_DE_CADENAS.indexOf("chavez");
 console.log("La cadena generada con nombres es: ",posicionDeMancilla);
@@ -502,19 +671,19 @@ console.log("La cadena generada con nombres es: ",posicionDeMancilla);
 let posicion = VECTOR_DE_CADENAS.indexOf("karla");
 posicion != -1 ? console.log("El nombre esta en la posicion: ", posicion) : console.log("El nombre NO existe"); */
 
-/* //Ejemplo 15: Conocer si existe o no un elemento dentro de un array (Valor booleano) con |.includes()|
+/* //Ejemplo 16: Conocer si existe o no un elemento dentro de un array (Valor booleano) con |.includes()|
 let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior"];
 let nombre = "mancilla"
 let existe = VECTOR_DE_CADENAS.includes(nombre);
 
 existe ? console.log("El nombre SI existe") : console.log("El nombre NO existe"); */
 
-/* //Ejemplo 16: Tomar al array e invertir el orden de sus elementos con |.reverse()|
+/* //Ejemplo 17: Tomar al array e invertir el orden de sus elementos con |.reverse()|
 let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior"];
 VECTOR_DE_CADENAS.reverse();
 console.log("--> El array con los nombres cambiados de lugar es", VECTOR_DE_CADENAS); */
 
-/* //Ejemplo 17: como iterar sobre los elementos de un array, no importa si posee valores simples u objetos, con |.foreach()|
+/* //Ejemplo 18: como iterar sobre los elementos de un array, no importa si posee valores simples u objetos, con |.foreach()|
 
 class producto{
     constructor(id, nombre, precio){
@@ -544,7 +713,7 @@ misProductos.forEach( (unProducto) => {
     console.log( "--> "+unProducto.convertirEnString() );
 }); */
 
-/* //Ejemplo 18: como para hallar un elemento dentro de la coleccion (el PRIMER elemento), con |.find()|
+/* //Ejemplo 19: como para hallar un elemento dentro de la coleccion (el PRIMER elemento), con |.find()|
 class producto {
     constructor(id, nombre, precio){
         this.id = id;
@@ -584,7 +753,7 @@ if (unProductoBuscado1 !== undefined) {
     console.log("No encontramos el producto con nombre: "+ nombreBuscado);
 } */
 
-/* //Ejemplo 19: como hallar todos los elementos dentro de la coleccion que cumplan con una condicion, con |.filter()|
+/* //Ejemplo 20: como hallar todos los elementos dentro de la coleccion que cumplan con una condicion, con |.filter()|
 class producto {
     constructor(id, nombre, precio){
         this.id = id;
@@ -614,7 +783,7 @@ let nombreBuscado = "Mermelada";
 let productoHallados = misProductos.filter( (unProducto) => unProducto.nombre.includes( nombreBuscado.convertirEnString() ));
 console.log("Numero de productos hallados con el nombre "+ "'"+`${nombreBuscado}`+"'" +" son: "+ productoHallados.length+ " y tienen los siguientes nombres: ", productoHallados); */
 
-/* //Ejemplo 20: como saber si un elemento dentro de la coleccion existe o no, con |.some()|
+/* //Ejemplo 21: como saber si un elemento dentro de la coleccion existe o no, con |.some()|
 
 class producto {
     constructor(id, nombre, precio){
@@ -652,7 +821,7 @@ if (existe) {
     console.log("El producto buscado NO existe");
 } */
 
-/* //Ejemplo 21: como enlistar solamente los nombres de los productos, con |.map()|
+/* //Ejemplo 22: como enlistar solamente los nombres de los productos, con |.map()|
 
 class producto {
     constructor(id, nombre, precio){
@@ -703,7 +872,7 @@ function incrementarPrecio(precio, porcentaje){
     return precio + (precio * (porcentaje/100) )
 } */
 
-/* //Ejemplo 22: como calcular el valor total de una compra, con |.reduce()|
+/* //Ejemplo 23: como calcular el valor total de una compra, con |.reduce()|
 
 class producto{
     constructor(id, nombre, precio){
@@ -729,7 +898,7 @@ let misProductos = [
 let preciosTotales = misProductos.reduce( (acumulador, unProducto) => acumulador + unProducto.precio, 0);
 console.log("El total de la suma es: "+ preciosTotales.toFixed(2)); */
 
-/* //Ejemplo 23: como re-ordenar nuestro array (es DESTRUCTIVO, cambia su posicion), con |.sort()|
+/* //Ejemplo 24: como re-ordenar nuestro array (es DESTRUCTIVO, cambia su posicion), con |.sort()|
 
 class producto {
     constructor(id, nombre, precio){
@@ -803,21 +972,6 @@ numeroUno *= numeroDOs;
 console.log("--> El resultado de la multiplicación de los dos valores es", {numeroUno}); */
 
 /* // Ejemplo 2: Uso del oeprador ternario (simplificación de la estructura IF-ELSE)
-let tempt = 29;
-
-// Así escribiríamos un IF-ELSE normalmente
-if (tempt > 30) {
-  alert("Día caluroso");
-} else {
-  alert("Día agradable");
-}
-
-// Así lo escribiríamos con el operador ternario
-tempt > 30 ?
-  alert("Día caluroso")
-  : alert("Día agradable"); */
-
-/* // Ejemplo 3: Aplicación del operador ternario para capturar su return implicito
 let tempt = 31;
 let diaCaluroso;
 
@@ -825,8 +979,7 @@ tempt > 30 ? (diaCaluroso = true) : (diaCaluroso = false);
 
 alert("--> La evalaución resulto " + diaCaluroso); */
 
-// Ejemplo 4: Operador lógico AND
-// Ejemplo Operador lógico AND
+/* // Ejemplo 4: Operador lógico AND
 let carrito = [];
 let carritox2 = [{id: 10, nombre: "Play Station 5"}];
 
@@ -834,11 +987,11 @@ let carritox2 = [{id: 10, nombre: "Play Station 5"}];
 // El return por default en caso de false, es false.
 
 carrito.length == 0 && console.log("--> El carrito está vacío");
-carritox2.length == 1 && console.log("--> El carritox2 está lleno");
+carritox2.length == 1 && console.log("--> El carritox2 está lleno"); */
 
 /* // Ejemplo 5: Operador Lógico OR
-// Tabla que ejemplifica algunos de los valores que corresponden a Falsy
 
+// Tabla que ejemplifica algunos de los valores que corresponden a Falsy
 console.log("Hola Mundo" || "Falsy"); // Hola Mundo
 console.log(40 || "Falsy"); // 40
 console.log(true || "Falsy"); // true
@@ -849,17 +1002,9 @@ console.log(undefined || "Falsy"); // Falsy
 console.log(NaN || "Falsy"); // Falsy
 console.log(false || "Falsy"); // Falsy 
 
-// Cómo operamos con el Operador Logico OR
-//const resultado = oparando1 || operando2;
 let numero = 15;
 const numerSelected = numero || 0 ;
 console.log("--> numerSelected", {numerSelected}); */
-
-/* // Ejemplo 5.1: Operador Lógico OR
-const usuario1 = {nombre: "John Doe", edad: 14}
-const usuario2 = null
-console.log( usuario1 || "El usuario no existe" ) //{ nombre: 'John Doe', edad: 14 }
-console.log( usuario2 || "El usuario no existe" ) //El usuario no existe */
 
 /* // Ejemplo 6: Nullish Coalescing
 // Tabla que ejemplifica algunos de los valores que corresponden a Falsy
@@ -881,11 +1026,81 @@ console.log(usuario.nombre || "El usuario no existe"); //Error: "No se pueden le
 console.log(usuario?.nombre || "El usuario no existe"); //"El usuario no existe" */
 
 /* // Ejemplo 8: Uso del acceso condicional con más de un atributo (propiedad)
-const usuario = {nombre: "John Doe", edad: 22, cursos: {javascript: "Curso aprobado",}};
-console.log(usuario?.cursos?.javascript || "La propiedad no existe"); //"Curso aprobado"
-console.log(usuario?.trabajos?.coderhouse || "El estudiante no realizo trabajos con Coder House"); //"El estudiante no realizo trabajos con Coder House" */
+const days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+const openingHours = {
+        [days[3]]: {open: 12,close: 22,},
+        [days[4]]: {open: 11,close: 23,},
+        [days[5]]: {open: 0,close: 24,},
+    };
 
-/* // Ejemplo 9: Desestructuración de arrays y objetos
+const restaurant = {
+    Name: 'Classico-Italiano',
+    location: 'Via Angelo Tavanti 23, Firenze, Italy',
+    categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+    starterMenu: ['Focaccia', 'Bruschetta', 'Garlic-Bread', 'Caprese-Salad'],
+    mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+    info: [
+        {id: 1, nombre: "german"},
+        {id: 2, nombre: "mancilla"}
+    ],
+
+    openingHours, //openingHours: openingHours,    Ambas son lo mismo
+
+    order: function(starterIndex, mainIndex){
+        return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+    },
+};
+
+for (const res of days) {
+    const open = restaurant?.openingHours[res]?.open ?? "closed";
+    console.log(`On ${res}, we open at ${open}`);
+}
+
+console.log(restaurant.order ?. (0,1) ?? "Error");
+console.log(restaurant.orderNew ?. (0,1) ?? "Error"); */
+
+/* // Ejemplo 9: Looping Objects: Object Keys, Values, and Entries
+const days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+const openingHours = {
+        [days[3]]: {open: 12,close: 22,},
+        [days[4]]: {open: 11,close: 23,},
+        [days[5]]: {open: 0,close: 24,},
+    };
+
+const restaurant = {
+    Name: 'Classico-Italiano',
+    location: 'Via Angelo Tavanti 23, Firenze, Italy',
+    categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+    starterMenu: ['Focaccia', 'Bruschetta', 'Garlic-Bread', 'Caprese-Salad'],
+    mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+    info: [
+        {id: 1, nombre: "german"},
+        {id: 2, nombre: "mancilla"}
+    ],
+
+    openingHours, //openingHours: openingHours,    Ambas son lo mismo
+
+    order: function(starterIndex, mainIndex){
+        return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+    },
+};
+
+const properties1 = openingHours; console.log(properties1);
+const properties = Object.keys(openingHours); console.log("Object.keys()", properties);
+const values = Object.values(openingHours);  console.log("Object.values()", values);
+const entries = Object.entries(openingHours);  console.log("Object.entries()", entries);
+
+let openStr = `We are open on ${properties.length} days: `;
+for (const day of properties) {
+    openStr = openStr + `${day}, `
+}
+console.log(openStr);
+
+for (const [day, {open, close}] of entries) {
+    console.log(`On ${day} we open at ${open} and close at ${close}`);
+} */
+
+/* // Ejemplo 10: Desestructuración de arrays y objetos
 const restaurant = {
     Name: 'Classico-Italiano',
     location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -901,18 +1116,9 @@ const restaurant = {
     poseeVehiculo: true,
 
     openingHours: {
-        thu: {
-            open: 12,
-            close: 22,
-        },
-        fri: {
-            open: 11,
-            close: 23,
-        },
-        sat: {
-            open: 0, // Open 24 hours
-            close: 24,
-        },
+        thu: {open: 12,close: 22,},
+        fri: {open: 11,close: 23,},
+        sat: {open: 0,close: 24,},
     },
 
     order: function(starterIndex, mainIndex){
@@ -980,7 +1186,7 @@ restaurant.orderDeliveryX2({
     starterIndex:"1"
 }); */
 
-/* // Ejemplo 10: Aplicación de la desestructuración para el evento del click
+/* // Ejemplo 11: Aplicación de la desestructuración para el evento del click
 window.addEventListener("click", (event) => {
     console.log(event.x, event.y);
 });
@@ -989,7 +1195,7 @@ window.addEventListener("click", ({ x, y }) => {
     console.log(x, y);
 }); */
 
-/* // Ejemplo 11: Operacion de spreading con Arrays
+/* // Ejemplo 12: Operacion de spreading con Arrays
 const nombres1 = ["Juan", "Julieta"], nombres2 = ["Carlos", "Mariela"];
 const array = [...nombres1, ...nombres2]; // spread de los dos arrays dentro de otro
 const nombresObjeto = {// spread del array en un objeto
@@ -1019,7 +1225,7 @@ console.log(Math.max(numeros)); // NaN
 console.log("--> Spredading de Array: ", ...numeros, "y el Math.max es: ", Math.max(...numeros));
 console.log("--> Equivalente a la anterior: ", Math.max(4, 77, 92, 10, 3, -32, 54, 11)); */
 
-/* // Ejemplo 12: Rest parameters
+/* // Ejemplo 13: Rest parameters
 
 sumar_1(10, 15, 30, 5, 13, 47, 98); // [10, 15, 30, 5, 13, 47, 98]
 console.log("Res 2: ", sumar_2(10, 15, 30, 5) ) // 60
