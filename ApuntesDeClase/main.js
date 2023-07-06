@@ -1,108 +1,3 @@
-console.log("Hola, bienvenidos a la clase de Javascript 🤯"); console.log("\n");
-
-
-//         $$$$$$$$$$$$$$$ UDEMY $$$$$$$$$$$$$$$
-
-
-/* // Exercise for Data Structures, Modern Operators and Strings
-// Suppose we get data from a web service about a certain game ('game' variable on next page). In this challenge we're gonna work with that data. Your tasks:
-
-const game = {
-    team1: 'Bayern Munich',
-    team2: 'Borrussia Dortmund',
-    players: [
-        ['Neuer','Pavard','Martinez','Alaba','Davies','Kimmich','Goretzka','Coman','Muller','Gnarby','Lewandowski'],
-        ['Burki','Schulz','Hummels','Akanji','Hakimi','Weigl','Witsel','Hazard','Brandt','Sancho','Gotze']
-    ],
-    score: '4:0',
-    scored: ['Lewandowski', 'Gnarby', 'Lewandowski','Hummels'],
-    date: 'Nov 9th, 2017',
-    odds: {
-        team1: 1.33,
-        x: 3.25,
-        team2: 6.5,
-    }
-    
-};
-
-const gameEvents = new Map([
-    [17, '⚽ GOAL'],
-    [36, '� Substitution'],
-    [47, '⚽ GOAL'],
-    [61, '� Substitution'],
-    [64, '� Yellow card'],
-    [69, '� Red card'],
-    [70, '� Substitution'],
-    [72, '� Substitution'],
-    [76, '⚽ GOAL'],
-    [80, '⚽ GOAL'],
-    [92, '� Yellow card'],
-]);
-
-//1. Create one player array for each team (variables 'players1' and'players2')
-const [players1,players2] = game.players;       //console.log(players1, players2);
-
-//2. The first player in any player array is the goalkeeper and the others are field players. For Bayern Munich (team 1) create one variable ('gk') with the goalkeeper's name, and one array ('fieldPlayers') with all the remaining 10 field players
-const [gk, ...fieldPlayers] = players1;         //console.log(gk, fieldPlayers);
-
-//3. Create an array 'allPlayers' containing all players of both teams (22 players)
-const allPlayers = [...players1, ...players1];  //console.log(allPlayers);
-
-//4. During the game, Bayern Munich (team 1) used 3 substitute players. So create a new array ('players1Final') containing all the original team1 players plus 'Thiago', 'Coutinho' and 'Perisic'
-const players1Final = ['Thiago', 'Coutinho', 'Perisic', ...players1]; //console.log(players1Final);
-
-//5. Based on the game.odds object, create one variable for each odd (called 'team1', 'draw' and 'team2')
-const {team1, x:draw, team2} = game.odds;   //console.log(team1, draw, team2);
-
-//6. Write a function ('printGoals') that receives an arbitrary number of player names (not an array) and prints each of them to the console, along with the number of goals that were scored in total (number of player names passed in)
-function printGoals(...players){ //Debemos desestructurar lo que mandamos a esta funcion tambien porque, al ser 4 elementos los que recibe, y si no hacemos eso, entonces unicamente se enviara el primer elemento y no los demas. 
-    //console.log(players, "and "+ `${players.length}` + " goals were scored");
-}
-printGoals(...game.scored);
-
-//7. The team with the lower odd is more likely to win. Print to the console which team is more likely to win, without using an if/else statement or the ternary operator. 
-let res = game.team2 > game.team1 && "Team 2 is more likely to win!!";  //console.log(res);
-let res2 = game.team2 < game.team1 && "Team 1 is more likely to win!!";  //console.log(res2);
-
-//8. Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
-for (const [i, player] of game.scored.entries()) {
-    //console.log(`Goal ${i + 1}: ${player}`);
-}
-
-//9. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, you can go check if you don't remember)
-let average = 0;
-for (const odd of Object.values(game.odds)) {
-    average = average + odd/3;
-}
-//console.log(average);
-
-//10. Print the 3 odds to the console, but in a nice formatted way, exactly like this: Odd of victory Bayern Munich: 1.33, Odd of draw: 3.25, Odd of victory Borrussia Dortmund: 6.5
-//    Get the team names directly from the game object, don't hardcode them (except for "draw"). Hint: Note how the odds and the game objects have the same property names
-for (const [team, odd] of Object.entries(game.odds)) {
-    let res = ( team === "x" ? "draw" : ("victory "+ game[team]) ); // team retorna un string, en este caso, sera team1 y team2. Pero, al ser ambos de tipo STRING, quiere decir que vienen de esta forma "team1" y "team2". Por eso al final queda game[team], si necesidad de poner los "".
-    //console.log(`Odd of ${res}: ${odd}`);
-}
-
-//11. Create an object called 'scorers' which contains the names of the players who scored as properties, and the number of goals as the value: { Gnarby: 1, Hummels: 1, Lewi: 2}
-const scorers = {};
-for (const player of game.scored) {
-    scorers[player] ? scorers[player]++ : (scorers[player] = 1);//En la primer y segunda iteracion no existe nada. No es hasta la tercera iteracion cuando ahi se repite "Lewandowski", por lo que ahora en este caso, se le suma 1.
-}
-console.log(scorers);
-
-// 12. Create an array 'events' of the different game events that happened (no duplicates)
-
-
-// 13. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from the game events log.
-
-
-// 14. Compute and log the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
-
-
-// 15. Loop over 'gameEvents' and log each element to the console, marking whether it's in the first half or second half (after 45 min) of the game: [FIRST HALF] 17: ⚽ GOAL
- */
-
-
 //         $$$$$$$$$$$$$$$ Funciones y funciones de orde superior $$$$$$$$$$$$$$$
 
 
@@ -934,7 +829,7 @@ let misProductos = [
 // misProductos.sort( (first, second) => second.precio - first.precio);                console.log("Forma descendente: ", misProductos); */
 
 
-//         $$$$$$$$$$$$$$$ OPERADORES AVANZADOS $$$$$$$$$$$$$$$
+//         $$$$$$$$$$$$$$$ STRINGS & MODERN OPERATORS $$$$$$$$$$$$$$$
 
 
 /* // Ejemplo 1: uso de los operadores Suggar Syntax con operaciones aritméticas sencillas como +, -, /, *. Te dejo para que investigues cómo se realizaría la potenciación (exponenciación).
@@ -1237,6 +1132,402 @@ function sumar_1(...numeros) {
 function sumar_2(...numeros) {
     return numeros.reduce((acumulador, unProducto) => acumulador + unProducto, 0);
 } */
+
+/* // Ejemplo 14: Uso de Set
+const orderSets = new Set(["res", "german", "mancilla", "chavez", "res", "ss22", "res,"])
+console.log(orderSets);
+console.log(orderSets.size);
+console.log(orderSets.has("pizza"));
+console.log(orderSets.has("german"));
+orderSets.add("ps4");
+orderSets.add("ps8")
+orderSets.delete("res")
+console.log(orderSets);
+
+for (const order of orderSets) {
+    console.log(order);
+}
+
+const staff = ["waiter", "chef", "waiter", "manager", "chef", "waiter"];
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique); */
+
+/* // Ejemplo 15: Uso de Map
+const rest = new Map();
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze, Italy');
+console.log(rest.set(2, 'Lisbon, Portugal'));
+
+rest.set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic']).set('open', 11).set('close', 23).set(true, 'We are open :D').set(false, 'We are closed :(');
+
+console.log(rest.get('name'));
+console.log(rest.get(true));
+console.log(rest.get(1));
+console.log(rest.has('categories'));
+rest.delete(2);
+// rest.clear();
+
+const time = 8;
+console.log(rest.get( time > (rest.get('open') && time < rest.get('close')) ));
+
+const arr = [1, 2];
+rest.set(arr, 'Test');
+rest.set(document.querySelector('h1'), 'Heading');
+console.log(rest);
+console.log(rest.size);
+console.log(rest.get(arr)); */
+
+/* // Ejemplo 16: Uso de Map con iteration
+
+// Maps: Iteration
+const question = new Map([
+    ['question', 'What is the best programming language in the world?'],
+    [1, 'C'],
+    [2, 'Java'],
+    [3, 'JavaScript'],
+    ['correct', 3],
+    [true, 'Correct 🎉'],
+    [false, 'Try again!'],
+]);         console.log(question);
+
+
+openingHours = { thu: {open: 12,close: 22}, fri: {open: 11,close: 23}, sat: {open: 0,close: 24} }
+console.log(Object.entries(openingHours));
+const hoursMap = new Map(Object.entries(openingHours));
+console.log("Convert object to map: ", hoursMap);
+
+// Quiz app
+console.log(question.get('question'));
+for (const [key, value] of question) {
+    if (typeof key === 'number'){
+        console.log(`Answer ${key}: ${value}`);
+    }
+}
+
+const answer = 3;
+console.log(question.get(question.get('correct') === answer));
+
+//Convert map to array
+console.log([...question]);
+console.log(question.entries());
+
+console.log([...question.keys()]);
+console.log([...question.values()]); */
+
+/* // Ejemplo 17: Split and join
+console.log('a+very+nice+string'.split('+'));
+console.log('Jonas Schmedtmann'.split(' '));
+
+const [firstName, lastName] = 'Jonas Schmedtmann'.split(' ');
+
+const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');
+console.log(newName);
+
+const capitalizeName = function (name) {
+    const names = name.split(' ');
+    const namesUpper = [];
+
+    for (const n of names) {
+        namesUpper.push(n[0].toUpperCase() + n.slice(1));
+        namesUpper.push(n.replace(n[0], n[0].toUpperCase()));
+    }
+    console.log(namesUpper.join(' '));
+};
+
+capitalizeName('jessica ann smith davis');
+capitalizeName('jonas schmedtmann'); */
+
+/* // Ejemplo 18: Padding
+const message = 'Go to gate 23!';
+console.log(message.padStart(20, '+').padEnd(30, '+'));
+console.log('Jonas'.padStart(20, '+').padEnd(30, '+'));
+
+const maskCreditCard = function (number) {
+    const str = number + ""; // Lo que esta a la derecha de number es para convertir el dato de tipo numero a string.
+    const last = str.slice(-4);
+    const res = last.padStart(str.length, '*');
+    return res;
+};
+
+console.log(maskCreditCard(64637836));
+console.log(maskCreditCard(43378463864647384));
+console.log(maskCreditCard('334859493847755774747')); */
+
+/* // Ejemplo 19: Repeat
+const message2 = 'Bad waether... All Departues Delayed... ';
+console.log(message2.repeat(3));
+
+const planesInLine = function (n) {
+    console.log(`There are ${n} planes in line ${'🛩'.repeat(n)}`);
+};
+
+planesInLine(5);
+planesInLine(3);
+planesInLine(12); */
+
+/* // Ejemplo 20: Working With Strings - Part 1
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+
+console.log(plane[0]);
+console.log(plane[1]);
+console.log(plane[2]);
+console.log('B737'[0]);
+
+console.log(airline.length);
+console.log('B737'.length);
+
+console.log(airline.indexOf('r'));
+console.log(airline.lastIndexOf('r'));
+console.log(airline.indexOf('portugal'));
+
+console.log(airline.slice(4));
+console.log(airline.slice(4, 7));
+
+console.log(airline.slice(0, airline.indexOf(' ')));
+console.log(airline.slice(airline.lastIndexOf(' ') + 1));
+
+console.log(airline.slice(-2));
+console.log(airline.slice(1, -1));
+
+const checkMiddleSeat = function (seat) {
+  // B and E are middle seats
+  const s = seat.slice(-1);
+  if (s === 'B' || s === 'E') console.log('You got the middle seat 😬');
+  else console.log('You got lucky 😎');
+};
+
+checkMiddleSeat('11B');
+checkMiddleSeat('23C');
+checkMiddleSeat('3E');
+
+console.log(new String('jonas'));
+console.log(typeof new String('jonas'));
+
+console.log(typeof new String('jonas').slice(1)); */
+
+/* // Ejemplo 21: Working With Strings - Part 2
+
+const airline = 'TAP Air Portugal';
+
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+
+// Fix capitalization in name
+const passenger = 'jOnAS'; // Jonas
+const passengerLower = passenger.toLowerCase();
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
+
+// Comparing emails
+const email = 'hello@jonas.io';
+const loginEmail = '  Hello@Jonas.Io \n';
+
+// const lowerEmail = loginEmail.toLowerCase();
+// const trimmedEmail = lowerEmail.trim();
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(normalizedEmail);
+console.log(email === normalizedEmail);
+
+// replacing
+const priceGB = '288,97£';
+const priceUS = priceGB.replace('£', '$').replace(',', '.');
+console.log(priceUS);
+
+const announcement =
+  'All passengers come to boarding door 23. Boarding door 23!';
+
+console.log(announcement.replace('door', 'gate'));
+// console.log(announcement.replaceAll('door', 'gate'));
+console.log(announcement.replace(/door/g, 'gate'));
+
+// Booleans
+const plane = 'Airbus A320neo';
+console.log(plane.includes('A320'));
+console.log(plane.includes('Boeing'));
+console.log(plane.startsWith('Airb'));
+
+if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+  console.log('Part of the NEW ARirbus family');
+}
+
+// Practice exercise
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase();
+
+  if (baggage.includes('knife') || baggage.includes('gun')) {
+    console.log('You are NOT allowed on board');
+  } else {
+    console.log('Welcome aboard!');
+  }
+};
+
+checkBaggage('I have a laptop, some Food and a pocket Knife');
+checkBaggage('Socks and camera');
+checkBaggage('Got some snacks and a gun for protection'); */
+
+/* // Ejemplo 22: Working With Strings - Part 3
+
+// 🔴 Delayed Departure from FAO to TXL (11h25)
+//              Arrival from BRU to FAO (11h45)
+//   🔴 Delayed Arrival from HEL to FAO (12h05)
+//            Departure from FAO to LIS (12h30)
+
+const flights = '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
+
+// console.log(flights.split("+"));
+for (const iter of flights.split("+")) {
+    // console.log(iter.split(";"));
+    const [type, from, to, time] = iter.split(";");
+    const output = `${type.startsWith('_Delayed') ? '🔴' : ""} ${type.replaceAll("_", " ")} from ${getCode(from)} to ${getCode(to)} (${time.replace(":", "h")})`.padStart(45);
+    console.log(output);
+}
+
+function getCode(str){
+    return str.slice(0, 3).toUpperCase();
+} */
+
+/* // Ejemplo 23: Exercise for Data Structures, Modern Operators and Strings (1)
+// Suppose we get data from a web service about a certain game ('game' variable on next page). In this challenge we're gonna work with that data. Your tasks:
+
+const game = {
+    team1: 'Bayern Munich',
+    team2: 'Borrussia Dortmund',
+    players: [
+        ['Neuer','Pavard','Martinez','Alaba','Davies','Kimmich','Goretzka','Coman','Muller','Gnarby','Lewandowski'],
+        ['Burki','Schulz','Hummels','Akanji','Hakimi','Weigl','Witsel','Hazard','Brandt','Sancho','Gotze']
+    ],
+    score: '4:0',
+    scored: ['Lewandowski', 'Gnarby', 'Lewandowski','Hummels'],
+    date: 'Nov 9th, 2017',
+    odds: {
+        team1: 1.33,
+        x: 3.25,
+        team2: 6.5,
+    }
+    
+};
+
+//1. Create one player array for each team (variables 'players1' and'players2')
+const [players1,players2] = game.players;       //console.log(players1, players2);
+
+//2. The first player in any player array is the goalkeeper and the others are field players. For Bayern Munich (team 1) create one variable ('gk') with the goalkeeper's name, and one array ('fieldPlayers') with all the remaining 10 field players
+const [gk, ...fieldPlayers] = players1;         //console.log(gk, fieldPlayers);
+
+//3. Create an array 'allPlayers' containing all players of both teams (22 players)
+const allPlayers = [...players1, ...players1];  //console.log(allPlayers);
+
+//4. During the game, Bayern Munich (team 1) used 3 substitute players. So create a new array ('players1Final') containing all the original team1 players plus 'Thiago', 'Coutinho' and 'Perisic'
+const players1Final = ['Thiago', 'Coutinho', 'Perisic', ...players1]; //console.log(players1Final);
+
+//5. Based on the game.odds object, create one variable for each odd (called 'team1', 'draw' and 'team2')
+const {team1, x:draw, team2} = game.odds;   //console.log(team1, draw, team2);
+
+//6. Write a function ('printGoals') that receives an arbitrary number of player names (not an array) and prints each of them to the console, along with the number of goals that were scored in total (number of player names passed in)
+function printGoals(...players){ //Debemos desestructurar lo que mandamos a esta funcion tambien porque, al ser 4 elementos los que recibe, y si no hacemos eso, entonces unicamente se enviara el primer elemento y no los demas. 
+    //console.log(players, "and "+ `${players.length}` + " goals were scored");
+}
+printGoals(...game.scored);
+
+//7. The team with the lower odd is more likely to win. Print to the console which team is more likely to win, without using an if/else statement or the ternary operator. 
+let res = game.team2 > game.team1 && "Team 2 is more likely to win!!";  //console.log(res);
+let res2 = game.team2 < game.team1 && "Team 1 is more likely to win!!";  //console.log(res2);
+
+//8. Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
+for (const [i, player] of game.scored.entries()) {
+    //console.log(`Goal ${i + 1}: ${player}`);
+}
+
+//9. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, you can go check if you don't remember)
+let average = 0;
+for (const odd of Object.values(game.odds)) {
+    average = average + odd/3;
+}
+//console.log(average);
+
+//10. Print the 3 odds to the console, but in a nice formatted way, exactly like this: Odd of victory Bayern Munich: 1.33, Odd of draw: 3.25, Odd of victory Borrussia Dortmund: 6.5
+//    Get the team names directly from the game object, don't hardcode them (except for "draw"). Hint: Note how the odds and the game objects have the same property names
+for (const [team, odd] of Object.entries(game.odds)) {
+    let res = ( team === "x" ? "draw" : ("victory "+ game[team]) ); // team retorna un string, en este caso, sera team1 y team2. Pero, al ser ambos de tipo STRING, quiere decir que vienen de esta forma "team1" y "team2". Por eso al final queda game[team], si necesidad de poner los "".
+    //console.log(`Odd of ${res}: ${odd}`);
+}
+
+//11. Create an object called 'scorers' which contains the names of the players who scored as properties, and the number of goals as the value: { Gnarby: 1, Hummels: 1, Lewi: 2}
+const scorers = {};
+for (const player of game.scored) {
+    scorers[player] ? scorers[player]++ : (scorers[player] = 1);//En la primer y segunda iteracion no existe nada. No es hasta la tercera iteracion cuando ahi se repite "Lewandowski", por lo que ahora en este caso, se le suma 1.
+};      //console.log(scorers);
+
+const gameEvents = new Map([
+    [17, '⚽ GOAL'],
+    [36, '↩️ Substitution'],
+    [47, '⚽ GOAL'],
+    [61, '↩️ Substitution'],
+    [64, '🟨 Yellow card'],
+    [69, '🟥 Red card'],
+    [70, '↩️ Substitution'],
+    [72, '↩️ Substitution'],
+    [76, '⚽ GOAL'],
+    [80, '⚽ GOAL'],
+    [92, '🟨 Yellow card'],
+]);
+
+
+// 12. Create an array 'events' of the different game events that happened (no duplicates)
+const events = new Set((gameEvents.values()));   console.log(events);
+
+// 13. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from the game events log.
+gameEvents.delete(64);   console.log(gameEvents.values());
+
+// 14. Compute and log the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
+console.log(`An event happened, on average, every ${(90/gameEvents.size)} minutes`);
+const des = [...gameEvents.keys()].pop();
+
+// 15. Loop over 'gameEvents' and log each element to the console, marking whether it's in the first half or second half (after 45 min) of the game: [FIRST HALF] 17: ⚽ GOAL
+for (const [key, value] of gameEvents) {
+    console.log( key < 45 ? `[FIRST HALF] ${key + ": " + value}` : `[SECOND HALF] ${key + ": " + value}` );
+} */
+
+/* // Ejemplo 24: Exercise for Data Structures, Modern Operators and Strings (2)
+// Write a program that receives a list of variable (SEE BELOW) names written in underscore_case and convert them to camelCase.
+
+// underscore_case
+//  first_name
+// Some_Variable
+//   calculate_AGE
+// delayed_departure
+
+// Should produce this output (5 separate console.log outputs):
+// underscoreCase    ✅
+// firstName         ✅✅
+// someVariable      ✅✅✅
+// calculateAge      ✅✅✅✅
+// delayedDeparture  ✅✅✅✅✅
+
+// Hints:
+// § Remember which character defines a new line in the textarea
+// § The solution only needs to work for a variable made out of 2 words, like a_b
+// § Start without worrying about the ✅. Tackle that only after you have the variable name conversion working 
+
+
+document.body.append(document.createElement('textarea'));
+
+let btn = document.createElement("button");
+btn.innerHTML = "Click Me";
+document.body.append(btn);
+
+document.querySelector("button").addEventListener("click", function(){
+    const text = document.querySelector("textarea").value;
+    const rows = text.split("\n");
+
+    for (const [i, iter] of rows.entries()) {
+        let [first, second] = iter.toLowerCase().trim().split("_");
+        let output = `${first}${second.replace(second[0], second[0].toUpperCase())}`;
+        console.log(`${output.padEnd(20, " ")}${"✅".repeat(i + 1)}`);
+    }
+}); */
 
 
 //         $$$$$$$$$$$$$$$ Fechas $$$$$$$$$$$$$$$
