@@ -56,7 +56,7 @@ function recuperarPosteos() {
 
 recuperarPosteos(); */
 
-/* // Ejemplo 4: Cómo recuperar datos de una localizacion interna (.json) con rutas relativas
+// Ejemplo 4: Cómo recuperar datos de una localizacion interna (.json) con rutas relativas
 function recuperarPosteos(){
   let bodyTable = document.getElementById("tableBody");// Pintar la tabla de carreras en la UI
   bodyTable.innerHTML = "";
@@ -86,14 +86,18 @@ function recuperarPosteos(){
   });
 }
 
-recuperarPosteos(); */
+recuperarPosteos();
 
 /* // Ejemplo 5: Uso de ASYNC/AWAIT para crear funciones asincrónas que se comportan como si fueran sincronas
 console.log("Previo a hacer la solicitud");
 async function pedirPosts(){
-  const respuesta = await fetch("./data/posts.json");  console.log("Obtuvimos la respuesta: ");
+  const respuesta = await fetch("./data/posts.json"); 
+
+  console.log("Obtuvimos la respuesta: ");
   console.log(respuesta);
-  const data = await respuesta.json();  console.log("Obtengo el BODY de la respuesta: ");
+
+  const data = await respuesta.json();  
+  console.log("Obtengo el BODY de la respuesta: ");
   console.log(data);
 };
 

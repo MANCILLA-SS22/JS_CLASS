@@ -152,7 +152,6 @@ console.log( sumarRango(1, 100) )
 console.log("La suma total de 1 hasta 10 es: "+ total.toString()); */
 
 /* //Ejemplo 2: Retorno de funciones y concepto sobre funciones con un esquema superior
-
 function mayorQue(n) {
     return (m) => m > n
 }
@@ -163,28 +162,6 @@ let mayorDeEdad = mayorQue(17);
 
 // Como tenemos que \ mayorDeEdad = (m) => m>17 /. Entonces nos damos cuenta que en la funcion ahora tenemos el parametro (m) y no (n) como en la primera funcion, por lo que 
 //ahora desde la linea 32 mandamos un 5, que se almacenara en ese variable (m) y obtendremos que  5>17, lo que resulta como un valor booleano, que se almacena en "res".
-let numero = parseInt(5); 
-let res = mayorDeEdad(numero); 
-
-if (res) {
-    console.log("El numero "+ numero+ " es mayor que 17."+ mayorDeEdad);
-}else{
-    console.log("El numero "+ numero+ " NO es mayor que 17."+ mayorDeEdad);
-} */
-
-/* //Ejemplo 2.1: Retorno de funciones y concepto sobre funciones con un esquema superior
-
-
-function mayorQue(n) {
-    return (m) => m > n
-}
-
-let mayorQueDiez = mayorQue(10);
-let mayorDeEdad = mayorQue(17);
-
-let precioSuperiorA = mayorQue(100000);
-let precioInferiorA = !mayorQue(100000);
-
 let numero = parseInt(5); 
 let res = mayorDeEdad(numero); 
 
@@ -223,6 +200,308 @@ let numeros = [10, 20, 30, 40, 50];
 porCadaElemento(numeros, console.log);
 porCadaElemento(numeros, acumular);
 console.log("El valor total de la suma de los elementos de "+ numeros.toString()+ " es: "+ total+"."); */
+
+/* // Ejemplo 5.0: Default Parameters
+'use strict';
+const bookings = [];
+
+const createBooking = function( flightNum, numPassengers = 1, price = (199*numPassengers) ){
+    
+    // Metodo utilizado en ES5 para establecer un valor inicial a esos parametros
+    // numPassengers = numPassengers || 1;
+    // price = price || 199
+    const booking = {
+        flightNum,
+        numPassengers,
+        price
+    };
+    console.log(booking);
+    bookings.push(booking);
+}
+
+createBooking("LH123");
+createBooking("LH123", 2, 800);
+createBooking("LH123", 5);
+createBooking("LH123", undefined, 1000); */
+
+/* // Ejemplo 5.1: How Passing Arguments Works: Value vs Reference
+const flight = 'LH234';
+const jonas = {name: 'Jonas Schmedtmann', passport: 24739479284};
+
+const checkIn = function (flightNum, passenger) {
+    flightNum = 'LH999';
+    passenger.name = 'Mr. ' + passenger.name;
+
+    if (passenger.passport === 24739479284) {
+        console.log('Checked in');
+    } else {
+        console.log('Wrong passport!');
+    }
+};
+
+checkIn(flight, jonas);
+// console.log(flight);
+// console.log(jonas); //When we try to copy an object, we're really only copying the reference to that object in the memory heap. They are both the same object in the memory heap
+
+const newPassport = function(person){
+    person.passport = Math.trunc(Math.random()*10000000000)
+}
+
+newPassport(jonas);
+checkIn(flight, jonas); */
+
+/* // Ejemplo 5.2: Functions Accepting Callback Functions
+const oneWord = function (str) {
+    const res = str.replace('/ /g', '').toLowerCase(); //     / /g sirve para capturar todos los elementos globales y no solamente 1. En este casi, queremos todos los espacios en blanco, y si no usamos esto, unicamente obtendremos el primer espacio en blanco.
+    return res;
+};
+
+const upperFirstWord = function (str) {
+    const [first, ...others] = str.split(' '); //El string tiene 4 palabras. Capturamos la 1era palabra con first, y las otras 3 las capturamos en una variable desestructurada (others), la cual devolvera un nuevo array con las 3 palabras restantes.
+    const res = [first.toUpperCase(), ...others].join(' '); //Convertimos las letras de la 1era palabra a mayusculas, y a esa palabra, le unimos con ayuda del join(), las otras 3 que estan en el array generado con el split().
+    return res;
+};
+
+// Higher-order function
+const transformer = function (str, fn) {
+    console.log(`Original string: ${str}`);
+    console.log(`Transformed string: ${fn(str)}`);
+    console.log(`Transformed by: ${fn.name}`);
+};
+
+transformer('JavaScript is the best!', upperFirstWord);
+transformer('JavaScript is the best!', oneWord);
+
+const high5 = function () {
+    console.log('👋');
+};
+document.body.addEventListener('click', high5);
+['Jonas', 'Martha', 'Adam'].forEach(high5); */
+
+/* // Ejemplo 5.3: Functions Returning Functions
+const greet = function (greeting) {
+
+    return function (name) {
+        console.log(`${greeting} ${name}`);
+    };
+};
+
+//Llamamos a la funcion greet y le mandamos "hey". Despues, esta funcion retorna otra funcion que se almacena en greeterHey. Entonces, cuando en la linea de abajo volvemos a llamar a la funcion greeterHey, ahora ejecutaremos la funcion pero que esta almacenada en esta variable. O sea, la funcion del return.
+const greeterHey = greet('Hey');
+greeterHey('Jonas');
+greet('Hey')('Jonas'); //Esto es lo mismo que las dos lineas de arriba.
+
+// Esto es lo mismo que el procedimiento de arriba pero con arrow functions.
+const greetArr = greeting => name => console.log(`${greeting} ${name}`);
+greetArr('Hey')('Jonas'); */
+
+/* // Ejemplo 5.4: The call() and apply() Methods
+const lufthansa = {airline: 'Lufthansa',iataCode: 'LH',bookings: [],
+    book: function(flightNum, name) {
+        console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
+        this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+    }
+};
+
+const eurowings = {airline: 'Eurowings',iataCode: 'EW',bookings: []};
+const swiss = {airline: 'Swiss Air Lines',iataCode: 'LX',bookings: []};
+
+lufthansa.book(239, 'Jonas Schmedtmann');
+lufthansa.book(635, 'John Smith');
+console.log(lufthansa);
+
+// Call method: You can write a method that can be used on different objects. It takes arguments separately. No recive una lista de argumentos despues del this. Permitira que la palabra recerbada this apunte a eurowings.
+const book = lufthansa.book; //Al hacer esto, ahora la funcion (metodo) del objeto lufthansa pasa a ser una funcion global, por lo que, no pudemos utilizarla asi nada mas y mandarle valores ya que esta funcion tiene "this", los cuales pertenecian al objeto lufthansa.
+book.call(eurowings, 23, 'German mancilla'); 
+book.call(lufthansa, 514, 'Chavez german');
+// book(23, "res"); Esto NO funciona
+
+// Apply method: You can write a method that can be used on different objects. It takes arguments as an array.
+const flightData = [583, 'George Cooper'];
+book.apply(swiss, flightData);
+book.call(swiss, ...flightData);
+console.log(swiss); */
+
+/* // Ejemplo 5.5: The bind() method
+const bookEW = book.bind(eurowings); // Bind method: Allows us to manually set "this" for any function call. With the bind() method, an object can borrow a method from another object.
+bookEW(23, "German Mancilla Chavez");
+
+const bookEWX = book.bind(eurowings, 23);
+bookEWX("German Mancilla Chavez");
+
+// Bind method with eventListener:
+lufthansa.planes = 300;             // Agregamos una nueva propiedad a lufthansa
+lufthansa.buyPlane = function () {  // Agregamos un nuevo metodo a lufthansa
+    this.planes++;                  // Ponemos el this para representar o llamar al objeto que dicha función está modificando.
+    console.log(this);
+    console.log(this.planes);
+};                                  // lufthansa.buyPlane(); Esto despliega exacamente lo que queremos ver una vez que precionamos el boton del addEventListener().
+
+//Al hacer esto, entonces decimos que, al hacer click, el console.log(this); retornara el boton. La razon de esto es porque en un event handler function, el "this" siempre 
+//apunta al elemento donde se adjunta el handler. Por lo tanto, lufthansa.buyPlane es el handler function, y esta adjunto a la parte del querySelector, que seria el 
+//elemento padre. Por eso, el console.log(this), muestra el elemento del boton. Ahora bien, en el handler function, necesitamos que el this de lufthansa.buyPlane apunte
+//objeto de lufthansa, y no a la parte del querySelector. Para ello, tenemos que definirlo ahi mismo como se muestra en la linea que le sigue, y la manera de hacerlo es pasarle
+//la funcion (bind) y no llamarla (call) porque el bind nos retornara una nueva funcion. Y finalmente, ahora el this apuntara a lufthansa y NO al boton del querySelector
+document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane);
+document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane.bind(lufthansa));
+
+
+// Dos formas de devolver una funcion utilizando bind() y de la forma tradicional (devolviendo una funcion dentro de otra).
+function addTax (rate, value){
+    let res = value + value * rate;
+    return res;
+};
+
+const addVAT = addTax.bind(null, 0.23); //Con el bind() obtendremos una nueva funcion
+console.log("The result of addVAT is: "+ addVAT(100));
+
+const addTaxRate = function (rate) {
+    return function (value) {
+        return value + value * rate;
+    };
+};
+const addVAT2 = addTaxRate(0.23);
+console.log("The result of addVAT is: "+addVAT2(100)); */
+
+/* // Ejemplo 5.6: Excercise with functions
+// A poll has a question, an array of options from which people can choose, and an array with the number of replies for each option. This data is stored in the starter 'poll' object below. Your tasks:
+// 1. Create a method called 'registerNewAnswer' on the 'poll' object. The method does 2 things:
+// 1.1. Display a prompt window for the user to input the number of the selected option. The prompt should look like this: 
+// What is your favourite programming language?
+// 0: JavaScript
+// 1: Python
+// 2: Rust
+// 3: C++
+// (Write option number)
+
+// 1.2. Based on the input number, update the 'answers' array property. For example, if the option is 3, increase the value at position 3 of the array by one (1). Make sure 
+// to check if the input is a number and if the number makes sense (e.g. answer 52 wouldn't make sense, right?)
+// 2. Call this method whenever the user clicks the "Answer poll" button.
+// 3. Create a method 'displayResults' which displays the poll results. The method takes a string as an input (called 'type'), which can be either 'string' or 'array'. If type is 
+// 'array', simply display the results array as it is, using cl(). This should be the default option. If type is 'string', display a string like "Poll results are 13, 2, 4, 1".
+// 4. Run the 'displayResults' method at the end of each 'registerNewAnswer' method call.
+// 5. Use the 'displayResults' method to display the 2 arrays in the test data. Use both the 'array' and the 'string' option. Do not put the arrays in the poll object!
+
+// Test data for bonus: Data 1: [5, 2, 3]
+
+const poll = {
+    question: "What is your favourite programming language?",
+    options: ["0: JavaScript", "1: Python", "2: Rust", "3: C++"], // This generates [0, 0, 0, 0]. More in the next section!
+    answers: new Array(4).fill(0),
+
+    registerNewAnswer(){ // (1)
+        const res = Number(prompt(`${this.question}\n${this.options.join("\n")}\n (Write option number)`)); // (1.1)
+        typeof res === "number" && res < this.answers.length && this.answers[res]++; // (1.2) Si el primer if es verdadero, pasamos al siguiente, pero cuando lleguemos a un false, se corta el condicional (&& representa un if)
+        console.log("Imprimos el objeto: ", poll);
+        console.log("Imprimos el arreglo: ", this.answers);
+        console.log("Imprimos el num seleccionado: ", res);
+
+        this.displayResults();         //(4)
+        this.displayResults("array");  //(4)
+        this.displayResults("string"); //(4) 
+    },
+    
+    displayResults(type = "array"){  //(3)
+        if(type === "array"){
+            console.log("Imprimimos el array con los valores", this.answers);
+        }else if(type === "string"){
+            console.log(`Poll results are ${this.answers.join(", ")}`);
+        }
+    }
+};
+
+document.querySelector(".poll").addEventListener("click", poll.registerNewAnswer.bind(poll)) //(2)
+
+//Usamos call() porque necesitamos un nuevo this. Es decir, usar la funcion de un objeto en otro. Despues, como this.answers necesita apuntar a otra direccion (ya que ahora 
+//esta fuera de poll), dentro de los parentesis de call creamos y le pasamos un objeto con el mismo nombre (ya que sino aparece como undefined) y a ese objeto le añadimos el nuevo array 
+//que queremos. Asi mismo, le pasamos un argumento para que se pueda ejecutar el condicional.
+poll.displayResults.call({answers: [5, 2, 3]}, "string"); // (5) */
+
+/* // Ejemplo 5.7: Immediately Invoked Function Expressions (IIFE)
+//Se usa cuando queremos una funcion que se utilice de inmediato una vez, que no sea necesario guardarla ni darle yn nombre, y que finalmente desaparezca para no volverla a usar
+
+const runOnce = function(){
+    console.log("This will never run again");
+};
+runOnce();
+
+(function(){ //Transformamos la declaracion que tenemos arriba, en una expresion.
+    console.log("This will never run again");
+})(); */
+
+/* // Ejemplo 5.8: Closures
+const secureBooking = function () {
+    let passengerCount = 0;
+
+    return function () {//Al momento de retornar esta funcion (hija), se tiene acceso a sus elementos o variables del padre. Em este caso, passengerCount, que es un global scope.
+        passengerCount++;
+        console.log(`${passengerCount} passengers`);
+    };
+};
+
+const booker = secureBooking();
+booker();
+booker();
+booker();
+
+console.dir(booker); */
+
+/* // Ejemplo 5.9: More Closure Examples
+
+//Example 1
+let f; //Creamos una variable global que almacenara una funcion
+const g = function () {
+    const a = 23; //closure
+    f = function () { //Podemos utilizar esta funcion repetidas ocaciones
+        console.log(a * 2);
+    };
+};
+
+const h = function () {
+    const b = 777; //closure
+    f = function () {
+        console.log(b * 2);
+    };
+};
+
+//Para poder acceder a f no podemos simplemente llamar a esa fucnion, ya que JS no la va a reconocer. Es decir, primero tenemos que llamar a su elemento padre y despues acceder a ella. En este caso, g y posteriormente h, son los padres de f.
+g();
+f();
+console.dir(f);
+
+h();
+f();
+console.dir(f);
+
+//Example 2
+const boardPassengers = function (n, wait) {
+    const perGroup = n / 3;
+
+    setTimeout(function () { //setTimeout necesita de dos parametros, en este caso usaremos una funcion y el otro debe ser el tiempo.
+        console.log(`We are now boarding all ${n} passengers`);
+        console.log(`There are 3 groups, each with ${perGroup} passengers`);
+    }, wait * 1000);
+
+    console.log(`Will start boarding in ${wait} seconds`);
+};
+
+const perGroup = 1000; //Si fijamos un valor en perGroup como variable global, de igual manera no se vera reflejado en el console.log porque al llamar la funcion, ejecutara la variable perGroup, la cual pisara a la que primero se creo con el valor de 1000.
+boardPassengers(180, 3);
+
+
+//Example 3
+// Take the IIFE below and at the end of the function, attach an event listener that changes the color of the selected h1 element ('header') to blue, each time the body element 
+// is clicked. Do not select the h1 element again. Think about when exactly the callback function is executed, and what that means for the variables involved in this example.
+
+(function () {
+    const header = document.querySelector('h1');
+    header.style.color = 'red';
+
+    document.querySelector('body').addEventListener("click", function(){
+        header.style.color = 'blue';
+    });
+})();  */
+
 
 
 //         $$$$$$$$$$$$$$$ Objetos $$$$$$$$$$$$$$$
@@ -440,6 +719,68 @@ const restaurant = {
 //         $$$$$$$$$$$$$$$ Arrays $$$$$$$$$$$$$$$
 
 
+// Ejemplo 0: Proyecto de seccion de arrays de curso de udemy
+const labelWelcome = document.querySelector('.welcome');
+const labelDate = document.querySelector('.date');
+const labelBalance = document.querySelector('.balance__value');
+const labelSumIn = document.querySelector('.summary__value--in');
+const labelSumOut = document.querySelector('.summary__value--out');
+const labelSumInterest = document.querySelector('.summary__value--interest');
+const labelTimer = document.querySelector('.timer');
+const containerApp = document.querySelector('.app');
+const containerMovements = document.querySelector('.movements');
+const btnLogin = document.querySelector('.login__btn');
+const btnTransfer = document.querySelector('.form__btn--transfer');
+const btnLoan = document.querySelector('.form__btn--loan');
+const btnClose = document.querySelector('.form__btn--close');
+const btnSort = document.querySelector('.btn--sort');
+const inputLoginUsername = document.querySelector('.login__input--user');
+const inputLoginPin = document.querySelector('.login__input--pin');
+const inputTransferTo = document.querySelector('.form__input--to');
+const inputTransferAmount = document.querySelector('.form__input--amount');
+const inputLoanAmount = document.querySelector('.form__input--loan-amount');
+const inputCloseUsername = document.querySelector('.form__input--user');
+const inputClosePin = document.querySelector('.form__input--pin');
+
+const account1 = {
+    owner: 'Jonas Schmedtmann',
+    movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+    interestRate: 1.2, // %
+    pin: 1111,
+};
+
+const account2 = {
+    owner: 'Jessica Davis',
+    movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+    interestRate: 1.5,
+    pin: 2222,
+};
+
+const account3 = {
+    owner: 'Steven Thomas Williams',
+    movements: [200, -200, 340, -300, -20, 50, 400, -460],
+    interestRate: 0.7,
+    pin: 3333,
+};
+
+const account4 = {
+    owner: 'Sarah Smith',
+    movements: [430, 1000, 700, 50, 90],
+    interestRate: 1,
+    pin: 4444,
+};
+
+const accounts = [account1, account2, account3, account4];
+
+const currencies = new Map([
+    ['USD', 'United States dollar'],
+    ['EUR', 'Euro'],
+    ['GBP', 'Pound sterling'],
+]);
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+
 /* //Ejemplo 1: Declaracion y manejo de un array con numeros que vamos a operar entre ellos
 
 const VECTOR_DE_CADENAS = ["german", "mancilla", "chavez"]; console.log("Los datos del vector son: ", VECTOR_DE_CADENAS);
@@ -542,7 +883,13 @@ let elementoRecuperado1 = VECTOR_DE_CADENAS1.splice(1,0, "karla", "res"); //1 = 
 console.log("Los nuevos nombres dentro del array son: ",VECTOR_DE_CADENAS1);
 console.log("Los elementos removidos dentro del array son ", elementoRecuperado1); */
 
-/* //Ejemplo 11: Obtener una cadena con cada uno de sus elementos concatenados, separados con un caracter o cadena especial con |.join()|.
+/* //Ejemplo 11: Tomar un conjunto de elementos de dentro de un array y generar un nuevo array con ellos con |.slice()|
+let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior", "karla"];
+console.log([...VECTOR_DE_CADENAS]);
+let resultadoDelSlice = VECTOR_DE_CADENAS.slice(2, 5); //2 = esta posicion no se toma, sino la siguiente. 5 = limite que se toma en cuenta
+console.log("La cadena generada con nombres es: ",resultadoDelSlice); */
+
+/* //Ejemplo 12: Obtener una cadena con cada uno de sus elementos concatenados, separados con un caracter o cadena especial con |.join()|.
 let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior"];
 let resultadoDelJoin = VECTOR_DE_CADENAS.join(", ");
 console.log("Los nuevos nombres dentro del array son: ",VECTOR_DE_CADENAS);
@@ -553,12 +900,7 @@ let VECTOR_DE_CADENAS1 = ["german", "mancilla", "chavez"], VECTOR_DE_CADENAS2 = 
 let resultadoDelJoin = VECTOR_DE_CADENAS1.concat(VECTOR_DE_CADENAS2);
 console.log("La cadena generada con nombres es: ",resultadoDelJoin); */
 
-/* //Ejemplo 14: Tomar un conjunto de elementos de dentro de un array y generar un nuevo array con ellos con |.slice()|
-let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior", "karla"];
-let resultadoDelSlice = VECTOR_DE_CADENAS.slice(2, 5); //2 = esta posicion no se toma, sino la siguiente. 5 = limite que se toma en cuenta
-console.log("La cadena generada con nombres es: ",resultadoDelSlice); */
-
-/* //Ejemplo 15: Conocer la posicion de un elemento dentro de un array (si existe o no) con |.indexof()|
+/* //Ejemplo 14: Conocer la posicion de un elemento dentro de un array (si existe o no) con |.indexof()|
 let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior"];
 let posicionDeMancilla = VECTOR_DE_CADENAS.indexOf("chavez");
 console.log("La cadena generada con nombres es: ",posicionDeMancilla);
@@ -566,20 +908,23 @@ console.log("La cadena generada con nombres es: ",posicionDeMancilla);
 let posicion = VECTOR_DE_CADENAS.indexOf("karla");
 posicion != -1 ? console.log("El nombre esta en la posicion: ", posicion) : console.log("El nombre NO existe"); */
 
-/* //Ejemplo 16: Conocer si existe o no un elemento dentro de un array (Valor booleano) con |.includes()|
+/* //Ejemplo 15: Conocer si existe o no un elemento dentro de un array (Valor booleano) con |.includes()|
 let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior"];
 let nombre = "mancilla"
 let existe = VECTOR_DE_CADENAS.includes(nombre);
 
 existe ? console.log("El nombre SI existe") : console.log("El nombre NO existe"); */
 
-/* //Ejemplo 17: Tomar al array e invertir el orden de sus elementos con |.reverse()|
+/* //Ejemplo 16: Tomar al array e invertir el orden de sus elementos con |.reverse()|
 let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior"];
 VECTOR_DE_CADENAS.reverse();
 console.log("--> El array con los nombres cambiados de lugar es", VECTOR_DE_CADENAS); */
 
-/* //Ejemplo 18: como iterar sobre los elementos de un array, no importa si posee valores simples u objetos, con |.foreach()|
+/* //Ejemplo 17: Retornar el elemento indexado de un array o el elemento contenido en x posicion |.at()|
+let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior"];
+console.log(VECTOR_DE_CADENAS.at(3).at(1)); //Obtenemos el elemento contenido en el array (Junior), y en el siguiente at, obtenemos la posicion de la letra. */
 
+// Ejemplo 17: como iterar sobre los elementos de un array, no importa si posee valores simples u objetos, con |.foreach()|
 class producto{
     constructor(id, nombre, precio){
         this.id = id;
@@ -590,7 +935,10 @@ class producto{
     convertirEnString () {
         return this.id + ". " + this.nombre +" ($"+ this.precio.toFixed(2) +")"
     };
-    //convertirEnString = () => {return this.id + ". " + this.nombre +" ($"+ this.precio.toFixed(2) +")"};
+
+    // convertirEnString = () => {
+    //     return this.id + ". " + this.nombre +" ($"+ this.precio.toFixed(2) +")"
+    // };
 };
 
 let misProductos = [
@@ -606,9 +954,9 @@ let misProductos = [
 
 misProductos.forEach( (unProducto) => {
     console.log( "--> "+unProducto.convertirEnString() );
-}); */
+});
 
-/* //Ejemplo 19: como para hallar un elemento dentro de la coleccion (el PRIMER elemento), con |.find()|
+/* //Ejemplo 18: como para hallar un elemento dentro de la coleccion (el PRIMER elemento), con |.find()|
 class producto {
     constructor(id, nombre, precio){
         this.id = id;
@@ -648,7 +996,7 @@ if (unProductoBuscado1 !== undefined) {
     console.log("No encontramos el producto con nombre: "+ nombreBuscado);
 } */
 
-/* //Ejemplo 20: como hallar todos los elementos dentro de la coleccion que cumplan con una condicion, con |.filter()|
+/* //Ejemplo 19: como hallar todos los elementos dentro de la coleccion que cumplan con una condicion, con |.filter()|
 class producto {
     constructor(id, nombre, precio){
         this.id = id;
@@ -678,7 +1026,7 @@ let nombreBuscado = "Mermelada";
 let productoHallados = misProductos.filter( (unProducto) => unProducto.nombre.includes( nombreBuscado.convertirEnString() ));
 console.log("Numero de productos hallados con el nombre "+ "'"+`${nombreBuscado}`+"'" +" son: "+ productoHallados.length+ " y tienen los siguientes nombres: ", productoHallados); */
 
-/* //Ejemplo 21: como saber si un elemento dentro de la coleccion existe o no, con |.some()|
+/* //Ejemplo 20: como saber si un elemento dentro de la coleccion existe o no, con |.some()|
 
 class producto {
     constructor(id, nombre, precio){
@@ -716,7 +1064,7 @@ if (existe) {
     console.log("El producto buscado NO existe");
 } */
 
-/* //Ejemplo 22: como enlistar solamente los nombres de los productos, con |.map()|
+/* //Ejemplo 21: como enlistar solamente los nombres de los productos, con |.map()|
 
 class producto {
     constructor(id, nombre, precio){
@@ -767,7 +1115,7 @@ function incrementarPrecio(precio, porcentaje){
     return precio + (precio * (porcentaje/100) )
 } */
 
-/* //Ejemplo 23: como calcular el valor total de una compra, con |.reduce()|
+/* //Ejemplo 22: como calcular el valor total de una compra, con |.reduce()|
 
 class producto{
     constructor(id, nombre, precio){
@@ -793,7 +1141,7 @@ let misProductos = [
 let preciosTotales = misProductos.reduce( (acumulador, unProducto) => acumulador + unProducto.precio, 0);
 console.log("El total de la suma es: "+ preciosTotales.toFixed(2)); */
 
-/* //Ejemplo 24: como re-ordenar nuestro array (es DESTRUCTIVO, cambia su posicion), con |.sort()|
+/* //Ejemplo 23: como re-ordenar nuestro array (es DESTRUCTIVO, cambia su posicion), con |.sort()|
 
 class producto {
     constructor(id, nombre, precio){
@@ -1316,8 +1664,7 @@ console.log(airline.toUpperCase());
 // Fix capitalization in name
 const passenger = 'jOnAS'; // Jonas
 const passengerLower = passenger.toLowerCase();
-const passengerCorrect =
-  passengerLower[0].toUpperCase() + passengerLower.slice(1);
+const passengerCorrect = passengerLower[0].toUpperCase() + passengerLower.slice(1);
 console.log(passengerCorrect);
 
 // Comparing emails
@@ -1335,8 +1682,7 @@ const priceGB = '288,97£';
 const priceUS = priceGB.replace('£', '$').replace(',', '.');
 console.log(priceUS);
 
-const announcement =
-  'All passengers come to boarding door 23. Boarding door 23!';
+const announcement = 'All passengers come to boarding door 23. Boarding door 23!';
 
 console.log(announcement.replace('door', 'gate'));
 // console.log(announcement.replaceAll('door', 'gate'));
@@ -1349,18 +1695,18 @@ console.log(plane.includes('Boeing'));
 console.log(plane.startsWith('Airb'));
 
 if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
-  console.log('Part of the NEW ARirbus family');
+    console.log('Part of the NEW ARirbus family');
 }
 
 // Practice exercise
 const checkBaggage = function (items) {
-  const baggage = items.toLowerCase();
+    const baggage = items.toLowerCase();
 
-  if (baggage.includes('knife') || baggage.includes('gun')) {
-    console.log('You are NOT allowed on board');
-  } else {
-    console.log('Welcome aboard!');
-  }
+    if (baggage.includes('knife') || baggage.includes('gun')) {
+        console.log('You are NOT allowed on board');
+    } else {
+        console.log('Welcome aboard!');
+    }
 };
 
 checkBaggage('I have a laptop, some Food and a pocket Knife');
@@ -2353,69 +2699,91 @@ fetch("https://jsonplaceholder.typicode.com/posts/1")
 
 /* // Ejemplo 3: Cómo recuperar datos de una localizacion externa (http://) con rutas relativas
 function recuperarPosteos() {
-  let bodyTable = document.getElementById("tableBody"); // Pintar la tabla de carreras en la UI
-  bodyTable.innerHTML = "";
-  toggleLoadingContainer(true);
-  fetch("https://jsonplaceholder.typicode.com/posts")
-    .then((resultado) => resultado.json()) // Obtuvimos la respuesta --> Tomar los datos del body (.json())
-    .then((data) => {                      // Obtenemos la colección de posteos
-      data.forEach((post) => {
-        let record = document.createElement("tr");
-        record.innerHTML = 
-        `<tr>
-        <td scope="row">${post.id}</td>
-        <td scope="row">${post.title}</td>
-        <td scope="row">${post.body}</td>
-        </tr>`;
-        bodyTable.append(record);
-      });
+    let bodyTable = document.getElementById("tableBody"); // Pintar la tabla de carreras en la UI
+    bodyTable.innerHTML = "";
+    toggleLoadingContainer(true);
+    fetch("https://jsonplaceholder.typicode.com/posts")
+        .then((resultado) => resultado.json()) // Obtuvimos la respuesta --> Tomar los datos del body (.json())
+        .then((data) => {                      // Obtenemos la colección de posteos
+            data.forEach((post) => {
+            let record = document.createElement("tr");
+            record.innerHTML = 
+            `<tr>
+            <td scope="row">${post.id}</td>
+            <td scope="row">${post.title}</td>
+            <td scope="row">${post.body}</td>
+            </tr>`;
+            bodyTable.append(record);
+        });
     })
-    .catch((error) => {
-      let record = document.createElement("tr");
-      record.innerHTML = 
-      `<tr>
-          <td colspan="3" scope="row">Ocurrio un error al recuperar los datos</td>
-        </tr>`;
-      bodyTable.append(record);
-    })
-    .finally(() => {
-      toggleLoadingContainer(false);
-    });
+        .catch((error) => {
+            let record = document.createElement("tr");
+            record.innerHTML = 
+            `<tr>
+                <td colspan="3" scope="row">Ocurrio un error al recuperar los datos</td>
+            </tr>`;
+            bodyTable.append(record);
+        })
+        
+        .finally(() => {
+            toggleLoadingContainer(false);
+        });
 }
 
-recuperarPosteos(); */
+recuperarPosteos();
+
+function toggleLoadingContainer(isLoading = false) {
+    const loadingContainer = document.getElementById("loadingMessage");
+    if (isLoading) {
+        loadingContainer.classList.remove("visually-hidden");
+    } else {
+        loadingContainer.classList.add("visually-hidden");
+    }
+} */
 
 /* // Ejemplo 4: Cómo recuperar datos de una localizacion interna (.json) con rutas relativas
 function recuperarPosteos(){
-  let bodyTable = document.getElementById("tableBody");// Pintar la tabla de carreras en la UI
-  bodyTable.innerHTML = "";
-  toggleLoadingContainer(true);
-  fetch("./data/posts.json")
-  .then((res) => res.json())
-  .then((data) => {
-    data.forEach((post) => {// Obtenemos la colección de posteos
-      let record = document.createElement("tr");
-      record.innerHTML = `<tr>
-      <td scope="row">${post.id}</td>
-      <td scope="row">${post.title}</td>
-      <td scope="row">${post.body}</td>
-      </tr>`;
-      bodyTable.append(record);
-    });
-  })
-  .catch((error) => {
-    let record = document.createElement("tr");
-    record.innerHTML = `<tr>
-        <td colspan="3" scope="row">Ocurrio un error al recuperar los datos</td>
-      </tr>`;
-    bodyTable.append(record);
-  })
-  .finally(() => {
-    toggleLoadingContainer(false);
-  });
+    let bodyTable = document.getElementById("tableBody");// Pintar la tabla de carreras en la UI
+    bodyTable.innerHTML = "";
+    toggleLoadingContainer(true);
+    fetch("/ApuntesDeClase/data/posts.json")
+        .then((res) => res.json())
+        .then((data) => {
+            data.forEach((post) => {// Obtenemos la colección de posteos
+                let record = document.createElement("tr");
+                record.innerHTML = `<tr>
+                <td scope="row">${post.id}</td>
+                <td scope="row">${post.title}</td>
+                <td scope="row">${post.body}</td>
+                </tr>`;
+                bodyTable.append(record);
+            });
+        })
+
+        .catch((error) => {
+            let record = document.createElement("tr");
+            record.innerHTML = 
+                `<tr>
+                    <td colspan="3" scope="row">Ocurrio un error al recuperar los datos</td>
+                </tr>`;
+            bodyTable.append(record);
+        })
+
+        .finally(() => {
+            toggleLoadingContainer(false);
+        });
 }
 
-recuperarPosteos(); */
+recuperarPosteos();
+
+function toggleLoadingContainer(isLoading = false) {
+  const loadingContainer = document.getElementById("loadingMessage");
+  if (isLoading) {
+    loadingContainer.classList.remove("visually-hidden");
+  } else {
+    loadingContainer.classList.add("visually-hidden");
+  }
+} */
 
 /* // Ejemplo 5: Uso de ASYNC/AWAIT para crear funciones asincrónas que se comportan como si fueran sincronas
 console.log("Previo a hacer la solicitud");
