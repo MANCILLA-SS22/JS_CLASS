@@ -9,6 +9,33 @@
     <link rel="stylesheet" href="../ApuntesDeClase/css/style.css" />
     <title>Bankist</title>
   </head>
+
+  <style>
+      .coloreado{
+          color:aqua;
+      }
+      #emailHelp{
+          color: white;
+      }
+  
+      body{
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+      }
+      .buy, .poll {
+          font-size: 1.6rem;
+          padding: 1rem 2rem;
+          /* position: absolute; */
+          top: 2rem;
+      }
+      .buy {
+          left: 2rem;
+      }
+      .poll {
+          right: 2rem;
+      }
+  </style>
   
   <body class="bg-dark">
     <!-- TOP NAVIGATION -->
@@ -98,6 +125,29 @@
       <!-- LOGOUT TIMER -->
       <p class="logout-timer"> You will be logged out in <span class="timer">05:00</span> </p>
     </main>
+
+    <!-- OTHER -->
+      <h1>A Closer Look at Functions</h1>
+      <button class="buy">Buy new plane 🛩</button>
+      <button class="poll">Answer poll?</button>
+
+    <!-- Este div pertenece al ejercicio 4 y 5 de asincronia -->
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ID de POST</th>
+            <th scope="col">Título</th>
+            <th scope="col">Posteo</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+  
+        <div id="loadingMessage" class="d-flex align-items-center alert alert-info mt-3 visually-hidden">
+          <strong>Recuperando datos...</strong>
+          <div class="spinner-border ms-auto" role="status" aria-hidden="true">
+          </div>
+        </div>
 
     <script src="main.js"></script>
   </body>
