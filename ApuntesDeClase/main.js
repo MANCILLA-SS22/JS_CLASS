@@ -1213,7 +1213,7 @@ console.log(overalBalance);
 const overalBalance2 = accounts.flatMap(acc => acc.movements).reduce((acc, mov) => acc + mov, 0);
 console.log(overalBalance2); */
 
-/* //Ejemplo 30: Ejercicio practico con foreach()
+/* //Ejemplo 30: Ejercicio practico #1
 // Julia and Kate are doing a study on dogs. So each of them asked 5 dog owners about their dog's age, and stored the data into an array (one array for each). For now, they are 
 // just interested in knowing whether a dog is an adult or a puppy. A dog is an adult if it is at least 3 years old, and it's a puppy if it's less than 3 years old. Your tasks:
 // Create a function 'checkDogs', which accepts 2 arrays of dog's ages ('dogsJulia' and 'dogsKate'), and does the following things:
@@ -1245,7 +1245,71 @@ function checkDogs(dogsJulia, dogsKate){
 
 checkDogs(dogsJulia, dogsKate); */
 
-/* //Ejemplo 31: Ejercicio practico con foreach() y otros elementos de arrays
+/* //Ejemplo 31: Ejercicio practico #2
+// Julia and Kate are still studying dogs, and this time they are studying if dogs are eating too much or too little. Eating too much means the dog's current food portion is 
+// larger than the recommended portion, and eating too little is the opposite. Eating an okay amount means the dog's current food portion is within a range 10% above and 
+// 10% below the recommended portion. Your tasks:
+// 1. Loop over the 'dogs' array containing dog objects, and for each dog, calculate the recommended food portion and add it to the object as a new property. Do not create a new 
+// array, simply loop over the array. Forumla: recommendedFood = weight^0.75 * 28. (The result is in grams of food, and the weight needs to be in kg)
+// 2. Find Sarah's dog and log to the console whether it's eating too much or too little. Hint: Some dogs have multiple owners, so you first need to find Sarah in the owners 
+// array, and so this one is a bit tricky (on purpose)
+// 3. Create an array containing all owners of dogs who eat too much ('ownersEatTooMuch') and an array with all owners of dogs who eat too little ('ownersEatTooLittle').
+// 4. Log a string to the console for each array created in 3., like this: "Matilda and Alice and Bob's dogs eat too much!" and "Sarah and John and Michael's dogs eat too little!"
+// 5. Log to the console whether there is any dog eating exactly the amount of food that is recommended (just true or false)
+// 6. Log to the console whether there is any dog eating an okay amount of food (just true or false)
+// 7. Create an array containing the dogs that are eating an okay amount of food (try to reuse the condition used in 6.)
+// 8. Create a shallow copy of the 'dogs' array and sort it by recommended food portion in an ascending order (keep in mind that the portions are inside the array's objects ).
+
+// Hints:
+// Being within a range 10% above and below the recommended portion means: current > (recommended * 0.90) && current < (recommended *1.10). Basically, the current portion 
+// should be between 90% and 110% of the recommended portion.
+
+const dogs = [
+    { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+    { weight: 8, curFood: 200, owners: ['Matilda'] },
+    { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+    { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+
+//1
+dogs.forEach(function(evento){
+    evento.recFood = Number((evento.weight ** 0.75 * 28).toFixed(4));
+});
+
+//2
+const dogSarah = dogs.find(function(evento){
+    return evento.owners.includes("Sarah");
+});
+console.log(`Sarah's dog is eating too ${dogSarah.curFood > dogSarah.recFood ? "much" : "little"}`);
+
+//3 
+// const ownersEatTooMuch = dogs.filter(evento => evento.curFood > evento.recFood).map(evento => evento.owners).flat();
+const ownersEatTooMuch = dogs.filter(evento => evento.curFood > evento.recFood).flatMap(evento => evento.owners);
+const ownersEatTooLittle = dogs.filter(evento => evento.curFood < evento.recFood).flatMap(evento => evento.owners);
+
+//4
+console.log(`${ownersEatTooMuch.join(" and ") }'s dogs eat too much!`);
+console.log(`${ownersEatTooLittle.join(" and ") }'s dogs eat too much!`);
+
+//5
+console.log(dogs.some(evento => evento.curFood === evento.recFood));
+
+//6. 
+function checkEatingOkey(evento){
+    return evento => evento.curFood > evento.recFood * 0.9 && evento.curFood < evento.recFood * 1.1;
+}
+let ss = dogs.some(checkEatingOkey)
+console.log(ss);
+
+//7.
+let res = dogs.filter(checkEatingOkey)
+console.log(res);
+
+//8.
+const dogsSorted = dogs.slice().sort((a, b) => a.recFood - b.recFood);
+console.log(dogsSorted); */
+
+/* //Ejemplo 32: Ejercicio practico con foreach(), split() y join().
 const account1 = {
     owner: 'Jonas Schmedtmann',
     movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
@@ -1285,7 +1349,7 @@ function createUserNames (accs){
 createUserNames(accounts);
 console.log(accounts); */
 
-/* //Ejemplo 32: Ejercicio practico con map(), filter() y reduce() y otros elementos de arrays
+/* //Ejemplo 33: Ejercicio practico con map(), filter() y reduce() y otros elementos de arrays
 // Let's go back to Julia and Kate's study about dogs. This time they want to convert dog ages to human ages and calculate the average age of the dogs in their study.
 // Create a function 'calcAverageHumanAge', which accepts an arrays of dog's ages ('ages'), and does the following things in order:
 // 1. Calculate the dog age in human years using the following formula: if the dog is <= 2 years old, humanAge = 2 * dogAge. If the dog is > 2 years old, humanAge = 16 + dogAge * 4
@@ -1321,183 +1385,73 @@ let averageAge = arrayLess18.reduce(function(acc, mov, i){
 }, 0);
 console.log("The average human age of adult dogs is: ", (averageAge/arrayLess18.length)); */
 
-/* //Ejemplo 33: The Magic of Chaining Methods
-const array = [200, 450, -400, 3000, -650, -130, 70, 1300];
-const value = 1.1;
-
-const res = array.filter(mov => mov > 0).map(mov => mov*value).reduce((acc, mov) => acc + mov, 0);
-console.log(res); */
-
-/* //Ejemplo 34: Proyecto de seccion de arrays de curso de udemy
-const labelWelcome = document.querySelector('.welcome');
-const labelDate = document.querySelector('.date');
-const labelBalance = document.querySelector('.balance__value');
-const labelSumIn = document.querySelector('.summary__value--in');
-const labelSumOut = document.querySelector('.summary__value--out');
-const labelSumInterest = document.querySelector('.summary__value--interest');
-const labelTimer = document.querySelector('.timer');
-const containerApp = document.querySelector('.app');
-const containerMovements = document.querySelector('.movements');
-const btnLogin = document.querySelector('.login__btn');
-const btnTransfer = document.querySelector('.form__btn--transfer');
-const btnLoan = document.querySelector('.form__btn--loan');
-const btnClose = document.querySelector('.form__btn--close');
-const btnSort = document.querySelector('.btn--sort');
-const inputLoginUsername = document.querySelector('.login__input--user');
-const inputLoginPin = document.querySelector('.login__input--pin');
-const inputTransferTo = document.querySelector('.form__input--to');
-const inputTransferAmount = document.querySelector('.form__input--amount');
-const inputLoanAmount = document.querySelector('.form__input--loan-amount');
-const inputCloseUsername = document.querySelector('.form__input--user');
-const inputClosePin = document.querySelector('.form__input--pin');
-
+/* //Ejemplo 34: Mas ejemplos con arrays
 const account1 = {
     owner: 'Jonas Schmedtmann',
     movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
     interestRate: 1.2, // %
     pin: 1111,
 };
-
 const account2 = {
     owner: 'Jessica Davis',
     movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
     interestRate: 1.5,
     pin: 2222,
 };
-
 const account3 = {
     owner: 'Steven Thomas Williams',
     movements: [200, -200, 340, -300, -20, 50, 400, -460],
     interestRate: 0.7,
     pin: 3333,
 };
-
 const account4 = {
     owner: 'Sarah Smith',
     movements: [430, 1000, 700, 50, 90],
     interestRate: 1,
     pin: 4444,
 };
-
 const accounts = [account1, account2, account3, account4]; //Almacenamos la informacion de los 4 objetos en un array.
-let currentAccount;
-let sorted = false;// For the btnSort, we fix this variable to false so the function displayMovements still recieve false, which means that it doesn't sort the array.
+const mapa = accounts.map(function(evento){
+    return evento.movements;
+}); //console.log(mapa);
 
-createUserNames(accounts);
-function createUserNames (accs){
-    accs.forEach(function(num_acc){
-        num_acc.username = num_acc.owner.toLowerCase().split(" ").map(name => name[0]).join(""); // We create a new element (num_acc.username) that will contain the lower case letters of each owner's name
-    })
-}
+// 1.
+const bankDepositSum = accounts.flatMap(acc => acc.movements).filter(mov => mov > 0).reduce((sum, cur) => sum + cur, 0);
+// console.log(bankDepositSum);
 
-function updateUI(acc){
-    displayMovements(acc.movements);
-    calcDisplayBalance(acc);
-    calcDisplaySummary(acc);
-}
+// 2.
+//const numDeposits1000 = accounts.flatMap(acc => acc.movements).filter(mov => mov >= 1000).length;
+const numDeposits1000 = accounts.flatMap(acc => acc.movements).reduce((count, cur) => (cur >= 1000 ? ++count : count), 0); //Debemos colocar ++count porque si no, el numero siempre se mantendra en 0.
+// console.log(numDeposits1000);
 
-function displayMovements(movements, sort=false){
-    containerMovements.innerHTML="";
+// 3.
+const { deposits, withdrawals } = accounts.flatMap(acc => acc.movements).reduce((acc, cur) => {        
+        acc[cur > 0 ? 'deposits' : 'withdrawals'] += cur;  //cur > 0 ? (acc.deposits += cur) : (acc.withdrawals += cur);
+        return acc;
+    },{ deposits: 0, withdrawals: 0 });
 
-    const movs = sort ? movements.slice().sort((a,b) => a - b) : movements;
+//console.log(deposits, withdrawals);
 
-    movs.forEach(function(mov, i) {
-        const type = mov > 0 ? "deposit" : "withdrawal";    
-        const html = `
-            <div class="movements__row">
-                <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
-                <div class="movements__value">${mov}€</div>
-            </div>`
-        containerMovements.insertAdjacentHTML("afterbegin", html);
-    });
-}
-
-function calcDisplayBalance(acc){
-    acc.balance = acc.movements.reduce(function(acc, mov){
-        return acc + mov;
-    }, 0);
-
-    labelBalance.textContent = `${acc.balance}€`
-}
-
-function calcDisplaySummary(acc){
-    const incomes = acc.movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
-    labelSumIn.textContent = `${incomes}€`;
-
-    const out = acc.movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0);
-    labelSumOut.textContent = `${Math.abs(out)}€`;
-
-    const interest = acc.movements.filter(mov => mov > 0).map( deposit => (deposit*acc.interestRate)/100 ).filter((int) => int >= 1).reduce((acc, int) => acc + int, 0);
-    labelSumInterest.textContent = `${interest}€`;
-}
-
-btnLogin.addEventListener("click", function(evento){
-    evento.preventDefault();
+// 4.
+// this is a nice title -> This Is a Nice Title
+function convertTitleCase(title) {
     
-    currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value) //We verify if the username typed in the input is the same as the one in the array that is into "accounts". If so, we get the found object.
-
-    if(currentAccount?.pin === Number(inputLoginPin.value)){ //We check if the pin in the object is the same as the one typed in the input. (We must write use "?." so that we can get an "undefined" and not an error)
-        labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(" ")[0]}`; //If so, then we change the sentence in the upper right corner.
-        containerApp.style.opacity = 100; //We do this so that we can see the menu with information.
-        inputLoginUsername.value = inputLoginPin.value = ""; //Now we delete the written values in our inputs (user and PIN)
-        inputLoginPin.blur(); //This work so that when we want to log in and finally press "enter", then our cursor will disappear.
-        
-        updateUI(currentAccount);
+    function capitzalize(str){
+        return str[0].toUpperCase() + str.slice(1); //En la posicion 0, cambiamos la letra a mayuscula, y luego concatenamos con el "+", el resto de la palabra en la posicion [1]
     }
-});
+    
+    const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
 
-btnTransfer.addEventListener("click", function(evento){
-    evento.preventDefault();
-    const amount = Number(inputTransferAmount.value); //Recuperamos el numero ingresado en el input donde introducimos el dinero
-    const receiverAcc = accounts.find(acc => acc.username === inputTransferTo.value); //Recuperamos el objeto contenido en uno de los arrays de accounts, al verificar si el nombre de usuario existe dentro de los 4 arrays de accounts y si es igual al ingresado en el input.
-    inputTransferAmount.value = inputTransferTo.value = "";
+    const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map(evento => (exceptions.includes(evento) ? evento : capitzalize(evento)))
+    .join(' ');
+    return capitzalize(titleCase);
+};
 
-    if (amount > 0 && receiverAcc && currentAccount.balance >= amount && receiverAcc?.username !== currentAccount.username) {
-        currentAccount.movements.push(-amount);
-        receiverAcc.movements.push(amount);
-        
-        updateUI(currentAccount);
-    }
-});
-
-btnClose.addEventListener("click", function(evento){
-    evento.preventDefault();
-
-    if (inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin) { //We verify if the written values in the inputs are the same as those in the current object.
-        const index = accounts.findIndex(acc => acc.username === currentAccount.username); //If so, we proceed to find the index of the object in the array "accounts"
-        accounts.splice(index, 1);
-        containerApp.style.opacity = 0; 
-        console.log(accounts);
-    }
-
-    inputCloseUsername.value = inputClosePin.value = "";
-});
-
-btnLoan.addEventListener("click", function(evento){
-    evento.preventDefault();
-
-    const amount = Number(inputLoanAmount.value)
-    if (amount > 0 && currentAccount.movements.some(moc => (mov >= amount*0.1))) {
-        currentAccount.movements.push(amount);
-        updateUI(currentAccount);
-    }
-    inputLoanAmount.value = "";
-});
-
-btnSort.addEventListener("click", function(evento){
-    evento.preventDefault();
-
-    displayMovements(currentAccount.movements, !sorted); //When clicking the button, then that variable changes to true and the array is sorted.
-    sorted =! sorted; //After that, we need to change the "sorted" variable to the opposite boolean value. We do this so that when we press the button again, this back to normal (unsorted).
-})
-
-labelBalance.addEventListener('click', function () {
-    let valor = document.querySelectorAll('.movements__value'); 
-    const movementsUI = Array.from(valor, function(el){   // Array.from(Array-like or iterable object, mapFunction, thisValue)
-        return Number(el.textContent.replace('€', ''))
-    });  console.log(movementsUI);
-    // const movementsUI2 = [...document.querySelectorAll('.movements__value')];
-}); */
+console.log(convertTitleCase('and here is another title with an EXAMPLE'));
+console.log(convertTitleCase('this is a LONG title but not too long')); */
 
 
 //         $$$$$$$$$$$$$$$ STRINGS & MODERN OPERATORS $$$$$$$$$$$$$$$
@@ -2199,12 +2153,47 @@ document.querySelector("button").addEventListener("click", function(){
 }); */
 
 
-//         $$$$$$$$$$$$$$$ Fechas $$$$$$$$$$$$$$$
+//         $$$$$$$$$$$$$$$ Numbers, dates, Intl and timers $$$$$$$$$$$$$$$
 
 
-/* //Ejemplo 1: Acceso a propiedades del objeto Math, y metodo Min y Max. 
+/* //Ejemplo 1: Conversion, Parseo y verificar si es un numero, indefinido o infinito
+//Convertion
+console.log(Number("23"));
+console.log(+"23");
+console.log(parseInt("23"));
+
+//Parsing
+console.log("\n");
+console.log(Number.parseInt('30px', 10));
+console.log(Number.parseInt('e23', 10));
+console.log(Number.parseInt('  2.5rem  '));
+console.log(Number.parseFloat('  2.5rem  '));
+
+// Check if value is NaN
+console.log("\n");
+console.log(Number.isNaN(20));
+console.log(Number.isNaN('20'));
+console.log(Number.isNaN(+'20X'));
+console.log(Number.isNaN(23 / 0));
+
+// Checking if value is number
+console.log("\n");
+console.log(Number.isFinite(20));
+console.log(Number.isFinite('20'));
+console.log(Number.isFinite(+'20X'));
+console.log(Number.isFinite(23 / 0));
+
+// Checking if value is number
+console.log("\n");
+console.log(Number.isInteger(23));
+console.log(Number.isInteger(23.0));
+console.log(Number.isInteger(23 / 0)); */
+
+/* //Ejemplo 2: Acceso a propiedades del objeto Math, y metodo Min y Max. 
 console.log("--> euler: "+ Math.E);
 console.log("--> pi: "+ Math.PI);
+console.log("--> sqrt: "+ Math.sqrt(25));
+console.log("--> sqrt: "+ 25**(1/2));
 
 const numeros = [55, 13, -25, 93, 4]; 
 console.log("Los numeros SIN spread son: ",numeros);
@@ -2214,7 +2203,23 @@ const maximo = Math.max(...numeros);
 console.log("El menor es: ", minimo);
 console.log("El mayor es: ", maximo); */
 
-/* //Ejemplo 2: Aplicacion para metodo de redondeo con ceil, floor, round y Aplicacion para metodo de raiz cuadrada
+/* //Ejemplo 3: Use of numeric separators
+const diameter = 287_460_000_000;// 287,460,000,000
+console.log(diameter);
+
+const price = 345_99;
+console.log(price);
+
+const transferFee1 = 15_00;
+const transferFee2 = 1_500;
+
+const PI = 3.1415;
+console.log(PI);
+
+console.log(Number('230_000'));   //NaN
+console.log(parseInt('230_000')); //230000 */
+
+/* //Ejemplo 4: Aplicacion para metodo de redondeo con ceil, floor, round y Aplicacion para metodo de raiz cuadrada
 console.log(Math.ceil(.95));   // Expected output: 1
 console.log(Math.ceil(4));     // Expected output: 4
 console.log(Math.ceil(7.004)); // Expected output: 8
@@ -2222,28 +2227,33 @@ console.log(Math.ceil(-7.004));// Expected output: -7
 
 console.log("\n");
 
-console.log(Math.floor(.95));   // Expected output: 0
-console.log(Math.floor(4));     // Expected output: 4
-console.log(Math.floor(7.004)); // Expected output: 7
-console.log(Math.floor(-7.004));// Expected output: -8
+console.log(Math.trunc(20.49));  // Expected output: 20
+console.log(Math.trunc(20.50));  // Expected output: 20
+console.log(Math.trunc(-20.50)); // Expected output: -20
+console.log(Math.trunc(-20.51)); // Expected output: -20
 
 console.log("\n");
 
-console.log(Math.round(20.49));
-console.log(Math.round(20.50));
-console.log(Math.round(-20.50));
-console.log(Math.round(-20.51));
+console.log(Math.floor(.95));    // Expected output: 0
+console.log(Math.floor(4));      // Expected output: 4
+console.log(Math.floor(7.004));  // Expected output: 7
+console.log(Math.floor(-7.004)); // Expected output: -8
 
 console.log("\n");
 
-let x;
-x= Math.sqrt(9); console.log("El valor de la raiz de 9 es: ", x.toFixed(4));
-x= Math.sqrt(2); console.log("El valor de la raiz de 2 es: ", x.toFixed(4));
-x= Math.sqrt(1); console.log("El valor de la raiz de 1 es: ", x.toFixed(4));
-x= Math.sqrt(0); console.log("El valor de la raiz de 0 es: ", x.toFixed(4));
-x= Math.sqrt(-1); console.log("El valor de la raiz de -1 es: ", x.toFixed(4)); */
+console.log(Math.round(20.49));   // Expected output: 20
+console.log(Math.round(20.50));   // Expected output: 21
+console.log(Math.round(-20.50));  // Expected output: -20
+console.log(Math.round(-20.51));  // Expected output: -21
 
-/* //Ejemplo 3: Uso del metodo random para la generacion de numeros psudo-aleatorios, entre [0, 1), entre [0, limite) y entre [limiteInferior, limiteSuperior).
+console.log("\n");
+
+console.log(+Math.sqrt(9).toFixed(4));
+console.log(+Math.sqrt(2).toFixed(6));
+console.log(+(2.7).toFixed(0));
+console.log(+(2.345).toFixed(2)); */
+
+/* //Ejemplo 5: Uso del metodo random para la generacion de numeros psudo-aleatorios, entre [0, 1), entre [0, limite) y entre [limiteInferior, limiteSuperior).
 
 for (let i = 0; i < 5; i++) {
     console.log(Math.random());
@@ -2251,76 +2261,126 @@ for (let i = 0; i < 5; i++) {
 
 console.log("\n");
 
-let limite = parseInt(10);
 for (let i = 0; i < 5; i++) { 
-    console.log(Math.random()*limite);
+    console.log(Math.random()*10);
 }
 
 console.log("\n");
 
-let limiteInferior = parseInt(0);
-let limiteSuperior = parseInt(100);
-for (let i = 0; i < 5; i++) {
-    const x = Math.random()*(limiteSuperior-limiteInferior) + limiteInferior;   console.log(x);
-} */
-
-/* //Ejemplo 4: Transformamos en una funcion el codigo del ejemplo 11
-
-function generateRandomNumber (limiteInferior, limiteSuperior){
-    return Math.random()*(limiteSuperior-limiteInferior) + limiteInferior
-}
-
-const generateRandomNumberVar = (limiteInferior, limiteSuperior) => Math.random()*(limiteSuperior-limiteInferior) + limiteInferior;
-
-let limiteInferior = parseInt(0);
-let limiteSuperior = parseInt(1000);
+let limiteInferior = parseInt(0); 
+let limiteSuperior = parseInt(10);
 
 for (let i = 0; i < 5; i++) {
     const x = generateRandomNumber(limiteInferior, limiteSuperior);
-    const y = generateRandomNumberVar(limiteInferior, limiteSuperior);
-    console.log(x, y);
+    console.log(x);
+}
+
+function generateRandomNumber (limiteInferior, limiteSuperior){
+    return Math.trunc(Math.random()*(limiteSuperior-limiteInferior) + 1) + limiteInferior;  // De 1 a 10
+    //return Math.trunc(Math.random()*(limiteSuperior-limiteInferior) + limiteInferior);    // De 0 a 9
 } */
 
-/* //Ejemplo 5: Obtener la fecha y hora actuales. Creacion de instancias de objetos Date con la clase date con fechas personalizadas. Y obtener datos de las fechas en formato STRING.
+/* //Ejemplo 6: Uso de BigInt
+console.log(2 ** 53 - 1); //The biggest number in JS
+console.log(Number.MAX_SAFE_INTEGER);
+console.log(2 ** 53 + 1); //This numbers and the next three are unstable ones and must not be used.
+console.log(2 ** 53 + 2);
+console.log(2 ** 53 + 3);
+console.log(2 ** 53 + 4);
 
+console.log(4838430248342043823408394839483204n);
+console.log(BigInt(48384302));
+
+// Operations
+console.log(10000n + 10000n);
+console.log(36286372637263726376237263726372632n * 10000000n);
+// console.log(Math.sqrt(16n));
+
+const huge = 20289830237283728378237n;
+const num = 23;
+console.log(huge * BigInt(num));
+
+// Exceptions
+console.log(20n > 15);
+console.log(20n === 20);
+console.log(typeof 20n);
+console.log(20n == '20');
+
+// Divisions
+console.log(11n / 3n); //It shows only the integer.
+console.log(11 / 3);   //It shows the number with decimals. */
+
+/* //Ejemplo 7: Obtener la fecha y hora actuales. Creacion de instancias de objetos Date con la clase date con fechas personalizadas. Y obtener datos de las fechas en formato STRING.
 let fechaActual = new Date();  console.log("La fecha actual del sistema es: ", fechaActual);
 let fecha1 = new Date(2023, 3, 22);  console.log("La fecha actual del sistema es: ", fecha1);
 let fecha2 = new Date(2023, 11, 24, 23, 59, 59);  console.log("La fecha actual de navidad es: ", fecha2); 
+let fecha3 = new Date("Aug 02 2023 18:05:41" );  console.log("La fecha actual de navidad es: ", fecha3); 
+let fecha4 = new Date("December 17, 2021" ); console.log("La fecha actual de navidad es: ", fecha4); 
 
-console.log("\n");
-
-console.log("Los valores singulares de la fecha de navidad son: ",{
-    numeroMes: fecha2.getMonth(),
-    anio: fecha2.getFullYear(),
-    numeroSemana: fecha2.getDay(),
-    hora: fecha2.getHours(),
-    minutos: fecha2.getMinutes(),
-    segundos: fecha2.getSeconds()
+console.log("\n", "Los valores singulares de la fecha de navidad son: ",{
+    year: fecha2.getFullYear(),
+    month: fecha2.getMonth(),
+    date: fecha2.getDate(), 
+    week: fecha2.getDay(),
+    hour: fecha2.getHours(),
+    minute: fecha2.getMinutes(),
+    second: fecha2.getSeconds(),
+    isoString: fecha2.toISOString(),
+    time: fecha2.getTime()
 });
 
-console.log("\n");
-
 //Obtener los datos de las fechas en cadenas de texto (STRING)
-console.log("toDateString: ", fechaActual.toDateString());
+console.log("\n"+ "toDateString: ", fechaActual.toDateString());
 console.log("toLocalString: ", fechaActual.toLocaleString());
 console.log("toLocalDateString: ", fechaActual.toLocaleDateString());
 console.log("toTimeString: ", fechaActual.toTimeString());
 console.log("toLocaleTimeString: ", fechaActual.toLocaleTimeString());
 
-const hoy = new Date("December 17, 2021" )
-console.log( hoy.toDateString() ) // Fri Dec 17 2021
-console.log( hoy.toLocaleString () ) // 17/12/2021 00:00:00
-console.log( hoy.toLocaleDateString () ) // 17/12/2021
-console.log( hoy.toTimeString() ) */
+//Creamos una nueva fecha, y despues logeamos esa fecha sin necesidad de poner "new"
+console.log("\n"+ new Date(1690259566417));
+console.log(Date.now());
 
-/* //Ejemplo 6: Como calcular la diferencia entre 2 fechas 
-let fechaMiCumple = new Date(2024, 4, 22);
+//Convertir una fecha a numero
+const future = new Date(2037, 10, 19, 15, 23);
+console.log("\n"+"La fecha convertida en milisegundos es: "+ (+future));
+
+//Calcular la diferencia entre 2 fechas (diferencia = fechaSuperior - fechaInferior)
+let fechaMiCumple = new Date(2024, 3, 22);
 let hoy = new Date();
+const diferencia = fechaMiCumple - hoy; // Marca de timempo (milisegundos)
+const milisegundosPorDia = 86400000;    // 86400000mS = 86400s = 1440min = 24h
+console.log("\n"+ "--> La diferencia de fechas entre hoy y mi cumpleanos es: " + Math.round((diferencia/milisegundosPorDia))); */
 
-// diferencia = fechaSuperior - fechaInferior
-const diferencia = fechaMiCumple - hoy;// Marca de timempo (milisegundos)
-const milisegundosPorDia = 86400000; // 86400000mS = 86400s = 1440min = 24h
-console.log("--> La diferencia de fechas entre hoy y mi cumpleanos es: " + Math.round((diferencia/milisegundosPorDia))); */
+/* //Ejemplo 8: Internationalizing Dates (Intl)
+const now = new Date();
+const options = {
+    hour:"numeric",
+    minute: "numeric",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    weekday: "long"
+}
+
+const locale = navigator.language;
+const res = new Intl.DateTimeFormat(locale, options).format(now);
+// const res = new Intl.DateTimeFormat("pt-PT", options).format(now);
+console.log(res); */
+
+//Ejemplo 9: Internationalizing Numbers (Intl)
+const num = 3884764.23;
+
+const options = {
+    style: 'currency',
+    unit: 'celsius',
+    currency: 'EUR',
+    // useGrouping: false,
+};
+
+console.log('US:      ', new Intl.NumberFormat('en-US', options).format(num));
+console.log('Germany: ', new Intl.NumberFormat('de-DE', options).format(num));
+console.log('Syria:   ', new Intl.NumberFormat('ar-SY', options).format(num));
+console.log(navigator.language,new Intl.NumberFormat(navigator.language, options).format(num));
 
 
 //         $$$$$$$$$$$$$$$ DOM & EVENTOS $$$$$$$$$$$$$$$
@@ -2630,6 +2690,7 @@ function validarFormulario(data) {
 
 
 //         $$$$$$$$$$$$$$$ JSON & storage $$$$$$$$$$$$$$$
+
 
 /* // Ejemplo 1: setItem en localStorage para crear datos en el local storage. getItem para recuperar informacion almacenada. Y buscar si existe algo o no.
 localStorage.setItem("saludar", "Hola mundo");
@@ -3161,10 +3222,5 @@ const CONFIGURACION = {
 fetch("https://jsonplaceholder.typicode.com/posts/10", CONFIGURACION)
   .then((response) => response.json())
   .then((data) => console.log(data)); */
-
-
-
-
-
 
 
