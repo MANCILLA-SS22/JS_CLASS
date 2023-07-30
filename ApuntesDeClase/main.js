@@ -1,3 +1,399 @@
+//         $$$$$$$$$$$$$$$ Proyectos $$$$$$$$$$$$$$$
+/* //Proyecto 1: Bankist
+const labelWelcome = document.querySelector('.welcome');
+const labelDate = document.querySelector('.date');
+const labelBalance = document.querySelector('.balance__value');
+const labelSumIn = document.querySelector('.summary__value--in');
+const labelSumOut = document.querySelector('.summary__value--out');
+const labelSumInterest = document.querySelector('.summary__value--interest');
+const labelTimer = document.querySelector('.timer');
+const containerApp = document.querySelector('.app');
+const containerMovements = document.querySelector('.movements');
+const btnLogin = document.querySelector('.login__btn');
+const btnTransfer = document.querySelector('.form__btn--transfer');
+const btnLoan = document.querySelector('.form__btn--loan');
+const btnClose = document.querySelector('.form__btn--close');
+const btnSort = document.querySelector('.btn--sort');
+const inputLoginUsername = document.querySelector('.login__input--user');
+const inputLoginPin = document.querySelector('.login__input--pin');
+const inputTransferTo = document.querySelector('.form__input--to');
+const inputTransferAmount = document.querySelector('.form__input--amount');
+const inputLoanAmount = document.querySelector('.form__input--loan-amount');
+const inputCloseUsername = document.querySelector('.form__input--user');
+const inputClosePin = document.querySelector('.form__input--pin');
+
+const account1 = {
+    owner: 'Jonas Schmedtmann',
+    movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
+    interestRate: 1.2, // %
+    pin: 1111,
+    movementsDates: [ // Las fechas se muestran con el formato toISOString()
+        '2019-11-18T21:31:17.178Z',
+        '2019-12-23T07:42:02.383Z',
+        '2020-01-28T09:15:04.904Z',
+        '2020-04-01T10:17:24.185Z',
+        '2020-05-08T14:11:59.604Z',
+        '2023-05-27T17:01:17.194Z',
+        '2023-07-23T23:36:17.929Z',
+        '2023-07-18T10:51:36.790Z',
+    ],
+    currency: 'EUR',
+    locale: 'pt-PT', // de-DE
+};
+const account2 = {
+    owner: 'Jessica Davis',
+    movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+    interestRate: 1.5,
+    pin: 2222,
+    movementsDates: [ // Las fechas se muestran con el formato toISOString()
+        '2019-11-01T13:15:33.035Z',
+        '2019-11-30T09:48:16.867Z',
+        '2019-12-25T06:04:23.907Z',
+        '2020-01-25T14:18:46.235Z',
+        '2020-02-05T16:33:06.386Z',
+        '2020-04-10T14:43:26.374Z',
+        '2020-06-25T18:49:59.371Z',
+        '2020-07-26T12:01:20.894Z',
+    ],
+    currency: 'USD',
+    locale: 'en-US',
+};
+const accounts = [account1, account2]; //Almacenamos la informacion de los 4 objetos en un array.
+
+// FAKE ALWAYS LOGGED IN
+currentAccount = account1;
+updateUI(currentAccount);
+containerApp.style.opacity = 100;
+
+let currentAccount, timer;
+let sorted = false;// For the btnSort, we fix this variable to false so the function displayMovements still recieve false, which means that it doesn't sort the array.
+
+createUserNames(accounts);
+function createUserNames (accs){
+    accs.forEach(function(num_acc){
+        num_acc.username = num_acc.owner.toLowerCase().split(" ").map(name => name[0]).join(""); // We create a new element (num_acc.username) that will contain the lower case letters of each owner's name
+    })
+}
+
+function updateUI(acc){
+    displayMovements(acc);
+    calcDisplayBalance(acc);
+    calcDisplaySummary(acc);
+}
+
+function formatMovementDate(date, locale){
+
+    function calcDaysPassed(date1, date2){
+        return Math.round(Math.abs(date2 - date1) / (1000*60*60*24));
+    }
+
+    const dayPassed = calcDaysPassed(new Date(), date);
+    if (dayPassed === 0) return "Today";
+    if (dayPassed === 1) return "Yesterday";
+    if (dayPassed <= 7)  return `${dayPassed} days`;
+    
+    // // METODO 1
+    // const day = `${date.getDate()}`.padStart(2, 0);
+    // const month = `${date.getMonth() + 1}`.padStart(2, 0);
+    // const year = date.getFullYear();
+    // return `${day}/${month}/${year}`;
+    
+    //METODO 2
+    return new Intl.DateTimeFormat(locale).format(date)
+
+}
+
+function formatCur(value, locale, currency){
+    return new Intl.NumberFormat(locale, {style: "currency", currency: currency}).format(value);
+}
+
+function displayMovements(acc, sort=false){
+
+    containerMovements.innerHTML="";
+    const movs = sort ? acc.movements.slice().sort((a,b) => a - b) : acc.movements;
+    
+    movs.forEach(function(mov, i) {
+        const date = new Date(acc.movementsDates[i]); //Accedemos a las fechas que estan en account1.movementsDates[]
+        const displayDate = formatMovementDate(date, acc.locale);
+
+        const type = mov > 0 ? "deposit" : "withdrawal";    
+
+        //METODO 1
+        // const html = `
+        //     <div class="movements__row">
+        //         <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+        //         <div class="movements__date">${displayDate}</div>
+        //         <div class="movements__value">${mov.toFixed(2)}€</div>
+        //     </div>`
+        // containerMovements.insertAdjacentHTML("afterbegin", html);
+
+        //METODO 2
+        const formattedMov = formatCur(mov, acc.locale, acc.currency);
+        const html = `
+            <div class="movements__row">
+                <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+                <div class="movements__date">${displayDate}</div>
+                <div class="movements__value">${formattedMov}</div>
+            </div>`
+        containerMovements.insertAdjacentHTML("afterbegin", html);
+    });
+}
+
+function calcDisplayBalance(acc){
+    acc.balance = acc.movements.reduce(function(acc, mov){
+        return acc + mov;
+    }, 0);
+
+    //METODO 1
+    // labelBalance.textContent = `${acc.balance.toFixed(2)}€`
+
+    //METODO 2
+    const formattedMov = formatCur(acc.balance, acc.locale, acc.currency);
+    labelBalance.textContent = formattedMov;
+}
+
+function calcDisplaySummary(acc){
+    // //METODO 1
+    // const incomes = acc.movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
+    // labelSumIn.textContent = `${incomes.toFixed(2)}€`;
+
+    // const out = acc.movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0);
+    // labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
+
+    // const interest = acc.movements.filter(mov => mov > 0).map( deposit => (deposit*acc.interestRate)/100 ).filter((int) => int >= 1).reduce((acc, int) => acc + int, 0);
+    // labelSumInterest.textContent = `${interest.toFixed(2)}€`;
+
+    //METODO 2
+    const incomes = acc.movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
+    labelSumIn.textContent = formatCur(incomes, acc.locale, acc.currency);
+
+    const out = acc.movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0);
+    labelSumOut.textContent = formatCur(Math.abs(out), acc.locale, acc.currency);
+
+    const interest = acc.movements.filter(mov => mov > 0).map( deposit => (deposit*acc.interestRate)/100 ).filter((int) => int >= 1).reduce((acc, int) => acc + int, 0);
+    labelSumInterest.textContent = formatCur(interest, acc.locale, acc.currency);
+}
+
+function startLogOutTimer(){
+    function tick(){
+        const min = String(Math.trunc(tiempo / 60)).padStart(2, 0);
+        const sec = String(tiempo % 60).padStart(2, 0);
+        labelTimer.textContent = `${min}:${sec}`;
+        if(tiempo === 0) {
+            clearInterval(startLogOutTimer);
+            labelWelcome.textContent = "Log in to get started"
+            containerApp.style.opacity = 0;
+        }
+        tiempo--;
+    }
+
+    let tiempo = 20;
+    tick(); //Llamamos a la funcion antes de que se ejecute el setInterval para que, al final se ejecuten al mismo tiempo. Ya que, de ejecutarse esta funcion dentro del setInterval, entonces obtendremos primero un '1' en la pantalla y luego iniciara el temporizador.
+    return setInterval(tick, 1000); //Volvemos a llamar a la funcion tick en el setInterval para que cada segundo que pase, se vuelva a ejecutar.
+}
+
+btnLogin.addEventListener("click", function(evento){
+    evento.preventDefault();
+    
+    currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value) //We verify if the username typed in the input is the same as the one in the array that is into "accounts". If so, we get the found object.
+
+    if(currentAccount?.pin === Number(inputLoginPin.value)){ //We check if the pin in the object is the same as the one typed in the input. (We must write use "?." so that we can get an "undefined" and not an error)
+        labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(" ")[0]}`; //If so, then we change the sentence in the upper right corner.
+        containerApp.style.opacity = 100; //We do this so that we can see the menu with information.
+
+        //METODO 1
+        // const now = new Date();
+        // const day = `${now.getDate()}`.padStart(2, 0);
+        // const month = `${now.getMonth() + 1}`.padStart(2, 0);
+        // const year = now.getFullYear();
+        // const hour = `${now.getHours()}`.padStart(2, 0);
+        // const min = `${now.getMinutes()}`.padStart(2, 0);
+        // labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
+
+        //METODO 2
+        const now = new Date();
+        const options = {hour:"numeric", minute: "numeric", day: "numeric", month: "numeric", year: "numeric", }; //weekday: "numeric"
+
+        // const locale = navigator.language;
+        labelDate.textContent = new Intl.DateTimeFormat(currentAccount.locale, options).format(now);
+        inputLoginUsername.value = inputLoginPin.value = ""; //Now we delete the written values in our inputs (user and PIN)
+        inputLoginPin.blur(); //This work so that when we want to log in and finally press "enter", then our cursor will disappear.
+
+        if (timer) {//Cuando iniciamos sesion, timer es undefined, por lo que no se ejecuta el if.
+            clearInterval(timer)
+        }
+        timer = startLogOutTimer(); //pero cuando iniciamos sesion, ejecutamos la funcion del conteo y se almacena en timer. Posterior a eso, como ya existira timer, ahora si se ejecutara el if, el cual reiniciara el conteo.
+        updateUI(currentAccount);
+    }
+});
+
+btnTransfer.addEventListener("click", function(evento){
+    evento.preventDefault();
+    const amount = Number(inputTransferAmount.value); //Recuperamos el numero ingresado en el input donde introducimos el dinero
+    const receiverAcc = accounts.find(acc => acc.username === inputTransferTo.value); //Recuperamos el objeto contenido en uno de los arrays de accounts, al verificar si el nombre de usuario existe dentro de los 4 arrays de accounts y si es igual al ingresado en el input.
+    inputTransferAmount.value = inputTransferTo.value = "";
+
+    if (amount > 0 && receiverAcc && currentAccount.balance >= amount && receiverAcc?.username !== currentAccount.username) {
+        currentAccount.movements.push(-amount);
+        receiverAcc.movements.push(amount);
+
+        currentAccount.movementsDates.push(new Date().toISOString());
+        receiverAcc.movementsDates.push(new Date().toISOString());
+
+        updateUI(currentAccount);
+
+        clearInterval(timer); //Cuando iniciamos sesion, timer es undefined, por lo que no se ejecuta el if.
+        timer = startLogOutTimer(); //pero cuando iniciamos sesion, ejecutamos la funcion del conteo y se almacena en timer. Posterior a eso, como ya existira timer, ahora si se ejecutara el if, el cual reiniciara el conteo.
+    }
+});
+
+btnClose.addEventListener("click", function(evento){
+    evento.preventDefault();
+
+    if (inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin) { //We verify if the written values in the inputs are the same as those in the current object.
+        const index = accounts.findIndex(acc => acc.username === currentAccount.username); //If so, we proceed to find the index of the object in the array "accounts"
+        accounts.splice(index, 1);
+        containerApp.style.opacity = 0; 
+        console.log(accounts);
+    }
+
+    inputCloseUsername.value = inputClosePin.value = "";
+});
+
+btnLoan.addEventListener("click", function(evento){
+    evento.preventDefault();
+
+    const amount = Math.floor(inputLoanAmount.value)
+    if (amount > 0 && currentAccount.movements.some(mov => (mov >= amount*0.1))) {
+        
+        setTimeout(function(){
+            currentAccount.movements.push(amount);
+            currentAccount.movementsDates.push(new Date().toISOString());
+
+            updateUI(currentAccount);
+
+            clearInterval(timer);
+            timer = startLogOutTimer();
+        }, 2500);
+
+    }
+    inputLoanAmount.value = "";
+});
+
+btnSort.addEventListener("click", function(evento){
+    evento.preventDefault();
+
+    displayMovements(currentAccount.movements, !sorted); //When clicking the button, then that variable changes to true and the array is sorted.
+    sorted =! sorted; //After that, we need to change the "sorted" variable to the opposite boolean value. We do this so that when we press the button again, this back to normal (unsorted).
+})
+
+labelBalance.addEventListener('click', function () {
+    let valor = document.querySelectorAll('.movements__value'); 
+    const movementsUI = Array.from(valor, function(el){   // Array.from(Array-like or iterable object, mapFunction, thisValue)
+        return Number(el.textContent.replace('€', ''))
+    });  console.log(movementsUI);
+    // const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+
+
+    [...document.querySelectorAll(".movements__row")].forEach(function(row, i){
+        if (i % 2 === 0) row.style.backgroundColor = "orangered";
+        if (i % 3 === 0) row.style.backgroundColor = "blue";
+    })
+}); */
+
+//Proyecto 2: Bankist_Advanced-DOM
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+const btnCloseModal = document.querySelector('.btn--close-modal');
+const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+
+const openModal = function (evento) {
+  evento.preventDefault();
+  modal.classList.remove('hidden');
+  overlay.classList.remove('hidden');
+};
+
+const closeModal = function () {
+  modal.classList.add('hidden');
+  overlay.classList.add('hidden');
+};
+
+/* //Metodo 1
+for (let i = 0; i < btnsOpenModal.length; i++){
+  btnsOpenModal[i].addEventListener('click', openModal);
+} */
+
+//Metodo 2
+btnsOpenModal.forEach(function(evento) {
+  evento.addEventListener("click", openModal)
+});
+
+btnCloseModal.addEventListener('click', closeModal);
+overlay.addEventListener('click', closeModal);
+
+document.addEventListener('keydown', function (evento) {
+  if (evento.key === 'Escape' && !modal.classList.contains('hidden')) {
+    closeModal();
+  }
+});
+
+
+// Creating and inserting elements
+const header = document.querySelector('.header');
+const message = document.createElement('div');
+message.classList.add('cookie-message');
+message.innerHTML = 'We use cookied for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>';
+header.append(message);
+document.querySelector('.btn--close-cookie').addEventListener('click', function () {
+    message.parentElement.removeChild(message);
+  });
+
+
+// Styles
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+message.style.height = Number.parseInt(getComputedStyle(message).height, 10) + 30 + 'px'; //El segundo elemento en parseInt representa el radix (base del sistema numerico, en este caso 10 es decimal)
+console.log(message.style.color);
+console.log(message.style.backgroundColor);
+console.log(getComputedStyle(message).color);
+console.log(getComputedStyle(message).height);
+
+document.querySelector('.btn--close-cookie').addEventListener('click', function () {
+    message.parentElement.removeChild(message);
+});
+
+document.documentElement.style.setProperty("--color-primary", "orangered");
+
+
+// Attributes
+const logo = document.querySelector('.nav__logo');
+console.log(logo.alt);
+console.log(logo.className);
+logo.alt = 'Beautiful minimalist logo';
+
+// Non-standard
+console.log(logo.designer);
+console.log(logo.getAttribute('designer'));
+logo.setAttribute('company', 'Bankist');
+
+console.log(logo.src);
+console.log(logo.getAttribute('src'));
+
+const link = document.querySelector('.nav__link--btn');
+console.log(link.href);
+console.log(link.getAttribute('href'));
+
+
+// Data attributes
+console.log(logo.dataset.versionNumber);
+
+// Classes
+logo.classList.add('c', 'j');
+logo.classList.remove('c', 'j');
+logo.classList.toggle('c');
+logo.classList.contains('c'); // not includes
+logo.clasName = 'jonas'; // Don't use because this will override all the existing classes and it will allow us only put one class on any element.
+
 //         $$$$$$$$$$$$$$$ Funciones y funciones de orde superior $$$$$$$$$$$$$$$
 
 
@@ -171,7 +567,18 @@ if (res) {
     console.log("El numero "+ numero+ " NO es mayor que 17."+ mayorDeEdad);
 } */
 
-/* //Ejemplo 3: Retorno de funciones con un if.
+/* // Ejemplo 3: Aplicacion de una funcion en CALL STACK
+function multiply (x, y) {
+ return x * y;
+}
+function printSquare (x) {
+    let s = multiply(x,x);
+    console.log(s);
+}
+
+printSquare(5); */
+
+/* //Ejemplo 4: Retorno de funciones con un if.
 function asignarOperacion (op) {
     if (op == "sumar") {
         return (a, b) => a + b
@@ -184,7 +591,7 @@ let resta = asignarOperacion ("restar")
 console.log( suma(4, 6) ) // 10
 console.log( resta(5, 3) ) // 2 */
 
-/* //Ejemplo 4: Como podemos pasar por parametro una funcion (funcionalidad)
+/* //Ejemplo 5: Como podemos pasar por parametro una funcion (funcionalidad)
 function porCadaElemento(elementos, funcionalidad){
     for (const unElemento of elementos) {
         funcionalidad(unElemento);
@@ -201,7 +608,7 @@ porCadaElemento(numeros, console.log);
 porCadaElemento(numeros, acumular);
 console.log("El valor total de la suma de los elementos de "+ numeros.toString()+ " es: "+ total+"."); */
 
-/* // Ejemplo 5.0: Default Parameters
+/* // Ejemplo 6.0: Default Parameters
 'use strict';
 const bookings = [];
 
@@ -224,7 +631,7 @@ createBooking("LH123", 2, 800);
 createBooking("LH123", 5);
 createBooking("LH123", undefined, 1000); */
 
-/* // Ejemplo 5.1: How Passing Arguments Works: Value vs Reference
+/* // Ejemplo 6.1: How Passing Arguments Works: Value vs Reference
 const flight = 'LH234';
 const jonas = {name: 'Jonas Schmedtmann', passport: 24739479284};
 
@@ -250,7 +657,7 @@ const newPassport = function(person){
 newPassport(jonas);
 checkIn(flight, jonas); */
 
-/* // Ejemplo 5.2: Functions Accepting Callback Functions
+/* // Ejemplo 6.2: Functions Accepting Callback Functions
 const oneWord = function (str) {
     const res = str.replace('/ /g', '').toLowerCase(); //     / /g sirve para capturar todos los elementos globales y no solamente 1. En este casi, queremos todos los espacios en blanco, y si no usamos esto, unicamente obtendremos el primer espacio en blanco.
     return res;
@@ -278,7 +685,7 @@ const high5 = function () {
 document.body.addEventListener('click', high5);
 ['Jonas', 'Martha', 'Adam'].forEach(high5); */
 
-/* // Ejemplo 5.3: Functions Returning Functions
+/* // Ejemplo 6.3: Functions Returning Functions
 const greet = function (greeting) {
 
     return function (name) {
@@ -295,7 +702,7 @@ greet('Hey')('Jonas'); //Esto es lo mismo que las dos lineas de arriba.
 const greetArr = greeting => name => console.log(`${greeting} ${name}`);
 greetArr('Hey')('Jonas'); */
 
-/* // Ejemplo 5.4: The call() and apply() Methods
+/* // Ejemplo 6.4: The call() and apply() Methods
 const lufthansa = {airline: 'Lufthansa',iataCode: 'LH',bookings: [],
     book: function(flightNum, name) {
         console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
@@ -322,7 +729,7 @@ book.apply(swiss, flightData);
 book.call(swiss, ...flightData);
 console.log(swiss); */
 
-/* // Ejemplo 5.5: The bind() method
+/* // Ejemplo 6.5: The bind() method
 const bookEW = book.bind(eurowings); // Bind method: Allows us to manually set "this" for any function call. With the bind() method, an object can borrow a method from another object.
 bookEW(23, "German Mancilla Chavez");
 
@@ -363,7 +770,7 @@ const addTaxRate = function (rate) {
 const addVAT2 = addTaxRate(0.23);
 console.log("The result of addVAT is: "+addVAT2(100)); */
 
-/* // Ejemplo 5.6: Excercise with functions
+/* // Ejemplo 6.6: Excercise with functions
 // A poll has a question, an array of options from which people can choose, and an array with the number of replies for each option. This data is stored in the starter 'poll' object below. Your tasks:
 // 1. Create a method called 'registerNewAnswer' on the 'poll' object. The method does 2 things:
 // 1.1. Display a prompt window for the user to input the number of the selected option. The prompt should look like this: 
@@ -417,7 +824,7 @@ document.querySelector(".poll").addEventListener("click", poll.registerNewAnswer
 //que queremos. Asi mismo, le pasamos un argumento para que se pueda ejecutar el condicional.
 poll.displayResults.call({answers: [5, 2, 3]}, "string"); // (5) */
 
-/* // Ejemplo 5.7: Immediately Invoked Function Expressions (IIFE)
+/* // Ejemplo 6.7: Immediately Invoked Function Expressions (IIFE)
 //Se usa cuando queremos una funcion que se utilice de inmediato una vez, que no sea necesario guardarla ni darle yn nombre, y que finalmente desaparezca para no volverla a usar
 
 const runOnce = function(){
@@ -429,7 +836,7 @@ runOnce();
     console.log("This will never run again");
 })(); */
 
-/* // Ejemplo 5.8: Closures
+/* // Ejemplo 6.8: Closures
 const secureBooking = function () {
     let passengerCount = 0;
 
@@ -446,7 +853,7 @@ booker();
 
 console.dir(booker); */
 
-/* // Ejemplo 5.9: More Closure Examples
+/* // Ejemplo 6.9: More Closure Examples
 
 //Example 1
 let f; //Creamos una variable global que almacenara una funcion
@@ -2367,7 +2774,7 @@ const res = new Intl.DateTimeFormat(locale, options).format(now);
 // const res = new Intl.DateTimeFormat("pt-PT", options).format(now);
 console.log(res); */
 
-//Ejemplo 9: Internationalizing Numbers (Intl)
+/* //Ejemplo 9: Internationalizing Numbers (Intl)
 const num = 3884764.23;
 
 const options = {
@@ -2380,63 +2787,117 @@ const options = {
 console.log('US:      ', new Intl.NumberFormat('en-US', options).format(num));
 console.log('Germany: ', new Intl.NumberFormat('de-DE', options).format(num));
 console.log('Syria:   ', new Intl.NumberFormat('ar-SY', options).format(num));
-console.log(navigator.language,new Intl.NumberFormat(navigator.language, options).format(num));
+console.log(navigator.language,new Intl.NumberFormat(navigator.language, options).format(num)); */
+
+/* // Ejemplo 10: Creacion de una funcionalidad asincriona con setTimeout 
+
+const ingredients = ['olives', 'spinach', 'pepperoni'];
+const pizzaTimer = setTimeout(function (ing1, ing2, ing3){
+    return console.log(`Here is your pizza with ${ing1}, ${ing2} and ${ing3} 🍕`);
+},1500, ...ingredients); //Tod0s los argumentos que pasemos despues del delay, seran argumentos de la funcion
+
+console.log('Waiting...');
+
+if (ingredients.includes('res')) clearTimeout(pizzaTimer);
+
+// setInterval(function () {
+//     const now = new Date();
+//     console.log(now);
+// }, 1000); */
+
+/* // Ejemplo 11: Creacion de un countdown hacia abajo
+
+const SEGUNDOS = 3;
+for (let LEFT = 1; LEFT <= SEGUNDOS; LEFT++) {
+    setTimeout(() => {
+        console.log(((SEGUNDOS+1-LEFT).toString() + " segundos left"));
+    }, LEFT*1000);
+}  */
+
+/* // Ejemplo 12: Aplicacion del modelo asincrono para momstrar a una de las letras de dos palabras
+
+// for (let letra of "hola") {
+//     setTimeout (() => {
+//     console.log(letra)
+//     }, 1000)
+// }
+
+// for (let letra of "mundo") {
+//     setTimeout (() => {
+//     console.log(letra)
+//     }, 1500)
+// }
+
+for (let index = 0; index < "hola".length; index++) {
+    setTimeout (() => {
+    console.log("hola"[index])
+    }, (index+1)*500)
+} */
+
+/* // Ejemplo 13: Uso del setInterval para ejecutar continuamente funcionalidades cada x cantidad de segundos.
+setInterval(() => {
+    console.log("Tic-Toc")
+}, 1000) */
+
+/* // Ejemplo 14: Ejemplo de como suspender un setInterval y clearTimeout
+console.log("Inicio");
+
+let counter = 0
+const interval = setInterval(() => {
+    counter++;
+    console.log("Counter: ", counter);
+    if (counter >= 5) {
+    clearInterval(interval);
+    console.log("Se removió el intervalo");
+    }
+}, 1000);
+
+const fin = setTimeout(() => {//Esta nunca se llega a ejecutar
+    console.log("fin");
+}, 2000);
+clearTimeout(fin); */
 
 
 //         $$$$$$$$$$$$$$$ DOM & EVENTOS $$$$$$$$$$$$$$$
 
 
 /* //Ejemplo 1: Acceso a la variable global document y sus propiedades
+console.log("Cual es nuestro documento? ", document.documentElement);
 console.log("Cual es nuestro body? ", document.body);
-console.log("Cual es nuestro body? ", document.head); */
+console.log("Cual es nuestro head? ", document.head); */
 
-/* //Ejemplo 2: Obtener un elemento del HTML con su identificador unico (ID)
-console.log("Nuestra etiqueta con el titulo es: ", document.getElementById("bienvenida"));
+/* //Ejemplo 2: Obtener un elemento del HTML a partir de su id, clase o etiqueta HTML. Y tambien acceder a un elemento con el querySelector y querySelectorAll
+console.log("Acceder a un elemento con el querySelector", document.querySelector("#formulario_HTML .mb-3"));
+console.log("Acceder a un elemento con el querySelectorAll", document.querySelectorAll("#formulario_HTML .mb-3"));
+console.log("Obtener un elemento del HTML a partir de su id: ", document.getElementById("bienvenida"));
+console.log("Obtener un elemento del HTML a partir de su clase: ",document.getElementsByClassName("texto"));
+console.log("Obtener un elemento del HTML a partir de su etiqueta HTML: ", document.getElementsByTagName("p")); */
 
-let tema = document.getElementById("temaClase");
-console.log("Este es el tema de la clase: ",tema); */
-
-/* //Ejemplo 3: Como recuperar elementos a partir de su clase
-let textos = document.getElementsByClassName("texto");
-console.log("Los elementos de nuestra pagina que contienen la clase 'texto' son: ",textos); */
-
-/* //Ejemplo 4: Como recuperar elementos a partir de su etiqueta HTML
-let recuperados = document.getElementsByTagName("h1");
-console.log("Los elementos de nuestra pagina que estan fabricados a partir de la etiqueta HTML 'h1' son: ",recuperados);
-
-let parrafos = document.getElementsByTagName("p");
-console.log("Los elementos de nuestra pagina que estan fabricados a partir de la etiqueta HTML 'p' son: ",parrafos); */
-
-/* //Ejemplo 5: Recorrer una coleccion de nodos devueltos por alguna query
-let items = document.getElementsByTagName("li");
-console.log("Los elementos de nuestra pagna que estan fabricados a partir de la etiqueta HTML son: ",items);
+/* //Ejemplo 3: Recorrer una coleccion de nodos devueltos por alguna query
+let items = document.getElementsByTagName("h1");
+console.log("Los elementos de nuestra pagina que estan fabricados a partir de la etiqueta h1 son: ",items);
 
 for (const unItem of items) {
     console.log("--> ", unItem);
 } */
 
-/* //Ejemplo 6: Como modificamos el contenido del texto de un nodo
-let frase_obtenida = prompt("Que quieres mostrar? ");
-let nodo = document.getElementById("frase");
-console.log("El texto original que modificaremos es: ", nodo.innerText);
-nodo.innerText = frase_obtenida; */
+/* //Ejemplo 4: Como modificamos el contenido del texto de un nodo
+let frase_obtenida = "Hola, bienvenidos a la clase de Javascript 😈";
+let nodo = document.getElementById("titulo");
+console.log("El texto original que modificaremos es: ", document.getElementById("titulo").innerText);
+nodo.innerText = frase_obtenida;
 
-/* //Ejemplo 7: Como modificamos el contenido del texto de un nodo (ejemplo 1)
-let sub = document.getElementById("subtitulo");
-sub.innerHTML = "<strong>Hola soy german!!</strong>";
-sub.className = "coloreado";
+document.getElementById("subtitulo").className = "coloreado";
+document.getElementById('frase').classList.add('coloreadoX2');
 
-// document.getElementById("subtitulo").className = "coloreado";
-// document.getElementById("subtitulo").innerHTML = "<strong>Hola soy german!!</strong>"; */
+document.getElementById("subtitulo").innerHTML = "<strong>Hola soy german!!</strong>";
+document.getElementById("frase").innerText = "Hola";
+document.getElementById("bienvenida").textContent = "Adios"; */
 
-/* //Ejemplo 8: Como modificamos el contenido del texto de un nodo (ejemplo 2)
-let cardButton = document.getElementById('frase');
-cardButton.classList.add('estilo_frase'); */
-
-/* //Ejemplo 9: Crear una lista de elementos a partir del contenido de un array y luego eliminar nodos
+/* //Ejemplo 5: Crear una lista de elementos a partir del contenido de un array y luego eliminar nodos
 let paises = ["Argentina", "Brazil", "Mexico", "Peru", "Suecia"];
-let nodoPaises = document.getElementById("paises"); //Obtenemos el elemento "paises" del HTML
 
+let nodoPaises = document.getElementById("paises"); //Obtenemos el elemento "paises" del HTML
 nodoPaises.innerHTML = ""; //Al dejar las comillas vacias, se borra el contenido del elemento "paises" en el HTML.
 
 for (const unPais of paises) {
@@ -2445,159 +2906,169 @@ for (const unPais of paises) {
     nodoPaises.append(nuevoItem); //Una vez que creamos el nuevo elemento "li", es importante AGREGARLO, ya que unicamente lo creamos en la linea anterior.
 }
 
-let paisesRecuperados = document.getElementsByTagName("li");
+let paisesRecuperados = document.querySelector("li");
 console.log("-->", paisesRecuperados);
-paisesRecuperados[4].remove(); */
+paisesRecuperados[2].remove(); */
 
-/* //Ejemplo 10: Escribir dentro de los inputs a travez del value
-let nombre = prompt("Cual es tu nombre?");
-let apellido = prompt("Cual es tu apellido?");
+/* //Ejemplo 6: Creacion de un elemento HTML en JS, añadicion de nodos en determinada posicion, y eliminacion de nodos.
+const message = document.createElement('div');
+message.classList.add('cookie-message');
+message.innerHTML = 'We use cookied for improved functionality and analytics. <button class="res">Got it!</button>';
+const body = document.querySelector('body');
+body.append(message);                 //Sirve para colocar el nodo al final
+// body.append(message.cloneNode(true)); //Sirve para duplicar el nodo y colocarlo debajo del principal
+// body.prepend(message);                //Sirve para colocar el nodo al inicio
+// body.after(message);                  //Cumple la misma funcion que body.append(message)
+// body.before(message);                 //Cumple la misma funcion que body.prepend(message)
 
-document.getElementById("nombres").value = nombre;
-document.getElementById("apellidos").value = apellido; */
+document.querySelector('.res').addEventListener('click', function () {
+    // message.remove();
+    message.parentElement.removeChild(message);
+}); */
 
-/* //Ejemplo 11: Uso de plantillas
+/* //Ejemplo 7: Escribir dentro de los inputs a travez del .value
+document.getElementById("nombres").value = "Cual es tu nombre?";
+document.getElementById("apellidos").value = "Cual es tu apellido?"; */
+
+/* //Ejemplo 8: Uso de plantillas
 const producto = {id: 1001, nombre: "Carne asada", precio: 140};
 
 //Creamos un elemento div 
 let contenedor = document.createElement("div");
 
 //Definimos el innerHTML del elemento con una plantilla de texto
-contenedor.innerHTML = `<h3> ID: ${producto.id}</h3><p> Producto: ${producto.nombre}</p><b> $ ${producto.precio}</b>`;
+contenedor.innerHTML = `<h3> ID: ${producto.id}</h3>
+                        <p> Producto: ${producto.nombre}</p>
+                        <b> $ ${producto.precio}</b>`;
 
 //Agregamos el contenedor creado al body
 document.body.appendChild(contenedor);
 
 //Formas de concatenar o mostrar en pantalla
-let concatenado = "id: "+ unProducto.id+" - Nombre: "+ unProducto.nombre + " - precio: $"+ unProducto.precio;   console.log("Concatenado", concatenado);
-let plantilla = `id: ${unProducto.id} - Nombre: ${unProducto.nombre} - Precio: $${unProducto.precio}`;       console.log("Plantilla  ", plantilla);  */
+let concatenado = "id: "+ producto.id+" - Nombre: "+ producto.nombre + " - precio: $"+ producto.precio;   console.log("Concatenado", concatenado);
+let plantilla = `id: ${producto.id} - Nombre: ${producto.nombre} - Precio: $${producto.precio}`;          console.log("Plantilla  ", plantilla);  */
 
-/* //Ejemplo 12: Acceder a un elemento con el querySelector
-let nodo1 = document.querySelector("#formulario .mb-3");
-console.log("QuerySelector", nodo1); */
+/* //Ejemplo 9: Agregar un elemento con estilizado
+//METODO 1
+const producto1 = {id: 1001, nombre: "Carne asada", precio: 140};
+let contenedor1 = document.createElement("div");
+contenedor1.style.marginTop = "50px";
+contenedor1.style.marginBottom = "50px";
+contenedor1.style.padding = "40px";
+contenedor1.style.borderRadius = "20px";
+contenedor1.style.background = "rgb(1, 135, 108)";
+contenedor1.style.color = "rgb(250, 255, 255)";
+contenedor1.style.opacity = "0.8";
+contenedor1.innerHTML = `<h3> ID: ${producto1.id}</h3><p> Producto: ${producto1.nombre}</p><b> $ ${producto1.precio}</b>`;
+contenedor1.className = 'border pad';
+document.getElementById("main").append(contenedor1); //append coloca el hijo hasta el final, mientras que el prepend coloca el hijo hasta el inicio.
+// document.body.appendChild(contenedor1);
 
-/* //Ejemplo 13: Acceder a un elemento con el querySelectorAll
-let nodo2 = document.querySelectorAll("#formulario .mb-3");
-console.log("QuerySelector", nodo2); */
 
-/* //Ejemplo 14: Agregar un elemento con estilizado (ejemplo 1)
-const producto = {id: 1001, nombre: "Carne asada", precio: 140};
-var contenedor = document.createElement("div");
-contenedor.style.marginTop = "50px";
-contenedor.style.marginBottom = "50px";
-contenedor.style.padding = "40px";
-contenedor.style.borderRadius = "20px";
-contenedor.style.background = "rgb(1, 135, 108)";
-contenedor.style.color = "rgb(250, 255, 255)";
-contenedor.style.opacity = "0.8";
-contenedor.innerHTML = `<h3> ID: ${producto.id}</h3><p> Producto: ${producto.nombre}</p><b> $ ${producto.precio}</b>`;
+//METODO 1.2
+const producto2 = {id: 1001, nombre: "Carne asada", precio: 140};
+let contenedor2 = document.createElement("div");
+contenedor2.classList.add("res");
+// contenedor2.textContent = "Hello world!";
+contenedor2.innerHTML = `<h3> ID: ${producto2.id}</h3><p> Producto: ${producto2.nombre}</p><b> $ ${producto2.precio}</b>`;
+contenedor2.className = 'border pad';
+document.getElementById("main").append(contenedor2); //append coloca el hijo hasta el final, mientras que el prepend coloca el hijo hasta el inicio.
+// document.body.appendChild(contenedor2);
 
-document.body.appendChild(contenedor); */
 
-/* //Ejemplo 15: Agregar un elemento con estilizado (ejemplo 2)
-var div = document.createElement("div");
-div.style.width = "100px";
-div.style.height = "100px";
-div.style.background = "red";
-div.style.color = "white";
-div.innerHTML = "Hello";
-
-document.getElementById("main").appendChild(div); //En el HTML hay un div con el nombre "main" */
-
-/* //Ejemplo 16: Agregar un elemento con estilizado (ejemplo 3)
+// METODO 2.1
 document.addEventListener('DOMContentLoaded', function() {
-    var div = document.createElement('div');
-    div.id = 'container';
-    div.innerHTML = 'Hi there!';
-    div.className = 'border pad';
+    const producto3 = {id: 1001, nombre: "Carne asada", precio: 140};
+    let contenedor3 = document.createElement("div");
+    contenedor3.style.marginTop = "50px";
+    contenedor3.style.marginBottom = "50px";
+    contenedor3.style.padding = "40px";
+    contenedor3.style.borderRadius = "20px";
+    contenedor3.style.background = "rgb(1, 135, 108)";
+    contenedor3.style.color = "rgb(250, 255, 255)";
+    contenedor3.style.opacity = "0.8";
+    contenedor3.innerHTML = `<h3> ID: ${producto3.id}</h3><p> Producto: ${producto3.nombre}</p><b> $ ${producto3.precio}</b>`;
+    contenedor3.className = 'border pad';
+    document.getElementById("main").append(contenedor3); //append coloca el hijo hasta el final, mientras que el prepend coloca el hijo hasta el inicio.
+    // document.body.appendChild(contenedor3);
+}, true);
 
-    document.body.appendChild(div);
+
+// METODO 2.2
+document.addEventListener('DOMContentLoaded', function() {
+    const producto4 = {id: 1001, nombre: "Carne asada", precio: 140};
+    let contenedor4 = document.createElement("div");
+    contenedor4.classList.add("res");
+    // contenedor4.textContent = "Hello world!";
+    contenedor4.innerHTML = `<h3> ID: ${producto4.id}</h3><p> Producto: ${producto4.nombre}</p><b> $ ${producto4.precio}</b>`;
+    contenedor4.className = 'border pad';
+    document.getElementById("main").append(contenedor4); //append coloca el hijo hasta el final, mientras que el prepend coloca el hijo hasta el inicio.
+    // document.body.appendChild(contenedor4);
 }, true); */
 
-/* //Despliegue de las opciones en la etiqueta <option> en el HTML, que servira para futuros ejercicios
+/* //Ejemplo 10: Agregar eventos a un nodo mediante el addEventListener y mediante la propiedad con el evento necesario
 
-//Para agregar opciones al HTML select.
-class Ocupacion {
-    constructor(numero, name) {
-        this.numero = numero;
-        this.nombre = name;
-    }
-}
-
-const ocupaciones = [
-    new Ocupacion(1, "Estudiante"),
-    new Ocupacion(2, "Docente"),
-    new Ocupacion(3, "Desarrollador"),
-    new Ocupacion(4, "Administrador de proyectos"),
-];
-
-let ocupacionList = document.getElementById("ocupacion");
-
-ocupaciones.forEach((unaOcupacion) => {
-    let item = document.createElement("option");
-    item.value = unaOcupacion.numero.toString();
-    item.innerText = unaOcupacion.nombre;
-    ocupacionList.append(item);
-}); */
-
-/* // Ejemplo 17: Agregar eventos a un nodo mediante el addEventListener
-function saludar() {
-    alert("Hola bebe");
-}
-
+// METODO 1.1
 const btnInscribir = document.getElementById("btnInscribir");
-btnInscribir.addEventListener("click", saludar); */
+btnInscribir.addEventListener("click", function() {
+    console.log("Hola");
+});
 
-/* // Ejemplo 18 : Agregar eventos a un nodo mediante la propiedad con el evento necesario
+//METODO 1.2
 function saludar() {
-    alert("Hola bebe");
+    console.log("Hola, bienvenido!")
 }
-
 const btnInscribir = document.getElementById("btnInscribir");
-btnInscribir.onclick = () => {alert("Hola, bienvenido!")}; //Metodo 1
-btnInscribir.onclick = () => saludar();  //Metodo 2 */
+btnInscribir.addEventListener("click", saludar);
 
-/* // Ejemplo 19 : Agregar eventos a un nodo mediante el atributo de evento de la etiqueta (No es recomendable usar en proyectos de produccion)
+//METODO 2.1
+const btnInscribir = document.getElementById("btnInscribir");
+btnInscribir.onclick = function() {
+    console.log("Hola, bienvenido!")
+};
+
+// METODO 2.2
 function saludar() {
-    alert("Hola bebe");
+    console.log("Hola!")
 }
-
 const btnInscribir = document.getElementById("btnInscribir");
-//Esto va en el HTML, dentro del form
-//<button type="button" class="btn btn-primary" id="btnInscribir" onclick="alert('Hola Mundo!');">Inscribir</button> //Esto va en el HTML, NO en el documento .js */
+btnInscribir.onclick = function(){
+    saludar();
+} */
 
-/* // Ejemplo 20: Agregar a un nodo el evento del movimiento del mouse.
+/* //Ejemplo 11: Agregar eventos a un nodo mediante el atributo de evento de la etiqueta (No es recomendable usar en proyectos de produccion)
+//Esto va en el HTML, dentro del form (Esto va en el HTML, NO en el documento .js)
+//<button type="button" class="btn btn-primary" id="btnInscribir" onclick="alert('Hola Mundo!');">Inscribir</button> */
+
+/* //Ejemplo 12: Agregar a un nodo el evento del movimiento del mouse, los eventos de keydown y keyup para un input, el evento change y el evento input.
 const title = document.getElementsByTagName("h1")[0]; //[0] representa el numero de los h1 que se encuentran en el HTML. Como en este caso solo hay uno, entonces inicializa en 0 y asi sucesivamente, dependiendo del tipo de etiqueta que estemos utilizando.
 console.log("--> H1", title);
 title.addEventListener("mousemove",() => {
     console.log("--> El mouse se esta moviendo sobre el titulo de la pagina <--")
-}); */
+});
 
-/* // Ejemplo 21: Agregar a un nodo los eventos de keydown y keyup para un input.
-const input = document.getElementById("apellidos");
-input.addEventListener("keydown",() => {
+
+const input1 = document.getElementById("apellidos");  //Agregar a un nodo los eventos de keydown y keyup para un input.
+input1.addEventListener("keydown",() => {
     console.log("--> La tecla bajo <--")
 })
 
-input.addEventListener("keyup",() => {
+input1.addEventListener("keyup",() => {
     console.log("--> La tecla subio <--")
 })
- */
 
-/* // Ejemplo 22: Agregar a un nodo el evento change.
-const input = document.getElementById("nombres");
-input.addEventListener("change",() => {
-    console.log("--> El valor del input cambio <--", input.value);
-    input.value = input.value.trim();
-}); */
+const input2 = document.getElementById("nombres"); //Agregar a un nodo el evento change.
+input2.addEventListener("change",() => {
+    console.log("--> El valor del input cambio <--", input2.value);
+    input2.value = input2.value.trim();
+});
 
-/* // Ejemplo 23: Agregar a un nodo el evento change (Simulando un keylogger).
-const input = document.getElementById("apellidos");
-input.addEventListener("input",() => {
+const input3 = document.getElementById("correo"); //Agregar a un nodo el evento change (Simulando un keylogger).
+input3.addEventListener("input",() => {
     console.log("--> Ejecutaste el evento INPUT <--");
 }); */
 
-/* // Ejemplo 24: uso del evento submit para validar los inputs de un formulario.
+/* //Ejemplo 13: uso del evento submit para validar los inputs de un formulario.
 
 //Para agregar opciones al select HTML del HTML cuando presionemos el recuadro.
 class Ocupacion {
@@ -2623,8 +3094,7 @@ ocupaciones.forEach((unaOcupacion) => {
     ocupacionList.append(item);
 });
 
-//Uso de eventos para rellenar los espacios en blanco y desplegar la informacion
-class Participante {
+class Participante { //Uso de eventos para rellenar los espacios en blanco y desplegar la informacion
     constructor(numero, apellido, nombre, ocupacion, correo, quiereBoucher = false) {
         this.numero = numero;
         this.apellido = apellido;
@@ -2634,11 +3104,11 @@ class Participante {
         this.quiereBoucher = quiereBoucher;
     }
 }
+
 let participantes = [];
 
-const formulario = document.getElementById("formulario_HTML");
-console.log(formulario);
-formulario.addEventListener("submit", (evento) => {
+const formulario = document.getElementById("formulario_HTML");      console.log(formulario);
+formulario.addEventListener("submit", function(evento) {
     evento.preventDefault();          //Cancelamos el comportamiento del evento
     validarFormulario(evento.target); //.target sirve para pasar el conjunto de items, elementos, componentes, inputs que tenga nuestro formulario dentro que contenga info
 });                                   //Es decir, se accede a los elementos del formulario a donde pertenete submit y NO a informacion del submit. O sea, el objeto que "disparo" o "activo el evento."
@@ -2655,21 +3125,18 @@ function validarFormulario(data) {
     // }
 
     // Recuperaremos de cada uno de los inputs, el valor que ingreso/selecciono el usaurio
-    const apellidos = document.getElementById("apellidos").value; console.log("Apellidos: "+ apellidos);
-    const nombres = document.getElementById("nombres").value; console.log("Nombres: "+ nombres);
-    const ocupacion = document.getElementById("ocupacion").value; console.log("Ocupacion: "+ ocupacion);
-    const correo = document.getElementById("correo").value; console.log("Correo: "+ correo);
+    const apellidos = document.getElementById("apellidos").value;     console.log("Apellidos: "+ apellidos);
+    const nombres = document.getElementById("nombres").value;         console.log("Nombres: "+ nombres);
+    const ocupacion = document.getElementById("ocupacion").value;     console.log("Ocupacion: "+ ocupacion);
+    const correo = document.getElementById("correo").value;           console.log("Correo: "+ correo);
     const participar = document.getElementById("participar").checked; console.log("Participar: "+ participar);// Mediante la propiedad checked accedemos al valor booleano true/false que representa si el radiobutton o el checkbox fue "tildado/seleccionado"
 
     // Instanciamos la creacion de un objeto con la forma de un Participante
-    const unaOcupacion = ocupaciones.find((evento) => evento.numero.toString() === ocupacion);
-    console.log("unaOcupacion", unaOcupacion);
-    const unParticipante = new Participante(participantes.length+1,apellidos,nombres,unaOcupacion,correo,participar);
-    console.log("--> Un participante a ser anadido", unParticipante);
+    const unaOcupacion = ocupaciones.find((evento) => evento.numero.toString() === ocupacion);                         console.log("unaOcupacion", unaOcupacion);
+    const unParticipante = new Participante(participantes.length+1,apellidos,nombres,unaOcupacion,correo,participar);  console.log("--> Un participante a ser anadido", unParticipante);
 
     // Anadimos un elemento a la lista de aprticipantes (aun no incorporamos un control sobre existentes o similar)
-    participantes.push(unParticipante);
-    console.log("--> Que elementos posee mi array de participantes",participantes);
+    participantes.push(unParticipante);           console.log("--> Que elementos posee mi array de participantes",participantes);
 
     // Pintar la lista en la interfaz de usuario (solo para demostrar en la interfaz el cambio anadido -- profundizaremos este tema a medida que avanzamos con las clases.)
     let lista = document.getElementById("listaParticipantes");
@@ -2686,7 +3153,7 @@ function validarFormulario(data) {
     document.getElementById("ocupacion").value = "0";// el valor de este por default es 0 porque es la primera opciOn del combo de selecciOn
     document.getElementById("correo").value = "";
     document.getElementById("participar").value = "off";// para bootstrap --> on: true y off: false 
-}*/
+} */
 
 
 //         $$$$$$$$$$$$$$$ JSON & storage $$$$$$$$$$$$$$$
@@ -2837,87 +3304,7 @@ console.log("Las carreras recuperadas en formato object (parse) son: ", {convert
 //         $$$$$$$$$$$$$$$ Asincronia $$$$$$$$$$$$$$$
 
 
-/* // Ejemplo 1: Creacion de una funcionalidad asincriona (timeOut)
-
-setTimeout(() => {
-    console.log("Proceso asincrono");
-}, 3000) */
-
-/* // Ejemplo 2: Uso del codigo anterior para reflejar como es que se ejecutan las instrucciones lineales.
-console.log("Inicia proceso" )
-setTimeout(()=> {
-    console.log("Mitad de proceso" )
-}, 2000)
-console.log("Fin proceso") */
-
-/* // Ejemplo 3: Creacion de un countdown hacia abajo
-
-const SEGUNDOS = 3;
-for (let LEFT = 1; LEFT < SEGUNDOS; LEFT++) {
-    setTimeout(() => {
-        console.log(((SEGUNDOS+1-LEFT).toString() + " segundos left"));
-    }, LEFT*1000);
-} 
-
-// setTimeout(() => {
-//     console.log("Proceso asincrono");
-// }, SEGUNDOS*1000); */
-
-/* // Ejemplo 4: Aplicacion del modelo asincrono para momstrar a una de las letras de dos palabras
-
-// for (let letra of "hola") {
-//     setTimeout (() => {
-//     console.log(letra)
-//     }, 1000)
-// }
-
-// for (let letra of "mundo") {
-//     setTimeout (() => {
-//     console.log(letra)
-//     }, 1500)
-// }
-
-for (let index = 0; index < "hola".length; index++) {
-    setTimeout (() => {
-    console.log("hola"[index])
-    }, (index+1)*500)
-} */
-
-/* // Ejemplo 5: Aplicacion de una funcion en CALL STACK
-function multiply (x, y) {
- return x * y;
-}
-function printSquare (x) {
-    let s = multiply(x,x);
-    console.log(s);
-}
-
-printSquare(5); */
-
-/* // Ejemplo 6: Uso del setInterval para ejecutar continuamente funcionalidades cada x cantidad de segundos.
-setInterval(() => {
-    console.log("Tic-Toc")
-}, 1000) */
-
-/* // Ejemplo 7: Ejemplo de como suspender un setInterval y clearTimeout
-console.log("Inicio");
-
-let counter = 0
-const interval = setInterval(() => {
-    counter++;
-    console.log("Counter: ", counter);
-    if (counter >= 5) {
-    clearInterval(interval);
-    console.log("Se removió el intervalo");
-    }
-}, 1000);
-
-const fin = setTimeout(() => {//Esta nunca se llega a ejecutar
-    console.log("fin");
-}, 2000);
-clearTimeout(fin); */
-
-/* // Ejemplo 8: Como conocer los estados de una promesa
+/* // Ejemplo 1: Como conocer los estados de una promesa
 function eventoFuturo (){
     return new Promise( (resolve, reject) => {
 
@@ -2925,7 +3312,7 @@ function eventoFuturo (){
 }
 console.log( eventoFuturo() ) // Promise { <pending> } */
 
-/* // Ejemplo 9: Uso de los resultados de una Promesa para cambiar sus estados
+/* // Ejemplo 2: Uso de los resultados de una Promesa para cambiar sus estados
 function eventoFuturo (res) {
     return new Promise( (resolve, reject) => {
         res ? resolve('Promesa resuelta') : reject('Promesa rechazada');
@@ -2934,7 +3321,7 @@ function eventoFuturo (res) {
 console.log( eventoFuturo(true) ) // Promise { 'Promesa resuelta' }
 console.log( eventoFuturo(false) ) // Promise { <rejected> 'Promesa rechazada' } */
 
-/* // Ejemplo 10: 
+/* // Ejemplo 3: 
 function eventoFuturo(res){
     return new Promise( (resolve, reject) => {
         setTimeout( () => {
@@ -2946,7 +3333,7 @@ function eventoFuturo(res){
 console.log( eventoFuturo(true) ) // Promise { <pending> }
 console.log( eventoFuturo(false) ) // Promise { <pending> } */
 
-/* // Ejemplo 11: Uso del Then y Catch para catpturar los resultados y aprovechamiento de las posibilidades de respuestas de una promesa
+/* // Ejemplo 4: Uso del Then y Catch para catpturar los resultados y aprovechamiento de las posibilidades de respuestas de una promesa
 function eventoFuturo (res) {
     return new Promise( (resolve, reject) => {
         setTimeout( () => {
@@ -2970,7 +3357,7 @@ eventoFuturo(true)
     //console.log("Fin del proceso con false")
 }); */
 
-/* // Ejemplo 12: Ejercicio con un array, usando then/catch/finally y tambien ASYNC/AWAIT
+/* // Ejemplo 5: Ejercicio con un array, usando then/catch/finally y tambien ASYNC/AWAIT
 const productos = [
     {marca: "Nissan", modelo: 'Sentra', precio: 1500},
     {marca: "Toyota", modelo: 'Camry', precio: 2500},
@@ -3012,7 +3399,7 @@ async function pedirPosts(){
     }
 }; */
 
-/* // Ejemplo 13: Ejemplo del uso de Promesa para recuperar informacion de una base de datos
+/* // Ejemplo 6: Ejemplo del uso de Promesa para recuperar informacion de una base de datos
 
 const BD_X = [
     {id: 1, nombre: 'Producto 1', precio: 1500},

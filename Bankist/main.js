@@ -63,7 +63,7 @@ currentAccount = account1;
 updateUI(currentAccount);
 containerApp.style.opacity = 100; */
 
-let currentAccount;
+let currentAccount, timer;
 let sorted = false;// For the btnSort, we fix this variable to false so the function displayMovements still recieve false, which means that it doesn't sort the array.
 
 createUserNames(accounts);
@@ -88,13 +88,13 @@ function formatMovementDate(date, locale){
     const dayPassed = calcDaysPassed(new Date(), date);
     if (dayPassed === 0) return "Today";
     if (dayPassed === 1) return "Yesterday";
-    if (dayPassed <= 7) return `${dayPassed} days`;
+    if (dayPassed <= 7)  return `${dayPassed} days`;
     
-    // METODO 1
-    // const day = `${date.getDate()}`.padStart(2, 0);
-    // const month = `${date.getMonth() + 1}`.padStart(2, 0);
-    // const year = date.getFullYear();
-    // return `${day}/${month}/${year}`;
+    /* // METODO 1
+    const day = `${date.getDate()}`.padStart(2, 0);
+    const month = `${date.getMonth() + 1}`.padStart(2, 0);
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`; */
     
     //METODO 2
     return new Intl.DateTimeFormat(locale).format(date)
@@ -172,6 +172,24 @@ function calcDisplaySummary(acc){
     labelSumInterest.textContent = formatCur(interest, acc.locale, acc.currency);
 }
 
+function startLogOutTimer(){
+    function tick(){
+        const min = String(Math.trunc(tiempo / 60)).padStart(2, 0);
+        const sec = String(tiempo % 60).padStart(2, 0);
+        labelTimer.textContent = `${min}:${sec}`;
+        if(tiempo === 0) {
+            clearInterval(startLogOutTimer);
+            labelWelcome.textContent = "Log in to get started"
+            containerApp.style.opacity = 0;
+        }
+        tiempo--;
+    }
+
+    let tiempo = 20;
+    tick(); //Llamamos a la funcion antes de que se ejecute el setInterval para que, al final se ejecuten al mismo tiempo. Ya que, de ejecutarse esta funcion dentro del setInterval, entonces obtendremos primero un '1' en la pantalla y luego iniciara el temporizador.
+    return setInterval(tick, 1000); //Volvemos a llamar a la funcion tick en el setInterval para que cada segundo que pase, se vuelva a ejecutar.
+}
+
 btnLogin.addEventListener("click", function(evento){
     evento.preventDefault();
     
@@ -192,21 +210,17 @@ btnLogin.addEventListener("click", function(evento){
 
         //METODO 2
         const now = new Date();
-        const options = {
-            hour:"numeric",
-            minute: "numeric",
-            day: "numeric",
-            month: "numeric",
-            year: "numeric",
-            // weekday: "numeric"
-        }
+        const options = {hour:"numeric", minute: "numeric", day: "numeric", month: "numeric", year: "numeric"/* , weekday: "numeric" */};
 
         // const locale = navigator.language;
         labelDate.textContent = new Intl.DateTimeFormat(currentAccount.locale, options).format(now);
-
         inputLoginUsername.value = inputLoginPin.value = ""; //Now we delete the written values in our inputs (user and PIN)
         inputLoginPin.blur(); //This work so that when we want to log in and finally press "enter", then our cursor will disappear.
-        
+
+        if (timer) {//Cuando iniciamos sesion, timer es undefined, por lo que no se ejecuta el if.
+            clearInterval(timer)
+        }
+        timer = startLogOutTimer(); //pero cuando iniciamos sesion, ejecutamos la funcion del conteo y se almacena en timer. Posterior a eso, como ya existira timer, ahora si se ejecutara el if, el cual reiniciara el conteo.
         updateUI(currentAccount);
     }
 });
@@ -225,6 +239,9 @@ btnTransfer.addEventListener("click", function(evento){
         receiverAcc.movementsDates.push(new Date().toISOString());
 
         updateUI(currentAccount);
+
+        clearInterval(timer); //Cuando iniciamos sesion, timer es undefined, por lo que no se ejecuta el if.
+        timer = startLogOutTimer(); //pero cuando iniciamos sesion, ejecutamos la funcion del conteo y se almacena en timer. Posterior a eso, como ya existira timer, ahora si se ejecutara el if, el cual reiniciara el conteo.
     }
 });
 
@@ -246,10 +263,17 @@ btnLoan.addEventListener("click", function(evento){
 
     const amount = Math.floor(inputLoanAmount.value)
     if (amount > 0 && currentAccount.movements.some(mov => (mov >= amount*0.1))) {
-        currentAccount.movements.push(amount);
-        currentAccount.movementsDates.push(new Date().toISOString());
+        
+        setTimeout(function(){
+            currentAccount.movements.push(amount);
+            currentAccount.movementsDates.push(new Date().toISOString());
 
-        updateUI(currentAccount);
+            updateUI(currentAccount);
+
+            clearInterval(timer);
+            timer = startLogOutTimer();
+        }, 2500);
+
     }
     inputLoanAmount.value = "";
 });
