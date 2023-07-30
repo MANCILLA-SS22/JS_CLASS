@@ -306,93 +306,82 @@ const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
 
 const openModal = function (evento) {
-  evento.preventDefault();
-  modal.classList.remove('hidden');
-  overlay.classList.remove('hidden');
+    evento.preventDefault();
+    modal.classList.remove('hidden');
+    overlay.classList.remove('hidden');
 };
 
 const closeModal = function () {
-  modal.classList.add('hidden');
-  overlay.classList.add('hidden');
+    modal.classList.add('hidden');
+    overlay.classList.add('hidden');
 };
 
-/* //Metodo 1
-for (let i = 0; i < btnsOpenModal.length; i++){
-  btnsOpenModal[i].addEventListener('click', openModal);
-} */
+//Metodo 1
+// for (let i = 0; i < btnsOpenModal.length; i++){
+//   btnsOpenModal[i].addEventListener('click', openModal);
+// }
 
 //Metodo 2
 btnsOpenModal.forEach(function(evento) {
-  evento.addEventListener("click", openModal)
+    evento.addEventListener("click", openModal)
 });
 
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
 
 document.addEventListener('keydown', function (evento) {
-  if (evento.key === 'Escape' && !modal.classList.contains('hidden')) {
-    closeModal();
-  }
+    if (evento.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+    }
 });
 
-
-// Creating and inserting elements
-const header = document.querySelector('.header');
-const message = document.createElement('div');
-message.classList.add('cookie-message');
-message.innerHTML = 'We use cookied for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>';
-header.append(message);
-document.querySelector('.btn--close-cookie').addEventListener('click', function () {
-    message.parentElement.removeChild(message);
-  });
-
-
-// Styles
-message.style.backgroundColor = '#37383d';
-message.style.width = '120%';
-message.style.height = Number.parseInt(getComputedStyle(message).height, 10) + 30 + 'px'; //El segundo elemento en parseInt representa el radix (base del sistema numerico, en este caso 10 es decimal)
-console.log(message.style.color);
-console.log(message.style.backgroundColor);
-console.log(getComputedStyle(message).color);
-console.log(getComputedStyle(message).height);
-
-document.querySelector('.btn--close-cookie').addEventListener('click', function () {
-    message.parentElement.removeChild(message);
+//Finding coordenates and position, and use of scroll
+btnScrollTo.addEventListener("click", function(evento){
+    section1.scrollIntoView({behavior: "smooth"});
 });
 
-document.documentElement.style.setProperty("--color-primary", "orangered");
+//Page navigation
+document.querySelector(".nav__links").addEventListener("click", function(evento){
+    evento.preventDefault();
 
+    //Aqui usamos evento.target porque en este caso estamos utilizando el <ul> como elemento padre, y sus hijos son <li> y <a>. Ahora, con el addEventListener podemos hacer click en el elemento padre o incluso sus hijos y JS ejecutara la tarea deseada. Si usamos this como en el metodo 1, este solo funcionara para elelemento actual o el padre, es decir <ul>.
+    if (evento.target.classList.contains("nav__link")) {
+        const id = evento.target.getAttribute("href"); //Retorna unicamente el nombre del atriuto contenido en esa etiqueta. Si usamos const id = this.href, entonces tendremos el link completo que aparece en la barra de navegacion
+        document.querySelector(id).scrollIntoView({behavior: "smooth"});
+    }
+});
 
-// Attributes
-const logo = document.querySelector('.nav__logo');
-console.log(logo.alt);
-console.log(logo.className);
-logo.alt = 'Beautiful minimalist logo';
+// Building a Tabbed Component
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContent = document.querySelectorAll('.operations__content');
 
-// Non-standard
-console.log(logo.designer);
-console.log(logo.getAttribute('designer'));
-logo.setAttribute('company', 'Bankist');
+tabsContainer.addEventListener('click', function (evento) {
+    //Debemos añadir el closest(), ya que operations__tab-container tiene de hijos tres elementos botones con un span cada uno. Por lo que al presionar el boton, especificamente
+    //el texto (span), no funcionara correctamente el boton. Es por eso que agregamos el closest(), para que al presionar el boton, considere unicamente el elemento mas cercano
+    //con el nombre operations__tab (incluyendo su hijo <span>). 
+    //Cabe mencionar que, si precionamos donde esta el <div class="operations__tab-container"> entonces tendremos un null en consola, ya que no existe ningun elemento padre con el 
+    //class ".operations__tab". Para eso usamos el Guard clause, para que al no haber un click en el botton, simplemente salga de la funcion y no ejecute las lineas siguientes.
+    const clicked = evento.target.closest('.operations__tab');  console.log(clicked);
+    
+    // Guard clause
+    if (!clicked) return;
 
-console.log(logo.src);
-console.log(logo.getAttribute('src'));
+    //Realizamos un barrido en cada uno de los 3 botones y en cada uno de los 3 contenidos de texto. Dependiendo del boton seleccionado, a este se le eliminaran sus "active"
+    tabs.forEach(evento => evento.classList.remove('operations__tab--active'));
+    tabsContent.forEach(evento => evento.classList.remove('operations__content--active'));
 
-const link = document.querySelector('.nav__link--btn');
-console.log(link.href);
-console.log(link.getAttribute('href'));
+    //Una vez eliminado los "active" en el boton y el contenido seleccinado, ahora se procede a "activar" el boton y su contenido seleccionado.
+    clicked.classList.add('operations__tab--active');
 
+    //Dependiendo del boton que se haya presionado, este realizara la animacion en el boton, y tambien se desplegara el contenido de texto del boton seleccionado.
+    document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active'); 
+});
 
-// Data attributes
-console.log(logo.dataset.versionNumber);
-
-// Classes
-logo.classList.add('c', 'j');
-logo.classList.remove('c', 'j');
-logo.classList.toggle('c');
-logo.classList.contains('c'); // not includes
-logo.clasName = 'jonas'; // Don't use because this will override all the existing classes and it will allow us only put one class on any element.
 
 //         $$$$$$$$$$$$$$$ Funciones y funciones de orde superior $$$$$$$$$$$$$$$
 
@@ -3041,28 +3030,42 @@ btnInscribir.onclick = function(){
 //<button type="button" class="btn btn-primary" id="btnInscribir" onclick="alert('Hola Mundo!');">Inscribir</button> */
 
 /* //Ejemplo 12: Agregar a un nodo el evento del movimiento del mouse, los eventos de keydown y keyup para un input, el evento change y el evento input.
+
+//Uso del mousemove
 const title = document.getElementsByTagName("h1")[0]; //[0] representa el numero de los h1 que se encuentran en el HTML. Como en este caso solo hay uno, entonces inicializa en 0 y asi sucesivamente, dependiendo del tipo de etiqueta que estemos utilizando.
 console.log("--> H1", title);
 title.addEventListener("mousemove",() => {
     console.log("--> El mouse se esta moviendo sobre el titulo de la pagina <--")
 });
 
+//Uso del mouseenter
+const title2 = document.querySelector("h1");
+const res = function(evento){
+    alert("--> El mouse se esta moviendo solo una vez <--");
+}
 
+title2.addEventListener("mouseenter", res);
+setTimeout(() => title2.removeEventListener("mouseenter", res), 3000);
+
+//Uso del keydown
 const input1 = document.getElementById("apellidos");  //Agregar a un nodo los eventos de keydown y keyup para un input.
 input1.addEventListener("keydown",() => {
     console.log("--> La tecla bajo <--")
 })
 
+//Uso del keyup
 input1.addEventListener("keyup",() => {
     console.log("--> La tecla subio <--")
 })
 
+//Uso del change
 const input2 = document.getElementById("nombres"); //Agregar a un nodo el evento change.
 input2.addEventListener("change",() => {
     console.log("--> El valor del input cambio <--", input2.value);
     input2.value = input2.value.trim();
 });
 
+//Uso del input
 const input3 = document.getElementById("correo"); //Agregar a un nodo el evento change (Simulando un keylogger).
 input3.addEventListener("input",() => {
     console.log("--> Ejecutaste el evento INPUT <--");
@@ -3154,6 +3157,199 @@ function validarFormulario(data) {
     document.getElementById("correo").value = "";
     document.getElementById("participar").value = "off";// para bootstrap --> on: true y off: false 
 } */
+
+
+/* //Ejemplo 14: Finding coordenates and position, and use of scroll
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
+
+btnScrollTo.addEventListener("click", function(evento){
+    const s1coords = section1.getBoundingClientRect(); 
+    console.log("Section position: ", s1coords);                              //Representa la posicion de la seccion
+    console.log("Learn more botton position: ", evento.target.getBoundingClientRect()); //Representa la posicion del boton "learn more"
+    console.log("Current scroll (X/Y): ", window.scrollX, window.scrollY);
+    console.log("Height/width viewport: ", document.documentElement.clientHeight, document.documentElement.clientWidth);
+    
+    //Scrolling (method 1)
+    // window.scrollTo(s1coords.left + window.scrollX, s1coords.top + window.scrollY);
+
+    //Scrolling (method 2)
+    // window.scrollTo({
+    //     left: s1coords.left + window.scrollX, 
+    //     top: s1coords.top + window.scrollY,
+    //     behavior: "smooth"
+    // });
+
+    //Scrolling (method 3)
+    section1.scrollIntoView({behavior: "smooth"});
+}); */
+
+/* //Ejemplo 15: Creating and inserting elements, use of styles atributes, non-standard and classes
+// Creating and inserting elements
+const header = document.querySelector('.header');
+const message = document.createElement('div');
+message.classList.add('cookie-message');
+message.innerHTML = 'We use cookied for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>';
+header.append(message);
+document.querySelector('.btn--close-cookie').addEventListener('click', function () {
+    message.parentElement.removeChild(message);
+});
+
+
+// Styles
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+message.style.height = Number.parseInt(getComputedStyle(message).height, 10) + 50 + 'px'; //El segundo elemento en parseInt representa el radix (base del sistema numerico, en este caso 10 es decimal)
+console.log(message.style.color);
+console.log(message.style.backgroundColor);
+console.log(getComputedStyle(message).color);
+console.log(getComputedStyle(message).height);
+
+document.documentElement.style.setProperty("--color-primary", "orange");
+
+
+// Attributes
+const logo = document.querySelector('.nav__logo');
+console.log(logo.alt);
+console.log(logo.className);
+logo.alt = 'Beautiful minimalist logo';
+
+// Non-standard
+console.log(logo.designer);
+console.log(logo.getAttribute('designer'));
+logo.setAttribute('company', 'Bankist');
+
+console.log(logo.src);
+console.log(logo.getAttribute('src'));
+
+const link = document.querySelector('.nav__link--btn');
+console.log(link.href);
+console.log(link.getAttribute('href'));
+
+// Data attributes
+console.log(logo.dataset.versionNumber);
+
+// Classes
+logo.classList.add('c', 'j');
+logo.classList.remove('c', 'j');
+logo.classList.toggle('c');
+logo.classList.contains('c'); // not includes
+logo.clasName = 'jonas'; // Don't use because this will override all the existing classes and it will allow us only put one class on any element.*/
+
+/* //Ejemplo 16: Use and difference between target and currentTarget
+function randomInt(min, max){
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function randomColor(){
+    return `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`
+}
+
+//En el HTML, estos tres querySelector que tiene el nav, nav__links y nav__link, esan agrupados en ese orden de arriba hacia abajo (O sea, un arbol). Si presiono el elemento padre (nav), unicamente se ejecutara ese evento, pero si ejecuto el ultimo (nav__link), se ejecutaran los 3 eventos ya que debe pasar por sus elementos anteriores para llegar hasta ese ultimo evento.
+//Recordar que en un EventListener el this siempre apunta al elemento en el cual se adjunta ese EventListener.
+//Para el caso de los target y currentTarget, se puede apreciar la diferencia cuando se hace click en los elementos hijos. Por ejemeplo. Si presiono el nav, no habra ninguna diferencia ya que es el elemento padre. Pero si presionamos nav__links, los target y currentTarget de este hijo seran los mismos, mientras que, en cuando ahora se ejecute el nav, el target seguira siendo el mismo ejecutado en el nav__links, pero en el currentTarget ahi si tomara el target actual, o sea, el del nav.
+document.querySelector('.nav').addEventListener('click', function (e) {
+    this.style.backgroundColor = randomColor();
+    console.log('NAV e.target: ', e.target);
+    console.log('NAV e.currentTarget: ', e.currentTarget);
+});
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+    this.style.backgroundColor = randomColor(); 
+    console.log('CONTAINER e.target: ', e.target, );
+    console.log('CONTAINER e.currentTarget:', e.currentTarget);
+});
+
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+    this.style.backgroundColor = randomColor(); 
+    console.log('LINK e.target: ', e.target);
+    console.log('LINK e.currentTarget: ', e.currentTarget);
+
+    // console.log(e.currentTarget === this);
+    // e.stopPropagation();
+}); */
+
+/* //Ejemplo 17: Page navigation, uso de scrollIntoView y diferencia entre usar this y target en addEventListener.
+//Metodo 1 (Esto es una mala practica cuando existen muchos elementos, porque tenemos muchas copias de la misma callback function, lo cual hara que la pagina sea mas lenta)
+// document.querySelectorAll(".nav__link").forEach(function(evento){
+//     evento.addEventListener("click", function(iter){
+//         iter.preventDefault();
+
+//         //Aqui usamos this en este addEventListener porque, estamos trabajando directamente con cada link (nav__link) por medio del foreach, por lo que, el this representa el elemento actual en el que se esta trabajando al precionar el boton
+//         const id = this.getAttribute("href"); //Retorna unicamente el nombre del atriuto contenido en esa etiqueta. Si usamos const id = this.href, entonces tendremos el link completo que aparece en la barra de navegacion
+//         document.querySelector(id).scrollIntoView({behavior: "smooth"});
+//     })
+// })
+
+//Metodo 2
+document.querySelector(".nav__links").addEventListener("click", function(evento){
+    evento.preventDefault();
+
+    //Aqui usamos evento.target porque en este caso estamos utilizando el <ul> como elemento padre, y sus hijos son <li> y <a>. Ahora, con el addEventListener podemos hacer click en el elemento padre o incluso sus hijos y JS ejecutara la tarea deseada. Si usamos this como en el metodo 1, este solo funcionara para elelemento actual o el padre, es decir <ul>.
+    if (evento.target.classList.contains("nav__link")) {
+        const id = evento.target.getAttribute("href"); //Retorna unicamente el nombre del atriuto contenido en esa etiqueta. Si usamos const id = this.href, entonces tendremos el link completo que aparece en la barra de navegacion
+        document.querySelector(id).scrollIntoView({behavior: "smooth"});
+    }
+}); */
+
+/* //Ejemplo 18: Use of childNodes, children, firstElementChild, lastElementChild, parentNode, parentElement and closest.
+const h1 = document.querySelector("h1");
+
+// Going downwards: child
+console.log("h1.querySelectorAll('.highlight')", h1.querySelectorAll(".highlight")); //Muestra todos los hijos de h1 con el nombre highlight
+console.log("h1.childNodes", h1.childNodes); // Retorna una lista de nodos de los nodos hijos de un elemento. En este caso, los hijos de h1. (Casi no se usa)
+console.log("h1.children", h1.children); //Retorna una coleccion HTML de los elementos hijos de un elemento y solo funciona para hijos directos. En este caso, los elementos de h1. (Se usa mucho)
+h1.firstElementChild.style.color = 'white'; //Este se usa para recuperar (y/o modificar) el primer elemento hijo.
+h1.lastElementChild.style.color = 'orangered'; //Este se usa para recuperar (y/o modificar) el ultimo elemento hijo.
+
+// Going upwards: parents (parentNode y parentElement nos permiten acceder al elemento del elemento que estamos usando. En este caso, <div class="header__title"> es padre de h1.)
+console.log("h1.parentNode", h1.parentNode);  
+console.log("h1.parentElement", h1.parentElement);
+
+h1.closest('.header').style.background = 'var(--gradient-secondary)'; //closese() se usa para seleccionar el elemento mas cercano a h1, por lo general es lo inverso al querySelector, ya que en lugar de buscar los elementos hijos, este busca los elementos padres.
+console.log(h1.closest('.header'));
+
+h1.closest('h1').style.background = 'var(--gradient-primary)';
+console.log(h1.closest('h1'));
+
+// Going sideways: siblings
+console.log(h1.previousElementSibling); //Returns the previous element at the same node tree level
+console.log(h1.nextElementSibling); //Returns the next element at the same node tree level
+console.log(h1.previousSibling); //Returns the previous node at the same node tree level
+console.log(h1.nextSibling); //Returns the next node at the same node tree level
+console.log(h1.parentElement.children); //This allows access to the h1's parent and then it allows us to access to all its children, which are h1, h4, button and img.
+
+[...h1.parentElement.children].forEach(function (evento) {
+    if (evento !== h1) evento.style.transform = 'scale(0.5)';
+}); */
+
+/* //Ejemplo 19: Building a Tabbed Component
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (evento) {
+    const clicked = evento.target.closest('.operations__tab');  console.log(clicked);
+    
+    // Guard clause
+    if (!clicked) return;
+
+    //Realizamos un barrido en cada uno de los 3 botones y en cada uno de los 3 contenidos de texto. Dependiendo del boton seleccionado, a este se le eliminaran sus "active"
+    tabs.forEach(evento => evento.classList.remove('operations__tab--active'));
+    tabsContent.forEach(evento => evento.classList.remove('operations__content--active'));
+
+    //Una vez eliminado los "active" en el boton y el contenido seleccinado, ahora se procede a "activar" el boton y su contenido seleccionado.
+    clicked.classList.add('operations__tab--active');
+
+    //Dependiendo del boton que se haya presionado, este realizara la animacion en el boton, y tambien se desplegara el contenido de texto del boton seleccionado.
+    document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active'); 
+});
+
+//Debemos añadir el closest(), ya que operations__tab-container tiene de hijos tres elementos botones con un span cada uno. Por lo que al presionar el boton, especificamente
+//el texto (span), no funcionara correctamente el boton. Es por eso que agregamos el closest(), para que al presionar el boton, considere unicamente el elemento mas cercano
+//con el nombre operations__tab (incluyendo su hijo <span>). 
+//Cabe mencionar que, si precionamos donde esta el <div class="operations__tab-container"> entonces tendremos un null en consola, ya que no existe ningun elemento padre con el 
+//class ".operations__tab". Para eso usamos el Guard clause, para que al no haber un click en el botton, simplemente salga de la funcion y no ejecute las lineas siguientes. */
 
 
 //         $$$$$$$$$$$$$$$ JSON & storage $$$$$$$$$$$$$$$
