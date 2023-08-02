@@ -61,9 +61,9 @@ const account2 = {
 const accounts = [account1, account2]; //Almacenamos la informacion de los 4 objetos en un array.
 
 // FAKE ALWAYS LOGGED IN
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
 
 let currentAccount, timer;
 let sorted = false;// For the btnSort, we fix this variable to false so the function displayMovements still recieve false, which means that it doesn't sort the array.
@@ -308,22 +308,22 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector(".btn--scroll-to");
 const section1 = document.querySelector("#section--1");
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContent = document.querySelectorAll('.operations__content');
+const nav = document.querySelector(".nav");
+const header = document.querySelector(".header");
 
-const openModal = function (evento) {
+function openModal(evento) {
     evento.preventDefault();
     modal.classList.remove('hidden');
     overlay.classList.remove('hidden');
 };
 
-const closeModal = function () {
+function closeModal() {
     modal.classList.add('hidden');
     overlay.classList.add('hidden');
 };
-
-//Metodo 1
-// for (let i = 0; i < btnsOpenModal.length; i++){
-//   btnsOpenModal[i].addEventListener('click', openModal);
-// }
 
 //Metodo 2
 btnsOpenModal.forEach(function(evento) {
@@ -333,6 +333,7 @@ btnsOpenModal.forEach(function(evento) {
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
 
+//Closing a card by using the keydown method in addEventListener
 document.addEventListener('keydown', function (evento) {
     if (evento.key === 'Escape' && !modal.classList.contains('hidden')) {
         closeModal();
@@ -356,16 +357,9 @@ document.querySelector(".nav__links").addEventListener("click", function(evento)
 });
 
 // Building a Tabbed Component
-const tabsContainer = document.querySelector('.operations__tab-container');
-const tabs = document.querySelectorAll('.operations__tab');
-const tabsContent = document.querySelectorAll('.operations__content');
-
 tabsContainer.addEventListener('click', function (evento) {
-    //Debemos añadir el closest(), ya que operations__tab-container tiene de hijos tres elementos botones con un span cada uno. Por lo que al presionar el boton, especificamente
-    //el texto (span), no funcionara correctamente el boton. Es por eso que agregamos el closest(), para que al presionar el boton, considere unicamente el elemento mas cercano
-    //con el nombre operations__tab (incluyendo su hijo <span>). 
-    //Cabe mencionar que, si precionamos donde esta el <div class="operations__tab-container"> entonces tendremos un null en consola, ya que no existe ningun elemento padre con el 
-    //class ".operations__tab". Para eso usamos el Guard clause, para que al no haber un click en el botton, simplemente salga de la funcion y no ejecute las lineas siguientes.
+
+    //Debemos añadir el closest(), ya que operations__tab-container tiene de hijos tres elementos botones con un span cada uno. Por lo que al presionar el boton, especificamente el texto (span), no funcionara correctamente el boton. Es por eso que agregamos el closest(), para que al presionar el boton, considere unicamente el elemento mas cercano con el nombre operations__tab (incluyendo su hijo <span>).  Cabe mencionar que, si precionamos donde esta el <div class="operations__tab-container"> entonces tendremos un null en consola, ya que no existe ningun elemento padre con el  class ".operations__tab". Para eso usamos el Guard clause, para que al no haber un click en el botton, simplemente salga de la funcion y no ejecute las lineas siguientes.
     const clicked = evento.target.closest('.operations__tab');  console.log(clicked);
     
     // Guard clause
@@ -382,8 +376,132 @@ tabsContainer.addEventListener('click', function (evento) {
     document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active'); 
 });
 
+//Passing Arguments to Event Handlers
+function handleHover(evento) {
+    //Recordar que cuando utilizamos bind(), la keyword "this" representa los parametros que le enviamos a la funcion, en este caso, 0.5 y 1.
+    if (evento.target.classList.contains('nav__link')) {
+        const link = evento.target;
+        const siblings = link.closest('.nav').querySelectorAll('.nav__link');
 
-//         $$$$$$$$$$$$$$$ Funciones y funciones de orde superior $$$$$$$$$$$$$$$
+        siblings.forEach(iter => { //Convertir a arrow function
+            if (iter !== link) iter.style.opacity = this;
+        });
+    }
+};
+
+// Usamos bind para retornar una nueva funcion de esa funcion handleHover, y de esa forma, no tener que usar una funcion que llame a otra funcion.
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+nav.addEventListener('mouseout', handleHover.bind(1));
+
+//Sticky navigation
+const stickyNav = function(entries, observer){
+    const [entry] = entries; //entries is always an array because the options in IntersectionObserver can have multiple thresholds, and for each threshold, there will be an entry in the array, even if there is only one threshold.
+    // console.log(entry, observer);
+
+    if (entry.isIntersecting) { //When the target isn't intersecting the root, then we want the sticky class to be applied.
+        nav.classList.remove("sticky");
+    }else{
+        nav.classList.add("sticky");
+    }
+}
+
+const options = {
+    root: null, //We select null because we are interested in the entire viewport
+    threshold: 0, //A value of 0 means that even a single visible pixel counts as the target being visible. That's to say, when the header shows a 0% of itself, then the function will get called .
+
+    //We use getBoundingClientRect().height to calculate dynamically the height (for responsive webpages) of the nav without the needed of hard coding and tupe an specific height. It'll be 90px.
+    rootMargin: `-${nav.getBoundingClientRect().height}px` //This value is in pixels and will be applied outside of the target element
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, options);
+headerObserver.observe(header);
+
+
+// Revealing Elements on Scroll
+const allSections = document.querySelectorAll(".section");
+
+const revealSection = function(entries, observer){
+    const [entry] = entries;     //console.log(entry)
+
+    if(entry.isIntersecting === false) return;
+    entry.target.classList.remove("section--hidden");
+
+    observer.unobserve(entry.target);
+};
+const opciones = {
+    root: null,
+    threshold: 0.15, //We use something greater than zero because we don't want to show the section right as it enters the viewport, but a litte latter.
+}
+
+const sectionObserver = new IntersectionObserver(revealSection, opciones)
+
+allSections.forEach(function(section){
+    sectionObserver.observe(section);
+    // section.classList.add("section--hidden");
+});
+
+
+//Lazy Loading Images
+const imgTarget = document.querySelectorAll("img[data-src]");  // console.log(imgTarget);
+
+const loadImg = function(entries, observer){
+    const [entry] = entries;   //console.log(entry);
+
+    if(entry.isIntersecting === false) return;
+
+    //Replace the src ("imgs/grow-lazy.jpg") with data-src ("imgs/grow.jpg"). That's to say, src is the blur image and the data-src is the high-quality image.
+    entry.target.src = entry.target.dataset.src;
+
+    entry.target.addEventListener("load", function(){
+        entry.target.classList.remove("lazy-img");
+    })
+
+    observer.unobserve(entry.target)
+}
+
+const Opciones = {
+    root: null,
+    threshold: 0,
+    rootMargin: "200px"
+}
+
+const imgObserver = new IntersectionObserver(loadImg, Opciones);
+imgTarget.forEach(evento => imgObserver.observe(evento));
+
+
+//Slider
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+
+let curSlide = 0;
+const maxSlide = slides.length;
+
+goToSlide(0);
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide);
+
+function goToSlide(slide) {
+    slides.forEach(function(evento, iter){
+        evento.style.transform = `translateX(${100 * (iter - slide)}%)`; //0%, 100%, 200%
+    })
+};
+
+function nextSlide() {
+    curSlide === maxSlide - 1 ? curSlide = 0 : curSlide++;
+    goToSlide(curSlide);
+};
+
+function prevSlide() {
+    curSlide === 0 ? curSlide = maxSlide - 1 : curSlide--;
+    goToSlide(curSlide);
+};
+
+
+
+
+
+//         $$$$$$$$$$$$$$$ Funciones $$$$$$$$$$$$$$$
 
 
 /* //Ejemplo 1: Definicion de mi funcion
@@ -524,6 +642,10 @@ let descuento = 50;
 let nuevoPrecio = resta( suma(precioProducto, iva(precioProducto)), descuento );
 console.log(nuevoPrecio); */
 
+
+//         $$$$$$$$$$$$$$$ Funciones de orde superior $$$$$$$$$$$$$$$
+
+
 /* //Ejemplo 1: Desarrollo de una funcion para conseguir la abstraccion de la suma consecutiva de numeros dentro de un rango.
 
 let total = 0;
@@ -556,7 +678,7 @@ if (res) {
     console.log("El numero "+ numero+ " NO es mayor que 17."+ mayorDeEdad);
 } */
 
-/* // Ejemplo 3: Aplicacion de una funcion en CALL STACK
+/* //Ejemplo 3: Aplicacion de una funcion en CALL STACK
 function multiply (x, y) {
  return x * y;
 }
@@ -597,8 +719,7 @@ porCadaElemento(numeros, console.log);
 porCadaElemento(numeros, acumular);
 console.log("El valor total de la suma de los elementos de "+ numeros.toString()+ " es: "+ total+"."); */
 
-/* // Ejemplo 6.0: Default Parameters
-'use strict';
+/* // Ejemplo 6.1: Default Parameters
 const bookings = [];
 
 const createBooking = function( flightNum, numPassengers = 1, price = (199*numPassengers) ){
@@ -620,7 +741,7 @@ createBooking("LH123", 2, 800);
 createBooking("LH123", 5);
 createBooking("LH123", undefined, 1000); */
 
-/* // Ejemplo 6.1: How Passing Arguments Works: Value vs Reference
+/* // Ejemplo 6.2: How Passing Arguments Works: Value vs Reference
 const flight = 'LH234';
 const jonas = {name: 'Jonas Schmedtmann', passport: 24739479284};
 
@@ -646,7 +767,7 @@ const newPassport = function(person){
 newPassport(jonas);
 checkIn(flight, jonas); */
 
-/* // Ejemplo 6.2: Functions Accepting Callback Functions
+/* // Ejemplo 6.3: Functions Accepting Callback Functions
 const oneWord = function (str) {
     const res = str.replace('/ /g', '').toLowerCase(); //     / /g sirve para capturar todos los elementos globales y no solamente 1. En este casi, queremos todos los espacios en blanco, y si no usamos esto, unicamente obtendremos el primer espacio en blanco.
     return res;
@@ -674,7 +795,7 @@ const high5 = function () {
 document.body.addEventListener('click', high5);
 ['Jonas', 'Martha', 'Adam'].forEach(high5); */
 
-/* // Ejemplo 6.3: Functions Returning Functions
+/* // Ejemplo 6.4: Functions Returning Functions
 const greet = function (greeting) {
 
     return function (name) {
@@ -684,14 +805,14 @@ const greet = function (greeting) {
 
 //Llamamos a la funcion greet y le mandamos "hey". Despues, esta funcion retorna otra funcion que se almacena en greeterHey. Entonces, cuando en la linea de abajo volvemos a llamar a la funcion greeterHey, ahora ejecutaremos la funcion pero que esta almacenada en esta variable. O sea, la funcion del return.
 const greeterHey = greet('Hey');
-greeterHey('Jonas');
-greet('Hey')('Jonas'); //Esto es lo mismo que las dos lineas de arriba.
+greeterHey('there');
+greet('Hey')('there'); //Esto es lo mismo que las dos lineas de arriba.
 
 // Esto es lo mismo que el procedimiento de arriba pero con arrow functions.
 const greetArr = greeting => name => console.log(`${greeting} ${name}`);
-greetArr('Hey')('Jonas'); */
+greetArr('Hey')('there'); */
 
-/* // Ejemplo 6.4: The call() and apply() Methods
+/* // Ejemplo 6.5: The call(), apply() and bind() Methods
 const lufthansa = {airline: 'Lufthansa',iataCode: 'LH',bookings: [],
     book: function(flightNum, name) {
         console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
@@ -716,9 +837,10 @@ book.call(lufthansa, 514, 'Chavez german');
 const flightData = [583, 'George Cooper'];
 book.apply(swiss, flightData);
 book.call(swiss, ...flightData);
-console.log(swiss); */
+console.log(swiss);
 
-/* // Ejemplo 6.5: The bind() method
+
+
 const bookEW = book.bind(eurowings); // Bind method: Allows us to manually set "this" for any function call. With the bind() method, an object can borrow a method from another object.
 bookEW(23, "German Mancilla Chavez");
 
@@ -897,7 +1019,6 @@ boardPassengers(180, 3);
         header.style.color = 'blue';
     });
 })();  */
-
 
 
 //         $$$$$$$$$$$$$$$ Objetos $$$$$$$$$$$$$$$
@@ -3160,9 +3281,6 @@ function validarFormulario(data) {
 
 
 /* //Ejemplo 14: Finding coordenates and position, and use of scroll
-const btnScrollTo = document.querySelector(".btn--scroll-to");
-const section1 = document.querySelector("#section--1");
-
 btnScrollTo.addEventListener("click", function(evento){
     const s1coords = section1.getBoundingClientRect(); 
     console.log("Section position: ", s1coords);                              //Representa la posicion de la seccion
@@ -3351,8 +3469,164 @@ tabsContainer.addEventListener('click', function (evento) {
 //Cabe mencionar que, si precionamos donde esta el <div class="operations__tab-container"> entonces tendremos un null en consola, ya que no existe ningun elemento padre con el 
 //class ".operations__tab". Para eso usamos el Guard clause, para que al no haber un click en el botton, simplemente salga de la funcion y no ejecute las lineas siguientes. */
 
+/* // Ejemplo 20.1: Passing Arguments to Event Handlers (Method 1)
+
+// Menu fade animation 
+function handleHover(evento) {
+    
+    //Recordar que cuando utilizamos bind(), la keyword "this" representa los parametros que le enviamos a la funcion, en este caso, 0.5 y 1.
+    console.log(this, evento.currentTarget);
+
+    if (evento.target.classList.contains('nav__link')) {
+        const link = evento.target;
+        const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+        const logo = link.closest('.nav').querySelector('img');
+
+        siblings.forEach(function(iter) {
+            if (iter !== link) iter.style.opacity = this;
+        });
+
+        logo.style.opacity = this;
+    }
+};
+
+// Usamos bind para retornar una nueva funcion de esa funcion handleHover, y de esa forma, no tener que usar una funcion que llame a otra funcion.
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+nav.addEventListener('mouseout', handleHover.bind(1)); */
+
+/* // Ejemplo 20.2: Passing Arguments to Event Handlers (Method 2) 
+// Menu fade animation
+function handleHover(evento, opacity) {
+
+    console.log(evento.currentTarget);
+
+    if (evento.target.classList.contains('nav__link')) {
+        const link = evento.target;
+        const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+        const logo = link.closest('.nav').querySelector('img');
+
+        siblings.forEach(function(iter){
+            if (iter !== link) iter.style.opacity = opacity;
+        });
+
+        logo.style.opacity = opacity;
+    }
+};
+
+//Debido a que addEventListener requiere una funcion como parametro, no podemos simplemente usar la funcion de handleHover directamente ahi porque esta al final del dia retorna un valor, lo cual es incorrecto cuando usamos addEventListener.
+nav.addEventListener('mouseover', function(evento){
+    handleHover(evento, 0.5);
+    console.log(this);
+});
+
+nav.addEventListener('mouseout', function(evento){
+    handleHover(evento, 1);
+    console.log(this);
+}); */
+
+/* //Ejemplo 21: Sticky navigation
+
+const initialCoords = section1.getBoundingClientRect();
+console.log(initialCoords);
+
+window.addEventListener('scroll', function () {
+    console.log(window.scrollY);
+    window.scrollY > initialCoords.top ? nav.classList.add('sticky') : nav.classList.remove('sticky');
+}); */
+
+/* //Ejemplo 22.1: The Intersection Observer API
+
+const obsCallback = function(entries, observer){ //Whenever the first section (our target) is intersecting the viewport at 10%, the function will get called and that's no matter if we're scrolling up or down.
+    entries.forEach(evento => console.log(evento));
+} 
+
+const obsOptions = { 
+    root: null,     //root is the element that the target is intersecting. We write null and we'll be able to observe our target element intersecting the entire wiewport (the entire rectangle which shows the current portion of the page)
+    // threshold: 0.1,  //This is the percent of intersection at which the obersver callback will be called
+    threshold: [0, 0.2] //0 means that our callback will trigger each time that the target element moves complitelly out of the view. and 1 when the 100% of the target is actually visible in the viewport.
+}
+
+//             new IntersectionObserver(callback,    options);
+const IO_API = new IntersectionObserver(obsCallback, obsOptions); // Our "callback" and "options" will be pased into our so called IntersectionObserver object.
+IO_API.observe(section1); //This is the target element that will intersect in root. */
+
+/* //Ejemplo 22.2: The Intersection Observer API
+const stickyNav = function(entries){
+    const [entry] = entries; //entries is always an array because the options in IntersectionObserver can have multiple thresholds, and for each threshold, there will be an entry in the array, even if there is only one threshold.
+    console.log(entry);
+
+    if (!entry.isIntersecting) { //When the target isn't intersecting the root, then we want the sticky class to be applied.
+        nav.classList.add("sticky");
+    }else{
+        nav.classList.remove("sticky");
+    }
+}
+
+const options = {
+    root: null, //We select null because we are interested in the entire viewport
+    threshold: 0, //A value of 0 means that even a single visible pixel counts as the target being visible. That's to say, when the header shows a 0% of itself, then the function will get called .
+
+    //We use getBoundingClientRect().height to calculate dynamically the height (for responsive webpages) of the nav without the needed of hard coding and tupe an specific height. It'll be 90px.
+    rootMargin: `-${nav.getBoundingClientRect().height}px` //This value is in pixels and will be applied outside of the target element
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, options);
+headerObserver.observe(header); */
+
+/* //Ejemplo 23: Revealing Elements on Scroll
+const allSections = document.querySelectorAll(".section");
+
+const revealSection = function(entries, observer){
+    const [entry] = entries;     console.log(entry)
+
+    if(entry.isIntersecting === false) return;
+    entry.target.classList.remove("section--hidden");
+
+    observer.unobserve(entry.target);
+};
+const opciones = {
+    root: null,
+    threshold: 0.15, //We use something greater than zero because we don't want to show the section right as it enters the viewport, but a litte latter.
+}
+
+const sectionObserver = new IntersectionObserver(revealSection, opciones)
+
+allSections.forEach(function(section){
+    sectionObserver.observe(section);
+    section.classList.add("section--hidden");
+}); */
+
+/* //Ejemplo 24: Lazy Loading Images
+const imgTarget = document.querySelectorAll("img[data-src]");  // console.log(imgTarget);
+
+const loadImg = function(entries, observer){
+    const [entry] = entries;   //console.log(entry);
+
+    if(entry.isIntersecting === false) return;
+
+    //Replace the src ("imgs/grow-lazy.jpg") with data-src ("imgs/grow.jpg"). That's to say, src is the blur image and the data-src is the high-quality image.
+    entry.target.src = entry.target.dataset.src;
+
+    entry.target.addEventListener("load", function(){
+        entry.target.classList.remove("lazy-img");
+    })
+
+    observer.unobserve(entry.target)
+}
+
+const Opciones = {
+    root: null,
+    threshold: 0,
+    rootMargin: "200px"
+}
+
+const imgObserver = new IntersectionObserver(loadImg, Opciones);
+imgTarget.forEach(evento => imgObserver.observe(evento)); */
+
+
 
 //         $$$$$$$$$$$$$$$ JSON & storage $$$$$$$$$$$$$$$
+
 
 
 /* // Ejemplo 1: setItem en localStorage para crear datos en el local storage. getItem para recuperar informacion almacenada. Y buscar si existe algo o no.
@@ -3509,16 +3783,7 @@ function eventoFuturo (){
 console.log( eventoFuturo() ) // Promise { <pending> } */
 
 /* // Ejemplo 2: Uso de los resultados de una Promesa para cambiar sus estados
-function eventoFuturo (res) {
-    return new Promise( (resolve, reject) => {
-        res ? resolve('Promesa resuelta') : reject('Promesa rechazada');
-    })
-}
-console.log( eventoFuturo(true) ) // Promise { 'Promesa resuelta' }
-console.log( eventoFuturo(false) ) // Promise { <rejected> 'Promesa rechazada' } */
-
-/* // Ejemplo 3: 
-function eventoFuturo(res){
+function eventoFuturo1(res){
     return new Promise( (resolve, reject) => {
         setTimeout( () => {
             res ? resolve('Promesa resuelta') : reject('Promesa rechazada');
@@ -3526,10 +3791,10 @@ function eventoFuturo(res){
     })
 }
 //Devuelve pending porque la funcion se ejecutara y esperara 1500mS por el setTimeout, pero como no hay nada que haga que "espere" a que esto se resuelva, entonces no se mostrara nada.
-console.log( eventoFuturo(true) ) // Promise { <pending> }
-console.log( eventoFuturo(false) ) // Promise { <pending> } */
+console.log( eventoFuturo1(true) ) // Promise { <pending> }
+console.log( eventoFuturo1(false) ) // Promise { <pending> } */
 
-/* // Ejemplo 4: Uso del Then y Catch para catpturar los resultados y aprovechamiento de las posibilidades de respuestas de una promesa
+/* // Ejemplo 3: Uso del Then y Catch para catpturar los resultados y aprovechamiento de las posibilidades de respuestas de una promesa
 function eventoFuturo (res) {
     return new Promise( (resolve, reject) => {
         setTimeout( () => {
@@ -3553,7 +3818,7 @@ eventoFuturo(true)
     //console.log("Fin del proceso con false")
 }); */
 
-/* // Ejemplo 5: Ejercicio con un array, usando then/catch/finally y tambien ASYNC/AWAIT
+/* // Ejemplo 4: Ejercicio con un array, usando then/catch/finally y tambien ASYNC/AWAIT
 const productos = [
     {marca: "Nissan", modelo: 'Sentra', precio: 1500},
     {marca: "Toyota", modelo: 'Camry', precio: 2500},
@@ -3595,7 +3860,7 @@ async function pedirPosts(){
     }
 }; */
 
-/* // Ejemplo 6: Ejemplo del uso de Promesa para recuperar informacion de una base de datos
+/* // Ejemplo 5: Ejemplo del uso de Promesa para recuperar informacion de una base de datos
 
 const BD_X = [
     {id: 1, nombre: 'Producto 1', precio: 1500},
@@ -3664,12 +3929,17 @@ fetch("https://jsonplaceholder.typicode.com/posts/1")
     console.log(json)
   }); */
 
-/* // Ejemplo 3: Cómo recuperar datos de una localizacion externa (http://) con rutas relativas
+/* // Ejemplo 3: Cómo recuperar datos de una localizacion externa (http://) e una interna (.json) con rutas relativas
+
+recuperarPosteos();
+
 function recuperarPosteos() {
     let bodyTable = document.getElementById("tableBody"); // Pintar la tabla de carreras en la UI
     bodyTable.innerHTML = "";
     toggleLoadingContainer(true);
-    fetch("https://jsonplaceholder.typicode.com/posts")
+    setTimeout(() => {
+        fetch("https://jsonplaceholder.typicode.com/posts")  //Localizacion externa
+    // fetch("/ApuntesDeClase/data/posts.json")                //Localizacion interna
         .then((resultado) => resultado.json()) // Obtuvimos la respuesta --> Tomar los datos del body (.json())
         .then((data) => {                      // Obtenemos la colección de posteos
             data.forEach((post) => {
@@ -3695,9 +3965,8 @@ function recuperarPosteos() {
         .finally(() => {
             toggleLoadingContainer(false);
         });
+    }, 2000);
 }
-
-recuperarPosteos();
 
 function toggleLoadingContainer(isLoading = false) {
     const loadingContainer = document.getElementById("loadingMessage");
@@ -3708,51 +3977,7 @@ function toggleLoadingContainer(isLoading = false) {
     }
 } */
 
-/* // Ejemplo 4: Cómo recuperar datos de una localizacion interna (.json) con rutas relativas
-function recuperarPosteos(){
-    let bodyTable = document.getElementById("tableBody");// Pintar la tabla de carreras en la UI
-    bodyTable.innerHTML = "";
-    toggleLoadingContainer(true);
-    fetch("/ApuntesDeClase/data/posts.json")
-        .then((res) => res.json())
-        .then((data) => {
-            data.forEach((post) => {// Obtenemos la colección de posteos
-                let record = document.createElement("tr");
-                record.innerHTML = `<tr>
-                <td scope="row">${post.id}</td>
-                <td scope="row">${post.title}</td>
-                <td scope="row">${post.body}</td>
-                </tr>`;
-                bodyTable.append(record);
-            });
-        })
-
-        .catch((error) => {
-            let record = document.createElement("tr");
-            record.innerHTML = 
-                `<tr>
-                    <td colspan="3" scope="row">Ocurrio un error al recuperar los datos</td>
-                </tr>`;
-            bodyTable.append(record);
-        })
-
-        .finally(() => {
-            toggleLoadingContainer(false);
-        });
-}
-
-recuperarPosteos();
-
-function toggleLoadingContainer(isLoading = false) {
-  const loadingContainer = document.getElementById("loadingMessage");
-  if (isLoading) {
-    loadingContainer.classList.remove("visually-hidden");
-  } else {
-    loadingContainer.classList.add("visually-hidden");
-  }
-} */
-
-/* // Ejemplo 5: Uso de ASYNC/AWAIT para crear funciones asincrónas que se comportan como si fueran sincronas
+/* // Ejemplo 4: Uso de ASYNC/AWAIT para crear funciones asincrónas que se comportan como si fueran sincronas
 console.log("Previo a hacer la solicitud");
 async function pedirPosts(){
   const respuesta = await fetch("./data/posts.json");  console.log("Obtuvimos la respuesta: ");
@@ -3763,7 +3988,7 @@ async function pedirPosts(){
 
 pedirPosts(); */
 
-/* // Ejemplo 6: Uso de los parámetros de configuración para el método fetch (CREACIÓN DE UN RECURSO)
+/* // Ejemplo 5: Uso de los parámetros de configuración para el método fetch (CREACIÓN DE UN RECURSO)
 const CONFIGURACION = {
   method: "POST",
   body: JSON.stringify({
@@ -3780,7 +4005,7 @@ fetch("https://jsonplaceholder.typicode.com/posts", CONFIGURACION)
   .then((response) => response.json())
   .then((data) => console.log(data)); */
 
-/* // Ejemplo 7: Uso de los parámetros de configuración para el método fetch (MODIFICACIÓN DE UN RECURSO)
+/* // Ejemplo 6: Uso de los parámetros de configuración para el método fetch (MODIFICACIÓN DE UN RECURSO)
 const CONFIGURACION = {
   method: "PUT",// PUT/GETCH
   body: JSON.stringify({
@@ -3797,7 +4022,7 @@ fetch("https://jsonplaceholder.typicode.com/posts/10", CONFIGURACION)
   .then((response) => response.json())
   .then((data) => console.log(data)); */
 
-/* // Ejemplo 8: Uso de los parámetros de configuración para el método fetch (ELIMINACIÓN DE UN RECURSO)
+/* // Ejemplo 7: Uso de los parámetros de configuración para el método fetch (ELIMINACIÓN DE UN RECURSO)
 const CONFIGURACION = {
   method: "DELETE",
 };

@@ -1,4 +1,4 @@
-//Apuntes de clase
+<!-- Apuntes de clase -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,12 +21,6 @@
       }
       #emailHelp{
           color: white;
-      }
-  
-      body{
-          display: flex;
-          flex-direction: column;
-          height: 100%;
       }
       .buy, .poll {
           font-size: 1.6rem;
@@ -109,34 +103,7 @@
           
           <div id="listaParticipantes"></div>
       </div>
-  
-      <!-- Other -->
-      <h1>A Closer Look at Functions</h1>
-      <button class="buy">Buy new plane 🛩</button>
-      <button class="poll">Answer poll?</button>
-  
-  
-      <!-- Este div pertenece al ejercicio 14 de DOM  -->
-      <div id="main"></div> 
-
-      <!-- Este div pertenece al ejercicio 4 y 5 de asincronia -->
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">ID de POST</th>
-            <th scope="col">Título</th>
-            <th scope="col">Posteo</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
-  
-        <div id="loadingMessage" class="d-flex align-items-center alert alert-info mt-3 visually-hidden">
-          <strong>Recuperando datos...</strong>
-          <div class="spinner-border ms-auto" role="status" aria-hidden="true">
-          </div>
-        </div>
-  
+   
   
       <script src="./main.js"></script>
       <script src="./js/bootstrap.min.js"></script>
@@ -145,7 +112,7 @@
   
   
   
-//Bankist
+<!-- Bankist -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -154,7 +121,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="shortcut icon" type="image/png" href="/icon.png" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../Bankist/css/style.css" />
+    <link rel="stylesheet" href="./css/style.css" />
     <title>Bankist</title>
   </head>
 

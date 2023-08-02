@@ -1249,7 +1249,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     > composed	            Returns whether the event is composed or not	Event
     > ctrlKey	            Returns whether the "CTRL" key was pressed when the mouse event was triggered	MouseEvent
     > ctrlKey	            Returns whether the "CTRL" key was pressed when the key event was triggered	KeyboardEvent, TouchEvent
-    > currentTarget	        Returns the element whose event listeners triggered the event. It is the element that the event listener is attached to.	                 Event
+    > currentTarget	        Returns the element whose event listeners triggered the event. It is the element that the event listener is attached to.	(currentTarget is similar to the "this" keyword)         Event
     > data	                Returns the inserted characters	InputEvent
     > dataTransfer	        Returns an object containing the data being dragged/dropped, or inserted/deleted	DragEvent, InputEvent
     > defaultPrevented	    Returns whether or not the preventDefault() method was called for the event	Event
@@ -1346,7 +1346,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     > keydown	              A key is down	KeyboardEvent
     > keypress	              A key is pressed	KeyboardEvent
     > keyup	                  A key is released	KeyboardEvent
-    > load	                  An object has loaded	UiEvent, Event
+    > load	                An object has loaded. This event is fired when the whole webpage (HTML) has loaded fully, including all dependent resources, including JavaScript files, CSS files, and images.	         UiEvent, Event
     > loadeddata	          Media data is loaded	Event
     > loadedmetadata	      Meta data (like dimensions and duration) are loaded	Event
     > loadstart	              The browser starts looking for the specified media	ProgressEvent
@@ -1394,7 +1394,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     > waiting	              A media is paused but is expected to resume (e.g. buffering)	Event
     > wheel	                  The mouse wheel rolls up or down over an element	WheelEvent    
     
-- Add Event Listener DOM Event Types
+- addEventListener DOM Event Types
     > Mouse Events:    click, dblclick, mousedown, mouseup, contextmenu, mouseout, mousewheel, mouseover
     > Touch Events:    touchstart, touchend, touchmove, touchcancel
     > Keyboard Events: keydown, keyup, keypress
@@ -1879,6 +1879,53 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
          + ¿Tienes algo nuevo para mí?
          + ¿Tienes algo nuevo para mí?
        De manera indefinida, sin optimizar los recursos/datos del usuario y nuestro servidor.
+       
+       
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
+
+                                                                                                                   WEB API'S
+
+> IntersectionObserver: The IntersectionObserver interface of the Intersection Observer API provides a way to asynchronously observe changes in the intersection of a target element with an ancestor element or with a top-level document's 
+  viewport. The ancestor element or viewport is referred to as the root.
+  When an IntersectionObserver is created, it's configured to watch for given ratios of visibility within the root. The configuration cannot be changed once the IntersectionObserver is created, so a given observer object is only useful for 
+  watching for specific changes in degree of visibility; however, you can watch multiple target elements with the same observer.            
+  
+  ~ constructor: The IntersectionObserver() constructor creates and returns a new IntersectionObserver object.
+    The rootMargin, if specified, is checked to ensure it's syntactically correct. If not specified, or an empty string, the default is 0px 0px 0px 0px.
+    The thresholds, if specified, are checked to ensure that they're all in the range 0.0 and 1.0 inclusive, and the threshold list is sorted in ascending numeric order. If the threshold list is empty, it's set to the array [0.0].      
+  
+                                                                                   new IntersectionObserver(callback, options);
+  
+    callback: A function which is called when the percentage of the target element is visible crosses a threshold. The callback receives as input two parameters:
+    
+    entries: An array of IntersectionObserverEntry objects, each representing one threshold which was crossed, either becoming more or less visible than the percentage specified by that threshold.
+    
+    observer: The IntersectionObserver for which the callback is being invoked.
+    
+    options Optional: An optional object which customizes the observer. If options isn't specified, the observer uses the document's viewport as the root, with no margin, and a 0% threshold (meaning that even a one-pixel change is enough to
+    trigger a callback). You can provide any combination of the following options:
+    
+    root: An Element or Document object which is an ancestor of the intended target, whose bounding rectangle will be considered the viewport. Any part of the target not visible in the visible area of the root is not considered visible.
+    root property identifies the Element or Document whose bounds are treated as the bounding box of the viewport for the element which is the observer's target. 
+    If the root is null, then the bounds of the actual document viewport are used, the owning document is used as the root, and the bounds its viewport (that is, the visible area of the document) are used as the root bounds.
+    
+    rootMargin: A string which specifies a set of offsets to add to the root's bounding_box when calculating intersections, effectively shrinking or growing the root for calculation purposes. The syntax is approximately the same as that for 
+    the CSS margin property; see The intersection root and root margin for more information on how the margin works and the syntax. The default is "0px 0px 0px 0px".
+    
+    threshold: Either a single number or an array of numbers between 0.0 and 1.0, specifying a ratio of intersection area to total bounding box area for the observed target. A value of 0 means that even a single visible pixel counts as the 
+    target being visible. 1.0 means that the entire target element is visible. See Thresholds for a more in-depth description of how thresholds are used. The default is a threshold of 0.0.                                                                                                                                                                                 
+    
+    
+    disconnect(): stops watching all of its target elements for visibility changes.
+    
+    observe(): adds an element to the set of target elements being watched by the IntersectionObserver. One observer has one set of thresholds and one root, but can watch multiple target elements for visibility changes in keeping with those.
+    To stop observing the element, call IntersectionObserver.unobserve().
+    
+    takeRecords(): returns an array of IntersectionObserverEntry objects, one for each targeted element which has experienced an intersection change since the last time the intersections were checked, either explicitly through a call to this 
+    method or implicitly by an automatic call to the observer's callback.
+    
+    unobserve(): instructs the IntersectionObserver to stop observing the specified target element.
+       
    
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
