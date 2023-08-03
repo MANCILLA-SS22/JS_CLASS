@@ -1,4 +1,6 @@
 //         $$$$$$$$$$$$$$$ Proyectos $$$$$$$$$$$$$$$
+
+
 /* //Proyecto 1: Bankist
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.date');
@@ -301,7 +303,7 @@ labelBalance.addEventListener('click', function () {
     })
 }); */
 
-//Proyecto 2: Bankist_Advanced-DOM
+/* //Proyecto 2: Bankist_Advanced-DOM
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
@@ -394,7 +396,7 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 nav.addEventListener('mouseout', handleHover.bind(1));
 
 //Sticky navigation
-const stickyNav = function(entries, observer){
+function stickyNav(entries, observer){
     const [entry] = entries; //entries is always an array because the options in IntersectionObserver can have multiple thresholds, and for each threshold, there will be an entry in the array, even if there is only one threshold.
     // console.log(entry, observer);
 
@@ -473,32 +475,66 @@ imgTarget.forEach(evento => imgObserver.observe(evento));
 const slides = document.querySelectorAll('.slide');
 const btnLeft = document.querySelector('.slider__btn--left');
 const btnRight = document.querySelector('.slider__btn--right');
-
+const dotContainer = document.querySelector(".dots");
 let curSlide = 0;
 const maxSlide = slides.length;
 
-goToSlide(0);
-btnRight.addEventListener('click', nextSlide);
-btnLeft.addEventListener('click', prevSlide);
 
 function goToSlide(slide) {
     slides.forEach(function(evento, iter){
         evento.style.transform = `translateX(${100 * (iter - slide)}%)`; //0%, 100%, 200%
+        // console.log(`${iter} , ${evento.style.transform}`);
     })
 };
 
 function nextSlide() {
     curSlide === maxSlide - 1 ? curSlide = 0 : curSlide++;
     goToSlide(curSlide);
+    activateDot(curSlide)
 };
 
 function prevSlide() {
     curSlide === 0 ? curSlide = maxSlide - 1 : curSlide--;
     goToSlide(curSlide);
+    activateDot(curSlide)
 };
 
+function createDots() {
+    slides.forEach(function (_, i) {
+        dotContainer.insertAdjacentHTML('beforeend',
+            `<button class="dots__dot" data-slide="${i}"></button>`
+        );
+    });
+};
 
+function activateDot(slide){
+    document.querySelectorAll('.dots__dot').forEach(dot => dot.classList.remove('dots__dot--active'));
+    document.querySelector(`.dots__dot[data-slide="${slide}"]`).classList.add('dots__dot--active');
+};
 
+function init(){
+    createDots();
+    goToSlide(0);
+    activateDot(0);
+}
+
+init();
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide);
+
+document.addEventListener('keydown', function (evento) {
+    console.log(evento)
+    if (evento.key === 'ArrowLeft') prevSlide();
+    if (evento.key === 'ArrowRight') nextSlide();
+});
+
+dotContainer.addEventListener('click', function (evento) {
+    if (evento.target.classList.contains('dots__dot')) {
+        const slide = evento.target.dataset.slide;  //const { slide } = e.target.dataset;
+        goToSlide(slide);
+        activateDot(slide);
+    }
+}); */
 
 
 //         $$$$$$$$$$$$$$$ Funciones $$$$$$$$$$$$$$$
@@ -1231,6 +1267,28 @@ const restaurant = {
         return console.log(`Desestructuracion de un objecto usando funcion X2--> Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`);
     }
 }; */
+
+
+//         $$$$$$$$$$$$$$$ POO $$$$$$$$$$$$$$$
+
+
+//Ejemplo 1:
+
+//Ejemplo 2:
+
+//Ejemplo 3:
+
+//Ejemplo 4:
+
+//Ejemplo 6:
+
+//Ejemplo 7:
+
+//Ejemplo 8:
+
+//Ejemplo 9:
+
+//Ejemplo 10:
 
 
 //         $$$$$$$$$$$$$$$ Arrays $$$$$$$$$$$$$$$
@@ -3622,6 +3680,86 @@ const Opciones = {
 
 const imgObserver = new IntersectionObserver(loadImg, Opciones);
 imgTarget.forEach(evento => imgObserver.observe(evento)); */
+
+/* //Ejemplo 24: Slider
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+const dotContainer = document.querySelector(".dots");
+let curSlide = 0;
+const maxSlide = slides.length;
+
+
+function goToSlide(slide) {
+    slides.forEach(function(evento, iter){
+        evento.style.transform = `translateX(${100 * (iter - slide)}%)`; //0%, 100%, 200%
+        // console.log(`${iter} , ${evento.style.transform}`);
+    })
+};
+
+function nextSlide() {
+    curSlide === maxSlide - 1 ? curSlide = 0 : curSlide++;
+    goToSlide(curSlide);
+    activateDot(curSlide)
+};
+
+function prevSlide() {
+    curSlide === 0 ? curSlide = maxSlide - 1 : curSlide--;
+    goToSlide(curSlide);
+    activateDot(curSlide)
+};
+
+function createDots() {
+    slides.forEach(function (_, i) {
+        dotContainer.insertAdjacentHTML('beforeend',
+            `<button class="dots__dot" data-slide="${i}"></button>`
+        );
+    });
+};
+
+function activateDot(slide){
+    document.querySelectorAll('.dots__dot').forEach(dot => dot.classList.remove('dots__dot--active'));
+    document.querySelector(`.dots__dot[data-slide="${slide}"]`).classList.add('dots__dot--active');
+};
+
+function init(){
+    createDots();
+    goToSlide(0);
+    activateDot(0);
+}
+
+init();
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide);
+
+document.addEventListener('keydown', function (evento) {
+    console.log(evento)
+    if (evento.key === 'ArrowLeft') prevSlide();
+    if (evento.key === 'ArrowRight') nextSlide();
+});
+
+dotContainer.addEventListener('click', function (evento) {
+    if (evento.target.classList.contains('dots__dot')) {
+        const slide = evento.target.dataset.slide;  //const { slide } = e.target.dataset;
+        goToSlide(slide);
+        activateDot(slide);
+    }
+}); */
+
+/* //Ejemplo 25: Lifecycle DOM Events
+document.addEventListener('DOMContentLoaded', function (evento) {
+    console.log('HTML parsed and DOM tree built!', evento);
+});
+
+window.addEventListener('load', function (evento) {
+    console.log('Page fully loaded', evento);
+});
+
+window.addEventListener('beforeunload', function (evento) {
+    evento.preventDefault();
+    console.log(evento);
+    evento.returnValue = '';
+}); */
 
 
 

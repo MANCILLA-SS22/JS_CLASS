@@ -8,35 +8,14 @@
     <link rel="shortcut icon" type="image/png" href="img/icon.png" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./css/style.css">
-    <!-- <link rel="stylesheet" href="./css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
     <title>Bankist | When Banking meets Minimalist</title>
+
+    <script defer src="./main.js"></script>
   </head>
 
-    <style>
-      .coloreado{
-          color:aqua;
-      }
-      .coloreadoX2{
-          color:rgb(1, 255, 14);
-      }
-      #emailHelp{
-          color: white;
-      }
-      .buy, .poll {
-          font-size: 1.6rem;
-          padding: 1rem 2rem;
-          /* position: absolute; */
-          top: 2rem;
-      }
-      .buy {
-          left: 2rem;
-      }
-      .poll {
-          right: 2rem;
-      }
-  </style>
 
-  <body>
+  <body class="bg-black">
     <header class="header">
       <nav class="nav">
         <img src="imgs/logo.png" alt="Bankist logo" class="nav__logo" id="logo" designer="Jonas" data-version-number="3.0"/>
@@ -266,6 +245,13 @@
           </div>
         </div>
 
+        
+        <!-- <div class="slide"><img src="img/img-1.jpg" alt="Photo 1" /></div>
+        <div class="slide"><img src="img/img-2.jpg" alt="Photo 2" /></div>
+        <div class="slide"><img src="img/img-3.jpg" alt="Photo 3" /></div>
+        <div class="slide"><img src="img/img-4.jpg" alt="Photo 4" /></div> -->
+
+
         <button class="slider__btn slider__btn--left">&larr;</button>
         <button class="slider__btn slider__btn--right">&rarr;</button>
         <div class="dots"></div>
@@ -310,7 +296,8 @@
       </p>
     </footer>
 
-    <div class="modal hidden">
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <div class="modal hidden">
       <button class="btn--close-modal">&times;</button>
       <h2 class="modal__header">Open your bank account <br />in just <span class="highlight">5 minutes</span></h2>
       <form class="modal__form">
@@ -326,10 +313,77 @@
     <div class="overlay hidden"></div>
 
 
-    <!-- Other -->
-    <h1>A Closer Look at Functions</h1>
-    <button class="buy">Buy new plane 🛩</button>
-    <button class="poll">Answer poll?</button>
+    <h1>Acá veremos lo que tienes para contarnos 🥵</h1>
+      <div class="alert alert-info w-50 align-items-center" role="alert">
+          <h4 class="alert-heading">¡Qué veremos en la clase de hoy 🤞!</h4>
+          <hr />
+          <ul>
+              <li>Definir Storage.</li>
+              <li>Identificar y diferenciar localStorage y sessionStorage.</li>
+              <li>
+              Definir JSON y entender su alcance y utilidad en cada situación.
+              </li>
+          </ul>
+      </div>
+  
+      <div id="containers" class="w-50"> 
+          <h1 id="titulo">Hola, bienvenidos a la clase de Javascript 🤯</h1>
+          <h3 id="subtitulo">Esto es un titulo</h3>
+          <p id="bienvenida" class="texto">Hola Bienvenidos 🤑</p>
+          <p id="temaClase" class="texto">En la clase de hoy veremos, modelo de objetos del documento (DOM).</p>
+          <p class="texto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, enim.</p>
+          <p id="frase">Acá veremos lo que tienes para contarnos 🥵</p>
+  
+          <ul id="paises">
+              <li>Esta es la lista de paises:</li>
+          </ul> 
+  
+          <form id="formulario_HTML">
+              <div class="mb-3">
+                  <label for="apellidos" class="form-label">Apellidos</label>
+                  <input type="text" class="form-control" id="apellidos" />
+              </div>
+      
+              <div class="mb-3">
+                  <label for="nombres" class="form-label">Nombres</label>
+                  <input type="text" class="form-control" id="nombres" />
+              </div>
+      
+              <div class="mb-3">
+                  <label for="ocupacion" class="form-label">Ocupación</label>
+                  <select id="ocupacion" class="form-select">
+                      <option value="0">Seleccione una opción</option>
+                  </select>
+              </div>
+          
+              <div class="mb-3">
+                  <label for="correo" class="form-label">Correo electrónico</label>
+                  <input type="email" class="form-control" id="correo" aria-describedby="emailHelp"/>
+                  <div id="emailHelp" class="form-text">
+                      No lo compartiremos con nadie.
+                  </div>
+              </div>
+  
+              <div class="form-check">
+                  <input value="" class="form-check-input" type="checkbox" id="participar" checked/>
+                  <label class="form-check-label" for="participar">¿Quiere boucher de bienvenida?</label>
+              </div>
+  
+              <button type="button" class="btn btn-primary" id="btnInscribir">boton creado en JS</button>
+              <button type="button" class="btn btn-primary" id="btnInscribirX2" onclick="alert('Hola Mundo!');">boton creado en HTML</button> <!-- Ejercicio 3 de eventos, que es lo mismo que el ejercicio 1 y 2, pero en HTML en lugar de JS (Esto va en el HTML, NO en el documento .js) -->
+              <button type="submit" class="btn btn-primary" id="btnInscribir">Inscribir</button>
+
+
+              <h1>A Closer Look at Functions</h1>
+              <button class="buy">Buy new plane 🛩</button>
+              <button class="poll">Answer poll?</button>
+  
+          </form>
+          
+          <div id="listaParticipantes"></div>
+      </div>
+    </div>
+
   
   
     <!-- Este div pertenece al ejercicio 14 de DOM  -->
@@ -350,12 +404,9 @@
   
     <div id="loadingMessage" class="d-flex align-items-center alert alert-info mt-3 visually-hidden">
       <strong>Recuperando datos...</strong>
-      <div class="spinner-border ms-auto" role="status" aria-hidden="true">
-      </div>
+      <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
     </div>
-
-
-    <script src="./main.js"></script>
+    
     <script src="./js/bootstrap.min.js"></script>
 
   </body>

@@ -30,7 +30,7 @@ body {
   font-weight: 300;
   color: #444;
   line-height: 1.9;
-  background-color: #f3f3f3;
+  background-color: #160202;
 }
 
 /* GENERAL ELEMENTS */
@@ -191,11 +191,6 @@ img {
 
   align-items: start;
   justify-items: start;
-}
-
-h1 {
-  font-size: 5.5rem;
-  line-height: 1.35;
 }
 
 h4 {
@@ -671,4 +666,71 @@ h4 {
   color: #bbb;
   font-size: 1.5rem;
   font-weight: 400;
+}
+
+.res{
+margin-top : 50px;
+margin-bottom: 50px;
+padding: 40px;
+border-radius : 20px;
+background : rgb(1, 135, 108);
+color : rgb(250, 255, 255);
+opacity : 0.8;
+}
+
+
+p{
+  color: white;
+}
+
+.alert .alert-info {
+  display: flex;    
+  justify-content: center;
+  height: 100vh;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  background: linear-gradient(to top left, #7db9c4, #695aa0);
+}
+    
+h1 {
+    font-family: sans-serif;
+    font-size: 5.5rem;
+    line-height: 1.35;
+    width: 100%;
+    padding: 30px;
+    text-align: center;
+    color: white;
+}
+
+#containers{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 15px;
+  border-radius: 20px;
+  background: rgb(44, 95, 85);
+  color: rgb(250, 255, 255);
+  opacity: 0.8;
+}
+
+.coloreado{
+  color:aqua;
+}
+.coloreadoX2{
+  color:rgb(1, 255, 14);
+}
+#emailHelp{
+  color: white;
+}
+.buy, .poll {
+  font-size: 1.6rem;
+  padding: 1rem 2rem;
+  /* position: absolute; */
+  top: 2rem;
+}
+.buy {
+  left: 2rem;
+}
+.poll {
+  right: 2rem;
 }
