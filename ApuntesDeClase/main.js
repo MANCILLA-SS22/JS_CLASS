@@ -1272,13 +1272,195 @@ const restaurant = {
 //         $$$$$$$$$$$$$$$ POO $$$$$$$$$$$$$$$
 
 
-//Ejemplo 1:
+/* //Ejemplo 1: Constructor Functions, and the "new" and the "this" Operator (do this)
 
-//Ejemplo 2:
+// 1. New {} is created. We create a new instance (a new empty object) of the Person function.
+// 2. function is called, this = {}. The this keyword will be set to this newly created object. That's to say, the "this" keyword points to the new empty object.
+// 3. {} linked to prototype
+// 4. function automatically return {} that empty object from the constructor function 
 
-//Ejemplo 3:
+// NEVER DO THIS!
+// function Person(firstName, birthYear) {
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
 
-//Ejemplo 4:
+//     this.calcAge = function () {
+//         console.log(2037 - this.birthYear);
+//     };
+// };
+
+function Person(firstName, birthYear) { //Constructor function
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () { //We create a new calcAge method with the prototype keyword to the Person object. So, we can use this method on the german or karla object even though it isn't on the object itself. The reason why we create this method outsite the constructor function, is becuase when creating it inside, this method is added to all the object created. So, it's best to add this method to every object just when necessary.
+    console.log("My age is: ", 2037 - this.birthYear);
+}; 
+
+const german = new Person('German', 1991);
+const karla = new Person('Karla', 2017);
+
+german.calcAge();
+karla.calcAge();
+
+console.log("german is an instance of Person? ", german instanceof Person);
+console.log(german, karla);    //Although we created a new calcAge method in both objects, they don't contain this method but we have access to it because of prototypal inherencce.
+
+// Prototypal Inheritance on Built-In Objects
+console.log("Person.prototype ", Person.prototype); //"prototype" let you to add properties and methods to JavaScript objects (in this case, the Person object). All the objects that are created through this function constructor function (Person), will inherit. So they will get access to all the methods and properties that arre defined on this prototype property.
+console.log("german.__proto__ ", german.__proto__); //This is the prototype of german (not the prototype porperty) It is the same as: console.log(Person.prototype); 
+console.log(german.__proto__.__proto__);            //It is the prototype property of object
+console.log(german.__proto__ === Person.prototype); //It's true because the prototype of the german object is essentially the prototype property of the constructor function. (Person.prototype is actually not the prototype of Person, but it is what's gonna be used as the prototype of all the objects that are created with the person constructor function. )
+console.log(Person.prototype.constructor); console.dir(Person.prototype.constructor);
+
+console.log(Person.prototype.isPrototypeOf(german));
+console.log(Person.prototype.isPrototypeOf(Person));
+
+Person.prototype.species = 'Homo Sapiens';
+
+console.log(german.species, karla.species);      //Both objects will inherit and will get access to this property from the prototype.
+console.log(german.hasOwnProperty('firstName')); //This is true because "firstname" was created directly in the constructor function
+console.log(german.hasOwnProperty('species'));   //This is false because the species property isn't directly in the object because of it's not its own property (the ones that are declared directly on the object itself, and not including the inherited properties).
+
+
+const arr = [3, 6, 6, 5, 6, 9, 9]; //  new Array === []  whenever we create an array like this, it is indeed created by the array constructor.
+console.log("Array.prototype ", Array.prototype)
+console.log("arr.__proto__ ", arr.__proto__);
+console.log(arr.__proto__.__proto__);
+console.log(arr.__proto__ === Array.prototype); 
+
+Array.prototype.unique = function () { //We create a new method (unique) into the object Array. Some methods like this are filter, some, map, etc.
+    return [...new Set(this)];
+};
+
+console.log(arr.unique()); //Seeing in the MDN documentation, we can realize that every method (function) when using arrays, have the following sintaxis: Array.prototype.map().
+
+const h1 = document.querySelector('h1'); console.dir(h1)
+console.dir(function funciones(x){x + 1}); */
+
+//Ejemplo 2: classes, Setters and Getters (assessors properties), static method
+
+//We need to create a constructor function. Whenever we create a new object (like a new instance using the new operator), this constructor will automatically be called.
+class PersonCl{
+    constructor(fullName, birthYear){ 
+        this.fullName = fullName;
+        this.birthYear = birthYear;
+    }; 
+
+    //Instance methods (Methods will be added to .prototype property and all instances can have access to them)
+    calgAge(){ //All the methods that we write in the class (outside of the constructor), will be on the prototype on the object and not on the objects themselves.
+        console.log("calgAge: ", 2037 - this.birthYear);
+    };
+
+    greet(){
+        console.log(`greet:  ${this._fullName}`)
+    }
+
+    get age(){
+        return `age: ${2037 - this.birthYear}`;
+    }
+    
+    //Set a property that already exists.
+    set fullName(name){ 
+        //We're creating a setter for a property name that does already exists. So, fullName is already a property to set in the constructor function, but then we also have a 
+        //setter here. Now what's gonna happen is that each time the constructor function is executed, so whenever we set the fullName on the this keyword, then actually the 
+        //method (set fullName) is gonna be executed. And, that name that we pass in as fullName (German mancilla) will then become this name.
+        //Now, When we're using setters which is trying to set a property that already exists, both the setter function here and the construction function have the exact same 
+        //property name (fullName), and will get an error. So, to fix that, we need to create a new property name, that's to say, "fullName" must be a different name.
+        //Having done so, then the "fullName" property in the object german won't exists, but the "_fillname" property will.
+        console.log("name ", name);
+        name.includes(" ") ? this._fullName = name : `${name} is not a full name!`
+    }
+
+    get fullName(){
+        return this._fullName;
+    }
+
+    static hey(){ //Static class methods are defined on the class itself. Staic are not available on instances
+        console.log("Hello world");
+        console.dir(this);
+    }
+    
+}
+
+const german = new PersonCl("German mancilla", 1998); //We use the this keyword as before, and will be set to the newly created empty object. So, when we create a new instance here, then the constructor function is gonna be called and that will return a new object and then that will be stored in "dani".
+
+// This method is NOT inherited. So, we couldn't call the from method on an array like german.hey(); because it isn't in the prototype of the german object.
+// PersonCl.hey = function(){
+//     console.log("Hello world");
+//     console.log(this)
+// }
+
+console.log(german);
+console.dir(PersonCl);
+german.calgAge();
+german.greet();
+console.log(german.age);
+PersonCl.hey(); //That's exactly the object that is calling the method. So, whatever object is calling the method, will be the this keyword inside of that funcion. And here the this keyword  is simply the entire constructor function.
+// german.hey(); //We will get an error because german doesn't inherit the hey() method
+
+console.log(german.__proto__);
+console.log(german.__proto__ === PersonCl.prototype);
+
+// 1. Classes are not hoisted even if they're class declarations. Functions declarations are hoisted, which means we can use them before they're declared in the code. With classes tgat doesn't work.
+// 2. Class are first-class citizens. This means that we can pas them into functions and also return them from functions. (classes are just a special kind of functions behind the scenes)
+// 3. Classes are executed in strict mode. And so even if we didn't activate it for our entire script, all the code that is in the class will be executed in strict mode.
+
+const account = {
+    owner: 'Jonas',
+    movements: [200, 530, 120, 300],
+
+    get latest() {
+        return this.movements.slice(-1).pop();
+    },
+
+    set latest(mov) {
+        this.movements.push(mov);
+    },
+};
+
+console.log(account.latest);
+
+account.latest = 50;
+console.log(account.movements);
+
+/* //Ejemplo 2.1: classes, Setters and Getters (ignore this)
+class PersonCl{
+    constructor(fullName, birthYear){ //We need to create a constructor function. Whenever we create a new object (like a new instance using the new operator), this constructor will automatically be called.
+        this.fullName = fullName;
+        this.birthYear = birthYear;
+    }; 
+
+    calgAge(){ //All the methods that we write in the class (outside of the constructor), will be on the prototype on the object and not on the objects themselves.
+        console.log("calgAge: ", 2037 - this.birthYear);
+    };
+
+    // Set a property that doesn't exists.
+    greet(){
+        console.log(`greet:  ${this.fullName}`)
+    }
+
+    get age(){
+        return `age: ${2037 - this.birthYear}`;
+    }
+
+    set res(name){
+        name.includes(" ") ? this.fullName = name : `${name} is not a full name!`
+    }
+
+    get res(){
+        return this.fullName;
+    }
+    
+}
+
+const german = new PersonCl("German mancilla", 1998); //We use the this keyword as before, and will be set to the newly created empty object. So, when we create a new instance here, then the constructor function is gonna be called and that will return a new object and then that will be stored in "dani".
+console.log(german);
+console.dir(PersonCl);
+german.calgAge();
+german.greet();
+console.log(german.age); */
 
 //Ejemplo 6:
 
@@ -1290,6 +1472,59 @@ const restaurant = {
 
 //Ejemplo 10:
 
+/* //Ejemplo : Ejercicio de repaso numero 1
+// 1. Use a constructor function to implement a 'Car'. A car has a 'brand' and a 'speed' property. The 'speed' property is the current speed of the car in km/h
+// 2. Implement an 'accelerate' method that will increase the car's speed by 10, and log the new speed to the console
+// 3. Implement a 'brake' method that will decrease the car's speed by 5, and log the new speed to the console
+// 4. Create 2 'Car' objects and experiment with calling 'accelerate' and 'brake' multiple times on each of them
+
+//GOOD PRACTICE
+function Car(brand, speed){
+    this.brand = brand;
+    this.speed = speed;
+}
+
+Car.prototype.accelerate = function(){
+    this.speed = this.speed + 10;
+    console.log(`${this.brand} is going at ${this.speed} km/h`)
+}
+
+Car.prototype.brake = function(){
+    this.speed = this.speed - 5;
+    console.log(`${this.brand} is going at ${this.speed} km/h`)
+}
+
+const bmw = new Car("BMW", 120);
+const mercedes = new Car("Mercedes", 95);
+
+bmw.accelerate();
+bmw.accelerate();
+bmw.accelerate();
+bmw.brake();
+
+//BAD PRACTICE
+// function Car(brand, speed){
+//     this.brand = brand;
+//     this.speed = speed;
+
+//     this.accelerate = function () {
+//         this.speed = this.speed + 10;
+//         console.log(`${this.brand} is going at ${this.speed} km/h`)
+//     };
+
+//     this.brake = function () {
+//         this.speed = this.speed - 5;
+//         console.log(`${this.brand} is going at ${this.speed} km/h`)
+//     };
+// }
+
+// const bmw = new Car("BMW", 120);
+// const mercedes = new Car("Mercedes", 95);
+
+// bmw.accelerate();
+// bmw.accelerate();
+// bmw.accelerate();
+// bmw.brake(); */
 
 //         $$$$$$$$$$$$$$$ Arrays $$$$$$$$$$$$$$$
 
