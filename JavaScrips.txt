@@ -103,12 +103,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
       + const yearUntilRetirement1 = function(birthYear, firstName){} //Esta funcion es la misma que la de arriba pero de la forma tradicional. Se requiere de un return si es que queremos regresar un valor.    
       + toString = () => {return this.nombre +" ($"+ this.precio.toFixed(2) +")"}; //Asi se define una funcion flecha dentro de una clase
       + toString(){return this.nombre +" ($"+ this.precio.toFixed(2) +")"} //Asi se define una funcion tradicional dentro de una clase
-    
-  > Hoisting: Es el proceso de mover todas las declaraciones de variables a la parte superior de la función o del entorno. El concepto de hoisting de JavaScript determina que el valor de una variable declarada con var puede subir al 
-    principio del scope de la función dentro de la que está declarada. Esto puede ser peligroso, porque puedes terminar con un valor de tipo undefined a pesar de haberle otorgado valor a tus variables. Es decir, la palabra clave var a veces 
-    nossorprende con valores indefinidos en variables definidas. El hoisting de JavaScript raras veces genera este comportamiento en variables declaradas con const y con let. Aunque puede suceder, el desarrollador web casi que tiene que 
-    generar este comportamiento a propósito para que suceda.    
-    
+        
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 - POO en JAVASCRIPT
@@ -250,6 +245,13 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
       En resumen, this se utiliza para hacer referencia al objeto en el contexto actual, y su valor puede cambiar dependiendo del contexto en el que se invoca una función o método. Conocer cómo funciona this en diferentes contextos es 
       esencial para escribir código efectivo en JavaScript.       https://www.freecodecamp.org/espanol/news/la-guia-completa-sobre-this-en-javascript/   https://www.programiz.com/javascript/this
 
+  > super: The super keyword is used to call the constructor of its parent class to access the parent's properties and methods, to access properties on an object literal or class's [[Prototype]], or invoke a superclass's constructor.
+
+  > extends: The extends keyword is used to create a child class of another class (parent). The child class inherits all the methods from another class. Inheritance is useful for code reusability: reuse properties and methods of an existing 
+    class when you create a new class. 
+    Note: From the example above; The super() method refers to the parent class. By calling the super() method in the constructor method, we call the parent's constructor method and gets access to the parent's properties and methods.
+    Extends is used to denote the parent class that the child class will inherit its methods from, and super is used to reference the parent classes constructor method.
+      
   > Constructor: El constructor de un objeto es una función que usamos para crear un nuevo objeto cada vez que sea necesario. Con función constructora podemos inicializar las propiedades del objeto al momento de ser instanciado con new
       
         function Persona(nombre, edad, calle) {
@@ -264,7 +266,20 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   > Metodo: Los métodos de los objetos también son técnicamente funciones, sólo que se limitan a poder ser ejecutados solo desde el mismo objeto. Se requiere un objeto y puede no retornar un valor.
         function Persona(nombre, edad, calle) {
            this.nombre = nombre; this.edad = edad; this.calle = calle;
-        }        
+        } 
+        
+  > Encaptulation: It is defined as the wrapping up of data under a single unit. It is the mechanism that binds together code and the data it manipulates. In Encapsulation, the variables or data of a class are hidden from any 
+    other class and can be accessed only through any member function of their class in which they are declared. As in encapsulation, the data in a class is hidden from other classes, so it is also known as data-hiding.    
+    
+    This principle states that all important information is contained inside an object and only select information is exposed. The implementation and state of each object are privately held inside a defined class. Other objects do not have 
+    access to this class or the authority to make changes. They are only able to call a list of public functions or methods. This characteristic of data hiding provides greater program security and avoids unintended data corruption.
+    
+     ~ Public: These members of the class and available to everyone that can access the (owner) class instance.
+     
+     ~ Private: These members are only accessible within the class that instantiated the object.
+     
+     ~ Protected: This keyword allows a little more access than private members but a lot less than the public. A protected member is accessible within the class (similar to private) and any object that inherits from it. A protected value is 
+       shared across all layers of the prototype chain. It is not accessible by anybody else.       
         
   > Diferencia entre una funcion constructora de objetos y las clases, y la forma en que se escriben:
   
@@ -336,7 +351,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     identificadores que permita el creador del objeto.
     
     This principle states that all important information is contained inside an object and only select information is exposed. The implementation and state of each object are privately held inside a defined class. Other objects do not have 
-    access to this class or the authority to make changes. They are only able to call a list of public functions or methods. This characteristic of data hiding provides greater program security and avoids unintended data corruption
+    access to this class or the authority to make changes. They are only able to call a list of public functions or methods. This characteristic of data hiding provides greater program security and avoids unintended data corruption.
 
   
   > Abstracción: Son las características especificas de un objeto, aquellas que lo distinguen de los demás tipos de objetos y que logran definir límites conceptuales respecto a quien está haciendo dicha abstracción del objeto. Una 
@@ -2124,7 +2139,11 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   
 - fetch: Fetch is the retrieval of data by a software program, script, or hardware device. After being retrieved, the data is moved to an alternate location or displayed on a screen.
 
-  
+- Hoisting: Es el proceso de mover todas las declaraciones de variables a la parte superior de la función o del entorno. El concepto de hoisting de JavaScript determina que el valor de una variable declarada con var puede subir al 
+  principio del scope de la función dentro de la que está declarada. Esto puede ser peligroso, porque puedes terminar con un valor de tipo undefined a pesar de haberle otorgado valor a tus variables. Es decir, la palabra clave var a veces 
+  nos sorprende con valores indefinidos en variables definidas. El hoisting de JavaScript raras veces genera este comportamiento en variables declaradas con const y con let. Aunque puede suceder, el desarrollador web casi que tiene que 
+  generar este comportamiento a propósito para que suceda.    
+
 
 - Renderizar: El renderizado es un proceso utilizado en desarrollo web para convertir el código de un website en una página con la que las usuarias y usuarios puedan interactuar. Como tal, el término hace referencia a la conversión de los
   códigos HTML, CSS y JS que son los encargados de la interfaz y contenido de la página. El proceso para renderizar una web se realiza con un motor de renderizado o software que, por lo general, ejecutan los navegadores. A estos motores de 
