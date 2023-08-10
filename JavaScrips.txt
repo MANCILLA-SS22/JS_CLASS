@@ -1544,8 +1544,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     > remove()	Removes one or more tokens from the list. Removes an option from a drop-down list
     > replace()	Replaces a token in the list
     > supports()	Returns true if a token is one of an attribute's supported tokens
-    > toggle()	Toggles between tokens in the list. It removes an existing token from the list and returns false. If the token doesn't exist it's added and the function returns true. permite cada vez que se ejecute cambiar de estado la 
-                 visibilidad del elemento HTML, es decir si está visible pasa a oculto y si se encuentra oculto pasa a visible.
+    > toggle()	Toggles between tokens in the list. It removes an existing token from the list and returns false. If the token doesn't exist it's added and the function returns true. 
+                Permite cada vez que se ejecute cambiar de estado la visibilidad del elemento HTML, es decir si está visible pasa a oculto y si se encuentra oculto pasa a visible.
     > value      Returns the token list as a string
     > values()	Returns an Iterator with the values in the list   
     
