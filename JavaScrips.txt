@@ -1204,7 +1204,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     > clientTop	                Returns the width of the top border of an element
     > clientWidth	                Returns the width of an element, including padding
     > cloneNode()	                Clones an element
-    > closest()	                Searches the DOM tree for the closest element that matches a CSS selector
+    > closest()	                Searches the DOM tree for the closest element that matches a CSS selector. This is the opposite to hte querySelctor() and also traverses the element and its parents (heading toward the document root) until it 
+                                finds a node that matches the specified CSS selector.
     > compareDocumentPosition()	Compares the document position of two elements
     > contains()	                Returns true if a node is a descendant of a node
     > contentEditable	            Sets or returns whether the content of an element is editable or not

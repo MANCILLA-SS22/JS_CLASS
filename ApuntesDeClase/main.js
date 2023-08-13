@@ -536,17 +536,27 @@ dotContainer.addEventListener('click', function (evento) {
     }
 }); */
 
-//Proyecto 3: Mapty
+/* //Proyecto 3: Mapty
 
-////////////////////////////////////////
+// Application architecture
+const form = document.querySelector('.form');
+const containerWorkouts = document.querySelector('.workouts');
+const inputType = document.querySelector('.form__input--type');
+const inputDistance = document.querySelector('.form__input--distance');
+const inputDuration = document.querySelector('.form__input--duration');
+const inputCadence = document.querySelector('.form__input--cadence');
+const inputElevation = document.querySelector('.form__input--elevation');
+
 // Parent class and child classes
 class Workout{ 
     // date = new Date(); //This line and the next one are the same as the line 549 amd 550.
     // id = (Date.now() + "").slice(-10);  
+    // clicks = 0;
 
     constructor(coords, distance, duration){
         this.date = new Date();
         this.id = (Date.now() + "").slice(-10);  //now() returns the number of milliseconds since midnight Jan 1, 1970
+        this.clicks = 0;
         this.coords = coords;     // Must be an array [lat, lng]
         this.distance = distance; // in km
         this.duration = duration; // in min
@@ -555,6 +565,10 @@ class Workout{
     _setDescription(){
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${months[this.date.getMonth()]} ${this.date.getDate()}`;
+    }
+
+    _click(){
+        this.clicks++;
     }
 }
 
@@ -588,30 +602,24 @@ class Cycling extends Workout{
     }
 }
 
-// const run1 = new Running([39, -12], 5.2, 24, 175);
-// const cycling1 = new Running([39, -12], 9.2, 18, 523);
-// console.log(run1, cycling1);
-
-////////////////////////////////////////
-// Application architecture
-const form = document.querySelector('.form');
-const containerWorkouts = document.querySelector('.workouts');
-const inputType = document.querySelector('.form__input--type');
-const inputDistance = document.querySelector('.form__input--distance');
-const inputDuration = document.querySelector('.form__input--duration');
-const inputCadence = document.querySelector('.form__input--cadence');
-const inputElevation = document.querySelector('.form__input--elevation');
-
 class App{
     //We're gonna define the map and mapEvent as properties of the object and will use a private class field. Now, both of the will become private instances properties which are gonna be present  on all the instances created through this class.
     #map;
+    #mapZoomLevel = 13;
     #mapEvent;
     #workouts = [];
 
     constructor(){
+        //Get user's position
         this._getPosition();
+
+        //Get data from local storage
+        this._getLocalStorage();
+
+        //Atach event handlers
         form.addEventListener("submit", this._newWorkout.bind(this));  //When we have event listeners inside of a class, you'll have to bind the this keywords all the time. Because if not, this._newWorkout will only point to the form. So we always want our this keywords to still point to the object itself (in this case, the app object, which is what "this" is currently pointing to).
         inputType.addEventListener("change",this._toggleElevaionField); //In _toggleElevaionField there aren't any this keyword, so we can avoid using the bind() method in inputType.addEventListener
+        containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
     }
 
     _getPosition(){
@@ -632,13 +640,14 @@ class App{
         const {longitude} = position.coords;
         const coords = [latitude, longitude];
 
-        this.#map = L.map('map').setView(coords, 13); //We use 'this.#map' and 'this.#mapEvent' because this is like a property that is defined on the object itself. It's no longer just a normal variable
+        this.#map = L.map('map').setView(coords, this.#mapZoomLevel); //We use 'this.#map' and 'this.#mapEvent' because this is like a property that is defined on the object itself. It's no longer just a normal variable
         
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(this.#map);
 
         this.#map.on("click", this._showForm.bind(this));
+        this.#workouts.forEach(work => this._renderWorkoutMarker(work));
 
         //console.log(position);
         //console.log(latitude, longitude); 
@@ -709,8 +718,7 @@ class App{
         }
 
         //Add new object to workout array
-        this.#workouts.push(workout);
-        console.log(workout);
+        this.#workouts.push(workout);      console.log(workout);
 
         //Render workout on map as marker
         this._renderWorkoutMarker(workout);
@@ -720,6 +728,9 @@ class App{
 
         //Hide form + clear input fields
         this._hideForm();
+
+        //Set local storage to all workouts
+        this._setLocalStorage();
     }
 
     _renderWorkoutMarker(workout){
@@ -786,10 +797,46 @@ class App{
         
         form.insertAdjacentHTML('afterend', html);
     }
+
+    _moveToPopup(event){
+        const workoutEl = event.target.closest(".workout");   // console.log(workoutEl);
+
+        if (!workoutEl) return;
+
+        const workout = this.#workouts.find(event => event.id === workoutEl.dataset.id);      console.log(workoutEl.dataset.id);
+        this.#map.setView(workout.coords, this.#mapZoomLevel, {
+            animate: true, 
+            pan: {duration: 1}
+        });
+        
+        // workout._click(); // using the public interface
+    }
+
+    _setLocalStorage(){
+        localStorage.setItem("workouts", JSON.stringify(this.#workouts));
+    }
+
+    _getLocalStorage(){
+        const data = JSON.parse(localStorage.getItem('workouts'));
+        console.log(data);
+
+        if(!data) return;
+
+        this.#workouts = data; //This method will be executed right at the begining. And data will always start with an empty array with that will be stored in this.#workouts
+        this.#workouts.forEach(work => this._renderWorkout(work)); //We ise _renderWorkout instead of _renderWorkoutMarker because once our page is reloaded right at the beginning, the #map in the _renderWorkoutMarker is not yed defined. So, that's why we get an error. On the other hand, the method _renderWorkout doesn't have this variable (#map).
+
+        //When we convert our objects to a string and then back to a script from object, we lose the prototype chain. So, the new objects that we recover from the local storage are now regular objects. They're now no longer objects that were created by the running class or by the cycling class. And therefore, they won't be able to inherit any of their methods.
+    }
+
+    _reset(){
+        localStorage.removeItem("workouts");
+        location.reload(); //location is basically a big object that contains a lot of methods and properties in the browser. 
+    }
+    
 }
 
 const app = new App();   
-console.log(app);
+// console.log(app); */
 
 //         $$$$$$$$$$$$$$$ Funciones $$$$$$$$$$$$$$$
 
@@ -804,7 +851,7 @@ for (let index = 0; index < 6; index++) {
     saludar();
 } */
 
-/* //Ejemplo 3: Definicion de mi funcion
+/* //Ejemplo 2: Definicion de mi funcion
 
 function pedirNombre(){
     let nombreIngresado = prompt("Ingresar nombre");
@@ -813,7 +860,7 @@ function pedirNombre(){
 
 pedirNombre(); */
 
-/* //Ejemplo 4: Como crear una funcion si necesito reiterar varias veces su funcionalidad
+/* //Ejemplo 3: Como crear una funcion si necesito reiterar varias veces su funcionalidad
 
 function pedirNombre(){
     let index = 0;
@@ -827,7 +874,7 @@ function pedirNombre(){
 
 pedirNombre(); */
 
-/* //Ejemplo 5: Creacion de una funcion que recibe parametros
+/* //Ejemplo 4: Creacion de una funcion que recibe parametros
 function verParametros(p1,p2){
     let res = p1 - p2;
     console.log("La resta es: ".concat(res));
@@ -838,7 +885,7 @@ let variable2 = parseFloat(prompt("Ingrese el valor de la variable 2: "));
 
 verParametros(variable1, variable2); */
 
-/* //Ejemplo 6: Creacion de una funcion que recibe parametros, esta calcula una resta aritmetica y devuelve su valor.
+/* //Ejemplo 5: Creacion de una funcion que recibe parametros, esta calcula una resta aritmetica y devuelve su valor.
 function resta(p1,p2){
     let res = p1 - p2;
     return res;
@@ -852,7 +899,7 @@ let variable2 = parseFloat(prompt("Ingrese el valor de la variable 2: "));
 
 console.log("El resultado es: " + resta(variable1, variable2)); */
 
-/* //Ejemplo 7: Uso de una funcion para validar una contrasena.
+/* //Ejemplo 6: Uso de una funcion para validar una contrasena.
 
 function passwordValidation(password, repeatPassword)
 {
@@ -879,7 +926,7 @@ function passwordValidation(password, repeatPassword)
 
 passwordValidation("123", "pass"); */
 
-/* //Ejemplo 8: Uso del ambito de varaibles para cambiar el valor de variables globales
+/* //Ejemplo 7: Uso del ambito de varaibles para cambiar el valor de variables globales
 let res = 0;
 function suma(num1, num2){
     res = num1 + num2;
@@ -887,7 +934,7 @@ function suma(num1, num2){
 suma(5,6);
 console.log(res); */
 
-/* //Ejemplo 9: Uso del ambito de varaibles para cambiar el valor de variables locales
+/* //Ejemplo 8: Uso del ambito de varaibles para cambiar el valor de variables locales
 let res = ""; //let resultado = undefined; let resultado = null;
 function suma(num1, num2)
 {
@@ -897,7 +944,7 @@ function suma(num1, num2)
 res = suma(5,6);
 console.log(res); */
 
-/* //Ejemplo 10: Creacion de variables anonimas y su uso.
+/* //Ejemplo 9: Creacion de variables anonimas y su uso.
 
 const sum = function(a,b)
 {
@@ -912,7 +959,7 @@ const res = function(a,b)
 console.log( sum(15,20) );
 console.log( res(15,5) ); */
 
-/* //Ejemplo 11: Uso de finiciones flecha (Si es una funcion de una sola linea con retorno podemos evitar escribir el cuerpo.)
+/* //Ejemplo 10: Uso de finiciones flecha (Si es una funcion de una sola linea con retorno podemos evitar escribir el cuerpo.)
 
 const add = (a, b) => {return a + b}; //Metodo 1 para utilizar flecha 
 const subs = (a, b) => a - b;         //Metodo 2 para utilizar flecha

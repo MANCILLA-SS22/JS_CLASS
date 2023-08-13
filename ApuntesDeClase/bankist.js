@@ -1,4 +1,3 @@
-////////////////////////////////////////
 // Parent class and child classes
 class Workout{ 
     // date = new Date(); //This line and the next one are the same as the line 549 amd 550.
@@ -72,6 +71,7 @@ class App{
         this._getPosition();
         form.addEventListener("submit", this._newWorkout.bind(this));  //When we have event listeners inside of a class, you'll have to bind the this keywords all the time. Because if not, this._newWorkout will only point to the form. So we always want our this keywords to still point to the object itself (in this case, the app object, which is what "this" is currently pointing to).
         inputType.addEventListener("change",this._toggleElevaionField); //In _toggleElevaionField there aren't any this keyword, so we can avoid using the bind() method in inputType.addEventListener
+        containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
     }
 
     _getPosition(){
@@ -110,6 +110,15 @@ class App{
         this.#mapEvent = mapE;
         form.classList.remove("hidden");
         inputCadence.focus();
+    }
+
+    _hideForm(){
+        inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = "";
+        form.style.display = "none";
+        form.classList.add("hidden");
+        setTimeout(function(){
+            form.style.display = "grid";
+        }, 1000)
     }
     
     _toggleElevaionField(){
@@ -170,7 +179,7 @@ class App{
         this._renderWorkout(workout);
 
         //Hide form + clear input fields
-        inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = "";
+        this._hideForm();
     }
 
     _renderWorkoutMarker(workout){
@@ -183,7 +192,7 @@ class App{
             closeOnClick: false,
             className: `${workout.type}-popup`
         }))
-        .setPopupContent(workout.distance)
+        .setPopupContent(`${workout.type === "running" ? "🏃‍♂️" : "🚴‍♀️"} ${workout.description}`)
         .openPopup()
     }
 
@@ -236,6 +245,16 @@ class App{
         }
         
         form.insertAdjacentHTML('afterend', html);
+    }
+
+    _moveToPopup(event){
+        const workoutEl = event.target.closest(".workout");
+        console.log(workoutEl);
+
+        if (!workoutEl) return;
+
+        const workout = this.#workouts.find(event => event.id === workoutEl.dataset.id);
+        console.log(workout);
     }
 }
 
