@@ -384,7 +384,11 @@
       </div>
     </div>
 
-  
+    <section class="container">
+      <div class="countries"></div>
+      <button class="btn-country">Where am I?</button>
+      <div class="images"></div>
+    </section>  
   
     <!-- Este div pertenece al ejercicio 14 de DOM  -->
     <h1>AJAX & FETCH</h1>

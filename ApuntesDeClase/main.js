@@ -3914,74 +3914,6 @@ console.log('Germany: ', new Intl.NumberFormat('de-DE', options).format(num));
 console.log('Syria:   ', new Intl.NumberFormat('ar-SY', options).format(num));
 console.log(navigator.language,new Intl.NumberFormat(navigator.language, options).format(num)); */
 
-/* // Ejemplo 10: Creacion de una funcionalidad asincriona con setTimeout 
-
-const ingredients = ['olives', 'spinach', 'pepperoni'];
-const pizzaTimer = setTimeout(function (ing1, ing2, ing3){
-    return console.log(`Here is your pizza with ${ing1}, ${ing2} and ${ing3} 🍕`);
-},1500, ...ingredients); //Tod0s los argumentos que pasemos despues del delay, seran argumentos de la funcion
-
-console.log('Waiting...');
-
-if (ingredients.includes('res')) clearTimeout(pizzaTimer);
-
-// setInterval(function () {
-//     const now = new Date();
-//     console.log(now);
-// }, 1000); */
-
-/* // Ejemplo 11: Creacion de un countdown hacia abajo
-
-const SEGUNDOS = 3;
-for (let LEFT = 1; LEFT <= SEGUNDOS; LEFT++) {
-    setTimeout(() => {
-        console.log(((SEGUNDOS+1-LEFT).toString() + " segundos left"));
-    }, LEFT*1000);
-}  */
-
-/* // Ejemplo 12: Aplicacion del modelo asincrono para momstrar a una de las letras de dos palabras
-
-// for (let letra of "hola") {
-//     setTimeout (() => {
-//     console.log(letra)
-//     }, 1000)
-// }
-
-// for (let letra of "mundo") {
-//     setTimeout (() => {
-//     console.log(letra)
-//     }, 1500)
-// }
-
-for (let index = 0; index < "hola".length; index++) {
-    setTimeout (() => {
-    console.log("hola"[index])
-    }, (index+1)*500)
-} */
-
-/* // Ejemplo 13: Uso del setInterval para ejecutar continuamente funcionalidades cada x cantidad de segundos.
-setInterval(() => {
-    console.log("Tic-Toc")
-}, 1000) */
-
-/* // Ejemplo 14: Ejemplo de como suspender un setInterval y clearTimeout
-console.log("Inicio");
-
-let counter = 0
-const interval = setInterval(() => {
-    counter++;
-    console.log("Counter: ", counter);
-    if (counter >= 5) {
-    clearInterval(interval);
-    console.log("Se removió el intervalo");
-    }
-}, 1000);
-
-const fin = setTimeout(() => {//Esta nunca se llega a ejecutar
-    console.log("fin");
-}, 2000);
-clearTimeout(fin); */
-
 
 //         $$$$$$$$$$$$$$$ DOM & EVENTOS $$$$$$$$$$$$$$$
 
@@ -4719,9 +4651,7 @@ window.addEventListener('beforeunload', function (evento) {
 }); */
 
 
-
 //         $$$$$$$$$$$$$$$ JSON & storage $$$$$$$$$$$$$$$
-
 
 
 /* // Ejemplo 1: setItem en localStorage para crear datos en el local storage. getItem para recuperar informacion almacenada. Y buscar si existe algo o no.
@@ -4866,10 +4796,78 @@ const convertido = JSON.parse(res);
 console.log("Las carreras recuperadas en formato object (parse) son: ", {convertido}); */
 
 
-//         $$$$$$$$$$$$$$$ Asincronia $$$$$$$$$$$$$$$
+//         $$$$$$$$$$$$$$$ Asincronia, promesas, AJAX & FETCH $$$$$$$$$$$$$$$
 
 
-/* // Ejemplo 1: Como conocer los estados de una promesa
+/* // Ejemplo 1: Creacion de una funcionalidad asincriona con setTimeout 
+
+const ingredients = ['olives', 'spinach', 'pepperoni'];
+const pizzaTimer = setTimeout(function (ing1, ing2, ing3){
+    return console.log(`Here is your pizza with ${ing1}, ${ing2} and ${ing3} 🍕`);
+},1500, ...ingredients); //Tod0s los argumentos que pasemos despues del delay, seran argumentos de la funcion
+
+console.log('Waiting...');
+
+if (ingredients.includes('res')) clearTimeout(pizzaTimer);
+
+// setInterval(function () {
+//     const now = new Date();
+//     console.log(now);
+// }, 1000); */
+
+/* // Ejemplo 2: Creacion de un countdown hacia abajo
+
+const SEGUNDOS = 3;
+for (let LEFT = 1; LEFT <= SEGUNDOS; LEFT++) {
+    setTimeout(() => {
+        console.log(((SEGUNDOS+1-LEFT).toString() + " segundos left"));
+    }, LEFT*1000);
+}  */
+
+/* // Ejemplo 3: Aplicacion del modelo asincrono para momstrar a una de las letras de dos palabras
+
+// for (let letra of "hola") {
+//     setTimeout (() => {
+//     console.log(letra)
+//     }, 1000)
+// }
+
+// for (let letra of "mundo") {
+//     setTimeout (() => {
+//     console.log(letra)
+//     }, 1500)
+// }
+
+for (let index = 0; index < "hola".length; index++) {
+    setTimeout (() => {
+    console.log("hola"[index])
+    }, (index+1)*500)
+} */
+
+/* // Ejemplo 4: Uso del setInterval para ejecutar continuamente funcionalidades cada x cantidad de segundos.
+setInterval(() => {
+    console.log("Tic-Toc")
+}, 1000) */
+
+/* // Ejemplo 5: Ejemplo de como suspender un setInterval y clearTimeout
+console.log("Inicio");
+
+let counter = 0
+const interval = setInterval(() => {
+    counter++;
+    console.log("Counter: ", counter);
+    if (counter >= 5) {
+    clearInterval(interval);
+    console.log("Se removió el intervalo");
+    }
+}, 1000);
+
+const fin = setTimeout(() => {//Esta nunca se llega a ejecutar
+    console.log("fin");
+}, 2000);
+clearTimeout(fin); */
+
+/* // Ejemplo 6: Como conocer los estados de una promesa
 function eventoFuturo (){
     return new Promise( (resolve, reject) => {
 
@@ -4877,7 +4875,7 @@ function eventoFuturo (){
 }
 console.log( eventoFuturo() ) // Promise { <pending> } */
 
-/* // Ejemplo 2: Uso de los resultados de una Promesa para cambiar sus estados
+/* // Ejemplo 7: Uso de los resultados de una Promesa para cambiar sus estados
 function eventoFuturo1(res){
     return new Promise( (resolve, reject) => {
         setTimeout( () => {
@@ -4889,7 +4887,7 @@ function eventoFuturo1(res){
 console.log( eventoFuturo1(true) ) // Promise { <pending> }
 console.log( eventoFuturo1(false) ) // Promise { <pending> } */
 
-/* // Ejemplo 3: Uso del Then y Catch para catpturar los resultados y aprovechamiento de las posibilidades de respuestas de una promesa
+/* // Ejemplo 8: Uso del Then y Catch para catpturar los resultados y aprovechamiento de las posibilidades de respuestas de una promesa
 function eventoFuturo (res) {
     return new Promise( (resolve, reject) => {
         setTimeout( () => {
@@ -4913,7 +4911,7 @@ eventoFuturo(true)
     //console.log("Fin del proceso con false")
 }); */
 
-/* // Ejemplo 4: Ejercicio con un array, usando then/catch/finally y tambien ASYNC/AWAIT
+/* // Ejemplo 9: Ejercicio con un array, usando then/catch/finally y tambien ASYNC/AWAIT
 const productos = [
     {marca: "Nissan", modelo: 'Sentra', precio: 1500},
     {marca: "Toyota", modelo: 'Camry', precio: 2500},
@@ -4955,7 +4953,7 @@ async function pedirPosts(){
     }
 }; */
 
-/* // Ejemplo 5: Ejemplo del uso de Promesa para recuperar informacion de una base de datos
+/* // Ejemplo 10: Ejemplo del uso de Promesa para recuperar informacion de una base de datos
 
 const BD_X = [
     {id: 1, nombre: 'Producto 1', precio: 1500},
@@ -4999,11 +4997,7 @@ obtenerUsuarios(1)
     console.error(error);
 }); */
 
-
-//         $$$$$$$$$$$$$$$ AJAX & FETCH $$$$$$$$$$$$$$$
-
-
-/* // Ejemplo 1: fetch (método) sin aplicar los el then() y el catch(), y despues la plicación del método then() para ver que estructura posee una respuesta.
+/* // Ejemplo 11: fetch (método) sin aplicar los el then() y el catch(), y despues la plicación del método then() para ver que estructura posee una respuesta.
 console.log( fetch('https://jsonplaceholder.typicode.com/posts') );
 
 fetch('https://jsonplaceholder.typicode.com/posts')
@@ -5011,7 +5005,7 @@ fetch('https://jsonplaceholder.typicode.com/posts')
   console.log(resp)
 ); */
 
-/* // Ejemplo 2: Obtener la información que se encuentra dentro del BODY de la RESPONSE, y recuperar un único objeto de la API
+/* // Ejemplo 12: Obtener la información que se encuentra dentro del BODY de la RESPONSE, y recuperar un único objeto de la API
 fetch("https://jsonplaceholder.typicode.com/posts")
   .then((resp) => resp.json())
   .then((data) => {
@@ -5024,7 +5018,7 @@ fetch("https://jsonplaceholder.typicode.com/posts/1")
     console.log(json)
   }); */
 
-/* // Ejemplo 3: Cómo recuperar datos de una localizacion externa (http://) e una interna (.json) con rutas relativas
+/* // Ejemplo 13: Cómo recuperar datos de una localizacion externa (http://) e una interna (.json) con rutas relativas
 
 recuperarPosteos();
 
@@ -5072,35 +5066,35 @@ function toggleLoadingContainer(isLoading = false) {
     }
 } */
 
-/* // Ejemplo 4: Uso de ASYNC/AWAIT para crear funciones asincrónas que se comportan como si fueran sincronas
+/* // Ejemplo 14: Uso de ASYNC/AWAIT para crear funciones asincrónas que se comportan como si fueran sincronas
 console.log("Previo a hacer la solicitud");
 async function pedirPosts(){
-  const respuesta = await fetch("./data/posts.json");  console.log("Obtuvimos la respuesta: ");
-  console.log(respuesta);
-  const data = await respuesta.json();  console.log("Obtengo el BODY de la respuesta: ");
-  console.log(data);
+    const respuesta = await fetch("./data/posts.json");  
+    console.log("respuesta: ",respuesta);
+    const data = await respuesta.json();  
+    console.log("Data: ",data);
 };
 
 pedirPosts(); */
 
-/* // Ejemplo 5: Uso de los parámetros de configuración para el método fetch (CREACIÓN DE UN RECURSO)
+/* // Ejemplo 15: Uso de los parámetros de configuración para el método fetch (CREACIÓN DE UN RECURSO)
 const CONFIGURACION = {
-  method: "POST",
-  body: JSON.stringify({
-    title: "Nuestro posteo personal",
-    body: "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas 'Letraset', las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.",
-    userId: 1,
-  }),
-  headers: {
-    "Content-type": "application/json; charset=UTF-8",
-  },
+    method: "POST",
+    body: JSON.stringify({
+        title: "Nuestro posteo personal",
+        body: "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas 'Letraset', las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.",
+        userId: 1,
+    }),
+    headers: {
+        "Content-type": "application/json; charset=UTF-8",
+    },
 };
 
 fetch("https://jsonplaceholder.typicode.com/posts", CONFIGURACION)
-  .then((response) => response.json())
-  .then((data) => console.log(data)); */
+.then((response) => response.json())
+.then((data) => console.log(data)); */
 
-/* // Ejemplo 6: Uso de los parámetros de configuración para el método fetch (MODIFICACIÓN DE UN RECURSO)
+/* // Ejemplo 16: Uso de los parámetros de configuración para el método fetch (MODIFICACIÓN DE UN RECURSO)
 const CONFIGURACION = {
   method: "PUT",// PUT/GETCH
   body: JSON.stringify({
@@ -5117,7 +5111,7 @@ fetch("https://jsonplaceholder.typicode.com/posts/10", CONFIGURACION)
   .then((response) => response.json())
   .then((data) => console.log(data)); */
 
-/* // Ejemplo 7: Uso de los parámetros de configuración para el método fetch (ELIMINACIÓN DE UN RECURSO)
+/* // Ejemplo 17: Uso de los parámetros de configuración para el método fetch (ELIMINACIÓN DE UN RECURSO)
 const CONFIGURACION = {
   method: "DELETE",
 };
@@ -5125,5 +5119,676 @@ const CONFIGURACION = {
 fetch("https://jsonplaceholder.typicode.com/posts/10", CONFIGURACION)
   .then((response) => response.json())
   .then((data) => console.log(data)); */
+
+/* // Ejemplo 18: Asynchronous JS, promises and ajax (old way)
+const btn = document.querySelector('.btn-country');
+const countriesContainer = document.querySelector('.countries');
+
+function getCountryDataAndNeighbour(country) {
+
+    //AJAX call country 1
+    const request = new XMLHttpRequest();
+    request.open('GET', `https://restcountries.com/v3.1/name/${country}`);
+    request.send();
+
+    request.addEventListener('load', function () {
+    const [data] = JSON.parse(this.responseText);
+    console.log(data);
+
+    //Render country 1
+    renderCountry(data);
+
+    //Get neighbour country
+    const [neighbour] = data.borders;
+
+    if(!neighbour) return;
+
+    //AJAX call country 2
+    const request2 = new XMLHttpRequest();
+    request2.open('GET', `https://restcountries.com/v3.1/alpha/${neighbour}`);
+    request2.send();
+
+    request2.addEventListener('load', function (){
+        const [data2] = JSON.parse(this.responseText);
+        console.log(data2);
+
+        renderCountry(data2, "neighbour")
+    })
+
+    });
+};
+
+function renderCountry(data, className = ''){
+    //Metodo 1
+    const html = `
+    <article class="country ${className}">
+        <img class="country__img" src="${data.flags.svg}" />
+        <div class="country__data">
+            <h3 class="country__name">${data.name.common}</h3>
+            <h4 class="country__region">${data.region}</h4>
+            <p class="country__row"><span>👫</span>${Number(data.population / 1000000).toFixed(1)} people</p>
+
+            <p class="country__row"><span>🗣️</span>${data.languages[Object.keys(data.languages)[0]]}</p>
+            <p class="country__row"><span>💰</span>${data.currencies[Object.keys(data.currencies)[0]].name}</p>
+        </div>
+    </article>`;
+
+    //Metodo 2
+    // <p class="country__row"><span>🗣️</span>${Object.values(Object.values(data.currencies)[0])[0]}</p>
+    // <p class="country__row"><span>💰</span>${Object.values(data.languages)[0]}</p>
+
+    countriesContainer.insertAdjacentHTML('beforeend', html);
+    countriesContainer.style.opacity = 1;
+}
+
+getCountryDataAndNeighbour("russia");
+
+// setTimeout(() => {
+//     console.log('1 second passed');
+//     setTimeout(() => {
+//         console.log('2 seconds passed');
+//         setTimeout(() => {
+//             console.log('3 second passed');
+//             setTimeout(() => {
+//                 console.log('4 second passed');
+//             }, 1000);
+//         }, 1000);
+//     }, 1000);
+// }, 1000); */
+
+/* // Ejemplo 19: Asynchronous JS, promises and ajax (new way);
+const btn = document.querySelector('.btn-country');
+const countriesContainer = document.querySelector('.countries');
+
+const request = fetch("https://restcountries.com/v3.1/name/russia");
+console.log(request);
+
+function getCountryData(country){
+    //Country 1
+    getJSON(`https://restcountries.com/v3.1/name/${country}`, "Country not found")
+    .then(function(data){
+        console.log(data);
+        renderCountry(data[0]);
+        const neighbour = data[0]?.borders?.[0]; //If we chose austrlia, then there won't be any key with the name "border" in the object, so we'll get an "undefined". That's why we use the Optional chaining (?.)
+        // const neighbour = "frfsag"; //Line to execute an error
+        console.log(neighbour);
+
+        if (!neighbour) throw new Error("No neighbour found!");
+        
+        //Country 2
+        return getJSON(`https://restcountries.com/v3.1/alpha/${neighbour}`, "Country not found")
+        .then(function(data){
+            return renderCountry(data[0], "neighbour");
+        })
+    })
+    .catch(function(err){
+        console.log(`${err} 😡😡😡`);
+        renderError(`Something went wrong 😡😡😡 ${err.message}. Try again!`); //$ {err} = TypeError: Failed to fetch    {err.message} = Failed to fetch
+    })
+    .finally(function(){
+        countriesContainer.style.opacity = 1;
+    })
+}
+
+function getJSON(url, errorMsc = "Something went wrong"){
+    return fetch(url)
+    .then(function(response){
+        console.log(response);
+
+        if(!response.ok) throw new Error(`${errorMsc} (${response.status})`); //When we use "throw" in any of our methods, means that it will terminate the currecnt function, and the promise will immediately reject. So, the proimse returned by this first ".then" will be a rejected promise. And that rejection will then propagate all the way down to the catch handler, which we already have set up right down. 
+        return response.json(); //json is a function that is available on all responses of the fetch method. json is an asyncronous function and it'll also return a new promise.
+    })
+}
+
+function renderCountry(data, className = ''){
+    //Metodo 1
+    const html = `
+    <article class="country ${className}">
+        <img class="country__img" src="${data.flags.svg}" />
+        <div class="country__data">
+            <h3 class="country__name">${data.name.common}</h3>
+            <h4 class="country__region">${data.region}</h4>
+            <p class="country__row"><span>👫</span>${Number(data.population / 1000000).toFixed(1)} people</p>
+
+            <p class="country__row"><span>🗣️</span>${data.languages[Object.keys(data.languages)[0]]}</p>
+            <p class="country__row"><span>💰</span>${data.currencies[Object.keys(data.currencies)[0]].name}</p>
+        </div>
+    </article>`;
+
+    //Metodo 2
+    // <p class="country__row"><span>🗣️</span>${Object.values(Object.values(data.currencies)[0])[0]}</p>
+    // <p class="country__row"><span>💰</span>${Object.values(data.languages)[0]}</p>
+
+    countriesContainer.insertAdjacentHTML('beforeend', html);
+    // countriesContainer.style.opacity = 1;
+}
+
+function renderError(msg){
+    countriesContainer.insertAdjacentText("beforeend", msg);
+    // countriesContainer.style.opacity = 1;
+}
+
+btn.addEventListener("click", function(){
+    getCountryData("russia");
+    // getCountryData("australia"); 
+    // getCountryData("gtrgt"); //Line to execute an error
+}); */
+
+/* //Ejemplo 20: Excercise no. 1
+
+// In this challenge you will build a function 'whereAmI' which renders a country only based on GPS coordinates. For that, you will use a second API to geocode coordinates. 
+// So in this challenge, you’ll use an API on your own for the first time. Your tasks:
+// 1. Create a function 'whereAmI' which takes as inputs a latitude value ('lat') and a longitude value ('lng') (these are GPS coordinates, examples are in test data below).
+// 2. Do “reverse geocoding” of the provided coordinates. Reverse geocoding means to convert coordinates to a meaningful location, like a city and country name. Use this API 
+//    to do reverse geocoding: https://geocode.xyz/api. The AJAX call will be done to a URL with this format: https://geocode.xyz/52.508,13.381?geoit=json. Use the fetch API and
+//    promises to get the data. Do not use the 'getJSON' function we created, that is cheating 
+// 3. Once you have the data, take a look at it in the console to see all the attributes that you received about the provided location. Then, using this data, log a message 
+//    like this to the console: “You are in Berlin, Germany”
+// 4. Chain a .catch method to the end of the promise chain and log errors to the console
+// 5. This API allows you to make only 3 requests per second. If you reload fast, you will get this error with code 403. This is an error with the request. Remember, fetch() 
+//    does not reject the promise in this case. So create an error to reject the promise yourself, with a meaningful error message
+// 6. Now it's time to use the received data to render a country. So take the relevant attribute from the geocoding API result, and plug it into the countries API that we have been using.
+// 7. Render the country and catch any errors, just like we have done in the last lecture (you can even copy this code, no need to type the same code)
+
+const countriesContainer = document.querySelector('.countries');
+
+function whereAmI(lat, lng){
+    fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+    .then(function(res){
+        if(!res.ok) throw new Error(`Problem with geocoding (${res.status})`)
+        return res.json();
+    })
+    .then(function(data){
+        console.log(data);
+        console.log(`You are in ${data.city}, ${data.country}`);
+        return fetch(`https://restcountries.com/v3.1/name/${data.country}`)
+    })
+    .then(function(res){
+        if(!res.ok) throw new Error(`Country not found (${res.status})`)
+        return res.json();
+    })
+    .then(function(data){
+        return renderCountry(data[0])
+    })
+    .catch(function(err){
+        console.log(`${err.message} 😈`);
+    })
+}
+
+function renderCountry(data){
+    //Metodo 1
+    const html = `
+    <article class="country">
+        <img class="country__img" src="${data.flags.svg}" />
+        <div class="country__data">
+            <h3 class="country__name">${data.name.common}</h3>
+            <h4 class="country__region">${data.region}</h4>
+            <p class="country__row"><span>👫</span>${Number(data.population / 1000000).toFixed(1)} people</p>
+
+            <p class="country__row"><span>🗣️</span>${data.languages[Object.keys(data.languages)[0]]}</p>
+            <p class="country__row"><span>💰</span>${data.currencies[Object.keys(data.currencies)[0]].name}</p>
+        </div>
+    </article>`;
+
+    countriesContainer.insertAdjacentHTML('beforeend', html);
+    countriesContainer.style.opacity = 1;
+}
+
+whereAmI(52.508, 13.381); // (Latitude, Longitude)
+// whereAmI(19.037, 72.873);
+// whereAmI("ukrj", "brths"); */
+
+/* //Ejemplo 21: The Event Loop
+console.log("Test start");
+
+setTimeout(function(){ //This and the Promise.resolve() will be executed at the end. So, coat outside of any callback, will run first
+    console.log("0 sec timer");
+}, 0);
+
+//This allow us to build a promise, so to create a promise that is immediately resolved.
+Promise.resolve("Resolved promise 1")
+.then(function(res){
+    console.log(res);   
+});
+
+Promise.resolve("Resolved promise 2")
+.then(function(res){
+    for (let i = 0; i < 10000000; i++) {};
+    console.log(res);
+})
+
+console.log("Test end"); */
+
+/* //Ejemplo 22: Building a Simple Promise
+
+const lotteryPromise = new Promise(function(resolve, reject){ //All of this will create new promise. As soon as the promise constructor runs, it will automatically execute this executor function that we pass in. And as it executes this function here, it will do so by passing in two other arguments. And those arguments are the resolve and reject functions.
+    console.log("Lottery dray is happening...")
+    setTimeout(function(){
+        Math.random() >= 0.5 ? resolve("You win 💰") : reject(new Error ("You lost 💰"));
+    }, 2000)
+});
+
+lotteryPromise.then(function(res){console.log(res)}).catch(function(err){console.error(err)}); */
+
+/* //Ejemplo 23: Promisifying setTimeout
+function wait(seconds){
+    return new Promise(function(resolve){ //This doesn't need the reject function because it's impossible for the timer to fail. 
+        setTimeout(resolve, seconds);
+    })
+} 
+
+wait(1000)//This will create a promise that wait for one second at first, and after that second it will resolve.
+.then(function() {
+    console.log('1 second passed');
+    return wait(1000); //Now we have to return a new promise
+})
+.then(function() {
+    console.log('2 second passed');
+    return wait(1000);
+})
+.then(function() {
+    console.log('3 second passed');
+    return wait(1000);
+})
+.then(function(){
+    console.log('4 second passed');
+}); */
+
+/* //Ejemplo 24: Promisifying the Geolocation API
+const btn = document.querySelector('.btn-country');
+const countriesContainer = document.querySelector('.countries');
+
+function getPosition(){
+    return new Promise(function(resolve, reject){
+        // navigator.geolocation.getCurrentPosition( //If getCurrentPosition automatically calls the pos function, and if it also automatically passes in the position, then we can simply do the next line.
+        //     pos => resolve(pos), 
+        //     err => reject(err)); 
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+};
+
+function whereAmI(){
+    getPosition()
+    .then(function(pos){
+        console.log(pos)
+        const {latitude: lat, longitude: lng} = pos.coords;
+        return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`); //We return a new promise
+    })
+    .then(function(res){
+        if(!res.ok) throw new Error(`Problem with geocoding (${res.status})`)
+        return res.json(); //We return a new promise
+    })
+    .then(function(data){
+        console.log(data);
+        console.log(`You are in ${data.city}, ${data.country}`);
+        return fetch(`https://restcountries.com/v3.1/name/${data.country}`); //We return a new promise
+    })
+    .then(function(res){
+        if(!res.ok) throw new Error(`Country not found (${res.status})`)
+        return res.json(); //We return a new promise
+    })
+    .then(function(data){
+        return renderCountry(data[0]); //We return a new promise
+    })
+    .catch(function(err){
+        console.log(`${err.message} 😈`);
+    });
+};
+
+function renderCountry(data){
+    const html = `
+    <article class="country">
+        <img class="country__img" src="${data.flags.svg}" />
+        <div class="country__data">
+            <h3 class="country__name">${data.name.common}</h3>
+            <h4 class="country__region">${data.region}</h4>
+            <p class="country__row"><span>👫</span>${Number(data.population / 1000000).toFixed(1)} people</p>
+
+            <p class="country__row"><span>🗣️</span>${data.languages[Object.keys(data.languages)[0]]}</p>
+            <p class="country__row"><span>💰</span>${data.currencies[Object.keys(data.currencies)[0]].name}</p>
+        </div>
+    </article>`;
+
+    countriesContainer.insertAdjacentHTML('beforeend', html);
+    countriesContainer.style.opacity = 1;
+}
+
+btn.addEventListener("click", whereAmI); */
+
+/* //Ejemplo 25: Excercise no. 2
+// 1. Create a function 'createImage' which receives 'imgPath' as an input. This function returns a promise which creates a new image (use document.createElement('img')) and 
+//    sets the .src attribute to the provided image path. When the image is done loading, append it to the DOM element with the 'images' class, and resolve the promise. 
+//    The fulfilled value should be the image element itself. In case there is an error loading the image (listen for the'error' event), reject the promise
+// 2. Consume the promise using .then and also add an error handler
+// 3. After the image has loaded, pause execution for 2 seconds using the 'wait' function we created earlier
+// 4. After the 2 seconds have passed, hide the current image (set display CSS property to 'none'), and load a second image (Hint: Use the image element returned by the 
+//    'createImage' promise to hide the current image. You will need a global variable for that)
+// 5. After the second image has loaded, pause execution for 2 seconds again
+// 6. After the 2 seconds have passed, hide the current image
+
+// Test data: Images in the img folder. Test the error handler by passing a wrong image path. Set the network speed to “Fast 3G” in the dev tools Network tab, otherwise images load too fast
+const imgCountainer = document.querySelector(".images");
+
+function createImage(imgPath){
+    return new Promise(function(resolve, reject){
+        const img = document.createElement('img');
+        img.src = imgPath;
+
+        img.addEventListener("load", function(){
+            imgCountainer.append(img);
+            resolve(img);
+        });
+
+        img.addEventListener("error", function(){
+            reject(new Error("Image not found"));
+        });
+    })
+}
+
+function wait(seconds){
+    return new Promise(function(resolve){ //This doesn't need the reject function because it's impossible for the timer to fail. 
+        setTimeout(resolve, seconds);
+    })
+} 
+
+let currentImg;
+createImage("imgs/img-1.jpg")
+.then(function(res){
+    currentImg = res;
+    console.log("Image 1 loaded");
+    return wait(2000);
+})
+.then(function(){
+    currentImg.style.display = "none";
+    return createImage("imgs/img-2.jpg");
+})
+.then(function(img){
+    currentImg = img;
+    console.log("Image 2 loaded");
+    return wait(2000);
+})
+.then(function(){
+    currentImg.style.display = "none";
+})
+.catch(function(err){
+    console.error(err);
+}); */
+
+/* //Ejemplo 26: Consuming Promises with Async/Await
+//Running Promises in Parallel Consuming Promises with Async/Await
+const countriesContainer = document.querySelector('.countries');
+
+async function whereAmI(country){
+    try{
+        //Geolocation
+        const pos = await getPosition();
+        const {latitude: lat, longitude: lng} = pos.coords;
+        
+        //Revers geocoding
+        const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+        if(!resGeo.ok) throw new Error("Problem getting location data");
+        const dataGeo = await resGeo.json(); //This returns a new promise
+        // console.log(resGeo);
+        // console.log(dataGeo);
+    
+        //Country data
+        const res = await fetch(`https://restcountries.com/v3.1/name/${dataGeo.country}`); //This will return a promise. So, await will stop decode execution at this point of the function until the promise is fulfull, and so until the data has been fetched. This isn't blocking the main threat of execution. So, it isn't blocking the call stack.
+        if(!res.ok) throw new Error("Problem getting location country");
+        const data = await res.json(); //This returns a new promise
+        // console.log(res);
+        // console.log(data);
+    
+        renderCountry(data[0]);
+
+        return `You are in ${dataGeo.city}, ${dataGeo.country}`;
+    }
+    catch(err){
+        console.error(`${err} 😈`);
+        renderError(`😈 ${err.message}`);
+
+        //Reject promise returned from async function 
+        throw error;
+    }
+};
+
+function getPosition(){
+    return new Promise(function(resolve, reject){
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+};
+
+function renderCountry(data){
+    const html = `
+    <article class="country">
+        <img class="country__img" src="${data.flags.svg}" />
+        <div class="country__data">
+            <h3 class="country__name">${data.name.common}</h3>
+            <h4 class="country__region">${data.region}</h4>
+            <p class="country__row"><span>👫</span>${Number(data.population / 1000000).toFixed(1)} people</p>
+
+            <p class="country__row"><span>🗣️</span>${data.languages[Object.keys(data.languages)[0]]}</p>
+            <p class="country__row"><span>💰</span>${data.currencies[Object.keys(data.currencies)[0]].name}</p>
+        </div>
+    </article>`;
+
+    countriesContainer.insertAdjacentHTML('beforeend', html);
+    countriesContainer.style.opacity = 1;
+};
+
+function renderError(msg){
+    countriesContainer.insertAdjacentText("beforeend", msg);
+};
+
+//Metodo 1 con async await, usando IIEF (Immediately Invoked Function Expressions)
+console.log("1: Will get location");
+(async function () {
+    try {
+        const city = await whereAmI();
+        console.log(`2: ${city}`);
+    } catch (err) {
+        console.error(`2: ${err.message} 💥`);
+    }
+    console.log('3: Finished getting location');
+})();
+
+//Metodo 2 con then y catch
+// whereAmI()
+//   .then(city => console.log(`2: ${city}`))
+//   .catch(err => console.error(`2: ${err.message} 💥`))
+//   .finally(() => console.log('3: Finished getting location')); */
+
+/* //Ejemplo 27: Running Promises in Parallel
+async function get3Countries(c1, c2, c3){
+    try {
+        //If we use this method, then the 3 functions will run one after the other. So, if we use the second method, then the 3 functions wll run at the same time.
+        const [data1] = await getJSON(`https://restcountries.com/v2/name/${c1}`);
+        const [data2] = await getJSON(`https://restcountries.com/v2/name/${c2}`);
+        const [data3] = await getJSON(`https://restcountries.com/v2/name/${c3}`);
+        console.log([data1.capital, data2.capital, data3.capital]);
+
+        //This is a helper function on this promise constructor. So it's a static method. Now, this function takes in an array of promises and it will return a new promise (or also an array), which will then run all the promises in the array at the same time.
+        const data = await Promise.all([
+            getJSON(`https://restcountries.com/v2/name/${c1}`), 
+            getJSON(`https://restcountries.com/v2/name/${c2}`), 
+            getJSON(`https://restcountries.com/v2/name/${c3}`)
+        ]);
+        console.log(data.map(event => event[0].capital))
+
+    } catch (err) {
+        console.log(err);
+    }    
+}
+
+function getJSON(url, errorMsc = "Something went wrong"){
+    return fetch(url)
+    .then(function(response){
+        // console.log(response);
+
+        if(!response.ok) throw new Error(`${errorMsc} (${response.status})`); //When we use "throw" in any of our methods, means that it will terminate the currecnt function, and the promise will immediately reject. So, the proimse returned by this first ".then" will be a rejected promise. And that rejection will then propagate all the way down to the catch handler, which we already have set up right down. 
+        return response.json(); //json is a function that is available on all responses of the fetch method. json is an asyncronous function and it'll also return a new promise.
+    })
+}
+
+get3Countries("russia", "germany", "japan"); */
+
+/* //Ejemplo 28: Other Promise Combinators: race, all, allSettled and any
+//It recives an array of promises and it also return a promise. Now, this promise returned by race is settled as asoon as one of the input promises settle. (settled means that a value is available and it doesn't matter if the promise gor rejecetd or fulfilled). So, in Promise.race(), basically the first settled promise wins the race.
+(async function(){
+    const res = await Promise.race([
+        getJSON(`https://restcountries.com/v2/name/russia`),
+        getJSON(`https://restcountries.com/v2/name/germany`),
+        getJSON(`https://restcountries.com/v2/name/japan`)
+    ]);
+
+    console.log(res[0]);
+})();
+
+function getJSON(url, errorMsc = "Something went wrong"){
+    return fetch(url)
+    .then(function(response){
+        // console.log(response);
+
+        if(!response.ok) throw new Error(`${errorMsc} (${response.status})`); //When we use "throw" in any of our methods, means that it will terminate the currecnt function, and the promise will immediately reject. So, the proimse returned by this first ".then" will be a rejected promise. And that rejection will then propagate all the way down to the catch handler, which we already have set up right down. 
+        return response.json(); //json is a function that is available on all responses of the fetch method. json is an asyncronous function and it'll also return a new promise.
+    });
+}
+
+function timeout(sec){
+    return new Promise(function(_, reject){
+        setTimeout(function(){
+            reject(new Error("Request took long time!!"));
+        }, sec*1000)
+    })
+}
+
+//Promise.race() takes an iterable of promises as input and returns a single Promise. This returned promise settles with the eventual state of the first promise that settles. So, it will run the method that first happens, and then the rest of the methods will be rejected. So, that basically will then abort the fetch that is happening
+Promise.race([
+    getJSON(`https://restcountries.com/v2/name/mexico`),
+    timeout(10),
+])
+.then(res => console.log(res[0])).catch(err => console.error(err));
+
+//It takes in an array of promises again, and it will simply return an array pf all the settled promises, no matter if the promises got rejected or not. The difference with between each other, is that Promise.all() will short circuit as soon as one promises rejects, but Promse.allSettled simply never short circuits. It will only return all the results of all the promises.
+Promise.allSettled([
+    Promise.resolve('Success'),
+    Promise.reject('ERROR'),
+    Promise.resolve('Another success'),
+])
+.then(res => console.log(res));
+
+//It's a static method. Now, this function takes in an array of promises and it will return a new promise (or also an array), which will then run all the promises in the array at the same time.
+Promise.all([
+    Promise.resolve('Success'),
+    Promise.reject('ERROR'),
+    Promise.resolve('Another success'),
+])
+.then(res => console.log(res)).catch(err => console.error(err));
+
+// Promise.any() takes in an array of multiple promises and this one will then return the first fulfilled promise and it will simply ignore rejected promises. It's similar to Promise.race() with the difference that rejected promises are ignored, and so therefore the results of Promise.any() is always gonna be a fulfilled promise, unless of course all of them reject. 
+Promise.any([
+    Promise.resolve('Success'),
+    Promise.reject('ERROR'),
+    Promise.resolve('Another success'),
+])
+.then(res => console.log(res)).catch(err => console.error(err)); */
+
+/* //Ejemplo 29: Excercise no. 3
+// Your tasks:
+// 1. Write an async function 'loadNPause' that recreates Challenge #2, this time using async/await (only the part where the promise is consumed, reuse the 'createImage' 
+//    function from before). Compare the two versions, think about the big differences, and see which one you like more
+
+// 2. Create an async function 'loadAll' that receives an array of image paths 'imgArr'
+// 3. Use .map to loop over the array, to load all the images with the 'createImage' function (call the resulting array 'imgs')
+// 4. Check out the 'imgs' array in the console! Is it like you expected?
+// 5. Use a promise combinator function to actually get the images from the array 
+// 6. Add the 'parallel' class to all the images (it has some CSS styles)
+
+// Test data Part 2: ['img/img-1.jpg', 'img/img-2.jpg', 'img/img3.jpg']. To test, turn off the 'loadNPause' function
+
+const imgCountainer = document.querySelector(".images");
+
+function createImage(imgPath){
+    return new Promise(function(resolve, reject){
+        const img = document.createElement('img');
+        img.src = imgPath;
+
+        img.addEventListener("load", function(){
+            imgCountainer.append(img);
+            resolve(img);
+        });
+
+        img.addEventListener("error", function(){
+            reject(new Error("Image not found"));
+        });
+    })
+}
+
+function wait(seconds){
+    return new Promise(function(resolve){ //This doesn't need the reject function because it's impossible for the timer to fail. 
+        setTimeout(resolve, seconds);
+    })
+} 
+
+async function loadNPause(){
+    try {
+        let img; 
+
+        //Load image 1
+        img = await createImage("imgs/img-1.jpg");
+        console.log("Image 1 loaded");
+        await wait(2000);
+        img.style.display = "none";
+
+        //Load image 2
+        img = await createImage("imgs/img-2.jpg");
+        console.log("Image 2 loaded");
+        await wait(2000);
+        img.style.display = "none";
+
+        //Load image 3
+        img = await createImage("imgs/img-3.jpg");
+        console.log("Image 3 loaded");
+        await wait(2000);
+        img.style.display = "none";
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+async function loadAll(imgArr){
+    try {
+        const imgs = imgArr.map(async function(event){
+            return await createImage(event)
+        });
+        console.log(imgs);
+
+        const imgsEl = await Promise.all(imgs); //When we map the array of imgs by using async-await, we get a promise (fulfilled) and not the three images of each one. So, if we'd want to get the three images we'd have to use the Promise.all(imgs), because all the promises are stored in imgs.
+        console.log(imgsEl);
+
+        imgsEl.forEach(event => event.classList.add("parallel"));
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+// loadNPause();
+loadAll(['imgs/img-1.jpg', 'imgs/img-2.jpg', 'imgs/img-3.jpg']); */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

@@ -15,7 +15,7 @@
   </head>
 
 
-  <body class="bg-black">
+  <body class="bg-secondary">
     <header class="header">
       <nav class="nav">
         <img src="imgs/logo.png" alt="Bankist logo" class="nav__logo" id="logo" designer="Jonas" data-version-number="3.0"/>
@@ -328,45 +328,45 @@
   
       <div id="containers" class="w-50"> 
           <h1 id="titulo">Hola, bienvenidos a la clase de Javascript 🤯</h1>
-          <h3 id="subtitulo">Esto es un titulo</h3>
-          <p id="bienvenida" class="texto">Hola Bienvenidos 🤑</p>
-          <p id="temaClase" class="texto">En la clase de hoy veremos, modelo de objetos del documento (DOM).</p>
-          <p class="texto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, enim.</p>
-          <p id="frase">Acá veremos lo que tienes para contarnos 🥵</p>
+          <h3 id="subtitulo" class="fs-1 text-dark">Esto es un titulo</h3>
+          <p id="bienvenida" class="texto fs-2 text-dark">Hola Bienvenidos 🤑</p>
+          <p id="temaClase" class="texto fs-2 text-dark">En la clase de hoy veremos, modelo de objetos del documento (DOM).</p>
+          <p class="texto fs-2 text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, enim.</p>
+          <p id="frase" class="fs-2 text-dark">Acá veremos lo que tienes para contarnos 🥵</p>
   
           <ul id="paises">
-              <li>Esta es la lista de paises:</li>
+              <li><p class="texto fs-2 text-dark">Esta es la lista de paises:</p></li>
           </ul> 
   
           <form id="formulario_HTML">
               <div class="mb-3">
-                  <label for="apellidos" class="form-label">Apellidos</label>
-                  <input type="text" class="form-control" id="apellidos" />
+                  <label for="apellidos" class="form-label fs-2">Apellidos</label>
+                  <input type="text" class="form-control fs-2" id="apellidos" />
               </div>
       
               <div class="mb-3">
-                  <label for="nombres" class="form-label">Nombres</label>
-                  <input type="text" class="form-control" id="nombres" />
+                  <label for="nombres" class="form-label fs-2">Nombres</label>
+                  <input type="text" class="form-control fs-2" id="nombres" />
               </div>
       
               <div class="mb-3">
-                  <label for="ocupacion" class="form-label">Ocupación</label>
-                  <select id="ocupacion" class="form-select">
+                  <label for="ocupacion" class="form-label fs-2">Ocupación</label>
+                  <select id="ocupacion" class="form-select fs-2">
                       <option value="0">Seleccione una opción</option>
                   </select>
               </div>
           
               <div class="mb-3">
-                  <label for="correo" class="form-label">Correo electrónico</label>
-                  <input type="email" class="form-control" id="correo" aria-describedby="emailHelp"/>
-                  <div id="emailHelp" class="form-text">
+                  <label for="correo" class="form-label fs-2">Correo electrónico</label>
+                  <input type="email" class="form-control fs-2" id="correo" aria-describedby="emailHelp"/>
+                  <div id="emailHelp" class="form-text fs-2">
                       No lo compartiremos con nadie.
                   </div>
               </div>
   
               <div class="form-check">
                   <input value="" class="form-check-input" type="checkbox" id="participar" checked/>
-                  <label class="form-check-label" for="participar">¿Quiere boucher de bienvenida?</label>
+                  <label class="form-check-label fs-2" for="participar">¿Quiere boucher de bienvenida?</label>
               </div>
   
               <button type="button" class="btn btn-primary" id="btnInscribir">boton creado en JS</button>
@@ -384,7 +384,12 @@
       </div>
     </div>
 
-  
+    <!-- Esta section pertenece al ejemplo de a seccion de ajax  -->
+    <section class="containerX4">
+      <div class="countries"></div>
+      <button class="btn-country">Where am I?</button>
+      <div class="images"></div>
+    </section>  
   
     <!-- Este div pertenece al ejercicio 14 de DOM  -->
     <h1>AJAX & FETCH</h1>
