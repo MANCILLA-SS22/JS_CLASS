@@ -5777,6 +5777,149 @@ async function loadAll(imgArr){
 loadAll(['imgs/img-1.jpg', 'imgs/img-2.jpg', 'imgs/img-3.jpg']); */
 
 
+//         $$$$$$$$$$$$$$$ MODERN JAVASCRIPT DEVELOPMENT: MODULES AND TOOLING $$$$$$$$$$$$$$$
+
+
+/* //Ejemplo 1: Importing and exporting modules
+console.log("Importing modile");  //Variables that are declared inside of a module, are actually sculpt to the module. So basically inside a module, the module itself is like the top level scope. And so by default, this means that all top level variables are private inside of this variable.
+import "./shoppingCart.js";       //All the modules are first executed before the rest of the code. */
+
+/* //Ejemplo 2: Named exports
+import { addToCart, totalPrice as price, tq } from './shoppingCart.js'; //When we use named exports, we must use curly braces.
+addToCart('bread', 5);
+console.log(price, tq); */
+
+/* //Ejemplo 3: Getting an arror by not exporting a module
+console.log(shippingCost); //This will give us an error because we haven't exported the shippingCost variable from shoppingCart.js */
+
+/* //Ejemplo 4: Import all the exports of a module at the same time into an object
+import * as ShoppingCart from './shoppingCart.js'; //This will create an object containing everything that is exported from the module that we will specify here.
+ShoppingCart.addToCart('bread', 5);
+console.log(ShoppingCart.totalPrice); */
+
+/* //Ejemplo 5: Default exports
+// import add, { addToCart, totalPrice as price, tq } from './shoppingCart.js'; //We must avoid using named and default exports at the same time because this is a bad practice.
+// import add from './shoppingCart.js'; //When we use named exports, we must not use curly braces.
+import add, { cart } from './shoppingCart.js';
+add('pizza', 2);
+add('bread', 5);
+add('apples', 4);
+
+//We do not see that empty object, that we export, but instead we have the array with the objects that we just added to the cart, by calling the add function. And so that proves
+//that this import here, is in fact, not simply a copy of the value, that we exported here. Because if it was, then here we would simply get the empty array.
+//Imports are not copies of the exports. They are instead like a live connection, and what this means is that I point to the same place of memory
+console.log(cart); */
+
+/* //Ejemplo 6: Top-Level await
+//it's very important to remember that using top-level await, so await outside of any async function will block the entire module in a way that we really couldn't block code execution before.
+const res = await fetch('https://jsonplaceholder.typicode.com/posts'); // this await keyword here, which is now outside of an async function, is blocking the entire execution of this module.
+const data = await res.json();
+console.log("data", data);
+
+async function getLastPost() { //calling an async is not necessary because it returns a new promise ( Promise {<pending>} )
+    const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const data = await res.json();
+
+    return { 
+        title: data.at(-1).title, 
+        text: data.at(-1).body 
+    };
+};
+
+const lastPost = getLastPost();
+console.log("lastPost", lastPost);
+
+const lastPost2 = await getLastPost();
+console.log("lastPost2", lastPost2); */
+
+/* //Ejemplo 7: The Module Pattern (old way)
+
+// All of this data here is private because it is inside of the scope of the function. And so now all we have to do is to return some of this stuff in order to basically return a public API.
+const ShoppingCart2 = (function(){
+    const cart = [];
+    const shippingCost = 10;
+    const totalPrice = 237;
+    const totalQuantity = 23;
+
+    function addToCart (product, quantity) {
+        cart.push({
+            product: product, 
+            quantity: product
+        });
+        console.log(`${quantity} ${product} added to cart (sipping cost is ${shippingCost})`);
+    };
+
+    function orderStock (product, quantity) {
+        console.log(`${quantity} ${product} ordered from suplier`);
+    };
+
+    //we simply return an object, which contains the stuff that we want to make public here.
+    return {
+        addToCart,
+        orderStock,
+        cart,
+        totalPrice,
+        totalQuantity,
+    };
+
+}) ();
+
+ShoppingCart2.addToCart('apple', 4);
+ShoppingCart2.orderStock('pizza', 2);
+console.log(ShoppingCart2);
+console.log(ShoppingCart2.shippingCost); */
+
+/* //Ejemplo 8: CommonJS Modules
+
+// Export
+exports.addTocart = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(
+        `${quantity} ${product} added to cart (sipping cost is ${shippingCost})`
+    );
+};
+
+// Import
+const { addTocart } = require('./shoppingCart.js'); */
+
+//Ejemplo 9: Introduction to NPM
+import add, { cart } from './shoppingCart.js';
+add('pizza', 2);
+add('bread', 5);
+console.log(cart);
+
+
+import cloneDeep from '../node_modules/lodash-es/cloneDeep.js';
+// import cloneDeep from 'lodash-es';
+
+const state = {
+    cart: [
+        { product: 'bread', quantity: 5 },
+        { product: 'pizza', quantity: 5 },
+    ],
+    user: { loggedIn: true },
+};
+
+const stateClone = Object.assign({}, state);
+const stateDeepClone = cloneDeep(state);
+
+state.user.loggedIn = false;
+console.log(stateClone);
+
+console.log(stateDeepClone);
+
+//The goal of using Parcel is to bunddle the three modules together, which are script.js, shoppingCart.js and cloneDeep.js
+
+
+
+
+
+
+
+
+
+
+
 
 
 
