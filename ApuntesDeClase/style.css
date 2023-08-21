@@ -1,5 +1,6 @@
  /* Advanced Dom Bankist */
 /* The page is NOT responsive. You can implement responsiveness yourself if you wanna have some fun 😃 */
+/* @import "../node_modules/bootstrap/dist/css/bootstrap.min.css"; */
 
 :root {
   --color-primary: #5ec576;

@@ -5882,7 +5882,7 @@ exports.addTocart = function (product, quantity) {
 // Import
 const { addTocart } = require('./shoppingCart.js'); */
 
-//Ejemplo 9: Introduction to NPM
+/* //Ejemplo 9: Introduction to NPM
 import add, { cart } from './shoppingCart';
 add('pizza', 2);
 add('bread', 5);
@@ -5915,6 +5915,26 @@ if (module.hot) {
     module.hot.accept();
 }
 
+class Person {
+    #greeting = 'Hey';
+    constructor(name) {
+        this.name = name;
+        console.log(`${this.#greeting}, ${this.name}`);
+    }
+}
+const jonas = new Person('Jonas');
+
+console.log('Jonas' ?? null);
+
+console.log(cart.find(el => el.quantity >= 2));
+Promise.resolve('TEST').then(x => console.log(x));
+
+import 'core-js/stable';
+// import 'core-js/stable/array/find';
+// import 'core-js/stable/promise';
+
+// Polifilling async functions
+import 'regenerator-runtime/runtime'; */
 
 
 
