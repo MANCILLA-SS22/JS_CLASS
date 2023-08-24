@@ -2,9 +2,30 @@
   "dependencies": {
     "bootstrap": "^5.3.1",
     "core-js": "^3.32.1",
+    "fractional": "^1.0.0",
     "leaflet": "^1.9.4",
     "lodash-es": "^4.17.21",
     "parcel": "^2.9.3",
     "regenerator-runtime": "^0.14.0"
-  }
+  },
+  "name": "forkify",
+  "description": "Reciepe application",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.9.3"
+  },
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MANCILLA-SS22/JS_CLASS.git"
+  },
+  "author": "German mancilla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MANCILLA-SS22/JS_CLASS/issues"
+  },
+  "homepage": "https://github.com/MANCILLA-SS22/JS_CLASS#readme"
 }

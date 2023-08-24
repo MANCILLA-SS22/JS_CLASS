@@ -838,6 +838,7 @@ class App{
 const app = new App();   
 // console.log(app); */
 
+
 //         $$$$$$$$$$$$$$$ Funciones $$$$$$$$$$$$$$$
 
 
@@ -1951,7 +1952,21 @@ console.log("4. Los precios incrementados forma de objeto seran: ", preciosIncre
 
 function incrementarPrecio(precio, porcentaje){
     return precio + (precio * (porcentaje/100) )
-} */
+} 
+
+const numbers = [65, 44, 12, 4];
+const newArr = numbers.map(myFunction);
+
+document.getElementById("demo").innerHTML = newArr;
+
+function myFunction(num) {
+  return num * 10;
+}
+
+
+*/
+
+
 
 /* //Ejemplo 26: como calcular el valor total de una compra, con |.reduce()|
 class producto{

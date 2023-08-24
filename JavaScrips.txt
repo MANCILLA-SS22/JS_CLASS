@@ -279,7 +279,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      ~ Private: These members are only accessible within the class that instantiated the object.
      
      ~ Protected: This keyword allows a little more access than private members but a lot less than the public. A protected member is accessible within the class (similar to private) and any object that inherits from it. A protected value is 
-       shared across all layers of the prototype chain. It is not accessible by anybody else.       
+       shared across all layers of the prototype chain. It is not accessible by anybody else.
         
   > Diferencia entre una funcion constructora de objetos y las clases, y la forma en que se escriben:
   
@@ -533,71 +533,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     > values()           Object.values() returns an array whose elements are values of enumerable string-keyed properties found directly upon object. This is the same as iterating with a for...in loop, except that a for...in loop enumerates 
                          properties in the prototype chain as well. The order of the array returned by Object.values() is the same as that provided by a for...in loop.
                          
-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
-- Propiedades del objeto WINDOW
-
-    > closed	        Returns a boolean true if a window is closed.
-    > console	        Returns the Console Object for the window.
-    > document	        Returns the Document object for the window.
-    > frameElement	   Returns the frame in which the window runs.
-    > frames	        Returns all window objects running in the window.
-    > history	        Returns the History object for the window.
-    > innerHeight	    Returns the height of the window's content area (viewport) including scrollbars
-    > innerWidth	         Returns the width of a window's content area (viewport) including scrollbars
-    > length	        Returns the number of <iframe> elements in the current window
-    > localStorage	   Allows to save key/value pairs in a web browser. Stores the data with no expiration date
-    > location	        Returns the Location object for the window.
-    > name	             Sets or returns the name of a window
-    > navigator	        Returns the Navigator object for the window.
-    > opener	        Returns a reference to the window that created the window
-    > outerHeight	    Returns the height of the browser window, including toolbars/scrollbars
-    > outerWidth	         Returns the width of the browser window, including toolbars/scrollbars
-    > pageXOffset	    Returns the pixels the current document has been scrolled (horizontally) from the upper left corner of the window
-    > pageYOffset	    Returns the pixels the current document has been scrolled (vertically) from the upper left corner of the window
-    > parent	        Returns the parent window of the current window
-    > screen	        Returns the Screen object for the window
-    > screenLeft	        Returns the horizontal coordinate of the window relative to the screen
-    > screenTop	        Returns the vertical coordinate of the window relative to the screen
-    > screenX	        Returns the horizontal coordinate of the window relative to the screen
-    > screenY	        Returns the vertical coordinate of the window relative to the screen
-    > sessionStorage	   Allows to save key/value pairs in a web browser. Stores the data for one session
-    > scrollX	        An alias of pageXOffset
-    > scrollY	        An alias of pageYOffset
-    > self	              Returns the current window
-    > top	             Returns the topmost browser window
-
-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
-- Métodos del objeto WINDOW
-
-    > addEventListener()         Attaches an event handler to the window
-    > alert()	                 Displays an alert box with a message and an OK button
-    > atob()	                 Decodes a base-64 encoded string
-    > blur()	                 Removes focus from the current window
-    > btoa()	                 Encodes a string in base-64
-    > clearInterval()            Clears a timer set with setInterval()
-    > clearTimeout()             Clears a timer set with setTimeout()
-    > close()	                 Closes the current window
-    > confirm()	                 Displays a dialog box with a message and an OK and a Cancel button
-    > focus()	                 Sets focus to the current window
-    > getComputedStyle()	      Gets the current computed CSS styles applied to an element
-    > getSelection()             Returns a Selection object representing the range of text selected by the user
-    > matchMedia()               Returns a MediaQueryList object representing the specified CSS media query string
-    > moveBy()	                 Moves a window relative to its current position
-    > moveTo()	                 Moves a window to the specified position
-    > open()	                 Opens a new browser window
-    > print()	                 Prints the content of the current window
-    > prompt()	                 Displays a dialog box that prompts the visitor for input
-    > removeEventListener()	 Removes an event handler from the window
-    > requestAnimationFrame()	 Requests the browser to call a function to update an animation before the next repaint
-    > resizeBy()	                 Resizes the window by the specified pixels
-    > resizeTo()	                 Resizes the window to the specified width and height
-    > scrollBy()	                 Scrolls the document by the specified number of pixels
-    > scrollTo()	                 Scrolls the document to the specified coordinates
-    > setInterval()              Calls a function or evaluates an expression at specified intervals (in milliseconds)
-    > setTimeout()               Calls a function or evaluates an expression after a specified number of milliseconds
-    > stop()	                 Stops the window from loading
     
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    
 
@@ -1142,6 +1077,73 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
    
    > Recuperar datos: Muchas veces usamos el Storage para recuperar datos relacionados a la última navegación del usuario. Por ejemplo, su última sesión de login o el último estado de su carrito de compras. Para esto, pensamos en inicializar 
      las variables de la app consultando el Storage en el momento de inicio.
+     
+     
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
+- Propiedades del objeto WINDOW
+
+    > closed	        Returns a boolean true if a window is closed.
+    > console	        Returns the Console Object for the window.
+    > document	        Returns the Document object for the window.
+    > frameElement	   Returns the frame in which the window runs.
+    > frames	        Returns all window objects running in the window.
+    > history	        Returns the History object for the window.
+    > innerHeight	    Returns the height of the window's content area (viewport) including scrollbars
+    > innerWidth	         Returns the width of a window's content area (viewport) including scrollbars
+    > length	        Returns the number of <iframe> elements in the current window
+    > localStorage	   Allows to save key/value pairs in a web browser. Stores the data with no expiration date
+    > location	        Returns the Location object for the window.
+    > name	             Sets or returns the name of a window
+    > navigator	        Returns the Navigator object for the window.
+    > opener	        Returns a reference to the window that created the window
+    > outerHeight	    Returns the height of the browser window, including toolbars/scrollbars
+    > outerWidth	         Returns the width of the browser window, including toolbars/scrollbars
+    > pageXOffset	    Returns the pixels the current document has been scrolled (horizontally) from the upper left corner of the window
+    > pageYOffset	    Returns the pixels the current document has been scrolled (vertically) from the upper left corner of the window
+    > parent	        Returns the parent window of the current window
+    > screen	        Returns the Screen object for the window
+    > screenLeft	        Returns the horizontal coordinate of the window relative to the screen
+    > screenTop	        Returns the vertical coordinate of the window relative to the screen
+    > screenX	        Returns the horizontal coordinate of the window relative to the screen
+    > screenY	        Returns the vertical coordinate of the window relative to the screen
+    > sessionStorage	   Allows to save key/value pairs in a web browser. Stores the data for one session
+    > scrollX	        An alias of pageXOffset
+    > scrollY	        An alias of pageYOffset
+    > self	              Returns the current window
+    > top	             Returns the topmost browser window
+
+- Métodos del objeto WINDOW
+
+    > addEventListener()         Attaches an event handler to the window
+    > alert()	                 Displays an alert box with a message and an OK button
+    > atob()	                 Decodes a base-64 encoded string
+    > blur()	                 Removes focus from the current window
+    > btoa()	                 Encodes a string in base-64
+    > clearInterval()            Clears a timer set with setInterval()
+    > clearTimeout()             Clears a timer set with setTimeout()
+    > close()	                 Closes the current window
+    > confirm()	                 Displays a dialog box with a message and an OK and a Cancel button
+    > focus()	                 Sets focus to the current window
+    > getComputedStyle()	      Gets the current computed CSS styles applied to an element
+    > getSelection()             Returns a Selection object representing the range of text selected by the user
+    > matchMedia()               Returns a MediaQueryList object representing the specified CSS media query string
+    > moveBy()	                 Moves a window relative to its current position
+    > moveTo()	                 Moves a window to the specified position
+    > open()	                 Opens a new browser window
+    > print()	                 Prints the content of the current window
+    > prompt()	                 Displays a dialog box that prompts the visitor for input
+    > removeEventListener()	 Removes an event handler from the window
+    > requestAnimationFrame()	 Requests the browser to call a function to update an animation before the next repaint
+    > resizeBy()	                 Resizes the window by the specified pixels
+    > resizeTo()	                 Resizes the window to the specified width and height
+    > scrollBy()	                 Scrolls the document by the specified number of pixels
+    > scrollTo()	                 Scrolls the document to the specified coordinates
+    > setInterval()              Calls a function or evaluates an expression at specified intervals (in milliseconds)
+    > setTimeout()               Calls a function or evaluates an expression after a specified number of milliseconds
+    > stop()	                 Stops the window from loading
+     
  
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$    
@@ -1863,8 +1865,19 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     Como una promesa puede tener varios estados posibles, se puede concatenar varios .then() o .catch() en un mismo llamado, y caeremos en el caso que corresponda según cómo se haya resuelto la promesa. Para cada promesa podemos definir una 
     estructura para trabajar los distintos casos posibles. Cada promesa sólo puede resolverse o rechazarse una única vez. Es un mecanismo de control claro y ordenado para trabajar la asincronía y los posibles valores a recibir.   
    
+   > Try-catch: This statement is comprised of a try block and either a catch block, a finally block, or both. The code in the try block is executed first, and if it throws an exception, the code in the catch block will be executed. The code 
+     in the finally block will always be executed before control flow exits the entire construct.
+   
+   > Try-catch-throw:
+     If you use the keyword 'throw' in an async function, the function will call the 'reject()' function behind the scenes and the promise will get rejected...
+     However, when using try...catch block inside an async function and an error occurs in some function that returns a promise (like fetch) or if you use the 'throw' keyword yourself, the code execution will stop and move to the first 
+     available catch block. So try...catch block gives you control to handle errors manually and internally and then decide how to proceed.
+     For example, you could handle 10 different errors in a single or multiple try...catch blocks withing the async function and decide to reject the promise only for major errors, but still resolve it manually for smaller errors.
+     The bottom line is that try...catch block gives you more control over error handling. So if you only have 1 possible error message like we do here, then you don't need the try/catch block in getJSON function nor loadRecipe function and
+     the promises those functions return will normally reject/resolve based on what happened with the promises inside
+   
    > fetch: Sirve para hacer peticiones HTTP a algún servicio externo. Como estas peticiones son asincrónicas, convenientemente el método fetch() trabaja con promesas. El método recibe un primer parámetro que es la URL a la cual hacer la 
-     petición, y un segundo parámetro opcional de configuración: fetch(url, config). 
+     petición, y un segundo parámetro opcional de configuración: fetch(url, config). Al final, fetch retorna una nueva promesa.
      Por defecto el método fetch hace peticiones del tipo GET. Según la documentación, para obtener una lista de posts debemos hacer una petición del siguiente tipo.
      Podemos hacer un request de manera simple, utilizando Fetch API.
      Esta nos provee con una promesa, que se resuelve al terminar el request.
@@ -1892,6 +1905,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
     ✓ async: Esta palabra reservada sirve para declarar una función como asincrónica, y se agrega como prefijo a la función. Así, dentro de una función async podemos utilizar la sentencia await vista previamente. Esto nos permite esperar a 
       que se resuelvan las promesas vistas para continuar con la instrucción siguiente.
+      Lo que hace await es detener la ejecución y no continuar. Se espera a que se resuelva la promesa, y hasta que no lo haga, no continua. A diferencia del fetch(), tenemos un código bloqueante.
+      
     ✓ await: Nos permite establecer un punto de espera en el código. Aplicado como prefijo a una promesa (en este caso, el return del fetch) se bloquea la ejecución de la siguiente instrucción hasta que la promesa se resuelva.     
       Lo malo es que await sólo puede utilizarse dentro de una función asincrónica. Aquí es donde entra la sentencia async. Ésta palabra reservada sirve para declarar una función como asincrónica, y se agrega como prefijo a la función.             
       Así, dentro de una función async podemos utilizar la sentencia await vista previamente. Esto nos permite esperar a que se resuelvan las promesas vistas para continuar con la instrucción siguiente. 
@@ -2333,3 +2348,13 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 - pluggins: 
 
 - side effects: 
+
+- polyfills: Un polyfill es un fragmento de código (generalmente JavaScript en la Web) que se utiliza para proporcionar una funcionalidad moderna en navegadores antiguos que no lo admiten de forma nativa. Por ejemplo, se podría usar un 
+  polyfill para imitar la funcionalidad de un elemento HTML Canvas en Microsoft Internet Explorer 7 usando un complemento de Silverlight, o un soporte mímico para las unidades rem CSS, o text-shadow, o lo que tu quieras.
+  
+  
+  
+  
+  
+  
+  
