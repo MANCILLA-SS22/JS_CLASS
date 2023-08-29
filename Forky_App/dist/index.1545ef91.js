@@ -575,34 +575,126 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 
 },{}],"7eL8J":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _webImmediateJs = require("core-js/modules/web.immediate.js");
+var _webImmediateJs = require("core-js/modules/web.immediate.js"); // clearBookmarks();
+var _regeneratorRuntime = require("regenerator-runtime");
 var _runtime = require("regenerator-runtime/runtime"); //This is for polyfilling async/await
 var _modelJs = require("./model.js");
+var _configJs = require("./config.js");
 var _recipeViewJs = require("./views/recipeView.js");
 var _recipeViewJsDefault = parcelHelpers.interopDefault(_recipeViewJs);
-init();
+var _searchViewJs = require("./views/searchView.js");
+var _searchViewJsDefault = parcelHelpers.interopDefault(_searchViewJs);
+var _resultsViewJs = require("./views/resultsView.js");
+var _resultsViewJsDefault = parcelHelpers.interopDefault(_resultsViewJs);
+var _bookmarksViewJs = require("./views/bookmarksView.js");
+var _bookmarksViewJsDefault = parcelHelpers.interopDefault(_bookmarksViewJs);
+var _addRecipeViewJs = require("./views/addRecipeView.js");
+var _addRecipeViewJsDefault = parcelHelpers.interopDefault(_addRecipeViewJs);
+var _paginationViewJs = require("./views/paginationView.js");
+var _paginationViewJsDefault = parcelHelpers.interopDefault(_paginationViewJs);
+if (module.hot) module.hot.accept();
+//We can't export functions from controller to the view becuase: 1) Controller is the main module that controls what happens in the app. It delegates tasks to models and views. 2) The controller.js file is linked with the index.html file, which makes it an entry point for all other JavaScript modules.
+function init() {
+    (0, _bookmarksViewJsDefault.default).addHandlerRender(controlBookmars);
+    (0, _addRecipeViewJsDefault.default)._addHandlerUpload(controlAddRecipe);
+    (0, _recipeViewJsDefault.default).addHandlerrender(controlRecipe);
+    (0, _recipeViewJsDefault.default).addHandlerUpdateServings(controlServings);
+    (0, _recipeViewJsDefault.default).addHandlerAddBookmark(controlAddBookmark);
+    (0, _searchViewJsDefault.default).addHandlerSearch(controlSearchResults);
+    (0, _paginationViewJsDefault.default).addHandlerClick(controlPagination);
+// controlServings(); We MUST NOT use this function here because of the asynchronous nature of our application. So, we're basically trying to control the servings simply after registering the handler functions right up. But by that time, no recipe has yet arrived from the API. And therefore state.recipe is not yet defined. So here we're then trying to read ingredients from the recipe that doesn't exist. If we would want to solve this, we can use this funcion at the end of contronRecipes(). After the recipe is loaded.
+}
 async function controlRecipe() {
     try {
         const id = window.location.hash.slice(1); //console.log(id);
         if (!id) return;
         (0, _recipeViewJsDefault.default).renderSpinner();
-        // 1) Loading the recipe
+        // 0) Update results view to mark selectect search result
+        (0, _resultsViewJsDefault.default).update(_modelJs.getSearchResultPage());
+        // 1) Updating bookmarks view
+        (0, _bookmarksViewJsDefault.default).update(_modelJs.state.bookmarks);
+        // 2) Loading the recipe
         await _modelJs.loadRecipe(id); //This is an async function calling another asyinc function. That's why we use await.
-        // 2) Rendering recipe
+        // 3) Rendering recipe
         (0, _recipeViewJsDefault.default).render(_modelJs.state.recipe); //This is the same as the following line of code: const res = new recipeView(model.state.recipe);
     } catch (err) {
         console.error(`${err} 😈`);
         (0, _recipeViewJsDefault.default).renderError(); //We catch the re-thrown error from model.js and then call the renderError() function from the same file.
     }
 }
-//We can't export functions from controller to the view becuase:
-// 1) Controller is the main module that controls what happens in the app. It delegates tasks to models and views.
-// 2) The controller.js file is linked with the index.html file, which makes it an entry point for all other JavaScript modules.
-function init() {
-    (0, _recipeViewJsDefault.default).addHandlerrender(controlRecipe);
+async function controlSearchResults() {
+    try {
+        (0, _resultsViewJsDefault.default).renderSpinner();
+        // 1) Get serch query
+        const query = (0, _searchViewJsDefault.default).getQuery();
+        if (!query) return (0, _resultsViewJsDefault.default).renderError();
+        // 2) Load search resutls
+        await _modelJs.loadSearchResults(query);
+        // 3) Render results
+        // console.log(model.state.search.results);
+        // resultsView.render(model.state.search.results);
+        (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultPage());
+        // 4) Render initial pagination buttons
+        (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
+    } catch (err) {
+        console.log(err);
+    }
 }
+function controlPagination(gotoPage) {
+    //this actually works because render will basically overwrite the markup that was there previously. And the reason for that is that we here have the clear method. And so before any new HTML is inserted into the page, the parentElement is first cleared, so it's first emptied, right. And so then that means that render here basically overwrites everything that was there and puts the new content in the same place.
+    // 3) Render NEW results
+    (0, _resultsViewJsDefault.default).render(_modelJs.getSearchResultPage(gotoPage));
+    // 4) Render NEW pagination buttons
+    (0, _paginationViewJsDefault.default).render(_modelJs.state.search);
+}
+function controlServings(newServings) {
+    //Update the recipe servings (in state)
+    _modelJs.updateServings(newServings);
+    //Update the recipe view
+    // recipeView.render(model.state.recipe);
+    (0, _recipeViewJsDefault.default).update(_modelJs.state.recipe); //The difference between this line en the above one, is that this one will basically update text and attributes in the DOM, without having to re-render the entire view, and the other one will render all the html.
+}
+function controlAddBookmark() {
+    // 1) Add/delete bookmark
+    !_modelJs.state.recipe.bookmarked ? _modelJs.addBookmark(_modelJs.state.recipe) : _modelJs.deleteBookmark(_modelJs.state.recipe.id);
+    // 2) Update recipe view
+    console.log(_modelJs.state.recipe);
+    (0, _recipeViewJsDefault.default).update(_modelJs.state.recipe);
+    // 3) Render bookmarks
+    (0, _bookmarksViewJsDefault.default).render(_modelJs.state.bookmarks);
+}
+function controlBookmars() {
+    (0, _bookmarksViewJsDefault.default).render(_modelJs.state.bookmarks);
+}
+function clearBookmarks() {
+    localStorage.clear("bookmarks");
+}
+async function controlAddRecipe(newRecipe) {
+    try {
+        //Show loadig spinner
+        (0, _addRecipeViewJsDefault.default).renderSpinner();
+        await _modelJs.uploadRecipe(newRecipe);
+        console.log(_modelJs.state.recipe);
+        //Render recipe
+        (0, _recipeViewJsDefault.default).render(_modelJs.state.recipe);
+        //Success message
+        (0, _addRecipeViewJsDefault.default).renderMessage();
+        //Render bookmark view
+        (0, _bookmarksViewJsDefault.default).render(_modelJs.state.bookmarks);
+        //Change ID in the URL
+        window.history.pushState(null, "", `#${_modelJs.state.recipe.id}`);
+        //Close form window
+        setTimeout(function() {
+            (0, _addRecipeViewJsDefault.default).toggleWindow();
+        }, (0, _configJs.MODAL_CLOSE_SEC) * 1000);
+    } catch (err) {
+        console.error("\uD83D\uDCA3", err);
+        (0, _addRecipeViewJsDefault.default).renderError(err.message);
+    }
+}
+init();
 
-},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"ifVwN","regenerator-runtime/runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/recipeView.js":"3scQE"}],"49tUX":[function(require,module,exports) {
+},{"core-js/modules/web.immediate.js":"49tUX","regenerator-runtime/runtime":"dXNgZ","./model.js":"ifVwN","./views/recipeView.js":"3scQE","./views/searchView.js":"dkPrN","./views/resultsView.js":"hUahT","./views/paginationView.js":"3n1l3","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","regenerator-runtime":"dXNgZ","./config.js":"j9Cis","./views/bookmarksView.js":"71RM4","./views/addRecipeView.js":"iuOf7"}],"49tUX":[function(require,module,exports) {
 "use strict";
 // TODO: Remove this module from `core-js@4` since it's split to modules listed below
 require("52e9b3eefbbce1ed");
@@ -1847,104 +1939,7 @@ module.exports = function(scheduler, hasTimeArg) {
 "use strict";
 /* global Bun -- Deno case */ module.exports = typeof Bun == "function" && Bun && typeof Bun.version == "string";
 
-},{}],"ifVwN":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "state", ()=>state);
-parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
-var _configJs = require("./config.js");
-var _helpersJs = require("./helpers.js");
-const state = {
-    recipe: {}
-};
-const loadRecipe = async function(id) {
-    try {
-        const data = await (0, _helpersJs.getJSON)(`${(0, _configJs.API_URL)}/${id}`);
-        const { recipe } = data.data;
-        state.recipe = {
-            id: recipe.id,
-            title: recipe.title,
-            publisher: recipe.publisher,
-            sourceUrl: recipe.source_url,
-            image_url: recipe.image_url,
-            servings: recipe.servings,
-            cooking_time: recipe.cooking_time,
-            ingredients: recipe.ingredients
-        };
-        console.log(state.recipe);
-    } catch (err) {
-        console.error(`${err} 🥶`);
-        throw err; //We re-throw this error so the other file (controller.js) can recive it.
-    }
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config.js":"j9Cis","./helpers.js":"5dttl"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"j9Cis":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "API_URL", ()=>API_URL);
-parcelHelpers.export(exports, "TIMEOUT_SEC", ()=>TIMEOUT_SEC);
-const API_URL = `https://forkify-api.herokuapp.com/api/v2/recipes`;
-const TIMEOUT_SEC = 1;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5dttl":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "getJSON", ()=>getJSON);
-var _config = require("./config");
-const getJSON = async function(url) {
-    try {
-        const res = await Promise.race([
-            fetch(url),
-            timeout((0, _config.TIMEOUT_SEC))
-        ]); //Both fetch and timeout function return a new promise. So, remmber that we Promise.race() when we want to run two promoses at the same time and get the result of the promise that has FIRST been completed. So, if the request lasts more than 10 seconds, then the timeout function will be executed first than the other one and the rest of the code won't be executed.
-        const data = await res.json();
-        // console.log(res, data);
-        if (!res.ok) throw new Error(`Hello, ${data.message} (${res.status})`);
-        return data;
-    } catch (err) {
-        console.error(`${err} 🤮`);
-        throw err; //We re-throw this error so the other file (helpers.js) can recive it.
-    }
-};
-function timeout(num) {
-    return new Promise(function(_, reject) {
-        setTimeout(function() {
-            reject(new Error(`Request took too long! Timeout after ${num} second`));
-        }, num * 1000);
-    });
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config":"j9Cis"}],"dXNgZ":[function(require,module,exports) {
+},{}],"dXNgZ":[function(require,module,exports) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -2528,82 +2523,283 @@ try {
     else Function("r", "regeneratorRuntime = r")(runtime);
 }
 
-},{}],"3scQE":[function(require,module,exports) {
+},{}],"ifVwN":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "state", ()=>state);
+parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
+parcelHelpers.export(exports, "loadSearchResults", ()=>loadSearchResults);
+parcelHelpers.export(exports, "getSearchResultPage", ()=>getSearchResultPage);
+parcelHelpers.export(exports, "updateServings", ()=>updateServings);
+parcelHelpers.export(exports, "addBookmark", ()=>addBookmark);
+parcelHelpers.export(exports, "deleteBookmark", ()=>deleteBookmark);
+parcelHelpers.export(exports, "uploadRecipe", ()=>uploadRecipe);
+var _configJs = require("./config.js");
+var _helpersJs = require("./helpers.js");
+const state = {
+    recipe: {},
+    search: {
+        query: "",
+        results: [],
+        page: 1,
+        resultsPerPage: (0, _configJs.RES_PER_PAGE)
+    },
+    bookmarks: []
+};
+function createRecipeObject(data) {
+    const { recipe } = data.data;
+    return state.recipe = {
+        id: recipe.id,
+        title: recipe.title,
+        publisher: recipe.publisher,
+        sourceUrl: recipe.source_url,
+        image: recipe.image_url,
+        servings: recipe.servings,
+        cooking_time: recipe.cooking_time,
+        ingredients: recipe.ingredients,
+        ...recipe.key && {
+            key: recipe.key
+        }
+    };
+}
+async function loadRecipe(id) {
+    try {
+        const data = await (0, _helpersJs.AJAX)(`${(0, _configJs.API_URL)}${id}?key=${(0, _configJs.KEY)}`); //console.log(data)
+        state.recipe = createRecipeObject(data);
+        if (state.bookmarks.some((event)=>{
+            event.id;
+        })) state.recipe.bookmarked = true;
+        else state.recipe.bookmarked = false;
+    // console.log(state.recipe);
+    } catch (err) {
+        console.error(`${err} 🥶`);
+        throw err; //We re-throw this error so the other file (controller.js) can recive it.
+    }
+}
+async function loadSearchResults(query) {
+    try {
+        state.search.query = query;
+        const res = await (0, _helpersJs.AJAX)(`${(0, _configJs.API_URL)}?search=${query}&key=${(0, _configJs.KEY)}`);
+        // console.log(res);
+        state.search.results = res.data.recipes.map(function(event) {
+            return {
+                id: event.id,
+                title: event.title,
+                publisher: event.publisher,
+                image: event.image_url,
+                ...event.key && {
+                    key: event.key
+                }
+            };
+        });
+        state.search.page = 1;
+    // console.log(state.search.results)
+    } catch (err) {
+        console.error(`${err} ☠`);
+        throw err; //We re-throw this error so the other file (controller.js) can recive it.
+    }
+}
+function getSearchResultPage(page = state.search.page) {
+    state.search.page = page; //We need to do this because it's important to know where page we are in and upgrade this new value in the state object. So, once we naviate across the pages, we'll have stored the number of the page.
+    const start = (page - 1) * state.search.resultsPerPage;
+    const end = page * state.search.resultsPerPage;
+    return state.search.results.slice(start, end);
+}
+function updateServings(newServings) {
+    state.recipe.ingredients.forEach(function(ing) {
+        ing.quantity = ing.quantity * newServings / state.recipe.servings;
+    });
+    state.recipe.servings = newServings; //We're doing that at the end of the function because otherwise, we could not preserve the old state.recipe.servings (the original value).
+}
+function addBookmark(recipe) {
+    state.bookmarks.push(recipe);
+    if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+    persistBookmarks();
+}
+function deleteBookmark(id) {
+    const index = state.bookmarks.findIndex((el)=>el.id === id);
+    state.bookmarks.splice(index, 1);
+    if (id === state.recipe.id) state.recipe.bookmarked = false;
+    persistBookmarks();
+}
+function persistBookmarks() {
+    localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
+}
+function init() {
+    const storage = localStorage.getItem("bookmarks");
+    if (storage) state.bookmarks = JSON.parse(storage);
+}
+async function uploadRecipe(newRecipe) {
+    try {
+        const ingredients = Object.entries(newRecipe).filter(function(entry) {
+            return entry[0].startsWith("ingredient") && entry[1] !== "";
+        }).map(function(ing) {
+            const ingArr = ing[1].split(",").map((res)=>res.trim()); // const ingArr = ing[1].replaceAll("").split(",");
+            if (ingArr.length !== 3) throw new Error("Wrong ingredient format, please use the correct format!");
+            const [quantity, unit, description] = ingArr;
+            return {
+                quantity: quantity ? Number(quantity) : null,
+                unit: unit,
+                description: description
+            };
+        });
+        const recipe = {
+            title: newRecipe.title,
+            source_url: newRecipe.sourceUrl,
+            image_url: newRecipe.image,
+            publisher: newRecipe.publisher,
+            cooking_time: Number(newRecipe.cookingTime),
+            servings: Number(newRecipe.servings),
+            ingredients: newRecipe.ingredients
+        };
+        const data = await (0, _helpersJs.AJAX)(`${(0, _configJs.API_URL)}?key=${(0, _configJs.KEY)}`, recipe);
+        state.recipe = createRecipeObject(data);
+        addBookmark(state.recipe);
+    //console.log(state.recipe);
+    // console.log(data); 
+    // console.log(ingredients); 
+    // console.log(recipe);
+    } catch (err) {
+        throw err;
+    }
+}
+init();
+
+},{"./config.js":"j9Cis","./helpers.js":"5dttl","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"j9Cis":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "API_URL", ()=>API_URL);
+parcelHelpers.export(exports, "TIMEOUT_SEC", ()=>TIMEOUT_SEC);
+parcelHelpers.export(exports, "RES_PER_PAGE", ()=>RES_PER_PAGE);
+parcelHelpers.export(exports, "KEY", ()=>KEY);
+parcelHelpers.export(exports, "MODAL_CLOSE_SEC", ()=>MODAL_CLOSE_SEC);
+const API_URL = `https://forkify-api.herokuapp.com/api/v2/recipes/`;
+const TIMEOUT_SEC = 1;
+const RES_PER_PAGE = 10;
+const KEY = "181a7c81-9eab-4098-b24b-253b597d8d2f";
+const MODAL_CLOSE_SEC = 2.5;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"5dttl":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "AJAX", ()=>AJAX);
+var _config = require("./config");
+/*
+export async function getJSON(url){ //We create a function and export it, called getJSON. it's gonna be an async function which will basically do the fetching and also converting to JSON all in one step. With this, we abstract all this functionality into one nice function that we can then use all over our project.
+    try {
+        const fetchPro = fetch(url);
+        const res = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]); //Both fetch and timeout function return a new promise. So, remmber that we Promise.race() when we want to run two promoses at the same time and get the result of the promise that has FIRST been completed. So, if the request lasts more than 10 seconds, then the timeout function will be executed first than the other one and the rest of the code won't be executed.
+        const data = await res.json();
+        // console.log(res, data);
+
+        if(!res.ok) throw new Error(`Hello, ${data.message} (${res.status})`);
+
+        return data;
+
+    } catch (err) {
+        console.error(`${err} 🤮`);
+        throw err; //We re-throw this error so the other file (helpers.js) can recive it.
+    }
+}
+
+//DUDA
+export async function sendJSON(url, uploadData){ //We create a function and export it, called getJSON. it's gonna be an async function which will basically do the fetching and also converting to JSON all in one step. With this, we abstract all this functionality into one nice function that we can then use all over our project.
+    try {
+        const fetchPro = fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(uploadData)
+        });
+
+        const res = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]); //Both fetch and timeout function return a new promise. So, remmber that we Promise.race() when we want to run two promoses at the same time and get the result of the promise that has FIRST been completed. So, if the request lasts more than 10 seconds, then the timeout function will be executed first than the other one and the rest of the code won't be executed.
+        const data = await res.json();
+        // console.log(res, data);
+
+        if(!res.ok) throw new Error(`Hello, ${data.message} (${res.status})`);
+
+        return data;
+
+    } catch (err) {
+        console.error(`${err} 🤮`);
+        throw err; //We re-throw this error so the other file (helpers.js) can recive it.
+    }
+}
+*/ function timeout(num) {
+    return new Promise(function(_, reject) {
+        setTimeout(function() {
+            reject(new Error(`Request took too long! Timeout after ${num} second`));
+        }, num * 1000);
+    });
+}
+async function AJAX(url, uploadData) {
+    try {
+        const fetchPro = uploadData ? fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(uploadData)
+        }) : fetch(url);
+        const res = await Promise.race([
+            fetchPro,
+            timeout((0, _config.TIMEOUT_SEC))
+        ]); //Both fetch and timeout function return a new promise. So, remmber that we Promise.race() when we want to run two promoses at the same time and get the result of the promise that has FIRST been completed. So, if the request lasts more than 10 seconds, then the timeout function will be executed first than the other one and the rest of the code won't be executed.
+        const data = await res.json();
+        if (!res.ok) throw new Error(`Hello, ${data.message} (${res.status})`);
+        return data;
+    } catch (err) {
+        throw err;
+    }
+}
+
+},{"./config":"j9Cis","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3scQE":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _iconsSvg = require("url:../../imgs/icons.svg");
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
-var _fractional = require("fractional");
-class RecipeView {
-    #parentElement = document.querySelector(".recipe");
-    #data;
-    #errorMessage = "We couldn't find that recipe. Please try another one!";
-    #message = "";
-    render(data) {
-        this.#data = data;
-        const markup = this.#generateMarkup();
-        this.#clear();
-        this.#parentElement.insertAdjacentHTML("afterbegin", markup);
-    }
-    #clear() {
-        this.#parentElement.innerHTML = "";
-    }
-    renderSpinner() {
-        const markup = `
-        <div class="spinner">
-            <svg>
-                <use href="${(0, _iconsSvgDefault.default)}#icon-loader"></use>
-            </svg>
-        </div>`;
-        this.#clear();
-        this.#parentElement.insertAdjacentHTML("afterbegin", markup);
-    }
-    renderError(message = this.#errorMessage) {
-        const markup = `
-            <div class="error">
-                <div>
-                    <svg>
-                        <use href="${(0, _iconsSvgDefault.default)}#icon-alert-triangle"></use>
-                    </svg>
-                </div>
-                <p>${message}</p>
-            </div>
-        `;
-        this.#clear();
-        this.#parentElement.insertAdjacentHTML("afterbegin", markup);
-    }
-    renderMessage(message = this.#message) {
-        const markup = `
-            <div class="message">
-                <div>
-                    <svg>
-                        <use href="${(0, _iconsSvgDefault.default)}#icon-smile"></use>
-                    </svg>
-                </div>
-                <p>${message}</p>
-            </div>
-        `;
-        this.#clear();
-        this.#parentElement.insertAdjacentHTML("afterbegin", markup);
-    }
-    #generateMarkupIngredient(event) {
-        return `
-            <li class="recipe__ingredient">
-                <svg class="recipe__icon">
-                    <use href="${0, _iconsSvgDefault.default}#icon-check"></use>
-                </svg>
-                <div class="recipe__quantity">${event.quantity ? new (0, _fractional.Fraction)(event.quantity).toString() : ""}</div>
-                <div class="recipe__description">
-                    <span class="recipe__unit">${event.unit}</span>
-                    ${event.description}
-                </div>
-            </li> `;
-    }
-    #generateMarkup() {
+var _viewJs = require("./View.js");
+var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
+class RecipeView extends (0, _viewJsDefault.default) {
+    _parentElement = document.querySelector(".recipe");
+    _errorMessage = "We couldn't find that recipe. Please try another one!";
+    _message = "";
+    _generateMarkup() {
         return `
         <figure class="recipe__fig">
-            <img src="${this.#data.image_url}" alt="${this.#data.title}" class="recipe__img" />
-            <h1 class="recipe__title"><span>${this.#data.title}</span></h1>
+            <img src="${this._data.image}" alt="${this._data.title}" class="recipe__img" />
+            <h1 class="recipe__title"><span>${this._data.title}</span></h1>
         </figure>
 
         <div class="recipe__details">
@@ -2612,7 +2808,7 @@ class RecipeView {
                 <svg class="recipe__info-icon">
                     <use href="${0, _iconsSvgDefault.default}#icon-clock"></use>
                 </svg>
-                <span class="recipe__info-data recipe__info-data--minutes">${this.#data.cooking_time}</span>
+                <span class="recipe__info-data recipe__info-data--minutes">${this._data.cooking_time}</span>
                 <span class="recipe__info-text">minutes</span>
             </div>
 
@@ -2620,32 +2816,33 @@ class RecipeView {
                 <svg class="recipe__info-icon">
                     <use href="${0, _iconsSvgDefault.default}#icon-users"></use>
                 </svg>
-                <span class="recipe__info-data recipe__info-data--people">${this.#data.servings}</span>
+                <span class="recipe__info-data recipe__info-data--people">${this._data.servings}</span>
                 <span class="recipe__info-text">servings</span>
 
                 <div class="recipe__info-buttons">
-                    <button class="btn--tiny btn--increase-servings">
+                    <button class="btn--tiny btn--update-servings" data-update-to="${this._data.servings - 1}">
                         <svg>
                             <use href="${0, _iconsSvgDefault.default}#icon-minus-circle"></use>
                         </svg>
                     </button>
-                    <button class="btn--tiny btn--increase-servings">
+                    <button class="btn--tiny btn--update-servings" data-update-to="${this._data.servings + 1}">
                         <svg>
                             <use href="${0, _iconsSvgDefault.default}#icon-plus-circle"></use>
                         </svg>
                     </button>
                 </div>
+
             </div>
 
-            <div class="recipe__user-generated">
+            <div class="recipe__user-generated ${this._data.key ? "" : "hidden"}">
                 <svg>
                     <use href="${0, _iconsSvgDefault.default}#icon-user"></use>
-                </svg>
+                </svg>            
             </div>
 
-            <button class="btn--round">
+            <button class="btn--round btn--bookmark">
                 <svg class="">
-                    <use href="${0, _iconsSvgDefault.default}#icon-bookmark-fill"></use>
+                    <use href="${0, _iconsSvgDefault.default}#icon-bookmark${this._data.bookmarked ? "-fill" : ""}"></use>
                 </svg>
             </button>
         </div>
@@ -2653,7 +2850,7 @@ class RecipeView {
         <div class="recipe__ingredients">
             <h2 class="heading--2">Recipe ingredients</h2>
             <ul class="recipe__ingredient-list">
-                ${this.#data.ingredients.map(this.#generateMarkupIngredient).join("")} //This is the same as the line 118
+                ${this._data.ingredients.map(this._generateMarkupIngredient).join("")} //This is the same as the line 118
             </ul>
         </div>
 
@@ -2661,10 +2858,10 @@ class RecipeView {
             <h2 class="heading--2">How to cook it</h2>
             <p class="recipe__directions-text">
                 This recipe was carefully designed and tested by
-                <span class="recipe__publisher">${this.#data.publisher}</span>. Please check out
+                <span class="recipe__publisher">${this._data.publisher}</span>. Please check out
                 directions at their website.
             </p>
-            <a class="btn--small recipe__btn" href="${this.#data.sourceUrl}" target="_blank" >
+            <a class="btn--small recipe__btn" href="${this._data.sourceUrl}" target="_blank" >
                 <span>Directions</span>
                 <svg class="search__icon">
                     <use href="${0, _iconsSvgDefault.default}#icon-arrow-right"></use>
@@ -2672,7 +2869,6 @@ class RecipeView {
             </a>
         </div>`;
     }
-    //${this.#data.ingredients.map(event => this.#generateMarkupIngredient(event)).join("")}
     addHandlerrender(handler) {
         //We use "hashchange" so it run this funcion whenever the hash (#) in the url has change. Now, as for "load", we have to use it because, once we copy the link in other page with the same id, this won't show anything because the id is the same. That's why we use "load", so we can load the page once it's used in other page.
         [
@@ -2680,10 +2876,28 @@ class RecipeView {
             "load"
         ].forEach((event)=>window.addEventListener(event, handler));
     }
+    addHandlerUpdateServings(handler) {
+        // console.log(this._parentElement)
+        this._parentElement.addEventListener("click", function(event) {
+            const btn = event.target.closest(".btn--update-servings");
+            // console.log(btn)
+            if (!btn) return;
+            // const updateTo = Number(btn.dataset.updateTo);
+            const updateTo = Number(btn.dataset.updateTo);
+            if (updateTo > 0) handler(updateTo);
+        });
+    }
+    addHandlerAddBookmark(handler) {
+        this._parentElement.addEventListener("click", function(event) {
+            const btn = event.target.closest(".btn--bookmark");
+            if (!btn) return;
+            handler();
+        });
+    }
 }
 exports.default = new RecipeView();
 
-},{"url:../../imgs/icons.svg":"ekMhF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","fractional":"3SU56"}],"ekMhF":[function(require,module,exports) {
+},{"url:../../imgs/icons.svg":"ekMhF","./View.js":"6tjQW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ekMhF":[function(require,module,exports) {
 module.exports = require("149b5957e87d3c51").getBundleURL("g4iFY") + "icons.32441394.svg" + "?" + Date.now();
 
 },{"149b5957e87d3c51":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -2721,7 +2935,113 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"3SU56":[function(require,module,exports) {
+},{}],"6tjQW":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _iconsSvg = require("url:../../imgs/icons.svg");
+var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
+var _fractional = require("fractional");
+class View {
+    _data;
+    /**
+    * Render the received object to the DOM
+    * @param {Object | Object[]} data The data to be rendered (e.g. recipe)
+    * @param {boolean} [render=true] If false, create markup string instead of rendering to the DOM
+    * @returns {undefined | string} A markup string is returned if render=false
+    * @this {Object} View instance
+    * @author Jonas Schmedtmann
+    * @todo Finish implementation
+    */ render(data, render = true) {
+        // console.log(data)
+        if (!data || Array.isArray(data) && data.length === 0) return this.renderError();
+        this._data = data;
+        const markup = this._generateMarkup();
+        if (!render) return markup;
+        this._clear();
+        this._parentElement.insertAdjacentHTML("afterbegin", markup);
+    }
+    update(data) {
+        this._data = data; //Once we update the data, we then want the view's data to become that new data
+        const newMarkup = this._generateMarkup(); //We also want to generate some new markup. And this will be the entire Markup as if we wanted to render a new view. (We're just going to update the Markup). For doing that, we still need the entire markup so that we can then compare it to the old markup. So, here we'll create a new markup but not render it. Finally, we'll generate this markup and then compare that new HTML to the current HTML, and then only change text and attributes that actually have changed from the old version to the new one. Remember that this markup is just a string.
+        const newDOM = document.createRange().createContextualFragment(newMarkup); //The second method convert the string from newMarkup into new real DOM node objects. Then, newDom will become like a big object which is like a virtual DOM. So, a DOM that is not really living on the page, but which live in our memory. And so we can now use that DOM as if it was a real DOM on our page.
+        const newElements = Array.from(newDOM.querySelectorAll("*")); //We will select and see all the elements that will be contained inside of the newDom element that we basically created from generating the new Markup from the updated data.
+        const curElements = Array.from(this._parentElement.querySelectorAll("*"));
+        //console.log("newMarkup", newMarkup); 
+        // console.log("newDOM", newDOM);
+        // console.log("newElements", newElements); 
+        // console.log("curElements", curElements);
+        newElements.forEach(function(newEl, i) {
+            const curEl = curElements[i];
+            // console.log(curEl, newEl.isEqualNode(curEl)); //Here we're going to compare the nodes both in newElements and curElements. So, we'll do that with thank for the isEqualNode() method.
+            // Updates changed TEXT
+            if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== "") // console.log('😈', newEl.firstChild.nodeValue.trim());
+            curEl.textContent = newEl.textContent; //If so, we update the textContent from curEl with the textContent from the newEl. Remember that curEl es the actual element that is currently on the page.
+            // Updates changed ATTRIBUES
+            if (!newEl.isEqualNode(curEl)) // console.log(newEl.attributes);
+            Array.from(newEl.attributes).forEach(function(attr) {
+                // console.log("attr.name", attr.name); console.log("attr.value", attr.value);
+                return curEl.setAttribute(attr.name, attr.value); //What we're doing here is to simply replace all the attributes in the current element by the attributes coming from the new element 
+            });
+        });
+    }
+    _clear() {
+        this._parentElement.innerHTML = "";
+    }
+    renderSpinner() {
+        const markup = `
+        <div class="spinner">
+            <svg>
+                <use href="${(0, _iconsSvgDefault.default)}#icon-loader"></use>
+            </svg>
+        </div>`;
+        this._clear();
+        this._parentElement.insertAdjacentHTML("afterbegin", markup);
+    }
+    renderError(message = this._errorMessage) {
+        const markup = `
+            <div class="error">
+                <div>
+                    <svg>
+                        <use href="${(0, _iconsSvgDefault.default)}#icon-alert-triangle"></use>
+                    </svg>
+                </div>
+                <p>${message}</p>
+            </div>
+        `;
+        this._clear();
+        this._parentElement.insertAdjacentHTML("afterbegin", markup);
+    }
+    renderMessage(message = this._message) {
+        const markup = `
+            <div class="message">
+                <div>
+                    <svg>
+                        <use href="${(0, _iconsSvgDefault.default)}#icon-smile"></use>
+                    </svg>
+                </div>
+                <p>${message}</p>
+            </div>
+        `;
+        this._clear();
+        this._parentElement.insertAdjacentHTML("afterbegin", markup);
+    }
+    _generateMarkupIngredient(event) {
+        return `
+            <li class="recipe__ingredient">
+                <svg class="recipe__icon">
+                    <use href="${0, _iconsSvgDefault.default}#icon-check"></use>
+                </svg>
+                <div class="recipe__quantity">${event.quantity ? new (0, _fractional.Fraction)(event.quantity).toString() : ""}</div>
+                <div class="recipe__description">
+                    <span class="recipe__unit">${event.unit}</span>
+                    ${event.description}
+                </div>
+            </li> `;
+    }
+}
+exports.default = View;
+
+},{"url:../../imgs/icons.svg":"ekMhF","fractional":"3SU56","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3SU56":[function(require,module,exports) {
 /*
 fraction.js
 A Javascript fraction library.
@@ -2974,6 +3294,191 @@ Fraction.primeFactors = function(n) {
 };
 module.exports.Fraction = Fraction;
 
-},{}]},["2UjPr","7eL8J"], "7eL8J", "parcelRequire3a11")
+},{}],"dkPrN":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+class SearchView {
+    _parentEl = document.querySelector(".search");
+    getQuery() {
+        const query = this._parentEl.querySelector(".search__field").value;
+        this._clearInput();
+        return query;
+    }
+    _clearInput() {
+        this._parentEl.querySelector(".search__field").value = "";
+    }
+    addHandlerSearch(handler) {
+        this._parentEl.addEventListener("submit", function(event) {
+            event.preventDefault();
+            handler();
+        });
+    }
+}
+exports.default = new SearchView();
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hUahT":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _previewViewJs = require("./previewView.js");
+var _previewViewJsDefault = parcelHelpers.interopDefault(_previewViewJs);
+var _viewJs = require("./View.js");
+var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
+class ResultsView extends (0, _viewJsDefault.default) {
+    _parentElement = document.querySelector(".results");
+    _errorMessage = "No recipe found for your query! Please try again.";
+    _message = "";
+    _generateMarkup() {
+        // console.log(this._data);
+        return this._data.map((res)=>(0, _previewViewJsDefault.default).render(res, false)).join("");
+    }
+}
+exports.default = new ResultsView();
+
+},{"./View.js":"6tjQW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./previewView.js":"lhz51"}],"lhz51":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _viewJs = require("./View.js");
+var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
+var _iconsSvg = require("url:../../imgs/icons.svg");
+var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
+class PreviewView extends (0, _viewJsDefault.default) {
+    _parentElement = "";
+    _generateMarkup() {
+        const id = window.location.hash.slice(1);
+        return `
+            <li class="preview">
+                <a class="preview__link ${this._data.id === id ? "preview__link--active" : ""}" href="#${this._data.id}">
+                    <figure class="preview__fig">
+                        <img src="${this._data.image}" alt="${this._data.title}" />
+                    </figure>
+                    <div class="preview__data">
+                        <h4 class="preview__title">${this._data.title}</h4>
+                        <p class="preview__publisher">${this._data.publisher}</p>
+                        <div class="preview__user-generated ${this._data.key ? "" : "hidden"}">
+                            <svg>
+                                <use href="${0, _iconsSvgDefault.default}#icon-user"></use>
+                            </svg>            
+                        </div>
+                    </div>
+                </a>
+            </li>
+        `;
+    }
+}
+exports.default = new PreviewView();
+
+},{"./View.js":"6tjQW","url:../../imgs/icons.svg":"ekMhF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3n1l3":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _viewJs = require("./View.js");
+var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
+var _iconsSvg = require("url:../../imgs/icons.svg");
+var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
+class PaginationView extends (0, _viewJsDefault.default) {
+    _parentElement = document.querySelector(".pagination");
+    _generateMarkupButton(type, currentPage) {
+        return `
+                <button data-goto="${type === "next" ? currentPage + 1 : currentPage - 1}" class="btn--inline pagination__btn--${type}">
+                    ${type === "next" ? `<span>Page ${currentPage + 1}</span>` : ""}
+                    <svg class="search__icon">
+                        <use href="${0, _iconsSvgDefault.default}#icon-arrow-${type === "next" ? "right" : "left"}"></use>
+                    </svg>
+                    ${type === "prev" ? `<span>Page ${currentPage - 1}</span>` : ""}
+                </button>
+            `;
+    }
+    _generateMarkup() {
+        const numPages = Math.ceil(this._data.results.length / this._data.resultsPerPage);
+        const currentPage = this._data.page;
+        // First page
+        if (currentPage === 1 && numPages > 1) return this._generateMarkupButton("next", currentPage);
+        // Last page
+        if (currentPage === numPages && numPages > 1) return this._generateMarkupButton("prev", currentPage);
+        // Other page
+        if (currentPage < numPages) return `${this._generateMarkupButton("next", currentPage)}
+                    ${this._generateMarkupButton("prev", currentPage)}`;
+        // Page 1, no other pages
+        return "";
+    }
+    addHandlerClick(handler) {
+        this._parentElement.addEventListener("click", function(event) {
+            console.log(event);
+            const btn = event.target.closest(".btn--inline"); //We need to use closese because, when clicking the child elements of the button, those will look up for the parent ".btn--inline". But, if we click on this element itself, we'll just get "null";
+            console.log(btn);
+            if (!btn) return;
+            const gotoPage = Number(btn.dataset.goto);
+            handler(gotoPage);
+        });
+    }
+}
+exports.default = new PaginationView();
+
+},{"./View.js":"6tjQW","url:../../imgs/icons.svg":"ekMhF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"71RM4":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _viewJs = require("./View.js");
+var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
+var _previewViewJs = require("./previewView.js");
+var _previewViewJsDefault = parcelHelpers.interopDefault(_previewViewJs);
+class BookmarksView extends (0, _viewJsDefault.default) {
+    _parentElement = document.querySelector(".bookmarks__list");
+    _errorMessage = "No bookmarks yet. Find a nice recipe and bookmark it!";
+    _message = "";
+    _generateMarkup() {
+        // console.log(this._data);
+        return this._data.map((bookmark)=>(0, _previewViewJsDefault.default).render(bookmark, false)).join("");
+    }
+    addHandlerRender(handler) {
+        window.addEventListener("load", handler);
+    }
+}
+exports.default = new BookmarksView();
+
+},{"./View.js":"6tjQW","./previewView.js":"lhz51","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iuOf7":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _viewJs = require("./View.js");
+var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
+var _iconsSvg = require("url:../../imgs/icons.svg");
+var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
+class AddRecipeView extends (0, _viewJsDefault.default) {
+    _parentElement = document.querySelector(".upload");
+    _message = "Recipe was successfully uploaded :)";
+    _window = document.querySelector(".add-recipe-window");
+    _overlay = document.querySelector(".overlay");
+    _btnOpen = document.querySelector(".nav__btn--add-recipe");
+    _btnClose = document.querySelector(".btn--close-modal");
+    constructor(){
+        super();
+        this._addHandlerShowWindow(); // The _addHandlerShowWindow() method is gonna be used inside of this class. In order to show the window, the controller doesn't interfere at all. And, what we'll have to do in the controller, is to import this object at the end of the code, because otherwise, our main script sort of controller will never execute this file, and so the object () will never be created, and so the event listener in _btnOpen will never be added.
+        this._addHandlerHideWindow();
+    }
+    toggleWindow() {
+        this._overlay.classList.toggle("hidden");
+        this._window.classList.toggle("hidden");
+    }
+    _addHandlerShowWindow() {
+        this._btnOpen.addEventListener("click", this.toggleWindow.bind(this)); //Remember that we must not use the this keyword inside of a handler function because the this keyword inside of it points to the element on which that listener is attached to. So in this case, the _btnOpen. To solve this, we manually sett the this keyword inside of the toggleWindow function, now to the this keyword that we actually want it to be. So, the this keyword inside of bind points to the current object.
+    }
+    _addHandlerHideWindow() {
+        this._btnClose.addEventListener("click", this.toggleWindow.bind(this));
+        this._overlay.addEventListener("click", this.toggleWindow.bind(this));
+    }
+    _addHandlerUpload(handler) {
+        this._parentElement.addEventListener("submit", function(event) {
+            event.preventDefault();
+            const dataArr = [
+                ...new FormData(this)
+            ]; //The FormData interface provides a way to construct a set of key/value pairs representing form fields and their values, which can be sent using the fetch(), XMLHttpRequest.send() or navigator.sendBeacon() methods. It uses the same format a form would use if the encoding type were set to "multipart/form-data
+            const data = Object.fromEntries(dataArr);
+            // handler(dataArr); 
+            handler(data);
+        });
+    }
+    _generateMarkup() {}
+}
+exports.default = new AddRecipeView();
+
+},{"./View.js":"6tjQW","url:../../imgs/icons.svg":"ekMhF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["2UjPr","7eL8J"], "7eL8J", "parcelRequire3a11")
 
 //# sourceMappingURL=index.1545ef91.js.map
