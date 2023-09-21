@@ -1,3 +1,9 @@
+const cardContainer = document.getElementById("cardContainer");
+const cartContainer = document.getElementById("cartContainer");
+const buttons = document.getElementsByClassName("addbtn");
+const showCartBtn = document.getElementById("showCart");
+const checkOut = document.getElementById("checkOut");
+
 class Item {
   constructor(id, name, price, description, category, stock, img) {
     this.id = id;
@@ -10,31 +16,21 @@ class Item {
   }
 }
 
-const cardContainer = document.getElementById("cardContainer");
-const cartContainer = document.getElementById("cartContainer");
-const buttons = document.getElementsByClassName("addbtn");
-const showCartBtn = document.getElementById("showCart");
-const checkOut = document.getElementById("checkOut");
-
 const items = [];
 items.push(new Item(1, "Cogonauts Flidas", 3500, "Grindr", "Accesories", 5, "./img/cogonauts-flidas-grindr.webp"));
 items.push(new Item(2, "Substrate Eden", 2500, "Substrate - 25L", "Growing", 0, "./img/eden-substrate.jpg"));
 items.push(new Item(3, "Sodium Lamp", 3755, "Lamp - 400w", "Lighting", 10, "./img/sodium-lamp-400w.jpg"));
 
-// Guardar el Catalogo en el Storage
-localStorage.getItem("catalog") ? console.log("Ya esta cargado el catálogo en el storage") : localStorage.setItem("catalog", JSON.stringify(items));
-// Traigo catálogo del storage
-let catalog = JSON.parse(localStorage.getItem("catalog"));
 
-// Cargo mis productos en la página
-LoadItems(catalog);
+localStorage.getItem("catalog") ? console.log("Ya esta cargado el catálogo en el storage") : localStorage.setItem("catalog", JSON.stringify(items)); // Guardar el Catalogo en el Storage
+let catalog = JSON.parse(localStorage.getItem("catalog")); // Traigo catálogo del storage
+LoadItems(catalog); // Cargo mis productos en la página
+let cart = JSON.parse(localStorage.getItem("cart")) || []; // Genero un array para el carrito
 
-// Genero un array para el carrito
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-// Agrego eventos a los botones "ADD TOO CART"
-for (let btn of buttons) {
-  btn.addEventListener("click", () => addToCart(btn.id));
+for (let btn of buttons) { // Agrego eventos a los botones "ADD TOO CART"
+  btn.addEventListener("click", function(){
+    addToCart(btn.id)
+  });
 }
 
 showCartBtn.addEventListener("click", showCart);
@@ -51,8 +47,7 @@ function LoadItems(catalog){
             <p>${description}</p>
             <h3>$${price}</h3>
             <h3 class= ${stock ? "green" : "red"}> Stock:${stock || " No hay Stock"}</h3> 
-            <button class='addbtn' id='${id}'><a class='whiteLink'>ADD TO CART</a></button>
-        `;
+            <button class='addbtn' id='${id}'><a class='whiteLink'>ADD TO CART</a></button>`;
     cardContainer.appendChild(card);
   });
 };

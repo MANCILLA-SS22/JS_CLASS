@@ -2614,7 +2614,18 @@ console.log(Math.max(numeros)); // NaN
 console.log("--> Spredading de Array: ", ...numeros, "y el Math.max es: ", Math.max(...numeros));
 console.log("--> Equivalente a la anterior: ", Math.max(4, 77, 92, 10, 3, -32, 54, 11)); */
 
-/* // Ejemplo 13: Rest parameters
+/* // Ejemplo 13: Square Brackets Javascript Object Key
+const animalSounds = {cat: 'meow', dog: 'bark'};
+const animal = 'lion';
+const sound = 'roar';
+
+const res1 = {...animalSounds, animal: sound};   
+const res2 = {...animalSounds, [animal]: sound}; 
+console.log("res1", res1); // res1 {cat: 'meow', dog: 'bark', animal: 'roar'}
+console.log("res2", res2); // res2 {cat: 'meow', dog: 'bark', lion: 'roar'}
+//https://stackoverflow.com/questions/32515598/square-brackets-javascript-object-key */
+
+/* // Ejemplo 14: Rest parameters
 
 sumar_1(10, 15, 30, 5, 13, 47, 98); // [10, 15, 30, 5, 13, 47, 98]
 console.log("Res 2: ", sumar_2(10, 15, 30, 5) ) // 60
@@ -2627,7 +2638,7 @@ function sumar_2(...numeros) {
     return numeros.reduce((acumulador, unProducto) => acumulador + unProducto, 0);
 } */
 
-/* // Ejemplo 14: Uso de Set
+/* // Ejemplo 15: Uso de Set
 const orderSets = new Set(["res", "german", "mancilla", "chavez", "res", "ss22", "res,"])
 console.log(orderSets);
 console.log(orderSets.size);
@@ -2646,7 +2657,7 @@ const staff = ["waiter", "chef", "waiter", "manager", "chef", "waiter"];
 const staffUnique = [...new Set(staff)];
 console.log(staffUnique); */
 
-/* // Ejemplo 15: Uso de Map
+/* // Ejemplo 16: Uso de Map
 const rest = new Map();
 rest.set('name', 'Classico Italiano');
 rest.set(1, 'Firenze, Italy');
@@ -2671,7 +2682,7 @@ console.log(rest);
 console.log(rest.size);
 console.log(rest.get(arr)); */
 
-/* // Ejemplo 16: Uso de Map con iteration
+/* // Ejemplo 17: Uso de Map con iteration
 
 // Maps: Iteration
 const question = new Map([
@@ -2708,7 +2719,7 @@ console.log(question.entries());
 console.log([...question.keys()]);
 console.log([...question.values()]); */
 
-/* // Ejemplo 17: Split and join
+/* // Ejemplo 18: Split and join
 console.log('a+very+nice+string'.split('+'));
 console.log('Jonas Schmedtmann'.split(' '));
 
@@ -2731,7 +2742,7 @@ const capitalizeName = function (name) {
 capitalizeName('jessica ann smith davis');
 capitalizeName('jonas schmedtmann'); */
 
-/* // Ejemplo 18: Padding
+/* // Ejemplo 19: Padding
 const message = 'Go to gate 23!';
 console.log(message.padStart(20, '+').padEnd(30, '+'));
 console.log('Jonas'.padStart(20, '+').padEnd(30, '+'));
@@ -2747,7 +2758,7 @@ console.log(maskCreditCard(64637836));
 console.log(maskCreditCard(43378463864647384));
 console.log(maskCreditCard('334859493847755774747')); */
 
-/* // Ejemplo 19: Repeat
+/* // Ejemplo 20: Repeat
 const message2 = 'Bad waether... All Departues Delayed... ';
 console.log(message2.repeat(3));
 
@@ -2759,7 +2770,7 @@ planesInLine(5);
 planesInLine(3);
 planesInLine(12); */
 
-/* // Ejemplo 20: Working With Strings - Part 1
+/* // Ejemplo 21: Working With Strings - Part 1
 const airline = 'TAP Air Portugal';
 const plane = 'A320';
 
@@ -2800,7 +2811,7 @@ console.log(typeof new String('jonas'));
 
 console.log(typeof new String('jonas').slice(1)); */
 
-/* // Ejemplo 21: Working With Strings - Part 2
+/* // Ejemplo 22: Working With Strings - Part 2
 
 const airline = 'TAP Air Portugal';
 
@@ -2859,7 +2870,7 @@ checkBaggage('I have a laptop, some Food and a pocket Knife');
 checkBaggage('Socks and camera');
 checkBaggage('Got some snacks and a gun for protection'); */
 
-/* // Ejemplo 22: Working With Strings - Part 3
+/* // Ejemplo 23: Working With Strings - Part 3
 
 // 🔴 Delayed Departure from FAO to TXL (11h25)
 //              Arrival from BRU to FAO (11h45)
@@ -2881,7 +2892,7 @@ function getCode(str){
     return str.slice(0, 3).toUpperCase();
 } */
 
-/* // Ejemplo 23: Exercise for Data Structures, Modern Operators and Strings (1)
+/* // Ejemplo 24: Exercise for Data Structures, Modern Operators and Strings (1)
 // Suppose we get data from a web service about a certain game ('game' variable on next page). In this challenge we're gonna work with that data. Your tasks:
 
 const game = {
@@ -2982,7 +2993,7 @@ for (const [key, value] of gameEvents) {
     console.log( key < 45 ? `[FIRST HALF] ${key + ": " + value}` : `[SECOND HALF] ${key + ": " + value}` );
 } */
 
-/* // Ejemplo 24: Exercise for Data Structures, Modern Operators and Strings (2)
+/* // Ejemplo 25: Exercise for Data Structures, Modern Operators and Strings (2)
 // Write a program that receives a list of variable (SEE BELOW) names written in underscore_case and convert them to camelCase.
 
 // underscore_case
@@ -4913,10 +4924,9 @@ function eventoFuturo (res) {
 
 console.log("1. Primer proseso");
 
-eventoFuturo(true)
-//eventoFuturo(false)
+eventoFuturo(true)//eventoFuturo(false)
 .then( (response) => {
-    console.log(response) // Promesa resuelta
+    console.log(response); // Promesa resuelta
 })
 .catch( (error) => {
     console.log(error)
@@ -4926,7 +4936,44 @@ eventoFuturo(true)
     //console.log("Fin del proceso con false")
 }); */
 
-/* // Ejemplo 9: Ejercicio con un array, usando then/catch/finally y tambien ASYNC/AWAIT
+/* // Ejemplo 9: Problema practico del then y catch utilizando el fetch
+let showSearchingUsers = document.getElementById("showSearchingUsers");
+let showSearchingPosts = document.getElementById("showSearchingPosts");
+//showSearchingUsers.style.display = "block";
+
+fetch("https://jsonplaceholder.typicode.com/users")
+.then((response) => {
+    console.log("--> Respuesta sin formatear", response);
+    return response.json();
+})
+.then((json) => {
+    console.log("--> Esta es la respuesta del recurso formateado",json);
+    showSearchingUsers.style.display = "block";
+    renderUsersTableDetails(json);
+    showSearchingUsers.style.display = "none";
+});
+
+function renderUsersTableDetails(users = []) {
+    let usersTableBody = document.getElementById("usersTableBody");
+    usersTableBody.innerHTML = "";
+    users.forEach((element) => {
+        renderUserDetail(element);
+    });
+}
+
+function renderUserDetail(user) {// Sección para consultar Usuarios
+    let productDetail = document.getElementById("usersTableBody");
+    let record = document.createElement("tr");
+    record.innerHTML = `
+        <td>${user.name}</td>
+        <td><a href="mailto:${user.email}?Subject=Lo%20contactamos%20para%20ofrecerle%20un%20curso">${user.email}</a></td>
+        <td>${user.username}</td>
+        <td><a href="${user.website}" target="_blank">${user.website}</a></td>`;
+
+    productDetail.appendChild(record);
+} */
+
+/* // Ejemplo 10: Ejercicio con un array, usando tambien ASYNC/AWAIT
 const productos = [
     {marca: "Nissan", modelo: 'Sentra', precio: 1500},
     {marca: "Toyota", modelo: 'Camry', precio: 2500},
@@ -4938,24 +4985,11 @@ const productos = [
 function getDatos(){
     return new Promise( (resolve, reject) => {
         setTimeout(() => {
-            productos[0].precio === 15200 ? resolve(productos) : reject(new Error ("No existe")) ;
+            productos[0].precio === 1500 ? resolve(productos) : reject(new Error ("No existe")) ;
         }, 1500);
     });
 }
 
-// //Ejercicio usando then/catch/finally
-// getDatos()
-// .then( (response) => {
-//     console.log(response) // Promesa resuelta
-// })
-// .catch( (error) => {
-//     console.log(error)
-// })
-// .finally( () => {
-//     console.log("Fin del proceso :)")
-// });
-
-//Ejercicio usando ASYNC/AWAIT
 pedirPosts();
 async function pedirPosts(){
     try{
@@ -4968,7 +5002,7 @@ async function pedirPosts(){
     }
 }; */
 
-/* // Ejemplo 10: Ejemplo del uso de Promesa para recuperar informacion de una base de datos
+/* // Ejemplo 11: Ejemplo del uso de Promesa para recuperar informacion de una base de datos
 
 const BD_X = [
     {id: 1, nombre: 'Producto 1', precio: 1500},
@@ -5012,28 +5046,48 @@ obtenerUsuarios(1)
     console.error(error);
 }); */
 
-/* // Ejemplo 11: fetch (método) sin aplicar los el then() y el catch(), y despues la plicación del método then() para ver que estructura posee una respuesta.
-console.log( fetch('https://jsonplaceholder.typicode.com/posts') );
+/* // Ejemplo 12: fetch utilizando el then/catch y ASYNC/AWAIT
+console.log( fetch('https://jsonplaceholder.typicode.com/photos') );
 
-fetch('https://jsonplaceholder.typicode.com/posts')
-.then((resp) =>
-  console.log(resp)
-); */
+fetch("https://jsonplaceholder.typicode.com/photos")
+.then((response) => response.json())
+.then((json) => {
+    console.log("JSON", json);
+})
+.catch( (error) => {
+console.log(error)
+})
+.finally( () => {
+    console.log("Fin del proceso :)")
+});   
 
-/* // Ejemplo 12: Obtener la información que se encuentra dentro del BODY de la RESPONSE, y recuperar un único objeto de la API
-fetch("https://jsonplaceholder.typicode.com/posts")
-  .then((resp) => resp.json())
-  .then((data) => {
-    console.log(data);
-  });
+(async function() {
+    let response = await fetch("https://jsonplaceholder.typicode.com/posts");
+    let custom = await response.json();
+    console.log("---> Respuesta formateada de la consulta", custom);
+})() */
 
-fetch("https://jsonplaceholder.typicode.com/posts/1")
-  .then((response) => response.json())
-  .then((json) => {
-    console.log(json)
-  }); */
+/* // Ejemplo 13: Realizar una solicitud POST
+fetch("https://jsonplaceholder.typicode.com/posts", {
+    method: "POST",
+    body: JSON.stringify({
+        title: "Me encanta la programación con Chaman",
+        body: "Un texto que comente la historia de uno  de los desarrolladores que más la peleó aprendiendo.",
+        userId: 100,
+    }),
+    headers: {
+        "Content-type": "application/json;charset=UTF-8",
+    },
+})
+.then((response) => {
+    console.log("--> El resultado de la respuesta POST es", response);
+    return response.json();
+})
+.then((json) => {
+    console.log("--> Respuesta del body de la petición", json);
+}); */
 
-/* // Ejemplo 13: Cómo recuperar datos de una localizacion externa (http://) e una interna (.json) con rutas relativas
+/* // Ejemplo 14: Cómo recuperar datos de una localizacion externa (http://) e una interna (.json) con rutas relativas
 
 recuperarPosteos();
 
@@ -5081,7 +5135,7 @@ function toggleLoadingContainer(isLoading = false) {
     }
 } */
 
-/* // Ejemplo 14: Uso de ASYNC/AWAIT para crear funciones asincrónas que se comportan como si fueran sincronas
+/* // Ejemplo 15: Uso de ASYNC/AWAIT para crear funciones asincrónas que se comportan como si fueran sincronas
 console.log("Previo a hacer la solicitud");
 async function pedirPosts(){
     const respuesta = await fetch("./data/posts.json");  
@@ -5092,7 +5146,7 @@ async function pedirPosts(){
 
 pedirPosts(); */
 
-/* // Ejemplo 15: Uso de los parámetros de configuración para el método fetch (CREACIÓN DE UN RECURSO)
+/* // Ejemplo 16: Uso de los parámetros de configuración para el método fetch (CREACIÓN DE UN RECURSO)
 const CONFIGURACION = {
     method: "POST",
     body: JSON.stringify({
@@ -5109,7 +5163,7 @@ fetch("https://jsonplaceholder.typicode.com/posts", CONFIGURACION)
 .then((response) => response.json())
 .then((data) => console.log(data)); */
 
-/* // Ejemplo 16: Uso de los parámetros de configuración para el método fetch (MODIFICACIÓN DE UN RECURSO)
+/* // Ejemplo 17: Uso de los parámetros de configuración para el método fetch (MODIFICACIÓN DE UN RECURSO)
 const CONFIGURACION = {
   method: "PUT",// PUT/GETCH
   body: JSON.stringify({
@@ -5126,7 +5180,7 @@ fetch("https://jsonplaceholder.typicode.com/posts/10", CONFIGURACION)
   .then((response) => response.json())
   .then((data) => console.log(data)); */
 
-/* // Ejemplo 17: Uso de los parámetros de configuración para el método fetch (ELIMINACIÓN DE UN RECURSO)
+/* // Ejemplo 18: Uso de los parámetros de configuración para el método fetch (ELIMINACIÓN DE UN RECURSO)
 const CONFIGURACION = {
   method: "DELETE",
 };
@@ -5135,7 +5189,7 @@ fetch("https://jsonplaceholder.typicode.com/posts/10", CONFIGURACION)
   .then((response) => response.json())
   .then((data) => console.log(data)); */
 
-/* // Ejemplo 18: Asynchronous JS, promises and ajax (old way)
+/* // Ejemplo 19: Asynchronous JS, promises and ajax (old way)
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
@@ -5211,7 +5265,7 @@ getCountryDataAndNeighbour("russia");
 //     }, 1000);
 // }, 1000); */
 
-/* // Ejemplo 19: Asynchronous JS, promises and ajax (new way);
+/* // Ejemplo 20: Asynchronous JS, promises and ajax (new way);
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
@@ -5289,7 +5343,7 @@ btn.addEventListener("click", function(){
     // getCountryData("gtrgt"); //Line to execute an error
 }); */
 
-/* //Ejemplo 20: Excercise no. 1
+/* // Ejemplo 21: Excercise no. 1
 
 // In this challenge you will build a function 'whereAmI' which renders a country only based on GPS coordinates. For that, you will use a second API to geocode coordinates. 
 // So in this challenge, you’ll use an API on your own for the first time. Your tasks:
@@ -5353,7 +5407,7 @@ whereAmI(52.508, 13.381); // (Latitude, Longitude)
 // whereAmI(19.037, 72.873);
 // whereAmI("ukrj", "brths"); */
 
-/* //Ejemplo 21: The Event Loop
+/* // Ejemplo 22: The Event Loop
 console.log("Test start");
 
 setTimeout(function(){ //This and the Promise.resolve() will be executed at the end. So, coat outside of any callback, will run first
@@ -5374,7 +5428,7 @@ Promise.resolve("Resolved promise 2")
 
 console.log("Test end"); */
 
-/* //Ejemplo 22: Building a Simple Promise
+/* // Ejemplo 23: Building a Simple Promise
 
 const lotteryPromise = new Promise(function(resolve, reject){ //All of this will create new promise. As soon as the promise constructor runs, it will automatically execute this executor function that we pass in. And as it executes this function here, it will do so by passing in two other arguments. And those arguments are the resolve and reject functions.
     console.log("Lottery dray is happening...")
@@ -5385,7 +5439,7 @@ const lotteryPromise = new Promise(function(resolve, reject){ //All of this will
 
 lotteryPromise.then(function(res){console.log(res)}).catch(function(err){console.error(err)}); */
 
-/* //Ejemplo 23: Promisifying setTimeout
+/* // Ejemplo 24: Promisifying setTimeout
 function wait(seconds){
     return new Promise(function(resolve){ //This doesn't need the reject function because it's impossible for the timer to fail. 
         setTimeout(resolve, seconds);
@@ -5409,7 +5463,7 @@ wait(1000)//This will create a promise that wait for one second at first, and af
     console.log('4 second passed');
 }); */
 
-/* //Ejemplo 24: Promisifying the Geolocation API
+/* // Ejemplo 25: Promisifying the Geolocation API
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
@@ -5470,7 +5524,7 @@ function renderCountry(data){
 
 btn.addEventListener("click", whereAmI); */
 
-/* //Ejemplo 25: Excercise no. 2
+/* // Ejemplo 26: Excercise no. 2
 // 1. Create a function 'createImage' which receives 'imgPath' as an input. This function returns a promise which creates a new image (use document.createElement('img')) and 
 //    sets the .src attribute to the provided image path. When the image is done loading, append it to the DOM element with the 'images' class, and resolve the promise. 
 //    The fulfilled value should be the image element itself. In case there is an error loading the image (listen for the'error' event), reject the promise
@@ -5529,7 +5583,7 @@ createImage("imgs/img-1.jpg")
     console.error(err);
 }); */
 
-/* //Ejemplo 26: Consuming Promises with Async/Await
+/* // Ejemplo 27: Consuming Promises with Async/Await
 //Running Promises in Parallel Consuming Promises with Async/Await
 const countriesContainer = document.querySelector('.countries');
 
@@ -5612,7 +5666,7 @@ console.log("1: Will get location");
 //   .catch(err => console.error(`2: ${err.message} 💥`))
 //   .finally(() => console.log('3: Finished getting location')); */
 
-/* //Ejemplo 27: Running Promises in Parallel
+/* // Ejemplo 28: Running Promises in Parallel
 async function get3Countries(c1, c2, c3){
     try {
         //If we use this method, then the 3 functions will run one after the other. So, if we use the second method, then the 3 functions wll run at the same time.
@@ -5646,7 +5700,7 @@ function getJSON(url, errorMsc = "Something went wrong"){
 
 get3Countries("russia", "germany", "japan"); */
 
-/* //Ejemplo 28: Other Promise Combinators: race, all, allSettled and any
+/* // Ejemplo 29: Other Promise Combinators: race, all, allSettled and any
 //It recives an array of promises and it also return a promise. Now, this promise returned by race is settled as asoon as one of the input promises settle. (settled means that a value is available and it doesn't matter if the promise gor rejecetd or fulfilled). So, in Promise.race(), basically the first settled promise wins the race.
 (async function(){
     const res = await Promise.race([
@@ -5707,7 +5761,7 @@ Promise.any([
 ])
 .then(res => console.log(res)).catch(err => console.error(err)); */
 
-/* //Ejemplo 29: Excercise no. 3
+/* // Ejemplo 30: Excercise no. 3
 // Your tasks:
 // 1. Write an async function 'loadNPause' that recreates Challenge #2, this time using async/await (only the part where the promise is consumed, reuse the 'createImage' 
 //    function from before). Compare the two versions, think about the big differences, and see which one you like more
@@ -5950,26 +6004,4 @@ import 'core-js/stable';
 
 // Polifilling async functions
 import 'regenerator-runtime/runtime'; */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -6,15 +6,14 @@ const inputElement = tbody.getElementsByClassName("input__element");
 
 let carrito = [];
 
-Clickbutton.forEach((evento) => {
+Clickbutton.forEach(function(evento){
   evento.addEventListener("click", addToCarritoItem);
 });
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function addToCarritoItem(evento){
-//const button = document.querySelector(".btn"); Esto es igual a la linea de abajo
-  const button = evento.target; console.log(button);
+  const button = evento.target; console.log(button); //const button = document.querySelector(".btn");
   const item = button.closest(".card"); console.log(item);
   const itemTitle = item.querySelector(".card-title").textContent; //console.log(itemTitle);
   const itemPrice = item.querySelector(".precio").textContent; //console.log(itemPrice);
@@ -30,8 +29,8 @@ function addItemCarrito(newItem){
   setTimeout(mostrarMensaje, 1000);
   alert1.classList.remove('hide');
 
-  for (let i = 0; i < carrito.length; i++) {
-    if (carrito[i].title === newItem.title.trim()) {
+  for (let i = 0; i < carrito.length; i++){
+    if (carrito[i].title === newItem.title.trim()){
       carrito[i].cantidad ++;
       const inputValue = inputElement[i];
       CarritoTotal();
