@@ -1150,7 +1150,7 @@ greet('Hey')('there'); //Esto es lo mismo que las dos lineas de arriba.
 const greetArr = greeting => name => console.log(`${greeting} ${name}`);
 greetArr('Hey')('there'); */
 
-/* // Ejemplo 6.5: The call(), apply() and bind() Methods
+/* // Ejemplo 6.5: The call() method
 const lufthansa = {airline: 'Lufthansa',iataCode: 'LH',bookings: [],
     book: function(flightNum, name) {
         console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
@@ -1169,28 +1169,39 @@ console.log(lufthansa);
 const book = lufthansa.book; //Al hacer esto, ahora la funcion (metodo) del objeto lufthansa pasa a ser una funcion global, por lo que, no pudemos utilizarla asi nada mas y mandarle valores ya que esta funcion tiene "this", los cuales pertenecian al objeto lufthansa.
 book.call(eurowings, 23, 'German mancilla'); 
 book.call(lufthansa, 514, 'Chavez german');
-// book(23, "res"); Esto NO funciona
+// book(23, "res"); Esto NO funciona */
 
+/* // Ejemplo 6.6: The apply() Method
 // Apply method: You can write a method that can be used on different objects. It takes arguments as an array.
 const flightData = [583, 'George Cooper'];
 book.apply(swiss, flightData);
 book.call(swiss, ...flightData);
 console.log(swiss);
 
-
-
 const bookEW = book.bind(eurowings); // Bind method: Allows us to manually set "this" for any function call. With the bind() method, an object can borrow a method from another object.
 bookEW(23, "German Mancilla Chavez");
 
 const bookEWX = book.bind(eurowings, 23);
-bookEWX("German Mancilla Chavez");
+bookEWX("German Mancilla Chavez"); */
 
-// Bind method with eventListener:
-lufthansa.planes = 300;             // Agregamos una nueva propiedad a lufthansa
-lufthansa.buyPlane = function () {  // Agregamos un nuevo metodo a lufthansa
-    this.planes++;                  // Ponemos el this para representar o llamar al objeto que dicha función está modificando.
-    console.log(this);
-    console.log(this.planes);
+// Ejemplo 6.7: The bind() Method
+
+const lufthansa = {
+    airline: 'Lufthansa',
+    iataCode: 'LH',bookings: [],
+
+    book: function(flightNum, name) {
+        console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
+        this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+    }
+};
+
+lufthansa.planes = 300;            // Agregamos una nueva propiedad a lufthansa
+lufthansa.buyPlane = function (event){  // Agregamos un nuevo metodo a lufthansa
+    event.preventDefault();
+    this.planes++;                 // Ponemos el this para representar o llamar al objeto que dicha función está modificando.
+    // console.log(this); 
+    // console.log(this.planes);
 };                                  // lufthansa.buyPlane(); Esto despliega exacamente lo que queremos ver una vez que precionamos el boton del addEventListener().
 
 //Al hacer esto, entonces decimos que, al hacer click, el console.log(this); retornara el boton. La razon de esto es porque en un event handler function, el "this" siempre 
@@ -1205,11 +1216,16 @@ document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane.bind
 // Dos formas de devolver una funcion utilizando bind() y de la forma tradicional (devolviendo una funcion dentro de otra).
 function addTax (rate, value){
     let res = value + value * rate;
+    console.log("rate", rate);
+    console.log("value", value);
+    console.log(res);
     return res;
 };
 
-const addVAT = addTax.bind(null, 0.23); //Con el bind() obtendremos una nueva funcion
-console.log("The result of addVAT is: "+ addVAT(100));
+// const addVAT = addTax.bind(0.23, null);
+const addVAT = addTax.bind(null, 0.23); //El primer parametro del bind siempre debe ser lo que ahora sera el "this". Pero como no hay ninun this en la funcion, simplemente ponemos null
+addVAT()
+// console.log("The result of addVAT is: "+ addVAT(100));
 
 const addTaxRate = function (rate) {
     return function (value) {
@@ -1217,9 +1233,9 @@ const addTaxRate = function (rate) {
     };
 };
 const addVAT2 = addTaxRate(0.23);
-console.log("The result of addVAT is: "+addVAT2(100)); */
+console.log("The result of addVAT is: "+addVAT2(100));
 
-/* // Ejemplo 6.6: Excercise with functions
+/* // Ejemplo 6.8: Excercise with functions
 // A poll has a question, an array of options from which people can choose, and an array with the number of replies for each option. This data is stored in the starter 'poll' object below. Your tasks:
 // 1. Create a method called 'registerNewAnswer' on the 'poll' object. The method does 2 things:
 // 1.1. Display a prompt window for the user to input the number of the selected option. The prompt should look like this: 
@@ -1273,7 +1289,7 @@ document.querySelector(".poll").addEventListener("click", poll.registerNewAnswer
 //que queremos. Asi mismo, le pasamos un argumento para que se pueda ejecutar el condicional.
 poll.displayResults.call({answers: [5, 2, 3]}, "string"); // (5) */
 
-/* // Ejemplo 6.7: Immediately Invoked Function Expressions (IIFE)
+/* // Ejemplo 6.9: Immediately Invoked Function Expressions (IIFE)
 //Se usa cuando queremos una funcion que se utilice de inmediato una vez, que no sea necesario guardarla ni darle yn nombre, y que finalmente desaparezca para no volverla a usar
 
 const runOnce = function(){
@@ -1285,7 +1301,7 @@ runOnce();
     console.log("This will never run again");
 })(); */
 
-/* // Ejemplo 6.8: Closures
+/* // Ejemplo 6.10: Closures
 const secureBooking = function () {
     let passengerCount = 0;
 
@@ -1302,7 +1318,7 @@ booker();
 
 console.dir(booker); */
 
-/* // Ejemplo 6.9: More Closure Examples
+/* // Ejemplo 6.11: More Closure Examples
 
 //Example 1
 let f; //Creamos una variable global que almacenara una funcion
@@ -1966,8 +1982,6 @@ function myFunction(num) {
 
 */
 
-
-
 /* //Ejemplo 26: como calcular el valor total de una compra, con |.reduce()|
 class producto{
     constructor(id, nombre, precio){
@@ -2619,8 +2633,16 @@ const animalSounds = {cat: 'meow', dog: 'bark'};
 const animal = 'lion';
 const sound = 'roar';
 
-const res1 = {...animalSounds, animal: sound};   
-const res2 = {...animalSounds, [animal]: sound}; 
+const res1 = {
+    animal: sound,
+    ...animalSounds, 
+};   
+
+const res2 = {
+    [animal]: sound,
+    ...animalSounds, 
+}; 
+
 console.log("res1", res1); // res1 {cat: 'meow', dog: 'bark', animal: 'roar'}
 console.log("res2", res2); // res2 {cat: 'meow', dog: 'bark', lion: 'roar'}
 //https://stackoverflow.com/questions/32515598/square-brackets-javascript-object-key */
