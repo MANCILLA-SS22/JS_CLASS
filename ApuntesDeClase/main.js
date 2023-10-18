@@ -1184,7 +1184,7 @@ bookEW(23, "German Mancilla Chavez");
 const bookEWX = book.bind(eurowings, 23);
 bookEWX("German Mancilla Chavez"); */
 
-// Ejemplo 6.7: The bind() Method
+/* // Ejemplo 6.7: The bind() Method
 
 const lufthansa = {
     airline: 'Lufthansa',
@@ -1233,7 +1233,7 @@ const addTaxRate = function (rate) {
     };
 };
 const addVAT2 = addTaxRate(0.23);
-console.log("The result of addVAT is: "+addVAT2(100));
+console.log("The result of addVAT is: "+addVAT2(100)); */
 
 /* // Ejemplo 6.8: Excercise with functions
 // A poll has a question, an array of options from which people can choose, and an array with the number of replies for each option. This data is stored in the starter 'poll' object below. Your tasks:
