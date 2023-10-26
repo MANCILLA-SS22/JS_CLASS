@@ -942,7 +942,9 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     > push()	      Adds new elements to the end of an array, and returns the new length. Para sumar un elemento a un Array ya existente, se utiliza el método push, pasando como parámetro el valor (o variable) a agregar.
    
     >* reduce()	      Reduce the values of an array to a single value (going left-to-right). Permite obtener un único valor tras iterar sobre el array. Funciona como un método que resume el array a un único valor de retorno. Este recibe dos 
-                      parámetros: 1.El primero es la función que ordena qué queremos resumir del array. Recibe un parámetro que funciona como acumulador, y el elemento del array que iteramos. 2.El segundo es el valor inicial del acumulador.
+                      parámetros: 
+                      1.El primero es la función que ordena qué queremos resumir del array. Recibe un parámetro que funciona como acumulador, y el elemento del array que iteramos. 
+                      2.El segundo es el valor inicial del acumulador.
     
    
     > reduceRight()   Reduce the values of an array to a single value (going right-to-left)

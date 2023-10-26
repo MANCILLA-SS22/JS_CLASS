@@ -1733,35 +1733,13 @@ console.log("--> El array con los nombres cambiados de lugar es", VECTOR_DE_CADE
 let VECTOR_DE_CADENAS = ["german", "mancilla", "chavez", "Junior"];
 console.log(VECTOR_DE_CADENAS.at(3).at(1)); //Obtenemos el elemento contenido en el array (Junior), y en el siguiente at, obtenemos la posicion de la letra. */
 
-/* //Ejemplo 18: Retornar el indice del primer elemento de una array que cumpla con una caracteristica especifica, on |.findIndex()|
-const array1 = [5, 12, 8, 130, 44];
-
-function isLargeNumber (element){
-    return element > 13;
-}
-
-console.log(array1.findIndex(isLargeNumber)); */
-
-/* //Ejemplo 19: Concatenar subelementos de un array en un solo array con |.flat()|
-const arr1 = [0, 1, 2, [3, 4]];
-
-console.log(arr1.flat()); // expected output: Array [0, 1, 2, 3, 4]
-
-const arr2 = [ 0, 1, [2, [3, [4, 5]]] ];
-
-console.log(arr2.flat()); // expected output: Array [0, 1, 2, Array [3, Array [4, 5]]]
-
-console.log(arr2.flat(2)); // expected output: Array [0, 1, 2, 3, Array [4, 5]]
-
-console.log(arr2.flat(Infinity)); // expected output: Array [0, 1, 2, 3, 4, 5] */
-
-/* //Ejemplo 20: Metodo |.fill()| para llenar un array con cualquier tipo de dato
+/* // Ejemplo 18: Metodo |.fill()| para llenar un array con cualquier tipo de dato
 const array1 = [1, 2, 3, 4];
 console.log(array1.fill(0, 2, 4)); // Fill with 0 from position 2 until position 4  --> [1, 2, 0, 0]
 console.log(array1.fill(5, 1));    // Fill with 5 from position 1 --> [1, 5, 5, 5]
 console.log(array1.fill(6));       //Fill the array with only "6" --> [6, 6, 6, 6] */
 
-/* //Ejemplo 21: Uso del metodo |new Array| para crear un arreglo de x cantidad de numeros y el metodo |Array.from()| para crear un array a partir de un objeto.
+/* //Ejemplo 19: Uso del metodo |new Array| para crear un arreglo de x cantidad de numeros y el metodo |Array.from()| para crear un array a partir de un objeto.
 const res = new Array(1, 2, 3, 4, 5, 6, 7); // const res = [1, 2, 3, 4, 5, 6, 7];
 const x = new Array(7); //Creamos un array vacio de 7 espacios de memoria.
 x.fill(1);              //LLenamos el arreglo con puros "1".
@@ -1776,7 +1754,7 @@ const z = Array.from({length: 7}, function(_, i){
     return i + 1;
 }); console.log(z); */
 
-/* //Ejemplo 22: como iterar sobre los elementos de un array, no importa si posee valores simples u objetos, con |.foreach()|
+/* //Ejemplo 20: como iterar sobre los elementos de un array, no importa si posee valores simples u objetos, con |.foreach()|
 class producto{
     constructor(id, nombre, precio){
         this.id = id;
@@ -1825,7 +1803,7 @@ currenciesIsUnique.forEach(function(value, _, map){
     console.log(`${value}: ${value}`);
 }); */
 
-/* //Ejemplo 23: como hallar un elemento dentro de la coleccion (el PRIMER elemento), con |.find()|
+/* //Ejemplo 21: como hallar un elemento dentro de la coleccion (el PRIMER elemento), con |.find()|
 class producto {
     constructor(id, nombre, precio){
         this.id = id;
@@ -1859,7 +1837,7 @@ let unProductoBuscado1 = misProductos.find(unProducto => unProducto.nombre === n
 
 unProductoBuscado1 !== undefined ? console.log("El producto buscado es: "+ unProductoBuscado1.convertirEnString()) : console.log("No encontramos el producto con nombre: "+ nombreBuscado); */
 
-/* //Ejemplo 24: como hallar todos los elementos dentro de la coleccion que cumplan con una condicion, con |.filter()|
+/* //Ejemplo 22: como hallar todos los elementos dentro de la coleccion que cumplan con una condicion, con |.filter()|
 class producto {
     constructor(id, nombre, precio){
         this.id = id;
@@ -1896,7 +1874,7 @@ let preciosMayores = misProductos.filter( function(evento){
 });
 console.log("Los precios mayores a $400 son: preciosMayores", preciosMayores); */
 
-/* //Ejemplo 25: como saber si un elemento dentro de la coleccion existe o no, con |.some()|
+/* //Ejemplo 23: como saber si un elemento dentro de la coleccion existe o no, con |.some()|
 
 class producto {
     constructor(id, nombre, precio){
@@ -1934,13 +1912,13 @@ if (existe) {
     console.log("El producto buscado NO existe");
 } */
 
-/* //Ejemplo 26: como saber si un elemento dentro de la coleccion existe o no, y que devuelva true o false si todo cumple la condicion. Con |.every()|
+/* //Ejemplo 24: como saber si un elemento dentro de la coleccion existe o no, y que devuelva true o false si todo cumple la condicion. Con |.every()|
 movements1 = [200, 450, 400, -3000, 650, 0, 70, 1300];  //false
 movements2 = [200, 450, 100, 3000, 650, 130, 70, 1300]; //true
 console.log(movements1.every(mov => mov > 0)); //
 console.log(movements2.every(mov => mov > 0)); */
 
-/* //Ejemplo 27: como enlistar solamente los nombres de los productos, con |.map()|
+/* //Ejemplo 25: como enlistar solamente los nombres de los productos, con |.map()|
 class producto {
     constructor(id, nombre, precio){
         this.id = id;
@@ -2004,7 +1982,7 @@ function myFunction(num) {
 
 */
 
-/* //Ejemplo 28: como calcular el valor total de una compra, con |.reduce()|
+/* //Ejemplo 26: como calcular el valor total de una compra, con |.reduce()|
 class producto{
     constructor(id, nombre, precio){
         this.id = id;
@@ -2038,7 +2016,7 @@ const max = misProductos.reduce(function(acc, mov){
 })
 console.log(max); */
 
-/* //Ejemplo 29: como re-ordenar nuestro array (es DESTRUCTIVO, cambia su posicion), con |.sort()|
+/* //Ejemplo 27: como re-ordenar nuestro array (es DESTRUCTIVO, cambia su posicion), con |.sort()|
 
 class producto {
     constructor(id, nombre, precio){
@@ -2073,7 +2051,7 @@ let misProductos = [
 // misProductos.sort( (first, second) => first.precio - second.precio);                console.log("Forma ascendente: ", misProductos);
 // misProductos.sort( (first, second) => second.precio - first.precio);                console.log("Forma descendente: ", misProductos); */
 
-/* //Ejemplo 30: como crear una nueva matriz con todos los elementos de sub-array concatenados con |.flat()| y como mapear todos los elementos del array y crear un nuevo flat array con |.flatMap()|
+/* //Ejemplo 28: como crear una nueva matriz con todos los elementos de sub-array concatenados con |.flat()| y como mapear todos los elementos del array y crear un nuevo flat array con |.flatMap()|
 const acc1 = {
     owner: 'Jonas Schmedtmann',
     movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
@@ -2118,7 +2096,7 @@ console.log(overalBalance);
 const overalBalance2 = accounts.flatMap(acc => acc.movements).reduce((acc, mov) => acc + mov, 0);
 console.log(overalBalance2); */
 
-/* //Ejemplo 31: Ejercicio practico #1
+/* //Ejemplo 30: Ejercicio practico #1
 // Julia and Kate are doing a study on dogs. So each of them asked 5 dog owners about their dog's age, and stored the data into an array (one array for each). For now, they are 
 // just interested in knowing whether a dog is an adult or a puppy. A dog is an adult if it is at least 3 years old, and it's a puppy if it's less than 3 years old. Your tasks:
 // Create a function 'checkDogs', which accepts 2 arrays of dog's ages ('dogsJulia' and 'dogsKate'), and does the following things:
@@ -2150,7 +2128,7 @@ function checkDogs(dogsJulia, dogsKate){
 
 checkDogs(dogsJulia, dogsKate); */
 
-/* //Ejemplo 32: Ejercicio practico #2
+/* //Ejemplo 31: Ejercicio practico #2
 // Julia and Kate are still studying dogs, and this time they are studying if dogs are eating too much or too little. Eating too much means the dog's current food portion is 
 // larger than the recommended portion, and eating too little is the opposite. Eating an okay amount means the dog's current food portion is within a range 10% above and 
 // 10% below the recommended portion. Your tasks:
@@ -2214,7 +2192,7 @@ console.log(res);
 const dogsSorted = dogs.slice().sort((a, b) => a.recFood - b.recFood);
 console.log(dogsSorted); */
 
-/* //Ejemplo 33: Ejercicio practico con foreach(), split() y join().
+/* //Ejemplo 32: Ejercicio practico con foreach(), split() y join().
 const account1 = {
     owner: 'Jonas Schmedtmann',
     movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
@@ -2254,7 +2232,7 @@ function createUserNames (accs){
 createUserNames(accounts);
 console.log(accounts); */
 
-/* //Ejemplo 34: Ejercicio practico con map(), filter() y reduce() y otros elementos de arrays
+/* //Ejemplo 33: Ejercicio practico con map(), filter() y reduce() y otros elementos de arrays
 // Let's go back to Julia and Kate's study about dogs. This time they want to convert dog ages to human ages and calculate the average age of the dogs in their study.
 // Create a function 'calcAverageHumanAge', which accepts an arrays of dog's ages ('ages'), and does the following things in order:
 // 1. Calculate the dog age in human years using the following formula: if the dog is <= 2 years old, humanAge = 2 * dogAge. If the dog is > 2 years old, humanAge = 16 + dogAge * 4
@@ -2290,7 +2268,7 @@ let averageAge = arrayLess18.reduce(function(acc, mov, i){
 }, 0);
 console.log("The average human age of adult dogs is: ", (averageAge/arrayLess18.length)); */
 
-/* //Ejemplo 35: Mas ejemplos con arrays
+/* //Ejemplo 34: Mas ejemplos con arrays
 const account1 = {
     owner: 'Jonas Schmedtmann',
     movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
@@ -2357,133 +2335,6 @@ function convertTitleCase(title) {
 
 console.log(convertTitleCase('and here is another title with an EXAMPLE'));
 console.log(convertTitleCase('this is a LONG title but not too long')); */
-
-/*//Ejemplo 36: Mas ejemplos con arrays x2
-const objetos =  [
-	{manzanas:3, peras:2, carne:1, jugos:5, dulces:2},
-	{manzanas:1, sandias:1, huevos:6, jugos:1, panes:4}
-];
-
-const productos = [];
-objetos.forEach((objeto) => {
-    const keys = Object.keys(objeto);
-    keys.forEach((key) => {
-        if (!productos.includes(key)) {
-            productos.push(key);
-        }
-    });
-});
-
-let totalVendidos = 0;
-objetos.forEach((objeto) => {
-    let keyValues = Object.values(objeto); //console.log(keyValues);
-    totalVendidos += keyValues.reduce((acc, curr) => acc + curr, 0);
-});
-
-console.log(productos);
-console.log(totalVendidos); */
-
-//Ejemplo 36: Registrador de tickets de eventos
-// Se creará una clase que permitirá llevar una gestión completa de usuarios que deseen acceder a dichos eventos.
-//     ✓ Definir clase TicketManager, el cual tendrá un arreglo de eventos que iniciará vacío
-//     ✓ La clase debe contar con una variable privada “precioBaseDeGanancia”, la cual añadirá un costo adicional al precio de cada evento.
-//     ✓ Debe contar con el método “getEventos” El cual mostrará los eventos guardados.
-//     ✓ Debe contar con el método “agregarEvento” El cual recibirá los siguientes parámetros:
-//         ○ nombre
-//         ○ lugar
-//         ○ precio (deberá agregarse un 0.15 del valor original)
-//         ○ capacidad (50 por defecto)
-//         ○ fecha (hoy por defecto)
-        
-//         El método deberá crear además el campo id autoincrementable y el campo “participantes” que siempre iniciará con un arreglo vacío.
-//      ✓ Debe contar con un método “agregarUsuario” El cual recibirá:
-//         ○ id del evento (debe existir, agregar validaciones)
-//         ○ id del usuario
-//      El método debe evaluar que el evento exista y que el usuario no haya estado registrado previamente (validación de fecha y capacidad se evitará para no alargar el reto)
-//      Si todo está en orden, debe agregar el id del usuario en el arreglo “participantes” de ese evento.
-//      
-//      ✓ Debe contar con un método “ponerEventoEnGira” El cual recibirá:
-//         ○ id del evento
-//         ○ nueva localidad
-//         ○ nueva fecha
-//      El método debe copiar el evento existente, con una nueva localidad, nueva fecha, nuevo id y sus participantes vacíos (Usar spread operator para el resto de las propiedades)
-
-class TicketManager{
-    #precioBaseDeGanancia = 0.15;
-
-    constructor(){
-        this.eventos = [];
-    }
-
-    getEventos(){
-        return this.eventos;
-    }
-
-    agregarEvento(evento){
-        evento.precio = evento.precio + (evento.precio * this.#precioBaseDeGanancia);
-
-        if(this.eventos.length === 0){
-            evento.id = 1;
-        }else{
-            evento.id = this.eventos[this.eventos.length - 1].id + 1;
-        }
-
-        this.eventos.push(evento);
-    }
-
-    agregarUsuario(idEvento, idUsuario){
-        const evento = this.eventos.find(evento => evento.id === idEvento);
-
-        if(!evento) return console.log("No existe el evento");
-        
-        if(!evento.participantes.includes(idUsuario) ){
-            evento.participantes.push(idUsuario)
-        }else{
-            return console.log("El usuario ya existe");;
-        } 
-    }
-
-    ponerEventoEnGira(idEvento, nuevaLocalidad, nuevaFecha){
-        const evento = this.eventos.find(evento => evento.id === idEvento);
-
-        if(!evento) return "No existe el evento"
-
-        const newEvento = {
-            ...evento,
-            lugar: nuevaLocalidad,
-            fecha: nuevaFecha,
-            id: this.eventos[this.eventos.length - 1].id + 1,
-            participantes: []
-        }
-
-        this.eventos.push(newEvento);
-    }
-}
-
-class Evento{
-    constructor(nombre, lugar, precio, capacidad=50, fecha = new Date().toLocaleString(), participantes){
-        this.nombre = nombre;
-        this.lugar = lugar;
-        this.precio = precio;
-        this.capacidad = capacidad;
-        this.fecha = fecha;
-        this.participantes = [];
-    }
-}
-
-//Pruebas
-const manejadorEventos = new TicketManager();
-
-console.log("agregando Evento coder 1 para Argentina, precio: 200, para 50 participantes");
-manejadorEventos.agregarEvento(new Evento("Evento coder 1", "Argentina", 200, 50));
-
-console.log("agregando al evento con id 1 la participacion del usuario con id 2");
-manejadorEventos.agregarUsuario(1, 2);
-
-// console.log("creando una copia vacía del evento 1 pero en mexico y para el 2024");
-// manejadorEventos.ponerEventoEnGira(1, "Mexico", "30/11/2024");
-
-console.log(manejadorEventos.getEventos());
 
 
 //         $$$$$$$$$$$$$$$ STRINGS & MODERN OPERATORS $$$$$$$$$$$$$$$
@@ -2611,23 +2462,7 @@ for (const res of days) {
 console.log(restaurant.order ?. (0,1) ?? "Error");
 console.log(restaurant.orderNew ?. (0,1) ?? "Error"); */
 
-/* // Ejemplo 9: Object.keys(), Object.values, and Object.entries()
-const objeto = {
-    nombre: "Alberto",
-    edad: 25,
-    colorFav: "Azul",
-};
-
-const numeros = [2, 232, 342, 233, 32];
-
-const total = numeros.reduce((valorPrevio, valorAcumulado) => valorPrevio + valorAcumulado);
-console.log(total);
-
-console.log(Object.keys(objeto));
-console.log(Object.values(objeto));
-console.log(Object.entries(objeto)); */
-
-/* // Ejemplo 10: Looping Objects: Object Keys, Values, and Entries
+/* // Ejemplo 9: Looping Objects: Object Keys, Values, and Entries
 const days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 const openingHours = {
         [days[3]]: {open: 12,close: 22,},
@@ -2668,7 +2503,7 @@ for (const [day, {open, close}] of entries) {
     console.log(`On ${day} we open at ${open} and close at ${close}`);
 } */
 
-/* // Ejemplo 11: Desestructuración de arrays y objetos
+/* // Ejemplo 10: Desestructuración de arrays y objetos
 const restaurant = {
     Name: 'Classico-Italiano',
     location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -2754,7 +2589,7 @@ restaurant.orderDeliveryX2({
     starterIndex:"1"
 }); */
 
-/* // Ejemplo 12: Aplicación de la desestructuración para el evento del click
+/* // Ejemplo 11: Aplicación de la desestructuración para el evento del click
 window.addEventListener("click", (event) => {
     console.log(event.x, event.y);
 });
@@ -2763,7 +2598,7 @@ window.addEventListener("click", ({ x, y }) => {
     console.log(x, y);
 }); */
 
-/* // Ejemplo 13: Uso del spread operator (...)
+/* // Ejemplo 12: Operacion de spreading con Arrays
 const nombres1 = ["Juan", "Julieta"], nombres2 = ["Carlos", "Mariela"];
 const array = [...nombres1, ...nombres2]; // spread de los dos arrays dentro de otro
 const nombresObjeto = {// spread del array en un objeto
@@ -2793,21 +2628,7 @@ console.log(Math.max(numeros)); // NaN
 console.log("--> Spredading de Array: ", ...numeros, "y el Math.max es: ", Math.max(...numeros));
 console.log("--> Equivalente a la anterior: ", Math.max(4, 77, 92, 10, 3, -32, 54, 11)); */
 
-/* // Ejemplo 14: Uso de rest operator
-const nuevoObjeto = {
-    a: "Algo",
-    b: "Otro algo",
-    c: "Algo más",
-};
-
-// Rest operator
-const { b, ...losDemas } = nuevoObjeto;
-
-console.log(b);
-console.log(losDemas);
-console.log(losDemas.a); */
-
-/* // Ejemplo 15: Square Brackets Javascript Object Key
+/* // Ejemplo 13: Square Brackets Javascript Object Key
 const animalSounds = {cat: 'meow', dog: 'bark'};
 const animal = 'lion';
 const sound = 'roar';
@@ -2826,7 +2647,7 @@ console.log("res1", res1); // res1 {cat: 'meow', dog: 'bark', animal: 'roar'}
 console.log("res2", res2); // res2 {cat: 'meow', dog: 'bark', lion: 'roar'}
 //https://stackoverflow.com/questions/32515598/square-brackets-javascript-object-key */
 
-/* // Ejemplo 16: Rest parameters
+/* // Ejemplo 14: Rest parameters
 
 sumar_1(10, 15, 30, 5, 13, 47, 98); // [10, 15, 30, 5, 13, 47, 98]
 console.log("Res 2: ", sumar_2(10, 15, 30, 5) ) // 60
@@ -2839,7 +2660,7 @@ function sumar_2(...numeros) {
     return numeros.reduce((acumulador, unProducto) => acumulador + unProducto, 0);
 } */
 
-/* // Ejemplo 17: Uso de Set
+/* // Ejemplo 15: Uso de Set
 const orderSets = new Set(["res", "german", "mancilla", "chavez", "res", "ss22", "res,"])
 console.log(orderSets);
 console.log(orderSets.size);
@@ -2858,7 +2679,7 @@ const staff = ["waiter", "chef", "waiter", "manager", "chef", "waiter"];
 const staffUnique = [...new Set(staff)];
 console.log(staffUnique); */
 
-/* // Ejemplo 18: Uso de Map
+/* // Ejemplo 16: Uso de Map
 const rest = new Map();
 rest.set('name', 'Classico Italiano');
 rest.set(1, 'Firenze, Italy');
@@ -2883,7 +2704,7 @@ console.log(rest);
 console.log(rest.size);
 console.log(rest.get(arr)); */
 
-/* // Ejemplo 19: Uso de Map con iteration
+/* // Ejemplo 17: Uso de Map con iteration
 
 // Maps: Iteration
 const question = new Map([
@@ -2920,7 +2741,7 @@ console.log(question.entries());
 console.log([...question.keys()]);
 console.log([...question.values()]); */
 
-/* // Ejemplo 21: Split and join
+/* // Ejemplo 18: Split and join
 console.log('a+very+nice+string'.split('+'));
 console.log('Jonas Schmedtmann'.split(' '));
 
@@ -2943,7 +2764,7 @@ const capitalizeName = function (name) {
 capitalizeName('jessica ann smith davis');
 capitalizeName('jonas schmedtmann'); */
 
-/* // Ejemplo 22: Padding
+/* // Ejemplo 19: Padding
 const message = 'Go to gate 23!';
 console.log(message.padStart(20, '+').padEnd(30, '+'));
 console.log('Jonas'.padStart(20, '+').padEnd(30, '+'));
@@ -2959,7 +2780,7 @@ console.log(maskCreditCard(64637836));
 console.log(maskCreditCard(43378463864647384));
 console.log(maskCreditCard('334859493847755774747')); */
 
-/* // Ejemplo 23: Repeat
+/* // Ejemplo 20: Repeat
 const message2 = 'Bad waether... All Departues Delayed... ';
 console.log(message2.repeat(3));
 
@@ -2971,7 +2792,7 @@ planesInLine(5);
 planesInLine(3);
 planesInLine(12); */
 
-/* // Ejemplo 24: Working With Strings - Part 1
+/* // Ejemplo 21: Working With Strings - Part 1
 const airline = 'TAP Air Portugal';
 const plane = 'A320';
 
@@ -3012,7 +2833,7 @@ console.log(typeof new String('jonas'));
 
 console.log(typeof new String('jonas').slice(1)); */
 
-/* // Ejemplo 25: Working With Strings - Part 2
+/* // Ejemplo 22: Working With Strings - Part 2
 
 const airline = 'TAP Air Portugal';
 
@@ -3071,7 +2892,7 @@ checkBaggage('I have a laptop, some Food and a pocket Knife');
 checkBaggage('Socks and camera');
 checkBaggage('Got some snacks and a gun for protection'); */
 
-/* // Ejemplo 26: Working With Strings - Part 3
+/* // Ejemplo 23: Working With Strings - Part 3
 
 // 🔴 Delayed Departure from FAO to TXL (11h25)
 //              Arrival from BRU to FAO (11h45)
@@ -3093,7 +2914,7 @@ function getCode(str){
     return str.slice(0, 3).toUpperCase();
 } */
 
-/* // Ejemplo 27: Exercise for Data Structures, Modern Operators and Strings (1)
+/* // Ejemplo 24: Exercise for Data Structures, Modern Operators and Strings (1)
 // Suppose we get data from a web service about a certain game ('game' variable on next page). In this challenge we're gonna work with that data. Your tasks:
 
 const game = {
@@ -3194,7 +3015,7 @@ for (const [key, value] of gameEvents) {
     console.log( key < 45 ? `[FIRST HALF] ${key + ": " + value}` : `[SECOND HALF] ${key + ": " + value}` );
 } */
 
-/* // Ejemplo 28: Exercise for Data Structures, Modern Operators and Strings (2)
+/* // Ejemplo 25: Exercise for Data Structures, Modern Operators and Strings (2)
 // Write a program that receives a list of variable (SEE BELOW) names written in underscore_case and convert them to camelCase.
 
 // underscore_case
@@ -3464,7 +3285,7 @@ console.log('Syria:   ', new Intl.NumberFormat('ar-SY', options).format(num));
 console.log(navigator.language,new Intl.NumberFormat(navigator.language, options).format(num)); */
 
 
-//         $$$$$$$$$$$$$$$ DOM & EVENTS $$$$$$$$$$$$$$$
+//         $$$$$$$$$$$$$$$ DOM & EVENTOS $$$$$$$$$$$$$$$
 
 
 /* //Ejemplo 1: Acceso a la variable global document y sus propiedades
@@ -4202,55 +4023,6 @@ window.addEventListener('beforeunload', function (evento) {
 
 //         $$$$$$$$$$$$$$$ POO $$$$$$$$$$$$$$$
 
-
-/* //Ejemplo 0: Creacion de un contador
-class Contador {
-    static contadorGlobal = 0;
-
-    constructor(responable, inicial) {
-        this.responable = responable;
-        this.contadorInicial = inicial;
-    }
-
-    getResponsable() {
-        return `${this.responable}`;
-    }
-
-    contar() {
-        this.contadorInicial++;
-        Contador.contadorGlobal++;
-    }
-
-    getCuentaIndividual() {
-        return this.contadorInicial;
-    }
-
-    getCuentaGlobal() {
-        return Contador.contadorGlobal;
-    }
-}
-
-// Pruebas
-const contador1 = new Contador("Fulanito", 0);
-const contador2 = new Contador("Arturito", 0);
-
-// Contamos
-contador1.contar();
-contador2.contar();
-contador1.contar();
-contador1.contar();
-contador2.contar();
-contador1.contar();
-contador2.contar();
-contador1.contar();
-
-// Cuenta individual
-console.log(contador1.getResponsable(), contador1.getCuentaIndividual());
-console.log(contador2.getResponsable(), contador2.getCuentaIndividual());
-
-// Cuenta global
-console.log(contador1.getCuentaGlobal());
-console.log(contador2.getCuentaGlobal()); */
 
 /* //Ejemplo 1: Constructor Functions, the "new" and the "this" Operator (do this)
 
