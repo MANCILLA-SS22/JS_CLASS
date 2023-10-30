@@ -1375,16 +1375,16 @@ boardPassengers(180, 3);
 })();  */
 
 
-//         $$$$$$$$$$$$$$$ Objetos $$$$$$$$$$$$$$$
+//         $$$$$$$$$$$$$$$ Objects, classes & OOP $$$$$$$$$$$$$$$
 
 
-/* // Ejemplo 1: Definicion de caracteristicas para un objeto y como podemos ver los datos dentro del objeto
+/* //Ejemplo 1: Definicion de caracteristicas para un objeto y como podemos ver los datos dentro del objeto
 let unPaciente = {DNI: "11222333", apellidos: "Mancilla", nombre: "German", edad: 36, altura: 170, peso: 72, generoBiologico: "Masculino", tipoSangre: "A+"};
 console.log("El objeto contiene estos datos: ", unPaciente);
 console.log("El paciente se llama: ", unPaciente.nombre);         //Forma 1 de seleccionar una variable de un objeto
 console.log("El paciente se apellida: ", unPaciente["apellidos"]);//Forma 2 de seleccionar una variable de un objeto */
 
-/* // Elemplo 2: Aignacion de valores
+/* //Elemplo 2: Aignacion de valores
 let unPaciente = {DNI: "11222333", apellidos: "Mancilla", nombre: "German", edad: 36, altura: 170, peso: 72, generoBiologico: "Masculino", tipoSangre: "A+"};
 unPaciente.apellidos = "res";
 unPaciente.nombre = "SS22";
@@ -1392,7 +1392,7 @@ unPaciente.DNI = 44555666;
 unPaciente["edad"] = 33;
 console.log("Los datos actualizados son: ", unPaciente); */
 
-/* // Ejemplo 3: Definicion de un objeto sin datos definidos para sus propiedades.
+/* //Ejemplo 3: Definicion de un objeto sin datos definidos para sus propiedades.
 let unPaciente = {DNI: undefined, apellidos: undefined, nombre: undefined, edad: undefined, altura: undefined, peso: undefined, generoBiologico: undefined, tipoSangre: undefined};
 unPaciente.apellidos = "res";
 unPaciente.nombre = "SS22";
@@ -1400,7 +1400,7 @@ unPaciente.DNI = 44555666;
 unPaciente["edad"] = 33;
 console.log("Los datos actualizados son: ", unPaciente); */
 
-/* // Ejemplo 4: Definicion de una funcion constructora para un objeto
+/* //Ejemplo 4: Definicion de una funcion constructora para un objeto
 function paciente(DNI, apellidos, nombre, edad, altura, peso, generoBiologico, tipoSangre){
 this.DNI = DNI;
 this.apellidos = apellidos;
@@ -1415,7 +1415,7 @@ this.obraSocial = undefined;};
 let paciente1 = new paciente("44555666","Cosme","Pricilla",undefined,183,65,"femenino",undefined);
 console.log("Los datos actualizados son: ", paciente1); */
 
-/* // Ejemplo 5: Ejemplo de aplicacion de metodos de un objeto
+/* //Ejemplo 5: Ejemplo de aplicacion de metodos de un objeto
 function producto(nombre, precio, cantidad){
     //propiedades
     this.nombre = nombre;
@@ -1448,7 +1448,7 @@ let cantidad = "5";
 let unProducto1 = new producto(nombre, precio, cantidad);
 console.log("Los valores que cargaste para el producto son: ", unProducto1); */
 
-/* // Ejemplo 6: Uso de las construcciones IN y FOR-IN
+/* //Ejemplo 6: Uso de las construcciones IN y FOR-IN
 function paciente(DNI, apellidos, nombre, edad){
 this.DNI = DNI;
 this.apellidos = apellidos;
@@ -1468,7 +1468,7 @@ for(const iter in paciente1){ //Despues del const podemos poner cualquier nombre
     console.log("La propiedad ("+iter + ") tiene el valor de: "+ paciente1[iter]);
 } */ 
 
-/* // Ejemplo 7: Ejemplo practico con objetos y funciones 
+/* //Ejemplo 7: Ejemplo practico con objetos y funciones 
 
 const jonas = {
     firstName: 'Jonas',
@@ -1511,7 +1511,7 @@ const measureKelvin = function () {
 
 console.log(measureKelvin()); */
 
-/* // Ejemplo 8: Definicion de una clase y uso de los metodos dentro de una clase
+/* //Ejemplo 8: Definicion de una clase y uso de los metodos dentro de una clase
 
 class producto{
     //Metodo constructor de una clase
@@ -1545,7 +1545,7 @@ console.log("Compre 10 kilos mas de papa y ahora tengo: ", unProducto);
 unProducto.comprar(40); 
 console.log("Compre 40 kilos mas de papa y ahora tengo:", unProducto); */
 
-/* // Ejemplo 9: Literales de objeto mejoradas
+/* //Ejemplo 9: Literales de objeto mejoradas
 
 const weekdays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
@@ -1585,6 +1585,951 @@ const restaurant = {
         return console.log(`Desestructuracion de un objecto usando funcion X2--> Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`);
     }
 }; */
+
+/* //Ejemplo 10: Registrador de tickets de eventos
+// Se creará una clase que permitirá llevar una gestión completa de usuarios que deseen acceder a dichos eventos.
+//     ✓ Definir clase TicketManager, el cual tendrá un arreglo de eventos que iniciará vacío
+//     ✓ La clase debe contar con una variable privada “precioBaseDeGanancia”, la cual añadirá un costo adicional al precio de cada evento.
+//     ✓ Debe contar con el método “getEventos” El cual mostrará los eventos guardados.
+//     ✓ Debe contar con el método “agregarEvento” El cual recibirá los siguientes parámetros:
+//         ○ nombre
+//         ○ lugar
+//         ○ precio (deberá agregarse un 0.15 del valor original)
+//         ○ capacidad (50 por defecto)
+//         ○ fecha (hoy por defecto)
+        
+//         El método deberá crear además el campo id autoincrementable y el campo “participantes” que siempre iniciará con un arreglo vacío.
+//      ✓ Debe contar con un método “agregarUsuario” El cual recibirá:
+//         ○ id del evento (debe existir, agregar validaciones)
+//         ○ id del usuario
+//      El método debe evaluar que el evento exista y que el usuario no haya estado registrado previamente (validación de fecha y capacidad se evitará para no alargar el reto)
+//      Si todo está en orden, debe agregar el id del usuario en el arreglo “participantes” de ese evento.
+//      
+//      ✓ Debe contar con un método “ponerEventoEnGira” El cual recibirá:
+//         ○ id del evento
+//         ○ nueva localidad
+//         ○ nueva fecha
+//      El método debe copiar el evento existente, con una nueva localidad, nueva fecha, nuevo id y sus participantes vacíos (Usar spread operator para el resto de las propiedades)
+
+class TicketManager{
+    #precioBaseDeGanancia = 0.15;
+
+    constructor(){
+        this.eventos = [];
+    }
+
+    getEventos(){
+        return this.eventos;
+    }
+
+    agregarEvento(evento){
+        evento.precio = evento.precio + (evento.precio * this.#precioBaseDeGanancia);
+
+        if(this.eventos.length === 0){
+            evento.id = 1;
+        }else{
+            evento.id = this.eventos[this.eventos.length - 1].id + 1;
+        }
+
+        this.eventos.push(evento);
+    }
+
+    agregarUsuario(idEvento, idUsuario){
+        const evento = this.eventos.find(evento => evento.id === idEvento);
+
+        if(!evento) return console.log("No existe el evento");
+        
+        if(!evento.participantes.includes(idUsuario) ){
+            evento.participantes.push(idUsuario)
+        }else{
+            return console.log("El usuario ya existe");;
+        } 
+    }
+
+    ponerEventoEnGira(idEvento, nuevaLocalidad, nuevaFecha){
+        const evento = this.eventos.find(evento => evento.id === idEvento);
+
+        if(!evento) return "No existe el evento"
+
+        const newEvento = {
+            ...evento,
+            lugar: nuevaLocalidad,
+            fecha: nuevaFecha,
+            id: this.eventos[this.eventos.length - 1].id + 1,
+            participantes: []
+        }
+
+        this.eventos.push(newEvento);
+    }
+}
+
+class Evento{
+    constructor(nombre, lugar, precio, capacidad, fecha = new Date().toLocaleString(), participantes){
+        this.nombre = nombre;
+        this.lugar = lugar;
+        this.precio = precio;
+        this.capacidad = capacidad;
+        this.fecha = fecha;
+        this.participantes = [];
+    }
+}
+
+//Pruebas
+const manejadorEventos = new TicketManager();
+
+console.log("agregando Evento coder 1 para Argentina, precio: 200, para 50 participantes");
+manejadorEventos.agregarEvento(new Evento("Evento coder 1", "Argentina", 200, 50));
+
+console.log("agregando al evento con id 1 la participacion del usuario con id 2");
+manejadorEventos.agregarUsuario(1, 2);
+
+// console.log("creando una copia vacía del evento 1 pero en mexico y para el 2024");
+// manejadorEventos.ponerEventoEnGira(1, "Mexico", "30/11/2024");
+
+console.log(manejadorEventos.getEventos()); */
+
+/* //Ejemplo 11: Clases con ECMAScript y ECMAScript avanzado
+// ✓ Realizar una clase “ProductManager” que gestione un conjunto de productos.
+// ✓ Debe crearse desde su constructor con el elemento products, el cual será un arreglo vacío
+// ✓ Cada producto que gestione debe contar con las propiedades:
+//    - title (nombre del producto)
+//    - description (descripción del producto)
+//    - price (precio)
+//    - thumbnail (ruta de imagen)
+//    - code (código identificador)
+//    - stock (número de piezas disponibles)
+// ✓ Debe contar con un método “addProduct” el cual agregará un producto al arreglo de productos inicial.
+//    - Validar que no se repita el campo “code” y que todos los campos sean obligatorios
+//    - Al agregarlo, debe crearse con un id autoincrementable
+// ✓ Debe contar con un método “getProducts” el cual debe devolver el arreglo con todos los productos creados hasta ese momento.
+// ✓ Debe contar con un método “getProductById” el cual debe buscar en el arreglo el producto que coincida con el id. En caso de no coincidir ningún id, mostrar en consola un error “Not found”.
+
+class ProductManager{
+
+    #products;
+
+    constructor(){
+        this.#products = [];
+    }
+
+    getProducts(){
+        return this.#products;
+    }
+    
+    addProduct(product){
+        const parametersExist = product.hasOwnProperty("title") && product.hasOwnProperty("description")&& product.hasOwnProperty("price")&& product.hasOwnProperty("thumbnail")&& product.hasOwnProperty("code")&& product.hasOwnProperty("stock");
+        const verifyExistence = this.#products.some((e) => e.code === product.code)
+        if(!verifyExistence){
+            if(!parametersExist || (product.title === "" ||  product.description === "" ||  product.price === null ||  product.thumbnail === "" ||  product.code === "" ||  product.stock === null) ){
+                return console.error("Not enough information");
+            }else{
+                this.#products.push({
+                    ...product,
+                    id: this.#products.length === 0 ? product.id = 1 : product.id = this.#products[this.#products.length - 1].id + 1
+                });
+                
+            }
+        }else{
+            return console.error("Same code is registered")
+        }
+    }
+
+    getProductById(id){
+        const res = this.#products.find(event => event.id === id);
+        if (res) {
+            return res;
+        }else{
+            console.error("Not found")
+        }
+    }
+}
+
+class GestionDeProductos{
+    constructor(title, description, price, thumbnail, code, stock){
+        this.title = title || "";
+        this.description = description || "";
+        this.price = price || null;
+        this.thumbnail = thumbnail || "";
+        this.code = code || "";
+        this.stock = stock || null;
+    }
+}
+
+const Product = new ProductManager();
+
+//Obtenemos el array vacio
+// console.log(Product.getProducts());
+
+//Agregamos productos al arreglo vacio
+const producto1 = Product.addProduct(new GestionDeProductos(
+    "AK-47", 
+    "Assault riffle", 
+    9, 
+    "https://www.therange702.com/wp-content/uploads/2021/09/AK47-768x513-1.jpg.webp",
+    "SS-1998",
+    5
+));
+
+const producto2 = Product.addProduct(new GestionDeProductos(
+    "P-90", 
+    "Sub machine gun", 
+    6, 
+    "https://www.therange702.com/wp-content/uploads/2022/12/fn-p90-sqsh.jpg.webp",
+    "SS-1999",
+    5
+));
+
+const producto3 = Product.addProduct(new GestionDeProductos(
+    "Saiga-12", 
+    "Shotgun", 
+    10, 
+    "http://dissidentarms.com/wp-content/uploads/2016/12/20210201_181025-scaled.jpg",
+    "SS-2000",
+    5
+));
+
+//Mostramos el array con los productos anadidos
+console.log(Product.getProducts());
+
+// //Comprobamos que no se debe agregar un producto con mismos parametros
+// const producto5 = Product.addProduct(new GestionDeProductos(
+//     "AK-47", 
+//     "Assault riffle", 
+//     9, 
+//     "https://www.therange702.com/wp-content/uploads/2021/09/AK47-768x513-1.jpg.webp",
+//     "SS-1998",
+//     5
+// ));
+
+// //Recuperamos el id de un producto existente
+// console.log(Product.getProductById(3));
+
+// //En caso de no existir el id solicitado, se retorna un mensaje de error
+// console.log(Product.getProductById(4)); */
+
+
+/* //Ejemplo 12: Creacion de un contador
+class Contador {
+    static contadorGlobal = 0;
+
+    constructor(responable, inicial) {
+        this.responable = responable;
+        this.contadorInicial = inicial;
+    }
+
+    getResponsable() {
+        return `${this.responable}`;
+    }
+
+    contar() {
+        this.contadorInicial++;
+        Contador.contadorGlobal++;
+    }
+
+    getCuentaIndividual() {
+        return this.contadorInicial;
+    }
+
+    getCuentaGlobal() {
+        return Contador.contadorGlobal;
+    }
+}
+
+// Pruebas
+const contador1 = new Contador("Fulanito", 0);
+const contador2 = new Contador("Arturito", 0);
+
+// Contamos
+contador1.contar();
+contador2.contar();
+contador1.contar();
+contador1.contar();
+contador2.contar();
+contador1.contar();
+contador2.contar();
+contador1.contar();
+
+// Cuenta individual
+console.log(contador1.getResponsable(), contador1.getCuentaIndividual());
+console.log(contador2.getResponsable(), contador2.getCuentaIndividual());
+
+// Cuenta global
+console.log(contador1.getCuentaGlobal());
+console.log(contador2.getCuentaGlobal()); */
+
+/* //Ejemplo 13: Constructor Functions, the "new" and the "this" Operator (do this)
+
+// 1. New {} is created. We create a new instance (a new empty object) of the Person function.
+// 2. function is called, this = {}. The this keyword will be set to this newly created object. That's to say, the "this" keyword points to the new empty object.
+// 3. {} linked to prototype
+// 4. function automatically return {} that empty object from the constructor function 
+
+// NEVER DO THIS!
+// function Person(firstName, birthYear) {
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
+
+//     this.calcAge = function () {
+//         console.log(2037 - this.birthYear);
+//     };
+// };
+
+function Person(firstName, birthYear) { //Constructor function
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () { //We create a new calcAge method with the prototype keyword to the Person object. So, we can use this method on the german or karla object even though it isn't on the object itself. The reason why we create this method outsite the constructor function, is becuase when creating it inside, this method is added to all the object created. So, it's best to add this method to every object just when necessary.
+    console.log("My age is: ", 2037 - this.birthYear);
+}; 
+
+const german = new Person('German', 1991);
+const karla = new Person('Karla', 2017);
+
+german.calcAge();
+karla.calcAge();
+
+console.log("german is an instance of Person? ", german instanceof Person);
+console.log(german, karla);    //Although we created a new calcAge method in both objects, they don't contain this method but we have access to it because of prototypal inherencce.
+
+// Prototypal Inheritance on Built-In Objects
+console.log("Person.prototype ", Person.prototype); //"prototype" let you to add properties and methods to JavaScript objects (in this case, the Person object). All the objects that are created through this function constructor function (Person), will inherit. So they will get access to all the methods and properties that arre defined on this prototype property.
+console.log("german.__proto__ ", german.__proto__); //This is the prototype of german (not the prototype porperty) It is the same as: console.log(Person.prototype); 
+console.log(german.__proto__.__proto__);            //It is the prototype property of object
+console.log(german.__proto__ === Person.prototype); //It's true because the prototype of the german object is essentially the prototype property of the constructor function. (Person.prototype is actually not the prototype of Person, but it is what's gonna be used as the prototype of all the objects that are created with the person constructor function. )
+console.dir(Person.prototype.constructor);
+
+console.log(Person.prototype.isPrototypeOf(german));
+console.log(Person.prototype.isPrototypeOf(Person));
+
+Person.prototype.species = 'Homo Sapiens';
+
+console.log(german.species, karla.species);      //Both objects will inherit and will get access to this property from the prototype.
+console.log(german.hasOwnProperty('firstName')); //This is true because "firstname" was created directly in the constructor function
+console.log(german.hasOwnProperty('species'));   //This is false because the species property isn't directly in the object because of it's not its own property (the ones that are declared directly on the object itself, and not including the inherited properties).
+
+
+const arr = [3, 6, 6, 5, 6, 9, 9]; //  new Array === []  whenever we create an array like this, it is indeed created by the array constructor.
+console.log("Array.prototype ", Array.prototype)
+console.log("arr.__proto__ ", arr.__proto__);
+console.log(arr.__proto__.__proto__);
+console.log(arr.__proto__ === Array.prototype); 
+
+Array.prototype.unique = function () { //We create a new method (unique) into the object Array. Some methods like this are filter, some, map, etc.
+    return [...new Set(this)];
+};
+
+console.log(arr.unique()); //Seeing in the MDN documentation, we can realize that every method (function) when using arrays, have the following sintaxis: Array.prototype.map().
+
+const h1 = document.querySelector('h1'); console.dir(h1)
+console.dir(function funciones(x){x + 1}); */
+
+/* //Ejemplo 14: classes, Setters and Getters (assessors properties), static method and Object.create
+
+//We need to create a constructor function. Whenever we create a new object (like a new instance using the new operator), this constructor will automatically be called.
+class PersonCl{
+    constructor(fullName, birthYear){ 
+        this.fullName = fullName;
+        this.birthYear = birthYear;
+    }; 
+
+    //Instance methods (Methods will be added to .prototype property and all instances can have access to them)
+    calgAge(){ //All the methods that we write in the class (outside of the constructor), will be on the prototype on the object and not on the objects themselves.
+        console.log("calgAge: ", 2037 - this.birthYear);
+    };
+
+    greet(){
+        console.log(`greet:  ${this._fullName}`)
+    }
+
+    get age(){
+        return `age: ${2037 - this.birthYear}`;
+    }
+    
+    //Set a property that already exists.
+    set fullName(name){ 
+        //We're creating a setter for a property name that does already exists. So, fullName is already a property to set in the constructor function, but then we also have a 
+        //setter here. Now what's gonna happen is that each time the constructor function is executed, so whenever we set the fullName on the this keyword, then actually the 
+        //method (set fullName) is gonna be executed. And, that name that we pass in as fullName (German mancilla) will then become this name.
+        //Now, When we're using setters which is trying to set a property that already exists, both the setter function here and the construction function have the exact same 
+        //property name (fullName), and will get an error. So, to fix that, we need to create a new property name, that's to say, "fullName" must be a different name.
+        //Having done so, then the "fullName" property in the object german won't exists, but the "_fillname" property will. If we aren't going to setter for a property name 
+        //that does already exists, then there's no need to change the name of this variable.
+        console.log("name ", name);
+        name.includes(" ") ? this._fullName = name : `${name} is not a full name!`
+    }
+
+    get fullName(){
+        return this._fullName;
+    }
+
+    static hey(){ //Static class methods are defined on the class itself. Staic are not available on instances
+        console.log("Hello world");
+        console.dir(this);
+    }
+    
+}
+
+const german = new PersonCl("German mancilla", 1998); //We use the this keyword as before, and will be set to the newly created empty object. So, when we create a new instance here, then the constructor function is gonna be called and that will return a new object and then that will be stored in "dani".
+
+// This method is NOT inherited. So, we couldn't call the from method on an array like german.hey(); because it isn't in the prototype of the german object.
+// PersonCl.hey = function(){
+//     console.log("Hello world");
+//     console.log(this)
+// }
+// german.hey(); //We will get an error because german doesn't inherit the hey() method
+
+console.log(german);
+console.dir(PersonCl);
+german.calgAge();
+german.greet();
+console.log(german.age);
+PersonCl.hey(); //That's exactly the object that is calling the method. So, whatever object is calling the method, will be the this keyword inside of that funcion. And here the this keyword  is simply the entire constructor function.
+console.dir(PersonCl.hey)
+
+console.log(german.__proto__);
+console.log(german.__proto__ === PersonCl.prototype);
+
+// 1. Classes are not hoisted even if they're class declarations. Functions declarations are hoisted, which means we can use them before they're declared in the code. With classes tgat doesn't work.
+// 2. Class are first-class citizens. This means that we can pas them into functions and also return them from functions. (classes are just a special kind of functions behind the scenes)
+// 3. Classes are executed in strict mode. And so even if we didn't activate it for our entire script, all the code that is in the class will be executed in strict mode.
+
+const account = {
+    owner: 'Jonas',
+    movements: [200, 530, 120, 300],
+
+    get latest() {
+        return this.movements.slice(-1).pop();
+    },
+
+    set latest(mov) {
+        this.movements.push(mov);
+    },
+};
+
+console.log(account.latest);
+
+account.latest = 50;
+console.log(account.movements);
+
+//Object.create 
+// --> Here there's still the idea of prototypal inheritance. However, there are no prototypal properties involved and also no constructor funcionds and no new operator. So, we can use Object.create to manually set the prototype of an object to any other object that we want.
+const PersonProto = {
+    init(firstName, birthYear){ //This looks like the constructor function that we created in the last methods, but here this is isn't the case becasue we don't use the new operator to call this.
+        this.firstName = firstName; //The this keyword will point to the mancilla object, and it does so because we explicitly called   mancilla.init("German", 1998);
+        this.birthYear = birthYear;
+        console.log(this); // === console.log(mancilla);
+    },
+
+    calgAge(){ //All the methods that we write in the class (outside of the constructor), will be on the prototype on the object and not on the objects themselves.
+        console.log("calgAge: ", 2037 - this.birthYear);
+    },
+}
+
+const mancilla = Object.create(PersonProto); //This will return a brand new object that is linked to the prototype that we passed in here. So, mancilla is right now an empty object and it'll be linked to the PersonProto object. PersonProto should be the prototype of mancilla.
+
+console.log(PersonProto);
+console.log(mancilla.__proto__);
+console.log(mancilla.__proto__ === PersonProto);
+
+// mancilla.name = "chavez"; //We can create properties manually like this
+// mancilla.year = 2002;
+
+mancilla.init("German", 1998);
+mancilla.calgAge(); //The calcAge() method is called on an object, for example, on the mancilla object. This means that the 'this' keyword inside of the calcAge() method will reference mancilla object. The mancilla object has a property called birthYear, so this.birthYear inside of calcAge() will translate to mancilla.birthYear . */
+
+/* //Ejemplo 15: Inheritance Between "Classes": Constructor Functions
+function Person(firstName, birthYear) { //Constructor function
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () { //We create a new calcAge method with the prototype keyword to the Person object. So, we can use this method on the german or karla object even though it isn't on the object itself. The reason why we create this method outsite the constructor function, is becuase when creating it inside, this method is added to all the object created. So, it's best to add this method to every object just when necessary.
+    console.log("My age is: ", 2037 - this.birthYear);
+}; 
+                    
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+function Student(firstName, birthYear, course){ //Child function of the Person function, and it will inherit everything of its parent funciton.
+    //Person(firstName, birthYear); //❌❌❌ If we would want to avoid duplicating code (in this case, re-write firstName and birthYear in Student), the problem here is that we are now actually calling this person constructor function as a regular function call. So we are not using this new operator to call this person function constructor. And so therefore this function call here is simply a regular function call. And remember that in a regular function call, the this keyword is set to undefined. And so therefore that's why we get this error here, that it cannot set first name on undefined. So instead of simply calling the person function here, we need to manually set the this keyword as well.
+    Person.call(this, firstName, birthYear); // ✔✔✔ We need to call the function and at the same time set the this keyword inside that function. To do that, we can simply use the call method, which will call the function but we'll be able to specify the this keywords as the first argument in the function. In the next line, we can the this keyword inside the Person function so simply be the this keyword inside this funcion. Now, the this keyword (Person.call) is going to be in the beggining, the empty object (german) that is being created by the new operator. And so it is on that new object where we want to set the first name and the birthYear property.
+    this.course = course;
+}
+
+//Student.prototype = Person.prototype; //❌❌❌ We must not do this because if so, we're saying that the student's prototype property and the person's prototype property should be the exact same object.
+Student.prototype = Object.create(Person.prototype); // ✔✔✔ We want to make Person.prototype the prototype of Student.prototype (inherit from it and should not be the same object). So, to link the two prototype objects, we do the following. That's because Object.create defines prototypes manually. Now, the Student.prototype object is an object that inherits from Person.prototype. We have to do this before any we add any more methods to the prototype object of student because Object.create, will return a new empty object.
+
+Student.prototype.introduce = function () {
+    console.log(`My name is ${this.firstName} and I study ${this.course}`);
+}; 
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+const german = new Student("German", 2023, "Computer science");
+
+german.introduce();
+german.calcAge(); //This function from Person works in Student as well because this last one inherit the function from Person by using Student.prototype = Object.create(Person.prototype);
+console.log(german.__proto__);
+console.log(german.__proto__.__proto__);
+
+console.log(german instanceof Student); //true
+console.log(german instanceof Person);  //true. If we didn't have Student.prototype = Object.create(Person.prototype), then it should be false because german wouldn't inherit from Person but Student.
+console.log(german instanceof Object);  //true. It is also an instance of Object because this is also in its prototype chain.
+
+console.log(german); //We must realize that when open up the [[Prototype]] element, we'll see that is says Person instead of Student, but german is actually of the type Student. 
+console.dir(Student); //This is the real prototype property of Student.
+Student.prototype.constructor = Student;  
+console.dir(Student.prototype.constructor); //Student.prototype.constructor is pointing back to Person, and the reason for that we set the prototype property of the student using Object.create(). So this make it so that the constructor of Student.prototype is still Person. (This will be best viewed using Firefox) */
+
+/* //Ejemplo 16: Inheritance Between "Classes": ES6 Classes
+class PersonCl{
+    constructor(fullName, birthYear){ 
+        this.fullName = fullName;
+        this.birthYear = birthYear;
+    }; 
+
+    //Instance methods (Methods will be added to .prototype property and all instances can have access to them)
+    calgAge(){ //All the methods that we write in the class (outside of the constructor), will be on the prototype on the object and not on the objects themselves.
+        console.log("calgAge: ", 2037 - this.birthYear);
+    };
+
+    greet(){
+        console.log(`greet:  ${this._fullName}`)
+    }
+
+    get age(){
+        return `age: ${2037 - this.birthYear}`;
+    }
+    
+
+    set fullName(name){  //Set a property that already exists.
+        console.log("name ", name);
+        name.includes(" ") ? this._fullName = name : `${name} is not a full name!`
+    }
+
+    get fullName(){
+        return this._fullName;
+    }
+
+    static hey(){ //Static class methods are defined on the class itself. Staic are not available on instances
+        console.log("Hello world");
+        console.dir(this);
+    }
+}
+
+class StudentCl extends PersonCl{
+    constructor(fullName, birthYear, course){
+        super(fullName, birthYear); //Always neets to happen first. super is basically the constructor function of the parent class. This is similar to use the "call" method in the Constructor Functions. We don't need to specify the name of the parent class again because that already happened in "extends PersonCl". Finally, we have to pass in the arguments for the constructor of the parent class (the parameters in the constructor funcion of PersonCl)
+        this.course = course;
+    }
+
+    inroduce(){
+        console.log(`My name is ${this.fullName} and I study ${this.course}`);
+    }
+
+    calgAge(){
+        console.log("Hello world");
+    }
+}
+
+const german = new StudentCl("German mancilla", 1998, "Computer science");
+console.log(german);
+german.inroduce();
+german.calgAge(); */
+
+/* //Ejemplo 17: Inheritance Between "Classes": Object.create
+const PersonProto = {
+    init(firstName, birthYear){     //This looks like the constructor function that we created in the last methods, but here this is isn't the case becasue we don't use the new operator to call this.
+        this.firstName = firstName; //The this keyword will point to the mancilla object, and it does so because we explicitly called   mancilla.init("German", 1998);
+        this.birthYear = birthYear;
+        // console.log(this);
+    },
+
+    calgAge(){ //All the methods that we write in the class (outside of the constructor), will be on the prototype on the object and not on the objects themselves.
+        console.log("My age is: ", 2037 - this.birthYear);
+    },
+}
+
+const mancilla = Object.create(PersonProto);
+const SudentProto = Object.create(PersonProto);
+
+SudentProto.init = function(firstName, birthYear, course){
+    PersonProto.init.call(this, firstName, birthYear); //We do this so that we can avoid writing the same code (this.firstName = firstName and this.birthYear = birthYear).
+    this.course = course;
+}
+
+SudentProto.introduce = function(){
+    console.log(`My name is ${this.firstName} and I study ${this.course}`);
+}
+
+const karla = Object.create(SudentProto);
+karla.init("Karla Marquez", 1998, "Computer science");
+karla.introduce();
+karla.calgAge();
+console.log(karla); */
+
+/* //Ejemplo 18: Another Class Example
+class Account{
+    constructor(owner, currency, pin, movements){
+        this.owner = owner;
+        this.currency = currency;
+        this.pin = pin;
+        this.locale = navigator.language;
+        this.movements = []; //We can create even more properties on any instance and properties tjat are not based on any inputs. 
+
+        console.log(`Thanks for opening an account, ${owner}`); //We can even execute any code here in this constructor that we want. When someone opens a new account then will recieve this message. 
+    }
+
+    //The reason why we defined deposit and withdraw inside the class Account is because we want these two methods to be inherited by all the instances of the Account class. 
+    //Methods put outside of the constructor(), but inside of the class's body are put in the prototype meaning they will be inherited by all of the instances of that class.
+    deposit(val){
+        this.movements.push(val)
+    }
+
+    withdraw(val){
+        this.deposit(-val); //We can call other methods inside of a certain one. But we forcelly need to use the this keyword to be able to access this other method.
+    }
+
+    aproveLoan(){
+        return true;
+    }
+
+    requestLoan(val){
+        if (this.aproveLoan(val)) {
+            this.deposit(val);
+            console.log(`Loan approved for ${val}$`);
+        }
+    }
+}
+
+const acc1 = new Account("German", "EUR", 1111);
+
+acc1.deposit(250);
+acc1.withdraw(140);
+acc1.requestLoan(1000);
+console.log(acc1); */
+
+/* //Ejemplo 19: Encapsulation, Protected Properties and Methods
+//Encapsulation basically means to keep some properties and methods private inside the class so that they are not accessible from outside of the class.
+class Account{
+    constructor(owner, currency, pin){
+        this.owner = owner;
+        this.currency = currency;
+        this.locale = navigator.language;
+        
+        //Protected propertyes
+        this._pin = pin;
+        this._movements = []; //We can create even more properties on any instance and properties that are not based on any inputs. This doen't actually make the property truly private because it's just a convention
+
+        console.log(`Thanks for opening an account, ${owner}`); //We can even execute any code here in this constructor that we want. When someone opens a new account then will recieve this message. 
+    }
+
+    //Public interface
+    getMovements(){ //if we still wanted to give access to the movements array from the outside then we would have to implement a public method for that
+        return this._movements;
+    }
+
+    //The reason why we defined deposit and withdraw inside the class Account is because we want these two methods to be inherited by all the instances of the Account class. 
+    //Methods put outside of the constructor(), but inside of the class's body are put in the prototype meaning they will be inherited by all of the instances of that class.
+    deposit(val){
+        this._movements.push(val)
+    }
+
+    withdraw(val){
+        this.deposit(-val); //We can call other methods inside of a certain one. But we forcelly need to use the this keyword to be able to access this other method.
+    }
+
+    _aproveLoan(){ //This method shouldn't be part of the public API, but all the others should be.
+        return true;
+    }
+
+    requestLoan(val){
+        if (this._aproveLoan(val)) {
+            this.deposit(val);
+            console.log(`Loan approved for ${val}$`);
+        }
+    }
+}
+
+const acc1 = new Account("German", "EUR", 1111);
+
+acc1._movements.push(250);
+acc1._movements.push(-140);
+
+acc1.deposit(250);
+acc1.withdraw(140);
+acc1.requestLoan(1000);
+console.log(acc1.getMovements()); //Someone can access the movements but they can't overwrite them.
+console.log(acc1); */
+
+/* //Ejemplo 20: Encapsulation: Private Class Fields and Methods
+
+//Encapsulation basically means to keep some properties and methods private inside the class so that they are not accessible from outside of the class.
+class Account{
+    
+    // 1) Public fields (instances). These public fields are gonna be presened on all the instances that we are creating through the class. (They're referenceable by the this keyword). So they're not on the prototype. Finally, these two instances are the same as the two ones on the Protected properties.
+    locale = navigator.language;
+
+    // 2) Private fields (instances). With this, properites are really truly not accessible from the outside.
+    #movements = [] //The # makes a field private
+    #pin;           //We cannot define a field in the constructor
+
+    constructor(owner, currency, pin){
+        this.owner = owner;
+        this.currency = currency;
+        this.#pin = pin;
+
+        console.log(`Thanks for opening an account, ${owner}`); //We can even execute any code here in this constructor that we want. When someone opens a new account then will recieve this message. 
+    }
+
+    // 3) Public methods
+    getMovements(){
+        return this.#movements;
+    }
+
+    deposit(val){
+        this.#movements.push(val)
+        return this; //deposit returns undefined because we're not returning anything explicitly here. So, to fix that, we need to return this, because the this keyword here is the current object. This line of code will make the method chainable. Finally, you must keep in mind that we have to do the same thing in deposit(), withdraw() and requestLoan() because the three of them deal with a private property (#movements).
+    }
+
+    withdraw(val){
+        this.deposit(-val); //We can call other methods inside of a certain one. But we forcelly need to use the this keyword to be able to access this other method.
+        return this;
+    }
+
+    requestLoan(val){
+        if (this.#aproveLoan(val)) {
+            this.deposit(val);
+            console.log(`Loan approved for ${val}$`);
+            return this;
+        }
+    }
+
+    static helper(){
+        console.log("Hello world!")
+    }
+
+    // 4) Private methods. This is very useful to hide the implementations details from the outside.
+    #aproveLoan(){ //This method shouldn't be part of the public API, but all the others should be.
+        return true;
+    }
+}
+
+const acc1 = new Account("German", "EUR", 1111);
+
+// acc1._movements.push(250);
+// acc1._movements.push(-140);
+
+acc1.deposit(250);
+acc1.withdraw(140);
+acc1.requestLoan(1000);
+console.log(acc1.getMovements()); //Someone can access the movements but they can't overwrite them 
+console.log(acc1); 
+Account.helper();
+// console.log(acc1.#movements); //We'll get an error because this is private.
+
+acc1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000);
+console.log(acc1.getMovements()); */
+
+/* //Ejemplo 21: Ejercicio de repaso numero 1: using constructor Functions, the "new" and the "this" Operator
+// 1. Use a constructor function to implement a 'Car'. A car has a 'brand' and a 'speed' property. The 'speed' property is the current speed of the car in km/h
+// 2. Implement an 'accelerate' method that will increase the car's speed by 10, and log the new speed to the console
+// 3. Implement a 'brake' method that will decrease the car's speed by 5, and log the new speed to the console
+// 4. Create 2 'Car' objects and experiment with calling 'accelerate' and 'brake' multiple times on each of them
+
+//GOOD PRACTICE
+function Car(brand, speed){
+    this.brand = brand;
+    this.speed = speed;
+}
+
+Car.prototype.accelerate = function(){
+    this.speed = this.speed + 10;
+    console.log(`${this.brand} is going at ${this.speed} km/h`)
+}
+
+Car.prototype.brake = function(){
+    this.speed = this.speed - 5;
+    console.log(`${this.brand} is going at ${this.speed} km/h`)
+}
+
+const bmw = new Car("BMW", 120);
+const mercedes = new Car("Mercedes", 95);
+
+bmw.accelerate();
+bmw.accelerate();
+bmw.accelerate();
+bmw.brake();
+
+//BAD PRACTICE
+// function Car(brand, speed){
+//     this.brand = brand;
+//     this.speed = speed;
+
+//     this.accelerate = function () {
+//         this.speed = this.speed + 10;
+//         console.log(`${this.brand} is going at ${this.speed} km/h`)
+//     };
+
+//     this.brake = function () {
+//         this.speed = this.speed - 5;
+//         console.log(`${this.brand} is going at ${this.speed} km/h`)
+//     };
+// }
+
+// const bmw = new Car("BMW", 120);
+// const mercedes = new Car("Mercedes", 95);
+
+// bmw.accelerate();
+// bmw.accelerate();
+// bmw.accelerate();
+// bmw.brake(); */
+
+/* //Ejemplo 21: Ejercicio de repaso numero 2: using classes, Setters and Getters
+// 1. Re-create Challenge #1, but this time using an ES6 class (call it 'CarCl')
+// 2. Add a getter called 'speedUS' which returns the current speed in mi/h (divide by 1.6)
+// 3. Add a setter called 'speedUS' which sets the current speed in mi/h (but converts it to km/h before storing the value, by multiplying the input by 1.6) methods, and with the getter and setter.
+// § Data car 1: 'Ford' going at 120 km/h
+
+class CarCl {
+    constructor(brand, speed){
+        this.brand = brand;
+        this.speed = speed;
+    }
+    
+    accelerate(){
+        this.speed = this.speed + 10;
+        console.log(`${this.brand} is going at ${this.speed} km/h`)
+    }
+    
+    brake(){
+        this.speed = this.speed - 5;
+        console.log(`${this.brand} is going at ${this.speed} km/h`)
+    }
+
+    get speedUS(){
+        return this.speed / 1.6;
+    }
+
+    set speedUS(speed){
+        this.speed = speed*1.6;
+    }
+}
+
+const ford = new CarCl("Ford", 120);
+console.log(`${ford.speedUS} mi/h`);
+ford.accelerate();
+ford.speedUS = 50;
+console.log(ford); */
+
+/* //Ejemplo 22: Ejercicio de repaso numero 3: using Inheritance Between "Classes": Constructor Functions
+1. Use a constructor function to implement an Electric Car (called 'EV') as a child "class" of 'Car'. Besides a make and current speed, the 'EV' also has the current
+   battery charge in % ('charge' property)
+2. Implement a 'chargeBattery' method which takes an argument 'chargeTo' and sets the battery charge to 'chargeTo'
+3. Implement an 'accelerate' method that will increase the car's speed by 20, and decrease the charge by 1%. Then log a message like this: 
+   'Tesla going at 140 km/h, with a charge of 22%'
+4. Create an electric car object and experiment with calling 'accelerate', 'brake' and 'chargeBattery' (charge to 90%). Notice what happens when you 'accelerate'!
+
+function Car(brand, speed){
+    this.brand = brand;
+    this.speed = speed;
+}
+
+Car.prototype.accelerate = function(){
+    this.speed = this.speed + 10;
+    console.log(`${this.brand} is going at ${this.speed} km/h`)
+}
+
+Car.prototype.brake = function(){
+    this.speed = this.speed - 5;
+    console.log(`${this.brand} is going at ${this.speed} km/h`)
+}
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+function EV(brand, speed, charge){
+    Car.call(this, brand, speed);
+    this.charge = charge;
+}
+
+EV.prototype = Object.create(Car.prototype); //We want to make Car.prototype the prototype of EV.prototype (inherit from it and should not be the same object). So, to link the two prototype objects, we do the following. That's because Object.create defines prototypes manually. Now, the ev.prototype object is an object that inherits from Car.prototype. We have to do this before any we add any more methods to the prototype object of EV because Object.create, will return a new empty object.
+
+EV.prototype.chargeBattery = function(chargeTo){ //We create a new method
+    this.charge = chargeTo;
+}
+
+EV.prototype.accelerate = function(){ //We create a new method.
+    this.speed += 20; 
+    this.charge--;
+    console.log(`Tesla going at ${this.speed}, with a charge of ${this.charge}`)
+}
+
+const tesla = new EV("Tesla", 129, 23);  
+tesla.brake(); //Having used the Object.create(), now we can also access to the methods in the constructor function (car), from the EV function. If we don't use EV.prototype = Object.create(Car.prototype), then we won't be able to access to this method in Car.
+tesla.chargeBattery(90);
+tesla.accelerate(); // There are two methods with the same name (accelerate). So, the first one is in the tesla's object, and the second one in the constructor function (Car). When there are two or more methods or properties with the same name in a prototype chain, then JS will always use the first one. Finally, a child class can overwrite a methid that inherited from the parent class.
+
+EV.prototype.constructor = EV;
+console.log(tesla);
+console.dir(EV.prototype.constructor); */
+
+/* //Ejemplo 23: Ejercicio de repaso numero 4: using Inheritance Between "Classes": ES6 Classes and Object.create(), and using encapsulation.
+// 1. Re-create Challenge #3, but this time using ES6 classes: create an 'EVCl' child class of the 'CarCl' class
+// 2. Make the 'charge' property private
+// 3. Implement the ability to chain the 'accelerate' and 'chargeBattery' methods of this class, and also update the 'brake' method in the 'CarCl' class. Then experiment with chaining!
+// Data car 1: 'Rivian' going at 120 km/h, with a charge of 23%
+
+class CarCl{
+    constructor(brand, speed){
+        this.brand = brand;
+        this.speed = speed;
+    }
+    accelerate(){
+        this.speed = this.speed + 10;
+        console.log(`${this.brand} is going at ${this.speed} km/h`);
+        return this;
+    }
+    
+    brake(){
+        this.speed = this.speed - 5;
+        console.log(`${this.brand} is going at ${this.speed} km/h`);
+        return this;
+    }
+
+    get speedUS(){
+        return this.speed / 1.6;
+    }
+
+    set speedUS(speed){
+        this.speed = speed*1.6;
+    }
+}
+
+class EVCl extends CarCl{
+    #charge
+
+    constructor(brand, speed, charge){
+        super(brand, speed);
+        this.#charge = charge;
+    }
+        
+    chargeBattery(chargeTo){ //We create a new method
+        this.#charge = chargeTo;
+        return this;
+    }
+    
+    accelerate(){ //We create a new method.
+        this.speed += 20; 
+        this.#charge--;
+        console.log(`Tesla going at ${this.speed}, with a charge of ${this.#charge}`);
+        return this;
+    }
+}
+
+const rivian = new EVCl("Rivian", 120, 23);
+console.log(rivian);
+rivian.accelerate().accelerate().accelerate().brake().chargeBattery(50).accelerate();
+console.log(rivian.speedUS); */
 
 
 //         $$$$$$$$$$$$$$$ Arrays $$$$$$$$$$$$$$$
@@ -2358,7 +3303,7 @@ function convertTitleCase(title) {
 console.log(convertTitleCase('and here is another title with an EXAMPLE'));
 console.log(convertTitleCase('this is a LONG title but not too long')); */
 
-/*//Ejemplo 36: Mas ejemplos con arrays x2
+/* //Ejemplo 36: Mas ejemplos con arrays x2
 const objetos =  [
 	{manzanas:3, peras:2, carne:1, jugos:5, dulces:2},
 	{manzanas:1, sandias:1, huevos:6, jugos:1, panes:4}
@@ -2382,108 +3327,6 @@ objetos.forEach((objeto) => {
 
 console.log(productos);
 console.log(totalVendidos); */
-
-//Ejemplo 36: Registrador de tickets de eventos
-// Se creará una clase que permitirá llevar una gestión completa de usuarios que deseen acceder a dichos eventos.
-//     ✓ Definir clase TicketManager, el cual tendrá un arreglo de eventos que iniciará vacío
-//     ✓ La clase debe contar con una variable privada “precioBaseDeGanancia”, la cual añadirá un costo adicional al precio de cada evento.
-//     ✓ Debe contar con el método “getEventos” El cual mostrará los eventos guardados.
-//     ✓ Debe contar con el método “agregarEvento” El cual recibirá los siguientes parámetros:
-//         ○ nombre
-//         ○ lugar
-//         ○ precio (deberá agregarse un 0.15 del valor original)
-//         ○ capacidad (50 por defecto)
-//         ○ fecha (hoy por defecto)
-        
-//         El método deberá crear además el campo id autoincrementable y el campo “participantes” que siempre iniciará con un arreglo vacío.
-//      ✓ Debe contar con un método “agregarUsuario” El cual recibirá:
-//         ○ id del evento (debe existir, agregar validaciones)
-//         ○ id del usuario
-//      El método debe evaluar que el evento exista y que el usuario no haya estado registrado previamente (validación de fecha y capacidad se evitará para no alargar el reto)
-//      Si todo está en orden, debe agregar el id del usuario en el arreglo “participantes” de ese evento.
-//      
-//      ✓ Debe contar con un método “ponerEventoEnGira” El cual recibirá:
-//         ○ id del evento
-//         ○ nueva localidad
-//         ○ nueva fecha
-//      El método debe copiar el evento existente, con una nueva localidad, nueva fecha, nuevo id y sus participantes vacíos (Usar spread operator para el resto de las propiedades)
-
-class TicketManager{
-    #precioBaseDeGanancia = 0.15;
-
-    constructor(){
-        this.eventos = [];
-    }
-
-    getEventos(){
-        return this.eventos;
-    }
-
-    agregarEvento(evento){
-        evento.precio = evento.precio + (evento.precio * this.#precioBaseDeGanancia);
-
-        if(this.eventos.length === 0){
-            evento.id = 1;
-        }else{
-            evento.id = this.eventos[this.eventos.length - 1].id + 1;
-        }
-
-        this.eventos.push(evento);
-    }
-
-    agregarUsuario(idEvento, idUsuario){
-        const evento = this.eventos.find(evento => evento.id === idEvento);
-
-        if(!evento) return console.log("No existe el evento");
-        
-        if(!evento.participantes.includes(idUsuario) ){
-            evento.participantes.push(idUsuario)
-        }else{
-            return console.log("El usuario ya existe");;
-        } 
-    }
-
-    ponerEventoEnGira(idEvento, nuevaLocalidad, nuevaFecha){
-        const evento = this.eventos.find(evento => evento.id === idEvento);
-
-        if(!evento) return "No existe el evento"
-
-        const newEvento = {
-            ...evento,
-            lugar: nuevaLocalidad,
-            fecha: nuevaFecha,
-            id: this.eventos[this.eventos.length - 1].id + 1,
-            participantes: []
-        }
-
-        this.eventos.push(newEvento);
-    }
-}
-
-class Evento{
-    constructor(nombre, lugar, precio, capacidad=50, fecha = new Date().toLocaleString(), participantes){
-        this.nombre = nombre;
-        this.lugar = lugar;
-        this.precio = precio;
-        this.capacidad = capacidad;
-        this.fecha = fecha;
-        this.participantes = [];
-    }
-}
-
-//Pruebas
-const manejadorEventos = new TicketManager();
-
-console.log("agregando Evento coder 1 para Argentina, precio: 200, para 50 participantes");
-manejadorEventos.agregarEvento(new Evento("Evento coder 1", "Argentina", 200, 50));
-
-console.log("agregando al evento con id 1 la participacion del usuario con id 2");
-manejadorEventos.agregarUsuario(1, 2);
-
-// console.log("creando una copia vacía del evento 1 pero en mexico y para el 2024");
-// manejadorEventos.ponerEventoEnGira(1, "Mexico", "30/11/2024");
-
-console.log(manejadorEventos.getEventos());
 
 
 //         $$$$$$$$$$$$$$$ STRINGS & MODERN OPERATORS $$$$$$$$$$$$$$$
@@ -4198,733 +5041,6 @@ window.addEventListener('beforeunload', function (evento) {
     console.log(evento);
     evento.returnValue = '';
 }); */
-
-
-//         $$$$$$$$$$$$$$$ POO $$$$$$$$$$$$$$$
-
-
-/* //Ejemplo 0: Creacion de un contador
-class Contador {
-    static contadorGlobal = 0;
-
-    constructor(responable, inicial) {
-        this.responable = responable;
-        this.contadorInicial = inicial;
-    }
-
-    getResponsable() {
-        return `${this.responable}`;
-    }
-
-    contar() {
-        this.contadorInicial++;
-        Contador.contadorGlobal++;
-    }
-
-    getCuentaIndividual() {
-        return this.contadorInicial;
-    }
-
-    getCuentaGlobal() {
-        return Contador.contadorGlobal;
-    }
-}
-
-// Pruebas
-const contador1 = new Contador("Fulanito", 0);
-const contador2 = new Contador("Arturito", 0);
-
-// Contamos
-contador1.contar();
-contador2.contar();
-contador1.contar();
-contador1.contar();
-contador2.contar();
-contador1.contar();
-contador2.contar();
-contador1.contar();
-
-// Cuenta individual
-console.log(contador1.getResponsable(), contador1.getCuentaIndividual());
-console.log(contador2.getResponsable(), contador2.getCuentaIndividual());
-
-// Cuenta global
-console.log(contador1.getCuentaGlobal());
-console.log(contador2.getCuentaGlobal()); */
-
-/* //Ejemplo 1: Constructor Functions, the "new" and the "this" Operator (do this)
-
-// 1. New {} is created. We create a new instance (a new empty object) of the Person function.
-// 2. function is called, this = {}. The this keyword will be set to this newly created object. That's to say, the "this" keyword points to the new empty object.
-// 3. {} linked to prototype
-// 4. function automatically return {} that empty object from the constructor function 
-
-// NEVER DO THIS!
-// function Person(firstName, birthYear) {
-//     this.firstName = firstName;
-//     this.birthYear = birthYear;
-
-//     this.calcAge = function () {
-//         console.log(2037 - this.birthYear);
-//     };
-// };
-
-function Person(firstName, birthYear) { //Constructor function
-    this.firstName = firstName;
-    this.birthYear = birthYear;
-};
-
-Person.prototype.calcAge = function () { //We create a new calcAge method with the prototype keyword to the Person object. So, we can use this method on the german or karla object even though it isn't on the object itself. The reason why we create this method outsite the constructor function, is becuase when creating it inside, this method is added to all the object created. So, it's best to add this method to every object just when necessary.
-    console.log("My age is: ", 2037 - this.birthYear);
-}; 
-
-const german = new Person('German', 1991);
-const karla = new Person('Karla', 2017);
-
-german.calcAge();
-karla.calcAge();
-
-console.log("german is an instance of Person? ", german instanceof Person);
-console.log(german, karla);    //Although we created a new calcAge method in both objects, they don't contain this method but we have access to it because of prototypal inherencce.
-
-// Prototypal Inheritance on Built-In Objects
-console.log("Person.prototype ", Person.prototype); //"prototype" let you to add properties and methods to JavaScript objects (in this case, the Person object). All the objects that are created through this function constructor function (Person), will inherit. So they will get access to all the methods and properties that arre defined on this prototype property.
-console.log("german.__proto__ ", german.__proto__); //This is the prototype of german (not the prototype porperty) It is the same as: console.log(Person.prototype); 
-console.log(german.__proto__.__proto__);            //It is the prototype property of object
-console.log(german.__proto__ === Person.prototype); //It's true because the prototype of the german object is essentially the prototype property of the constructor function. (Person.prototype is actually not the prototype of Person, but it is what's gonna be used as the prototype of all the objects that are created with the person constructor function. )
-console.dir(Person.prototype.constructor);
-
-console.log(Person.prototype.isPrototypeOf(german));
-console.log(Person.prototype.isPrototypeOf(Person));
-
-Person.prototype.species = 'Homo Sapiens';
-
-console.log(german.species, karla.species);      //Both objects will inherit and will get access to this property from the prototype.
-console.log(german.hasOwnProperty('firstName')); //This is true because "firstname" was created directly in the constructor function
-console.log(german.hasOwnProperty('species'));   //This is false because the species property isn't directly in the object because of it's not its own property (the ones that are declared directly on the object itself, and not including the inherited properties).
-
-
-const arr = [3, 6, 6, 5, 6, 9, 9]; //  new Array === []  whenever we create an array like this, it is indeed created by the array constructor.
-console.log("Array.prototype ", Array.prototype)
-console.log("arr.__proto__ ", arr.__proto__);
-console.log(arr.__proto__.__proto__);
-console.log(arr.__proto__ === Array.prototype); 
-
-Array.prototype.unique = function () { //We create a new method (unique) into the object Array. Some methods like this are filter, some, map, etc.
-    return [...new Set(this)];
-};
-
-console.log(arr.unique()); //Seeing in the MDN documentation, we can realize that every method (function) when using arrays, have the following sintaxis: Array.prototype.map().
-
-const h1 = document.querySelector('h1'); console.dir(h1)
-console.dir(function funciones(x){x + 1}); */
-
-/* //Ejemplo 2: classes, Setters and Getters (assessors properties), static method and Object.create
-
-//We need to create a constructor function. Whenever we create a new object (like a new instance using the new operator), this constructor will automatically be called.
-class PersonCl{
-    constructor(fullName, birthYear){ 
-        this.fullName = fullName;
-        this.birthYear = birthYear;
-    }; 
-
-    //Instance methods (Methods will be added to .prototype property and all instances can have access to them)
-    calgAge(){ //All the methods that we write in the class (outside of the constructor), will be on the prototype on the object and not on the objects themselves.
-        console.log("calgAge: ", 2037 - this.birthYear);
-    };
-
-    greet(){
-        console.log(`greet:  ${this._fullName}`)
-    }
-
-    get age(){
-        return `age: ${2037 - this.birthYear}`;
-    }
-    
-    //Set a property that already exists.
-    set fullName(name){ 
-        //We're creating a setter for a property name that does already exists. So, fullName is already a property to set in the constructor function, but then we also have a 
-        //setter here. Now what's gonna happen is that each time the constructor function is executed, so whenever we set the fullName on the this keyword, then actually the 
-        //method (set fullName) is gonna be executed. And, that name that we pass in as fullName (German mancilla) will then become this name.
-        //Now, When we're using setters which is trying to set a property that already exists, both the setter function here and the construction function have the exact same 
-        //property name (fullName), and will get an error. So, to fix that, we need to create a new property name, that's to say, "fullName" must be a different name.
-        //Having done so, then the "fullName" property in the object german won't exists, but the "_fillname" property will. If we aren't going to setter for a property name 
-        //that does already exists, then there's no need to change the name of this variable.
-        console.log("name ", name);
-        name.includes(" ") ? this._fullName = name : `${name} is not a full name!`
-    }
-
-    get fullName(){
-        return this._fullName;
-    }
-
-    static hey(){ //Static class methods are defined on the class itself. Staic are not available on instances
-        console.log("Hello world");
-        console.dir(this);
-    }
-    
-}
-
-const german = new PersonCl("German mancilla", 1998); //We use the this keyword as before, and will be set to the newly created empty object. So, when we create a new instance here, then the constructor function is gonna be called and that will return a new object and then that will be stored in "dani".
-
-// This method is NOT inherited. So, we couldn't call the from method on an array like german.hey(); because it isn't in the prototype of the german object.
-// PersonCl.hey = function(){
-//     console.log("Hello world");
-//     console.log(this)
-// }
-// german.hey(); //We will get an error because german doesn't inherit the hey() method
-
-console.log(german);
-console.dir(PersonCl);
-german.calgAge();
-german.greet();
-console.log(german.age);
-PersonCl.hey(); //That's exactly the object that is calling the method. So, whatever object is calling the method, will be the this keyword inside of that funcion. And here the this keyword  is simply the entire constructor function.
-console.dir(PersonCl.hey)
-
-console.log(german.__proto__);
-console.log(german.__proto__ === PersonCl.prototype);
-
-// 1. Classes are not hoisted even if they're class declarations. Functions declarations are hoisted, which means we can use them before they're declared in the code. With classes tgat doesn't work.
-// 2. Class are first-class citizens. This means that we can pas them into functions and also return them from functions. (classes are just a special kind of functions behind the scenes)
-// 3. Classes are executed in strict mode. And so even if we didn't activate it for our entire script, all the code that is in the class will be executed in strict mode.
-
-const account = {
-    owner: 'Jonas',
-    movements: [200, 530, 120, 300],
-
-    get latest() {
-        return this.movements.slice(-1).pop();
-    },
-
-    set latest(mov) {
-        this.movements.push(mov);
-    },
-};
-
-console.log(account.latest);
-
-account.latest = 50;
-console.log(account.movements);
-
-//Object.create 
-// --> Here there's still the idea of prototypal inheritance. However, there are no prototypal properties involved and also no constructor funcionds and no new operator. So, we can use Object.create to manually set the prototype of an object to any other object that we want.
-const PersonProto = {
-    init(firstName, birthYear){ //This looks like the constructor function that we created in the last methods, but here this is isn't the case becasue we don't use the new operator to call this.
-        this.firstName = firstName; //The this keyword will point to the mancilla object, and it does so because we explicitly called   mancilla.init("German", 1998);
-        this.birthYear = birthYear;
-        console.log(this); // === console.log(mancilla);
-    },
-
-    calgAge(){ //All the methods that we write in the class (outside of the constructor), will be on the prototype on the object and not on the objects themselves.
-        console.log("calgAge: ", 2037 - this.birthYear);
-    },
-}
-
-const mancilla = Object.create(PersonProto); //This will return a brand new object that is linked to the prototype that we passed in here. So, mancilla is right now an empty object and it'll be linked to the PersonProto object. PersonProto should be the prototype of mancilla.
-
-console.log(PersonProto);
-console.log(mancilla.__proto__);
-console.log(mancilla.__proto__ === PersonProto);
-
-// mancilla.name = "chavez"; //We can create properties manually like this
-// mancilla.year = 2002;
-
-mancilla.init("German", 1998);
-mancilla.calgAge(); //The calcAge() method is called on an object, for example, on the mancilla object. This means that the 'this' keyword inside of the calcAge() method will reference mancilla object. The mancilla object has a property called birthYear, so this.birthYear inside of calcAge() will translate to mancilla.birthYear . */
-
-/* //Ejemplo 3: Inheritance Between "Classes": Constructor Functions
-function Person(firstName, birthYear) { //Constructor function
-    this.firstName = firstName;
-    this.birthYear = birthYear;
-};
-
-Person.prototype.calcAge = function () { //We create a new calcAge method with the prototype keyword to the Person object. So, we can use this method on the german or karla object even though it isn't on the object itself. The reason why we create this method outsite the constructor function, is becuase when creating it inside, this method is added to all the object created. So, it's best to add this method to every object just when necessary.
-    console.log("My age is: ", 2037 - this.birthYear);
-}; 
-                    
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-function Student(firstName, birthYear, course){ //Child function of the Person function, and it will inherit everything of its parent funciton.
-    //Person(firstName, birthYear); //❌❌❌ If we would want to avoid duplicating code (in this case, re-write firstName and birthYear in Student), the problem here is that we are now actually calling this person constructor function as a regular function call. So we are not using this new operator to call this person function constructor. And so therefore this function call here is simply a regular function call. And remember that in a regular function call, the this keyword is set to undefined. And so therefore that's why we get this error here, that it cannot set first name on undefined. So instead of simply calling the person function here, we need to manually set the this keyword as well.
-    Person.call(this, firstName, birthYear); // ✔✔✔ We need to call the function and at the same time set the this keyword inside that function. To do that, we can simply use the call method, which will call the function but we'll be able to specify the this keywords as the first argument in the function. In the next line, we can the this keyword inside the Person function so simply be the this keyword inside this funcion. Now, the this keyword (Person.call) is going to be in the beggining, the empty object (german) that is being created by the new operator. And so it is on that new object where we want to set the first name and the birthYear property.
-    this.course = course;
-}
-
-//Student.prototype = Person.prototype; //❌❌❌ We must not do this because if so, we're saying that the student's prototype property and the person's prototype property should be the exact same object.
-Student.prototype = Object.create(Person.prototype); // ✔✔✔ We want to make Person.prototype the prototype of Student.prototype (inherit from it and should not be the same object). So, to link the two prototype objects, we do the following. That's because Object.create defines prototypes manually. Now, the Student.prototype object is an object that inherits from Person.prototype. We have to do this before any we add any more methods to the prototype object of student because Object.create, will return a new empty object.
-
-Student.prototype.introduce = function () {
-    console.log(`My name is ${this.firstName} and I study ${this.course}`);
-}; 
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-const german = new Student("German", 2023, "Computer science");
-
-german.introduce();
-german.calcAge(); //This function from Person works in Student as well because this last one inherit the function from Person by using Student.prototype = Object.create(Person.prototype);
-console.log(german.__proto__);
-console.log(german.__proto__.__proto__);
-
-console.log(german instanceof Student); //true
-console.log(german instanceof Person);  //true. If we didn't have Student.prototype = Object.create(Person.prototype), then it should be false because german wouldn't inherit from Person but Student.
-console.log(german instanceof Object);  //true. It is also an instance of Object because this is also in its prototype chain.
-
-console.log(german); //We must realize that when open up the [[Prototype]] element, we'll see that is says Person instead of Student, but german is actually of the type Student. 
-console.dir(Student); //This is the real prototype property of Student.
-Student.prototype.constructor = Student;  
-console.dir(Student.prototype.constructor); //Student.prototype.constructor is pointing back to Person, and the reason for that we set the prototype property of the student using Object.create(). So this make it so that the constructor of Student.prototype is still Person. (This will be best viewed using Firefox) */
-
-/* //Ejemplo 4: Inheritance Between "Classes": ES6 Classes
-class PersonCl{
-    constructor(fullName, birthYear){ 
-        this.fullName = fullName;
-        this.birthYear = birthYear;
-    }; 
-
-    //Instance methods (Methods will be added to .prototype property and all instances can have access to them)
-    calgAge(){ //All the methods that we write in the class (outside of the constructor), will be on the prototype on the object and not on the objects themselves.
-        console.log("calgAge: ", 2037 - this.birthYear);
-    };
-
-    greet(){
-        console.log(`greet:  ${this._fullName}`)
-    }
-
-    get age(){
-        return `age: ${2037 - this.birthYear}`;
-    }
-    
-
-    set fullName(name){  //Set a property that already exists.
-        console.log("name ", name);
-        name.includes(" ") ? this._fullName = name : `${name} is not a full name!`
-    }
-
-    get fullName(){
-        return this._fullName;
-    }
-
-    static hey(){ //Static class methods are defined on the class itself. Staic are not available on instances
-        console.log("Hello world");
-        console.dir(this);
-    }
-}
-
-class StudentCl extends PersonCl{
-    constructor(fullName, birthYear, course){
-        super(fullName, birthYear); //Always neets to happen first. super is basically the constructor function of the parent class. This is similar to use the "call" method in the Constructor Functions. We don't need to specify the name of the parent class again because that already happened in "extends PersonCl". Finally, we have to pass in the arguments for the constructor of the parent class (the parameters in the constructor funcion of PersonCl)
-        this.course = course;
-    }
-
-    inroduce(){
-        console.log(`My name is ${this.fullName} and I study ${this.course}`);
-    }
-
-    calgAge(){
-        console.log("Hello world");
-    }
-}
-
-const german = new StudentCl("German mancilla", 1998, "Computer science");
-console.log(german);
-german.inroduce();
-german.calgAge(); */
-
-/* //Ejemplo 5: Inheritance Between "Classes": Object.create
-const PersonProto = {
-    init(firstName, birthYear){     //This looks like the constructor function that we created in the last methods, but here this is isn't the case becasue we don't use the new operator to call this.
-        this.firstName = firstName; //The this keyword will point to the mancilla object, and it does so because we explicitly called   mancilla.init("German", 1998);
-        this.birthYear = birthYear;
-        // console.log(this);
-    },
-
-    calgAge(){ //All the methods that we write in the class (outside of the constructor), will be on the prototype on the object and not on the objects themselves.
-        console.log("My age is: ", 2037 - this.birthYear);
-    },
-}
-
-const mancilla = Object.create(PersonProto);
-const SudentProto = Object.create(PersonProto);
-
-SudentProto.init = function(firstName, birthYear, course){
-    PersonProto.init.call(this, firstName, birthYear); //We do this so that we can avoid writing the same code (this.firstName = firstName and this.birthYear = birthYear).
-    this.course = course;
-}
-
-SudentProto.introduce = function(){
-    console.log(`My name is ${this.firstName} and I study ${this.course}`);
-}
-
-const karla = Object.create(SudentProto);
-karla.init("Karla Marquez", 1998, "Computer science");
-karla.introduce();
-karla.calgAge();
-console.log(karla); */
-
-/* //Ejemplo 6: Another Class Example
-class Account{
-    constructor(owner, currency, pin, movements){
-        this.owner = owner;
-        this.currency = currency;
-        this.pin = pin;
-        this.locale = navigator.language;
-        this.movements = []; //We can create even more properties on any instance and properties tjat are not based on any inputs. 
-
-        console.log(`Thanks for opening an account, ${owner}`); //We can even execute any code here in this constructor that we want. When someone opens a new account then will recieve this message. 
-    }
-
-    //The reason why we defined deposit and withdraw inside the class Account is because we want these two methods to be inherited by all the instances of the Account class. 
-    //Methods put outside of the constructor(), but inside of the class's body are put in the prototype meaning they will be inherited by all of the instances of that class.
-    deposit(val){
-        this.movements.push(val)
-    }
-
-    withdraw(val){
-        this.deposit(-val); //We can call other methods inside of a certain one. But we forcelly need to use the this keyword to be able to access this other method.
-    }
-
-    aproveLoan(){
-        return true;
-    }
-
-    requestLoan(val){
-        if (this.aproveLoan(val)) {
-            this.deposit(val);
-            console.log(`Loan approved for ${val}$`);
-        }
-    }
-}
-
-const acc1 = new Account("German", "EUR", 1111);
-
-acc1.deposit(250);
-acc1.withdraw(140);
-acc1.requestLoan(1000);
-console.log(acc1); */
-
-/* //Ejemplo 7: Encapsulation, Protected Properties and Methods
-//Encapsulation basically means to keep some properties and methods private inside the class so that they are not accessible from outside of the class.
-class Account{
-    constructor(owner, currency, pin){
-        this.owner = owner;
-        this.currency = currency;
-        this.locale = navigator.language;
-        
-        //Protected propertyes
-        this._pin = pin;
-        this._movements = []; //We can create even more properties on any instance and properties that are not based on any inputs. This doen't actually make the property truly private because it's just a convention
-
-        console.log(`Thanks for opening an account, ${owner}`); //We can even execute any code here in this constructor that we want. When someone opens a new account then will recieve this message. 
-    }
-
-    //Public interface
-    getMovements(){ //if we still wanted to give access to the movements array from the outside then we would have to implement a public method for that
-        return this._movements;
-    }
-
-    //The reason why we defined deposit and withdraw inside the class Account is because we want these two methods to be inherited by all the instances of the Account class. 
-    //Methods put outside of the constructor(), but inside of the class's body are put in the prototype meaning they will be inherited by all of the instances of that class.
-    deposit(val){
-        this._movements.push(val)
-    }
-
-    withdraw(val){
-        this.deposit(-val); //We can call other methods inside of a certain one. But we forcelly need to use the this keyword to be able to access this other method.
-    }
-
-    _aproveLoan(){ //This method shouldn't be part of the public API, but all the others should be.
-        return true;
-    }
-
-    requestLoan(val){
-        if (this._aproveLoan(val)) {
-            this.deposit(val);
-            console.log(`Loan approved for ${val}$`);
-        }
-    }
-}
-
-const acc1 = new Account("German", "EUR", 1111);
-
-acc1._movements.push(250);
-acc1._movements.push(-140);
-
-acc1.deposit(250);
-acc1.withdraw(140);
-acc1.requestLoan(1000);
-console.log(acc1.getMovements()); //Someone can access the movements but they can't overwrite them.
-console.log(acc1); */
-
-/* //Ejemplo 8: Encapsulation: Private Class Fields and Methods
-
-//Encapsulation basically means to keep some properties and methods private inside the class so that they are not accessible from outside of the class.
-class Account{
-    
-    // 1) Public fields (instances). These public fields are gonna be presened on all the instances that we are creating through the class. (They're referenceable by the this keyword). So they're not on the prototype. Finally, these two instances are the same as the two ones on the Protected properties.
-    locale = navigator.language;
-
-    // 2) Private fields (instances). With this, properites are really truly not accessible from the outside.
-    #movements = [] //The # makes a field private
-    #pin;           //We cannot define a field in the constructor
-
-    constructor(owner, currency, pin){
-        this.owner = owner;
-        this.currency = currency;
-        this.#pin = pin;
-
-        console.log(`Thanks for opening an account, ${owner}`); //We can even execute any code here in this constructor that we want. When someone opens a new account then will recieve this message. 
-    }
-
-    // 3) Public methods
-    getMovements(){
-        return this.#movements;
-    }
-
-    deposit(val){
-        this.#movements.push(val)
-        return this; //deposit returns undefined because we're not returning anything explicitly here. So, to fix that, we need to return this, because the this keyword here is the current object. This line of code will make the method chainable. Finally, you must keep in mind that we have to do the same thing in deposit(), withdraw() and requestLoan() because the three of them deal with a private property (#movements).
-    }
-
-    withdraw(val){
-        this.deposit(-val); //We can call other methods inside of a certain one. But we forcelly need to use the this keyword to be able to access this other method.
-        return this;
-    }
-
-    requestLoan(val){
-        if (this.#aproveLoan(val)) {
-            this.deposit(val);
-            console.log(`Loan approved for ${val}$`);
-            return this;
-        }
-    }
-
-    static helper(){
-        console.log("Hello world!")
-    }
-
-    // 4) Private methods. This is very useful to hide the implementations details from the outside.
-    #aproveLoan(){ //This method shouldn't be part of the public API, but all the others should be.
-        return true;
-    }
-}
-
-const acc1 = new Account("German", "EUR", 1111);
-
-// acc1._movements.push(250);
-// acc1._movements.push(-140);
-
-acc1.deposit(250);
-acc1.withdraw(140);
-acc1.requestLoan(1000);
-console.log(acc1.getMovements()); //Someone can access the movements but they can't overwrite them 
-console.log(acc1); 
-Account.helper();
-// console.log(acc1.#movements); //We'll get an error because this is private.
-
-acc1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000);
-console.log(acc1.getMovements()); */
-
-/* //Ejemplo 9:  Ejercicio de repaso numero 1: using constructor Functions, the "new" and the "this" Operator
-// 1. Use a constructor function to implement a 'Car'. A car has a 'brand' and a 'speed' property. The 'speed' property is the current speed of the car in km/h
-// 2. Implement an 'accelerate' method that will increase the car's speed by 10, and log the new speed to the console
-// 3. Implement a 'brake' method that will decrease the car's speed by 5, and log the new speed to the console
-// 4. Create 2 'Car' objects and experiment with calling 'accelerate' and 'brake' multiple times on each of them
-
-//GOOD PRACTICE
-function Car(brand, speed){
-    this.brand = brand;
-    this.speed = speed;
-}
-
-Car.prototype.accelerate = function(){
-    this.speed = this.speed + 10;
-    console.log(`${this.brand} is going at ${this.speed} km/h`)
-}
-
-Car.prototype.brake = function(){
-    this.speed = this.speed - 5;
-    console.log(`${this.brand} is going at ${this.speed} km/h`)
-}
-
-const bmw = new Car("BMW", 120);
-const mercedes = new Car("Mercedes", 95);
-
-bmw.accelerate();
-bmw.accelerate();
-bmw.accelerate();
-bmw.brake();
-
-//BAD PRACTICE
-// function Car(brand, speed){
-//     this.brand = brand;
-//     this.speed = speed;
-
-//     this.accelerate = function () {
-//         this.speed = this.speed + 10;
-//         console.log(`${this.brand} is going at ${this.speed} km/h`)
-//     };
-
-//     this.brake = function () {
-//         this.speed = this.speed - 5;
-//         console.log(`${this.brand} is going at ${this.speed} km/h`)
-//     };
-// }
-
-// const bmw = new Car("BMW", 120);
-// const mercedes = new Car("Mercedes", 95);
-
-// bmw.accelerate();
-// bmw.accelerate();
-// bmw.accelerate();
-// bmw.brake(); */
-
-/* //Ejemplo 10: Ejercicio de repaso numero 2: using classes, Setters and Getters
-// 1. Re-create Challenge #1, but this time using an ES6 class (call it 'CarCl')
-// 2. Add a getter called 'speedUS' which returns the current speed in mi/h (divide by 1.6)
-// 3. Add a setter called 'speedUS' which sets the current speed in mi/h (but converts it to km/h before storing the value, by multiplying the input by 1.6) methods, and with the getter and setter.
-// § Data car 1: 'Ford' going at 120 km/h
-
-class CarCl {
-    constructor(brand, speed){
-        this.brand = brand;
-        this.speed = speed;
-    }
-    
-    accelerate(){
-        this.speed = this.speed + 10;
-        console.log(`${this.brand} is going at ${this.speed} km/h`)
-    }
-    
-    brake(){
-        this.speed = this.speed - 5;
-        console.log(`${this.brand} is going at ${this.speed} km/h`)
-    }
-
-    get speedUS(){
-        return this.speed / 1.6;
-    }
-
-    set speedUS(speed){
-        this.speed = speed*1.6;
-    }
-}
-
-const ford = new CarCl("Ford", 120);
-console.log(`${ford.speedUS} mi/h`);
-ford.accelerate();
-ford.speedUS = 50;
-console.log(ford); */
-
-/* //Ejemplo 11: Ejercicio de repaso numero 3: using Inheritance Between "Classes": Constructor Functions
-1. Use a constructor function to implement an Electric Car (called 'EV') as a child "class" of 'Car'. Besides a make and current speed, the 'EV' also has the current
-   battery charge in % ('charge' property)
-2. Implement a 'chargeBattery' method which takes an argument 'chargeTo' and sets the battery charge to 'chargeTo'
-3. Implement an 'accelerate' method that will increase the car's speed by 20, and decrease the charge by 1%. Then log a message like this: 
-   'Tesla going at 140 km/h, with a charge of 22%'
-4. Create an electric car object and experiment with calling 'accelerate', 'brake' and 'chargeBattery' (charge to 90%). Notice what happens when you 'accelerate'!
-
-function Car(brand, speed){
-    this.brand = brand;
-    this.speed = speed;
-}
-
-Car.prototype.accelerate = function(){
-    this.speed = this.speed + 10;
-    console.log(`${this.brand} is going at ${this.speed} km/h`)
-}
-
-Car.prototype.brake = function(){
-    this.speed = this.speed - 5;
-    console.log(`${this.brand} is going at ${this.speed} km/h`)
-}
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-function EV(brand, speed, charge){
-    Car.call(this, brand, speed);
-    this.charge = charge;
-}
-
-EV.prototype = Object.create(Car.prototype); //We want to make Car.prototype the prototype of EV.prototype (inherit from it and should not be the same object). So, to link the two prototype objects, we do the following. That's because Object.create defines prototypes manually. Now, the ev.prototype object is an object that inherits from Car.prototype. We have to do this before any we add any more methods to the prototype object of EV because Object.create, will return a new empty object.
-
-EV.prototype.chargeBattery = function(chargeTo){ //We create a new method
-    this.charge = chargeTo;
-}
-
-EV.prototype.accelerate = function(){ //We create a new method.
-    this.speed += 20; 
-    this.charge--;
-    console.log(`Tesla going at ${this.speed}, with a charge of ${this.charge}`)
-}
-
-const tesla = new EV("Tesla", 129, 23);  
-tesla.brake(); //Having used the Object.create(), now we can also access to the methods in the constructor function (car), from the EV function. If we don't use EV.prototype = Object.create(Car.prototype), then we won't be able to access to this method in Car.
-tesla.chargeBattery(90);
-tesla.accelerate(); // There are two methods with the same name (accelerate). So, the first one is in the tesla's object, and the second one in the constructor function (Car). When there are two or more methods or properties with the same name in a prototype chain, then JS will always use the first one. Finally, a child class can overwrite a methid that inherited from the parent class.
-
-EV.prototype.constructor = EV;
-console.log(tesla);
-console.dir(EV.prototype.constructor); */
-
-/* //Ejemplo 12: Ejercicio de repaso numero 4: using Inheritance Between "Classes": ES6 Classes and Object.create(), and using encapsulation.
-// 1. Re-create Challenge #3, but this time using ES6 classes: create an 'EVCl' child class of the 'CarCl' class
-// 2. Make the 'charge' property private
-// 3. Implement the ability to chain the 'accelerate' and 'chargeBattery' methods of this class, and also update the 'brake' method in the 'CarCl' class. Then experiment with chaining!
-// Data car 1: 'Rivian' going at 120 km/h, with a charge of 23%
-
-class CarCl{
-    constructor(brand, speed){
-        this.brand = brand;
-        this.speed = speed;
-    }
-    accelerate(){
-        this.speed = this.speed + 10;
-        console.log(`${this.brand} is going at ${this.speed} km/h`);
-        return this;
-    }
-    
-    brake(){
-        this.speed = this.speed - 5;
-        console.log(`${this.brand} is going at ${this.speed} km/h`);
-        return this;
-    }
-
-    get speedUS(){
-        return this.speed / 1.6;
-    }
-
-    set speedUS(speed){
-        this.speed = speed*1.6;
-    }
-}
-
-class EVCl extends CarCl{
-    #charge
-
-    constructor(brand, speed, charge){
-        super(brand, speed);
-        this.#charge = charge;
-    }
-        
-    chargeBattery(chargeTo){ //We create a new method
-        this.#charge = chargeTo;
-        return this;
-    }
-    
-    accelerate(){ //We create a new method.
-        this.speed += 20; 
-        this.#charge--;
-        console.log(`Tesla going at ${this.speed}, with a charge of ${this.#charge}`);
-        return this;
-    }
-}
-
-const rivian = new EVCl("Rivian", 120, 23);
-console.log(rivian);
-rivian.accelerate().accelerate().accelerate().brake().chargeBattery(50).accelerate();
-console.log(rivian.speedUS); */
 
 
 //         $$$$$$$$$$$$$$$ JSON & storage $$$$$$$$$$$$$$$
