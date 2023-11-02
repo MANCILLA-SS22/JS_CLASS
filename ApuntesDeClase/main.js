@@ -2535,6 +2535,57 @@ console.log(rivian.speedUS); */
 //         $$$$$$$$$$$$$$$ Arrays $$$$$$$$$$$$$$$
 
 
+/* //Ejemplo 0: map behind the scenes & callbacks
+function mapCustom(array, callback) {
+    let nuevoArray = [];
+
+    for (let i = 0; i < array.length; i++) {
+        let nuevoValor = callback(array[i]);
+        nuevoArray.push(nuevoValor);
+    }
+
+    return nuevoArray;
+}
+
+const numeros = [2, 3, 4, 5, 6];
+const nuevoArr = mapCustom(numeros, function(valor){
+    return valor * 2;
+});
+
+console.log(nuevoArr);
+
+
+  // Extra
+  Array.prototype.mapCustom = function (callback) {
+    let nuevoArray = [];
+  
+    for (let i = 0; i < this.length; i++) {
+      let nuevoValor = callback(this[i]);
+      nuevoArray.push(nuevoValor);
+    }
+  
+    return nuevoArray;
+  };
+  
+  numeros.mapCustom((valor) => {
+    console.log(valor);
+    return valor * 2;
+  });
+
+const sumar = (numero1, numero2) => numero1 + numero2;
+const restar = (numero1, numero2) => numero1 - numero2;
+const multiplicar = (numero1, numero2) => numero1 * numero2;
+const dividir = (numero1, numero2) => numero1 / numero2;
+
+function calcular(numero1, numero2, callback) {
+    return callback(numero1, numero2);
+}
+
+console.log(calcular(2, 3, sumar));
+console.log(calcular(2, 3, restar));
+console.log(calcular(2, 3, multiplicar));
+console.log(calcular(2, 3, dividir)); */
+
 /* //Ejemplo 1: Declaracion y manejo de un array con numeros que vamos a operar entre ellos
 
 const VECTOR_DE_CADENAS = ["german", "mancilla", "chavez"]; console.log("Los datos del vector son: ", VECTOR_DE_CADENAS);
@@ -5108,7 +5159,7 @@ const nombre = "german";
 localStorage.setItem("saludar", nombre);
 sessionStorage.setItem("unNumero", 8); */
 
-/* // Ejemplo 7: Recibir los datos JSON
+/* // Ejemplo 7: Recibir los datos JSON 
 const cars = `[
     {
         "modelo": "Ford mustang",
@@ -5187,9 +5238,90 @@ console.log("Las carreras recuperadas en formato string (stringify) son: ", {res
 const convertido = JSON.parse(res);
 console.log("Las carreras recuperadas en formato object (parse) son: ", {convertido}); */
 
+/* //Ejemplo 10: Uso del file system (fs) node.js
+const fs = require("fs"); //console.log(fs);
+
+fs.writeFileSync("./text.txt", "Escribiendo en un archivo nuevo \nOtro texto");
+if(fs.existsSync("./text.txt")){
+    console.log("Si existe");
+    let contenido = fs.readFileSync("./text.txt", "utf-8");
+    console.log(contenido);
+    
+    fs.appendFileSync("./text.txt", "\nContenido añadido");
+
+    contenido = fs.readFileSync("./text.txt", "utf-8");
+    console.log(contenido);
+
+    fs.unlinkSync("./text.txt");    
+} */
+
+//Ejemplo 11: Uso del file system (fs) con callbacks
+const fs = require("fs");
+const fecha = new Date().toLocaleString();
+console.log(fecha);
+
+fs.writeFile("./texto_callback.txt", "Escribiendo en un callback", function(error){
+
+    if (error) return console.log("Hubo un error al escribir el archivo");
+
+    fs.readFile("./texto_callback.txt", "utf-8", function(error, contenido){
+        if (error) return console.log("Hubo un error al leer el archivo");
+    
+        console.log(contenido);
+    
+        fs.appendFile("./texto_callback.txt","\nTexto recién salido del horno", function(error){
+            if (error) return console.log("Hubo un error al agregar contenido al archivo");
+    
+            fs.readFile("./texto_callback.txt", "utf-8", function(error, contenido){
+                if (error) return console.log("Hubo un error al leer el archivo");
+                console.log(contenido);
+    
+                fs.unlink("./texto_callback.txt", function(error){
+                    if (error) return console.log("Hubo un error al eliminar el archivo");
+                });
+            });
+        });
+    });
+});
+
+
+
 
 //         $$$$$$$$$$$$$$$ Asincronia, promesas, AJAX & FETCH $$$$$$$$$$$$$$$
 
+
+
+/* // Ejemplo 0: setTimeout y setInterval
+function temporizador (callback) {
+    setTimeout(() => {
+        callback();
+    }, 2000);
+};
+
+function operacion(){
+    console.log("Tarea 2");
+}
+
+console.log("Tarea 1");
+temporizador(operacion);
+console.log("Tarea 3");
+
+
+function contador() {
+    let contador = 1;
+    console.log("Iniciando contador");
+    let timer = setInterval(() => {
+        console.log("Contador: ", contador);
+        contador++;
+        if (contador > 5) {
+            clearInterval(timer);
+        }
+    }, 1000);
+};
+
+console.log("Tarea 1");
+contador();
+console.log("Tarea 3"); */
 
 /* // Ejemplo 1: Creacion de una funcionalidad asincriona con setTimeout 
 
@@ -5259,7 +5391,7 @@ const fin = setTimeout(() => {//Esta nunca se llega a ejecutar
 }, 2000);
 clearTimeout(fin); */
 
-/* // Ejemplo 6: Como conocer los estados de una promesa
+/* // Ejemplo 6: Como conocer los estados de una promesa     
 function eventoFuturo (){
     return new Promise( (resolve, reject) => {
 
@@ -5302,7 +5434,24 @@ eventoFuturo(true)//eventoFuturo(false)
     //console.log("Fin del proceso con false")
 }); */
 
-/* // Ejemplo 9: Problema practico del then y catch utilizando el fetch
+/* // Ejemplo 9: Uso del fetch
+fetch("https://jsonplaceholder.typicode.com/users")
+  .then((data) => {
+    return data.json();
+  })
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+  .finally(() => {
+    console.log("Terminó la ejecución");
+  });
+
+console.log(respuesta); */
+
+/* // Ejemplo 10: Problema practico del then y catch utilizando el fetch
 let showSearchingUsers = document.getElementById("showSearchingUsers");
 let showSearchingPosts = document.getElementById("showSearchingPosts");
 //showSearchingUsers.style.display = "block";
@@ -5339,7 +5488,7 @@ function renderUserDetail(user) {// Sección para consultar Usuarios
     productDetail.appendChild(record);
 } */
 
-/* // Ejemplo 10: Ejercicio con un array, usando tambien ASYNC/AWAIT
+/* // Ejemplo 11: Ejercicio con un array, usando tambien ASYNC/AWAIT
 const productos = [
     {marca: "Nissan", modelo: 'Sentra', precio: 1500},
     {marca: "Toyota", modelo: 'Camry', precio: 2500},
@@ -5368,7 +5517,7 @@ async function pedirPosts(){
     }
 }; */
 
-/* // Ejemplo 11: Ejemplo del uso de Promesa para recuperar informacion de una base de datos
+/* // Ejemplo 12: Ejemplo del uso de Promesa para recuperar informacion de una base de datos
 
 const BD_X = [
     {id: 1, nombre: 'Producto 1', precio: 1500},
@@ -5412,7 +5561,7 @@ obtenerUsuarios(1)
     console.error(error);
 }); */
 
-/* // Ejemplo 12: fetch utilizando el then/catch y ASYNC/AWAIT
+/* // Ejemplo 13: fetch utilizando el then/catch y ASYNC/AWAIT
 console.log( fetch('https://jsonplaceholder.typicode.com/photos') );
 
 fetch("https://jsonplaceholder.typicode.com/photos")
@@ -5433,7 +5582,94 @@ console.log(error)
     console.log("---> Respuesta formateada de la consulta", custom);
 })() */
 
-/* // Ejemplo 13: Realizar una solicitud POST
+/* // Ejemplo 14: Ejercicio de calculadora positiva con promesas
+// Se crearán un conjunto de funciones gestionadas por promesas y un entorno ASÍNCRONO donde podremos ponerlas a prueba.
+// ✓ Definir función suma:
+//   - Debe devolver una promesa que se resuelva siempre que ninguno de los dos sumandos sea 0
+//   - En caso de que algún sumando sea 0, rechazar la promesa indicando “Operación innecesaria”.
+//   - En caso de que la suma sea negativa, rechazar la promesa indicando “La calculadora sólo debe devolver valores positivos
+// ✓ Definir función resta:
+//   - Debe devolver una promesa que se resuelva siempre que ninguno de los dos valores sea 0
+//   - En caso de que el minuendo o sustraendo sea 0, rechazar la promesa indicando “Operación inválida
+//   - En caso de que el valor de la resta sea menor que 0, rechazar la promesa indicando “La calculadora sólo puede devolver valores positivos”
+// ✓ Definir una función multiplicación:
+//   - Debe devolver una promesa que se resuelva siempre que ninguno de los dos factores sea negativo
+//   - Si el producto es negativo, rechazar la oferta indicando “La calculadora sólo puede devolver valores positivos
+// ✓ Definir la misma función división utilizada en esta clase.
+// ✓ Definir una función asíncrona “cálculos”, y realizar pruebas utilizando async/await y try/catch
+
+function dividir(numero1, numero2) {
+    return new Promise((resolve, reject) => {
+        if (numero2 === 0) {
+            reject("No se puede dividir por 0");
+        } else {
+            resolve(numero1 / numero2);
+        }
+    });
+}
+
+function suma(numero1, numero2) {
+    return new Promise((resolve, reject) => {
+        if (numero1 === 0 || numero2 === 0) {
+            reject("Operación innecesaria");
+        } else {
+            const resultado = numero1 + numero2;
+            resolve(resultado);
+        }
+    });
+}
+
+function resta(numero1, numero2) {
+    return new Promise((resolve, reject) => {
+        if (numero1 === 0 || numero2 === 0) {
+            reject("Operación innecesaria");
+        } else {
+            const resultado = numero1 - numero2;
+            if (resultado <= 0) {
+                reject("La calculadora solo devuelve numeros positivos");
+            } else {
+            resolve(resultado);
+            }
+        }
+    });
+}
+
+function multiplicar(numero1, numero2) {
+    return new Promise((resolve, reject) => {
+        if (numero1 < 0 || numero2 < 0) {
+            reject("Operación innecesaria");
+        } else {
+            const resultado = numero1 * numero2;
+            if (resultado < 0) {
+                reject("La calculadora solo devuelve numeros positivos");
+            } else {
+                resolve(resultado);
+            }
+        }
+    });
+}
+
+async function calculos(numero1, numero2) {
+    try {
+        const resultadoSuma = await suma(numero1, numero2);
+        console.log("Resultado Suma: " + resultadoSuma);
+
+        const resultadoResta = await resta(numero1, numero2);
+        console.log("Resultado Resta: " + resultadoResta);
+
+        const resultadoMultiplicacion = await multiplicar(numero1, numero2);
+        console.log("Resultado Multiplicar: " + resultadoMultiplicacion);
+
+        const resultadoDivision = await dividir(numero1, numero2);
+        console.log("Resultado division: " + resultadoDivision);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+calculos(1, 1); */
+
+/* // Ejemplo 15: Realizar una solicitud POST
 fetch("https://jsonplaceholder.typicode.com/posts", {
     method: "POST",
     body: JSON.stringify({
@@ -5453,7 +5689,7 @@ fetch("https://jsonplaceholder.typicode.com/posts", {
     console.log("--> Respuesta del body de la petición", json);
 }); */
 
-/* // Ejemplo 14: Cómo recuperar datos de una localizacion externa (http://) e una interna (.json) con rutas relativas
+/* // Ejemplo 16: Cómo recuperar datos de una localizacion externa (http://) e una interna (.json) con rutas relativas
 
 recuperarPosteos();
 
@@ -5501,7 +5737,7 @@ function toggleLoadingContainer(isLoading = false) {
     }
 } */
 
-/* // Ejemplo 15: Uso de ASYNC/AWAIT para crear funciones asincrónas que se comportan como si fueran sincronas
+/* // Ejemplo 17: Uso de ASYNC/AWAIT para crear funciones asincrónas que se comportan como si fueran sincronas
 console.log("Previo a hacer la solicitud");
 async function pedirPosts(){
     const respuesta = await fetch("./data/posts.json");  
@@ -5512,7 +5748,7 @@ async function pedirPosts(){
 
 pedirPosts(); */
 
-/* // Ejemplo 16: Uso de los parámetros de configuración para el método fetch (CREACIÓN DE UN RECURSO)
+/* // Ejemplo 18: Uso de los parámetros de configuración para el método fetch (CREACIÓN DE UN RECURSO)
 const CONFIGURACION = {
     method: "POST",
     body: JSON.stringify({
@@ -5529,7 +5765,7 @@ fetch("https://jsonplaceholder.typicode.com/posts", CONFIGURACION)
 .then((response) => response.json())
 .then((data) => console.log(data)); */
 
-/* // Ejemplo 17: Uso de los parámetros de configuración para el método fetch (MODIFICACIÓN DE UN RECURSO)
+/* // Ejemplo 19: Uso de los parámetros de configuración para el método fetch (MODIFICACIÓN DE UN RECURSO)
 const CONFIGURACION = {
   method: "PUT",// PUT/GETCH
   body: JSON.stringify({
@@ -5546,7 +5782,7 @@ fetch("https://jsonplaceholder.typicode.com/posts/10", CONFIGURACION)
   .then((response) => response.json())
   .then((data) => console.log(data)); */
 
-/* // Ejemplo 18: Uso de los parámetros de configuración para el método fetch (ELIMINACIÓN DE UN RECURSO)
+/* // Ejemplo 20: Uso de los parámetros de configuración para el método fetch (ELIMINACIÓN DE UN RECURSO)
 const CONFIGURACION = {
   method: "DELETE",
 };
@@ -5555,7 +5791,7 @@ fetch("https://jsonplaceholder.typicode.com/posts/10", CONFIGURACION)
   .then((response) => response.json())
   .then((data) => console.log(data)); */
 
-/* // Ejemplo 19: Asynchronous JS, promises and ajax (old way)
+/* // Ejemplo 21: Asynchronous JS, promises and ajax (old way)
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
@@ -5631,7 +5867,7 @@ getCountryDataAndNeighbour("russia");
 //     }, 1000);
 // }, 1000); */
 
-/* // Ejemplo 20: Asynchronous JS, promises and ajax (new way);
+/* // Ejemplo 22: Asynchronous JS, promises and ajax (new way);
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
@@ -5709,7 +5945,7 @@ btn.addEventListener("click", function(){
     // getCountryData("gtrgt"); //Line to execute an error
 }); */
 
-/* // Ejemplo 21: Excercise no. 1
+/* // Ejemplo 23 Excercise no. 1
 
 // In this challenge you will build a function 'whereAmI' which renders a country only based on GPS coordinates. For that, you will use a second API to geocode coordinates. 
 // So in this challenge, you’ll use an API on your own for the first time. Your tasks:
@@ -5773,7 +6009,7 @@ whereAmI(52.508, 13.381); // (Latitude, Longitude)
 // whereAmI(19.037, 72.873);
 // whereAmI("ukrj", "brths"); */
 
-/* // Ejemplo 22: The Event Loop
+/* // Ejemplo 24: The Event Loop
 console.log("Test start");
 
 setTimeout(function(){ //This and the Promise.resolve() will be executed at the end. So, coat outside of any callback, will run first
@@ -5794,7 +6030,7 @@ Promise.resolve("Resolved promise 2")
 
 console.log("Test end"); */
 
-/* // Ejemplo 23: Building a Simple Promise
+/* // Ejemplo 25: Building a Simple Promise
 
 const lotteryPromise = new Promise(function(resolve, reject){ //All of this will create new promise. As soon as the promise constructor runs, it will automatically execute this executor function that we pass in. And as it executes this function here, it will do so by passing in two other arguments. And those arguments are the resolve and reject functions.
     console.log("Lottery dray is happening...")
@@ -5805,7 +6041,7 @@ const lotteryPromise = new Promise(function(resolve, reject){ //All of this will
 
 lotteryPromise.then(function(res){console.log(res)}).catch(function(err){console.error(err)}); */
 
-/* // Ejemplo 24: Promisifying setTimeout
+/* // Ejemplo 26: Promisifying setTimeout
 function wait(seconds){
     return new Promise(function(resolve){ //This doesn't need the reject function because it's impossible for the timer to fail. 
         setTimeout(resolve, seconds);
@@ -5829,7 +6065,7 @@ wait(1000)//This will create a promise that wait for one second at first, and af
     console.log('4 second passed');
 }); */
 
-/* // Ejemplo 25: Promisifying the Geolocation API
+/* // Ejemplo 27: Promisifying the Geolocation API
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
@@ -5890,7 +6126,7 @@ function renderCountry(data){
 
 btn.addEventListener("click", whereAmI); */
 
-/* // Ejemplo 26: Excercise no. 2
+/* // Ejemplo 28: Excercise no. 2
 // 1. Create a function 'createImage' which receives 'imgPath' as an input. This function returns a promise which creates a new image (use document.createElement('img')) and 
 //    sets the .src attribute to the provided image path. When the image is done loading, append it to the DOM element with the 'images' class, and resolve the promise. 
 //    The fulfilled value should be the image element itself. In case there is an error loading the image (listen for the'error' event), reject the promise
@@ -5949,7 +6185,7 @@ createImage("imgs/img-1.jpg")
     console.error(err);
 }); */
 
-/* // Ejemplo 27: Consuming Promises with Async/Await
+/* // Ejemplo 29: Consuming Promises with Async/Await
 //Running Promises in Parallel Consuming Promises with Async/Await
 const countriesContainer = document.querySelector('.countries');
 
@@ -6032,7 +6268,7 @@ console.log("1: Will get location");
 //   .catch(err => console.error(`2: ${err.message} 💥`))
 //   .finally(() => console.log('3: Finished getting location')); */
 
-/* // Ejemplo 28: Running Promises in Parallel
+/* // Ejemplo 31: Running Promises in Parallel
 async function get3Countries(c1, c2, c3){
     try {
         //If we use this method, then the 3 functions will run one after the other. So, if we use the second method, then the 3 functions wll run at the same time.
@@ -6066,7 +6302,7 @@ function getJSON(url, errorMsc = "Something went wrong"){
 
 get3Countries("russia", "germany", "japan"); */
 
-/* // Ejemplo 29: Other Promise Combinators: race, all, allSettled and any
+/* // Ejemplo 32: Other Promise Combinators: race, all, allSettled and any
 //It recives an array of promises and it also return a promise. Now, this promise returned by race is settled as asoon as one of the input promises settle. (settled means that a value is available and it doesn't matter if the promise gor rejecetd or fulfilled). So, in Promise.race(), basically the first settled promise wins the race.
 (async function(){
     const res = await Promise.race([
@@ -6127,7 +6363,7 @@ Promise.any([
 ])
 .then(res => console.log(res)).catch(err => console.error(err)); */
 
-/* // Ejemplo 30: Excercise no. 3
+/* // Ejemplo 33: Excercise no. 3
 // Your tasks:
 // 1. Write an async function 'loadNPause' that recreates Challenge #2, this time using async/await (only the part where the promise is consumed, reuse the 'createImage' 
 //    function from before). Compare the two versions, think about the big differences, and see which one you like more
@@ -6211,6 +6447,28 @@ async function loadAll(imgArr){
 // loadNPause();
 loadAll(['imgs/img-1.jpg', 'imgs/img-2.jpg', 'imgs/img-3.jpg']); */
 
+/* // Ejemplo 34: Top-Level await
+//it's very important to remember that using top-level await, so await outside of any async function will block the entire module in a way that we really couldn't block code execution before.
+const res = await fetch('https://jsonplaceholder.typicode.com/posts'); // this await keyword here, which is now outside of an async function, is blocking the entire execution of this module.
+const data = await res.json();
+console.log("data", data);
+
+async function getLastPost() { //calling an async is not necessary because it returns a new promise ( Promise {<pending>} )
+    const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const data = await res.json();
+
+    return { 
+        title: data.at(-1).title, 
+        text: data.at(-1).body 
+    };
+};
+
+const lastPost = getLastPost();
+console.log("lastPost", lastPost);
+
+const lastPost2 = await getLastPost();
+console.log("lastPost2", lastPost2); */
+
 
 //         $$$$$$$$$$$$$$$ MODERN JAVASCRIPT DEVELOPMENT: MODULES AND TOOLING $$$$$$$$$$$$$$$
 
@@ -6245,29 +6503,7 @@ add('apples', 4);
 //Imports are not copies of the exports. They are instead like a live connection, and what this means is that I point to the same place of memory
 console.log(cart); */
 
-/* //Ejemplo 6: Top-Level await
-//it's very important to remember that using top-level await, so await outside of any async function will block the entire module in a way that we really couldn't block code execution before.
-const res = await fetch('https://jsonplaceholder.typicode.com/posts'); // this await keyword here, which is now outside of an async function, is blocking the entire execution of this module.
-const data = await res.json();
-console.log("data", data);
-
-async function getLastPost() { //calling an async is not necessary because it returns a new promise ( Promise {<pending>} )
-    const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-    const data = await res.json();
-
-    return { 
-        title: data.at(-1).title, 
-        text: data.at(-1).body 
-    };
-};
-
-const lastPost = getLastPost();
-console.log("lastPost", lastPost);
-
-const lastPost2 = await getLastPost();
-console.log("lastPost2", lastPost2); */
-
-/* //Ejemplo 7: The Module Pattern (old way)
+/* //Ejemplo 6: The Module Pattern (old way)
 
 // All of this data here is private because it is inside of the scope of the function. And so now all we have to do is to return some of this stuff in order to basically return a public API.
 const ShoppingCart2 = (function(){
@@ -6304,7 +6540,7 @@ ShoppingCart2.orderStock('pizza', 2);
 console.log(ShoppingCart2);
 console.log(ShoppingCart2.shippingCost); */
 
-/* //Ejemplo 8: CommonJS Modules
+/* //Ejemplo 7: CommonJS Modules
 
 // Export
 exports.addTocart = function (product, quantity) {
@@ -6317,7 +6553,7 @@ exports.addTocart = function (product, quantity) {
 // Import
 const { addTocart } = require('./shoppingCart.js'); */
 
-/* //Ejemplo 9: Introduction to NPM
+/* //Ejemplo 8: Introduction to NPM
 import add, { cart } from './shoppingCart';
 add('pizza', 2);
 add('bread', 5);

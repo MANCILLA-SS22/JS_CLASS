@@ -1153,8 +1153,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     > resizeTo()	                 Resizes the window to the specified width and height
     > scrollBy()	                 Scrolls the document by the specified number of pixels
     > scrollTo()	                 Scrolls the document to the specified coordinates
-    > setInterval()              Calls a function or evaluates an expression at specified intervals (in milliseconds)
-    > setTimeout()               Calls a function or evaluates an expression after a specified number of milliseconds
     > stop()	                 Stops the window from loading
      
  
@@ -1737,23 +1735,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   Since window is the global object, you can reference any properties of it with just the property name - so you do not have to write down window. - it will be figured out by the runtime.
         
     
-- Storage API: The Storage object of the Web Storage API provides access to the session storage or local storage for a particular domain. This allows you to read, add, modify, and delete stored data items.
-   > localStorage:   The localStorage object stores the data with no expiration date. The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
-   > sessionStorage: The sessionStorage object is equal to the localStorage object, except that it stores the data for only one session. The data is deleted when the user closes the specific browser tab.
-   > getItem()	     Returns the value of the specified key name. Podemos acceder a la información almacenada en localStorage utilizando getItem. Las claves y valores de Storage se guardan en formato de cadena de caracteres (DOMString).
-   > setItem()	     Adds a key to the storage, or updates a key's value if it already exists. Los datos almacenados en localStorage (variable global preexistente) se almacenan en el navegador de forma indefinida (o hasta que se borren 
-                     los datos de navegación del browser). La información persiste reinicio de navegador y hasta del sistema operativo. Solo existe dentro de la pestaña actual del navegador. Otra pestaña con la misma página tendrá otro 
-                     sessionStorage distinto, pero se comparte entre iframes en la pestaña (asumiendo que tengan el mismo origen)
-   > clear()	     Empty all key out of the storage
-   > key(            Returns the name of the nth key in the storage. Es posible obtener todos los valores almacenados en localStorage o sessionStorage con un bucle for convencional unicamente y colocando localStorage.key(i);
-   > length	     Returns the number of data items stored in the Storage object
-   > removeItem()    Removes a key from the storage    
-    
-- JSON: It is a format for storing and transporting data. JSON is text, and text can be transported anywhere, and read by any programming language.   
-   > JSON.parse();          Parses a JSON string and returns a JavaScript object. Recibe un texto JSON como parámetro, y devuelve el objeto JavaScript correspondiente. Podemos transformar string en formato JSON a objeto JavaScript.
-   > JSON.stringify();      Convert a JavaScript object to a JSON string. acepta un objeto como parámetro, y devuelve la forma de texto JSON equivalente. Podemos transformar un objeto JavaScript a un string en formato JSON. 
-
- 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
     
 - Operadores logicos avanzados
@@ -1825,7 +1806,64 @@ Operador de encadenamiento opcional ?.    data?.name                 Permite int
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
+
+                                                                                                                   Almacenamiento de archivos
+
+
+- Storage API: The Storage object of the Web Storage API provides access to the session storage or local storage for a particular domain. This allows you to read, add, modify, and delete stored data items.
+   > localStorage:   The localStorage object stores the data with no expiration date. The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
+   > sessionStorage: The sessionStorage object is equal to the localStorage object, except that it stores the data for only one session. The data is deleted when the user closes the specific browser tab.
+   > getItem()	     Returns the value of the specified key name. Podemos acceder a la información almacenada en localStorage utilizando getItem. Las claves y valores de Storage se guardan en formato de cadena de caracteres (DOMString).
+   > setItem()	     Adds a key to the storage, or updates a key's value if it already exists. Los datos almacenados en localStorage (variable global preexistente) se almacenan en el navegador de forma indefinida (o hasta que se borren 
+                     los datos de navegación del browser). La información persiste reinicio de navegador y hasta del sistema operativo. Solo existe dentro de la pestaña actual del navegador. Otra pestaña con la misma página tendrá otro 
+                     sessionStorage distinto, pero se comparte entre iframes en la pestaña (asumiendo que tengan el mismo origen)
+   > clear()	     Empty all key out of the storage
+   > key(            Returns the name of the nth key in the storage. Es posible obtener todos los valores almacenados en localStorage o sessionStorage con un bucle for convencional unicamente y colocando localStorage.key(i);
+   > length	     Returns the number of data items stored in the Storage object
+   > removeItem()    Removes a key from the storage    
+    
+- JSON: It is a format for storing and transporting data. JSON is text, and text can be transported anywhere, and read by any programming language.   
+   > JSON.parse();          Parses a JSON string and returns a JavaScript object. Recibe un texto JSON como parámetro, y devuelve el objeto JavaScript correspondiente. Podemos transformar string en formato JSON a objeto JavaScript.
+   > JSON.stringify();      Convert a JavaScript object to a JSON string. acepta un objeto como parámetro, y devuelve la forma de texto JSON equivalente. Podemos transformar un objeto JavaScript a un string en formato JSON. 
+   
+- fs en Nodejs: fs es la abreviación utilizada para FileSystem, el cual, como indica el nombre, es un sistema de manejador de archivos que nos proporcionará node para poder crear, leer, actualizar o eliminar un archivo, sin tener que hacerlo 
+     nosotros desde cero. Así, crear un archivo con contenido será tan fácil como escribir un par de líneas de código, en lugar de tener que lidiar con los datos binarios y transformaciones complejas y de un nivel más bajo en la computadora.
+     fs existe desde el momento en el que instalamos Nodejs en nuestro computador, por lo que, para utilizarlo, podemos llamarlo desde cualquier archivo que tengamos de nuestro código con la siguiente línea:
+                                                                                   
+                                                                                   const = fs = require("fs");
+                                                                                   
+     De ahí en adelante todo el módulo de FileSystem estará contenido en la variable fs. Sólo debemos utilizarlo llamando sus métodos como una clase. Esto podremos hacerlo de 3 formas: síncrono, con callbacks o con promesas.                                                                                   
+     Para utilzar de forma adecuada el fs, sólo utilizaremos la palabra Sync después de cada operación que queramos realizar. Las principales operaciones que podemos hacer con fs síncrono son:
+       ✓ writeFileSync = Para escribir contenido en un archivo. Si el archivo no existe, lo crea. Si existe, lo sobreescribe.
+       ✓ readFileSync = Para obtener el contenido de un archivo.
+       ✓ appendFileSync = Para añadir contenido a un archivo. ¡No se sobreescribe!
+       ✓ unlinkSync = Es el “delete” de los archivos. eliminará todo el archivo, no sólo el contenido.
+       ✓ existsSync = Corrobora que un archivo exista!
+       
+- fs con callbacks: Funciona muy similar a las operaciones síncronas. Sólo que al final recibirán un último argumento, que como podemos intuir, debe ser un callback. Según lo vimos en las convenciones de callbacks de la clase pasada, el 
+    primer argumento suele ser un error. Esto permite saber si la operación salió bien, o si salió mal. Sólo readFile maneja un segundo argumento, con el resultado de la lectura del archivo.
+    Por último: el manejo por callbacks es totalmente asíncrono, así que cuidado dónde lo usas. Las principales operaciones que podemos hacer con fs con callbacks son:
+      ✓ writeFile = Para escribir contenido en un archivo. Si el archivo no existe, lo crea. Si existe, lo sobreescribe. Al sólo escribir, su callback sólo maneja: (error)=>
+      ✓ readFile = Para obtener el contenido de un archivo. Como pide información, su callback es de la forma: (error, resultado)=>
+      ✓ appendFile = Para añadir contenido a un archivo. ¡No se sobreescribe!, al sólo ser escritura, su callback sólo maneja: (error)=>
+      ✓ unlink = Es el “delete” de los archivos. eliminará todo el archivo, no sólo el contenido. Al no retornar contenido, su callback sólo es (error)=>
+    
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
+
+
                                                                                                                    Asincronia
+                                                                                                                   
+    > setInterval()              Calls a function or evaluates an expression at specified intervals (in milliseconds).
+                                 setInterval funciona como setTimeout, la diferencia radica en que éste reiniciará el conteo y ejecutará la tarea nuevamente cada vez que se cumpla dicho intervalo de tiempo. Un timer devuelve un apagador el 
+                                 cual permite detener el intervalo cuando se cumpla cierta operación. Suele utilizarse mucho para poner tiempos límites en alguna página para llenar formularios (Hay ciertas páginas que te dan tiempo límite 
+                                 para hacer la operación, O TE BOTAN).
+    > setTimeout()               Calls a function or evaluates an expression after a specified number of milliseconds. 
+                                 setTimeout se utiliza para establecer un temporizador que ejecute una tarea después de un determinado tiempo. permite entender en un par de líneas la idea del asincronismo. A diferencia de una operación 
+                                 síncrona, podremos notar como setTimeout inicia su ejecución, y una vez que haya transcurrido el tiempo, veremos el resultado, aun cuando el resto de las operaciones hayan terminado. 
+                                                                                                                  
+                                                                                                                   
   
   > setTimeout: Es una función que permite realizar acciones asincrónicamente. La función recibe dos parámetros: Una función de callback y un valor numérico que representa milisegundos. Así, la función que pasamos por primer parámetro se 
     ejecuta luego de que transcurra el tiempo definido en el segundo parámetro. Por ejemplo:
@@ -1882,7 +1920,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     ✓ Si la promesa llama a reject(), cambiará su estado a rejected con el valor enviado al reject(). Aqui decidimos que la promesa retornara un valor que se interpreta como error y se muestra en la consola en rojo y con una x.  
        
   > Then & Catch: Al llamado de una función que retorne una promesa, podemos concatenar el método .then() o .catch(), los cuales reciben una función por parámetro con la cual se captura el valor de la promesa:
-    ✓ .then():    Si la promesa es resuelta, su valor de retorno se captura dentro del .then(), recibiendo por parámetro de su función ese valor.
+    ✓ .then():    Si la promesa es resuelta, su valor de retorno se captura dentro del .then(), recibiendo por parámetro de su función ese valor. Siempre que coloquemos un return dentro de un .then, automáticamente el resultado se convierte 
+                  en otra promesa y puede ser encadenada con otro .then, y así sucesivamente hasta finalizar el proceso. Si en alguno de los .then algo llegara a salir mal, sólo se necesita un catch para atraparlo.
     ✓ .catch():   Si la promesa es rechazada, su valor se captura dentro de un .catch() siguiendo la misma lógica
     ✓ .finally() es un método que recibe una función la cual se ejecutará siempre al finalizar la secuencia, sin importar si se haya resuelto o no la promesa.
    
@@ -1920,18 +1959,20 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        En el parámetro data tenemos el contenido de la respuesta de nuestra petición. En este caso, la API nos responde con un array de 100 elemento donde cada elemento es un post.
          
   > async & await: Trabajar con promesas facilita mucho el control de los procesos asincrónicos Sin embargo, en procesos extensos se puede dificultar el trabajo escribiendo todo dentro de varios .then(). 
-    Por suerte, los desarrolladores de JS ya pensaron en esto y nos ofrecen una herramienta que nos permite trabajar las promesas como si escribiéramos código sincrónico : async await.
-    El método fetch retorna una promesa. De forma sincrónica, si guardamos esta promesa en una variable veremos la promesa pendiente, porque esto sucede sincrónicamente.
+       Por suerte, los desarrolladores de JS ya pensaron en esto y nos ofrecen una herramienta que nos permite trabajar las promesas como si escribiéramos código sincrónico : async await.
+       El método fetch retorna una promesa. De forma sincrónica, si guardamos esta promesa en una variable veremos la promesa pendiente, porque esto sucede sincrónicamente.
 
        const resp = fetch('https://jsonplaceholder.typicode.com/posts' ); console.log(resp) // Promise {<pending>}
        
     Significa que el console.log() no espera a que se resuelva la promesa de la línea anterior para ejecutarse.
 
-    ✓ async: Esta palabra reservada sirve para declarar una función como asincrónica, y se agrega como prefijo a la función. Así, dentro de una función async podemos utilizar la sentencia await vista previamente. Esto nos permite esperar a 
+    ✓ async: Se colocará al inicio de una función, indicando que todo el cuerpo de esa función deberá ejecutarse de manera asíncrona 
+      Esta palabra reservada sirve para declarar una función como asincrónica, y se agrega como prefijo a la función. Así, dentro de una función async podemos utilizar la sentencia await vista previamente. Esto nos permite esperar a 
       que se resuelvan las promesas vistas para continuar con la instrucción siguiente.
       Lo que hace await es detener la ejecución y no continuar. Se espera a que se resuelva la promesa, y hasta que no lo haga, no continua. A diferencia del fetch(), tenemos un código bloqueante.
       
-    ✓ await: Nos permite establecer un punto de espera en el código. Aplicado como prefijo a una promesa (en este caso, el return del fetch) se bloquea la ejecución de la siguiente instrucción hasta que la promesa se resuelva.     
+    ✓ await: servirá (como indica su nombre) para esperar por el resultado de la promesa y extraer su resultado. ✓ Al ser operaciones que podrían salir bien, PERO TAMBIÉN MAL, es importante encerrar el cuerpo en un bloque try {} catch {} 
+      Nos permite establecer un punto de espera en el código. Aplicado como prefijo a una promesa (en este caso, el return del fetch) se bloquea la ejecución de la siguiente instrucción hasta que la promesa se resuelva.     
       Lo malo es que await sólo puede utilizarse dentro de una función asincrónica. Aquí es donde entra la sentencia async. Ésta palabra reservada sirve para declarar una función como asincrónica, y se agrega como prefijo a la función.             
       Así, dentro de una función async podemos utilizar la sentencia await vista previamente. Esto nos permite esperar a que se resuelvan las promesas vistas para continuar con la instrucción siguiente. 
 
@@ -2172,13 +2213,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        2. git commit -m "escribir cualquier nombre al cambio"
        3. git push      o tambien     git push -u origin main
 
-        
-echo "# PreEntrega_MancillaChavezGerman" >> README.md
-git init
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/SOLDADO-DE-LA-SS/PreEntrega_MancillaChavezGerman.git
-git push -u origin main 
   
   
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
@@ -2354,6 +2388,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     > Marco de gestión de contenido: De nuevo, un tipo de frameworks relacionados con el diseño web. Aun así, en este caso se trata de interfaces diseñadas para personalizar un CMS. En consecuencia, existen una gran cantidad de CMFs, ideales 
       para diferentes lenguajes e incluso para diferentes tareas dentro de un lenguajes.
 
+- Buffer: 
+
 - Servidor: un equipo informático que forma parte de una red y provee servicios a otros equipos. Es un aparato informático que almacena, distribuye y suministra información. Los servidores funcionan basándose en el modelo “cliente-servidor”. 
   El cliente puede ser tanto un ordenador como una aplicación que requiere información del servidor para funcionar. Por tanto, un servidor ofrecerá la información demandada por el cliente siempre y cuando el cliente esté autorizado. Los 
   servidores pueden ser físicos o virtuales.
@@ -2426,12 +2462,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 - Portals
 
 - Hooks
-
-- Context  
   
 - bind, apply, call (functions)
-
-- React dom
 
 - 
 
