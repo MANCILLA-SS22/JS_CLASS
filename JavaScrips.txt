@@ -263,7 +263,9 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     Note: From the example above; The super() method refers to the parent class. By calling the super() method in the constructor method, we call the parent's constructor method and gets access to the parent's properties and methods.
     Extends is used to denote the parent class that the child class will inherit its methods from, and super is used to reference the parent classes constructor method.
       
-  > Constructor: El constructor de un objeto es una función que usamos para crear un nuevo objeto cada vez que sea necesario. Con función constructora podemos inicializar las propiedades del objeto al momento de ser instanciado con new
+  > Constructor: El constructor de un objeto es una función que usamos para crear un nuevo objeto cada vez que sea necesario. Con función constructora podemos inicializar las propiedades del objeto al momento de ser instanciado con new.
+    A constructor is a special function that creates and initializes an object instance of a class. In JavaScript, a constructor gets called when an object is created using the new keyword. 
+    The purpose of a constructor is to create a new object and set values for any existing object properties.
       
         function Persona(nombre, edad, calle) {
            this.nombre = nombre;
@@ -272,6 +274,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         }
         const persona1 = new Persona("Homero", 39, "Av. Siempreviva 742 ");
         const persona2 = new Persona("Marge", 36, "Av. Siempreviva 742 ");
+        
+     Estos metodos constructores NO son asincronos.
 
   
   > Metodo: Los métodos de los objetos también son técnicamente funciones, sólo que se limitan a poder ser ejecutados solo desde el mismo objeto. Se requiere un objeto y puede no retornar un valor.
@@ -1085,8 +1089,27 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
          
    > Conversiones de/hacia JSON: Cuando sea necesario enviar un objeto Javascript al servidor o almacenarlo en storage, será necesario convertirlo a un JSON (una cadena) antes de ser enviado.
      Cuando sea necesario enviar un objeto Javascript al servidor o almacenarlo en storage, será necesario convertirlo a un JSON (una cadena) antes de ser enviado. Para eso usamos los siguientes métodos:
+     
      ~ JSON.stringify(); acepta un objeto como parámetro, y devuelve la forma de texto JSON equivalente. Podemos transformar un objeto JavaScript a un string en formato JSON. 
-     ~ JSON.parse(); recibe un texto JSON como parámetro, y devuelve el objeto JavaScript correspondiente. Podemos transformar string en formato JSON a objeto JavaScript.
+       Los parametros que existen en esta funcion son:            JSON.stringify(value, replacer, space);
+       + value: The value to convert to a JSON string
+       + replacer: function that alters the behavior of the stringification process, or an array of strings and numbers that specifies properties of value to be included in the output. If replacer is an array, all elements in this array that 
+         are not strings or numbers (either primitives or wrapper objects), including Symbol values, are completely ignored. If replacer is anything other than a function or an array (e.g. null or not provided), all string-keyed properties 
+         of the object are included in the resulting JSON string.
+       + space: A string or number that's used to insert white space (including indentation, line break characters, etc.) into the output JSON string for readability purposes. If this is a number, it indicates the number of space characters 
+         to be used as indentation, clamped to 10 (that is, any number greater than 10 is treated as if it were 10). Values less than 1 indicate that no space should be used.
+         If this is a string, the string (or the first 10 characters of the string, if it's longer than that) is inserted before every nested object or array. If space is anything other than a string or number (can be either a primitive or a 
+         wrapper object) — for example, is null or not provided — no white space is used.
+         
+       This static method converts a JavaScript value to a JSON string, optionally replacing values if a replacer function is specified or optionally including only the specified properties if a replacer array is specified.
+
+     ~ JSON.parse(); recibe un texto JSON como parámetro, y devuelve el objeto JavaScript correspondiente. Podemos transformar string en formato JSON a objeto JavaScript. 
+       Los parametros que existen en esta funcion son:            JSON.parse(text, reviver);    
+        + text: The string to parse as JSON. See the JSON object for a description of JSON syntax.
+        + reviver: If a function, this prescribes how each value originally produced by parsing is transformed before being returned. Non-callable values are ignored. The function is called with the following arguments: key and value.
+       
+       This static method parses a JSON string, constructing the JavaScript value or object described by the string. An optional reviver function can be provided to perform a transformation on the resulting object before it is returned.
+
    
    > Recuperar datos: Muchas veces usamos el Storage para recuperar datos relacionados a la última navegación del usuario. Por ejemplo, su última sesión de login o el último estado de su carrito de compras. Para esto, pensamos en inicializar 
      las variables de la app consultando el Storage en el momento de inicio.
@@ -1847,7 +1870,12 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
       ✓ readFile = Para obtener el contenido de un archivo. Como pide información, su callback es de la forma: (error, resultado)=>
       ✓ appendFile = Para añadir contenido a un archivo. ¡No se sobreescribe!, al sólo ser escritura, su callback sólo maneja: (error)=>
       ✓ unlink = Es el “delete” de los archivos. eliminará todo el archivo, no sólo el contenido. Al no retornar contenido, su callback sólo es (error)=>
-    
+      
+     Si queremos utilizar promesas, entonces qudarian como:
+      ✓ fs.promises.writeFile
+      ✓ fs.promises.readFil
+      ✓ fs.promises.appendFile
+      ✓ fs.promises.unlink    
 
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
@@ -1971,7 +1999,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
       que se resuelvan las promesas vistas para continuar con la instrucción siguiente.
       Lo que hace await es detener la ejecución y no continuar. Se espera a que se resuelva la promesa, y hasta que no lo haga, no continua. A diferencia del fetch(), tenemos un código bloqueante.
       
-    ✓ await: servirá (como indica su nombre) para esperar por el resultado de la promesa y extraer su resultado. ✓ Al ser operaciones que podrían salir bien, PERO TAMBIÉN MAL, es importante encerrar el cuerpo en un bloque try {} catch {} 
+    ✓ await: servirá (como indica su nombre) para esperar por el resultado de la promesa y extraer su resultado. Al ser operaciones que podrían salir bien, PERO TAMBIÉN MAL, es importante encerrar el cuerpo en un bloque try {} catch {} 
       Nos permite establecer un punto de espera en el código. Aplicado como prefijo a una promesa (en este caso, el return del fetch) se bloquea la ejecución de la siguiente instrucción hasta que la promesa se resuelva.     
       Lo malo es que await sólo puede utilizarse dentro de una función asincrónica. Aquí es donde entra la sentencia async. Ésta palabra reservada sirve para declarar una función como asincrónica, y se agrega como prefijo a la función.             
       Así, dentro de una función async podemos utilizar la sentencia await vista previamente. Esto nos permite esperar a que se resuelvan las promesas vistas para continuar con la instrucción siguiente. 
