@@ -4253,7 +4253,19 @@ function generateRandomNumber (limiteInferior, limiteSuperior){
     //return Math.trunc(Math.random()*(limiteSuperior-limiteInferior) + limiteInferior);    // De 0 a 9
 } */
 
-/* //Ejemplo 6: Uso de BigInt
+/* //Ejemplo 6: Ejercicio de creacion de numeros aleatorios
+// Crear un proyecto de node que genere 10000 números aleatorios en un rango de 1 a 20.
+// Crear un objeto cuyas claves sean los números salidos y el valor asociado a cada clave será la cantidad de veces que salió dicho número. Representar por consola los resultados.
+const objeto = {};
+
+for (let i = 0; i < 10000; i++) {
+    const numAleatorio = Math.trunc(Math.random()*20) + 1;
+    objeto[numAleatorio] ? objeto[numAleatorio]++ : objeto[numAleatorio] = 1;
+}
+
+console.log(objeto); */
+
+/* //Ejemplo 7: Uso de BigInt
 console.log(2 ** 53 - 1); //The biggest number in JS
 console.log(Number.MAX_SAFE_INTEGER);
 console.log(2 ** 53 + 1); //This numbers and the next three are unstable ones and must not be used.
@@ -4283,7 +4295,7 @@ console.log(20n == '20');
 console.log(11n / 3n); //It shows only the integer.
 console.log(11 / 3);   //It shows the number with decimals. */
 
-/* //Ejemplo 7: Obtener la fecha y hora actuales. Creacion de instancias de objetos Date con la clase date con fechas personalizadas. Y obtener datos de las fechas en formato STRING.
+/* //Ejemplo 8: Obtener la fecha y hora actuales. Creacion de instancias de objetos Date con la clase date con fechas personalizadas. Y obtener datos de las fechas en formato STRING.
 let fechaActual = new Date();  console.log("La fecha actual del sistema es: ", fechaActual);
 let fecha1 = new Date(2023, 3, 22);  console.log("La fecha actual del sistema es: ", fecha1);
 let fecha2 = new Date(2023, 11, 24, 23, 59, 59);  console.log("La fecha actual de navidad es: ", fecha2); 
@@ -4324,7 +4336,7 @@ const diferencia = fechaMiCumple - hoy; // Marca de timempo (milisegundos)
 const milisegundosPorDia = 86400000;    // 86400000mS = 86400s = 1440min = 24h
 console.log("\n"+ "--> La diferencia de fechas entre hoy y mi cumpleanos es: " + Math.round((diferencia/milisegundosPorDia))); */
 
-/* //Ejemplo 8: Internationalizing Dates (Intl)
+/* //Ejemplo 9: Internationalizing Dates (Intl)
 const now = new Date();
 const options = {
     hour:"numeric",
@@ -4340,7 +4352,7 @@ const res = new Intl.DateTimeFormat(locale, options).format(now);
 // const res = new Intl.DateTimeFormat("pt-PT", options).format(now);
 console.log(res); */
 
-/* //Ejemplo 9: Internationalizing Numbers (Intl)
+/* //Ejemplo 10: Internationalizing Numbers (Intl)
 const num = 3884764.23;
 
 const options = {
@@ -5523,8 +5535,7 @@ async function fetchDatos() {
 
 fetchDatos(); */
 
-// Ejemplo 17: Manejo de archivos
-//Ejemplo 17: Manejo de archivos
+/* //Ejemplo 17: Manejo de archivos
 //  ✓ Realizar una clase de nombre “ProductManager”, el cual permitirá trabajar con múltiples productos. Éste debe poder agregar, consultar, modificar y eliminar un producto y manejarlo en persistencia de archivos.
 //  ✓ La clase debe contar con una variable this.path, el cual se inicializará desde el constructor y debe recibir la ruta a trabajar desde el momento de generar su instancia.
 //  ✓ Debe guardar objetos con el siguiente formato:
@@ -5566,16 +5577,16 @@ class ProductManager{
         try {
             const verifyExistence = this.res.some((e) => e.code === product.code); //Verificamos que el codigo de cada producto sea igual. Si son iguales, entonces el producto ya existe y no es necesario agreagarlo
             if (!verifyExistence){
-                /* if (this.res.length === 0) {
-                    product.id = this.res.length+1;
-                }else{
-                    if(this.res[this.res.length-1].id === this.res.length){
-                        product.id = this.res.length + 1;
-                    } 
-                    else{
-                        product.id = this.res[this.res.length-1].id+1;
-                    }
-                } */
+                // if (this.res.length === 0) {
+                //     product.id = this.res.length+1;
+                // }else{
+                //     if(this.res[this.res.length-1].id === this.res.length){
+                //         product.id = this.res.length + 1;
+                //     } 
+                //     else{
+                //         product.id = this.res[this.res.length-1].id+1;
+                //     }
+                // }
                 this.res.length === 0 ? product.id = 1 : product.id = this.res.length + 1;
                 this.res.push(product);
                 await fs.promises.writeFile(this.products, JSON.stringify([...this.res, product], null, "\t"));
@@ -5719,12 +5730,7 @@ const productiActualizar = {
 // console.log(Product.getProducts());
 
 // Product.updateProduct(1, productiActualizar);
-// console.log(Product.getProducts());
-
-
-
-
-
+// console.log(Product.getProducts()); */
 
 /* //Ejemplo 18: Lectura y escritura de archivos
 Escribir un programa ejecutable bajo node.js que realice las siguientes acciones:
@@ -7061,3 +7067,70 @@ import 'core-js/stable';
 // Polifilling async functions
 import 'regenerator-runtime/runtime'; */
 
+
+//         $$$$$$$$$$$$$$$ Node $$$$$$$$$$$$$$$
+
+// Ejemplo 1: Práctica de módulos nativos: fs + crypto
+// Se creará una clase “UserManager” que permitirá guardar usuarios en un archivo. El usuario se recibirá con una contraseña en string plano, y se deberá guardar la contraseña 
+// hasheada con crypto. Utilizar los módulos nativos fs y crypto, El manager debe contar con los siguientes métodos:
+// ✓ El método “Crear usuario” debe recibir un objeto con los campos: Nombre, Apellido, Nombre de usuario, y Contraseña
+//    El método debe guardar un usuario en un archivo “Usuarios.json”, recordando que la contraseña debe estar hasheada por seguridad
+// ✓ El método “Validar Usuario” recibirá el nombre de usuario que quiero validar, seguido de la contraseña, debe poder leer el json previamente generado con el arreglo de 
+//    usuarios y hacer la comparación de contraseñas, Si coinciden el usuario y la contraseña, devolver un mensaje “Logueado”, caso contrario indicar error si el usuario no existe, o si la contraseña no coincide.
+
+const fs = require("fs");
+const crypto = require("crypto");
+
+class UserManager {
+    constructor(path) {
+        try {
+            this.path = path;
+            this.users = fs.readFileSync(path, "utf-8");
+            this.users = JSON.parse(users);
+        } catch {
+            this.users = [];
+        }
+    }
+
+    async crearUsuario(user){
+        const hashPassword = crypto.createHash("sha256").update(user.password).digest("hex");
+        user.password = hashPassword;
+        this.users.push(user);
+
+        try {
+            await fs.promises.writeFile(this.path, JSON.stringify(this.users, null, "\t"));
+            console.log("User Created")
+        } catch (error) {
+            console.log("Error creating user: "+ error);
+        }
+
+    }
+
+    validarUsuario(username, password) {
+        const userExists = this.users.find((user) => user.username === username);
+        if (!userExists) return console.log("User does not exists");
+
+        const hashPassword = crypto.createHash("sha256").update(password).digest("hex");
+        userExists.password === hashPassword ? console.log("Logged!") : console.log("Invalid Password");
+    }
+}
+
+class User {
+    constructor(nombre, apellido, username, password) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.username = username;
+        this.password = password;
+    }
+}
+
+const user = new UserManager("./Users.json");
+user.crearUsuario(new User("emi", "perez", "emiperez", "123"));
+user.crearUsuario(new User("yessi", "perez", "yessiperez", "1234"));
+user.crearUsuario(new User("facu", "perez", "facuperez", "pauli"));
+user.crearUsuario(new User("paula", "perez", "pauperez", "facu123"));
+
+// user.validarUsuario("emiperez", "123");
+// user.validarUsuario("pauperez", "facu123");
+// user.validarUsuario("yessiperez", "123");
+// user.validarUsuario("yessuperez", "123");
