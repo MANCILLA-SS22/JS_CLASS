@@ -6431,7 +6431,7 @@ const lastPost2 = await getLastPost();
 console.log("lastPost2", lastPost2); */
 
 
-//         $$$$$$$$$$$$$$$ Node, express $$$$$$$$$$$$$$$
+//         $$$$$$$$$$$$$$$ Node, express, files $$$$$$$$$$$$$$$
 
 
 /* //Ejemplo 0: Uso del file system (fs) node.js
