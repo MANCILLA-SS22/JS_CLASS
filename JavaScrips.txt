@@ -2477,52 +2477,48 @@ User interface (UI) design: User interface (UI) design is a process focused on t
   
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
-                                                                                                                   Topics to learn about
-                                                                                                                   
-- Promises:      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+                                                                                                                   Express
 
-- async-await:   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function                                                                                                                   
-
-- FormData:      https://developer.mozilla.org/en-US/docs/Web/API/FormData
-
-- React Dom: 
-
-- Portals
-
-- Hooks
+- Express js es un framework minimalista que permitirá desarrollar servidores más complejos. Éste nos facilitará:
+   ✓ Utilizar diferentes rutas para las peticiones.
+   ✓ Mejorar la estructura de nuestro proyecto.
+   ✓ Manejar funcionalidades más complejas y utilización de middlewares. 
   
-- bind, apply, call (functions)
-
-- 
-
-- 
-
-- 
-
-- 
-
-- 
-
-- 
-
-- 
-
-- 
-
-- 
-
-- 
-
-- 
-
-- 
-
+  + Paso 1: npm init -y                                                                                                                   
+    Express no es nativo de nodejs, por lo tanto, necesitaremos primero contar con un package.json para gestionar las dependencias a instalar. 
+    Una vez que tenemos package.json en nuestra carpeta, podemos continuar instalando dependencias.
   
+  + Paso 2: npm install express 
+    Procedemos a instalar de manera local express js. Al ejecutar este comando, notaremos cómo se genera una carpeta node_modules, que es donde se encuentra almacenado express.
+    A partir de este punto, ya contamos con la estructura elemental instalada, el resto es más “flexible”.
 
+  + Paso 3: Estructurar el proyecto 
+    Se recomienda tener una carpeta src, donde vivirá todo nuestro código, dentro del cual crearemos un archivo con el nombre “app.js”
+    Finalmente, el archivo app.js ya puede importar la dependencia instalada de express js, ya sea por commonjs:   const express = require ("express");
+    o bien por module (recordar colocar el type:”module” en package.json):   import express from "express";                                           
   
+  + Ejemplo de una consulta en Express
+     ✓ Estructurar un servidor basado en express, el cual escuche peticiones en el puerto 8080
+     ✓ Realizar una función para el método GET en la ruta ‘/saludo’, el cual responderá con “¡Hola a todos, pero ahora desde express!”
+     ✓ Ejecutar con nodemon (npm install -g nodemon) y probar en el navegador el endpoint generado.
+     
+     
+- Objeto request: The req object represents the HTTP request and has properties for the request query string, parameters, body, HTTP headers, and so on. In this documentation and by convention, the object is always referred to as req (and 
+  the HTTP response is res) but its actual name is determined by the parameters to the callback function in which you’re working.  
   
+  > req.query: Como su nombre lo indica, query refiere a las múltiples consultas que se pueden hacer a un determinado endpoint, basta conque en la url coloquemos el símbolo ? , entonces express reconocerá que hay que meter información al 
+    objeto req.query para poder utilizarlo en el endpoint. Cuando buscamos algo en nuestro navegador, llamamos a un endpoint haciendo un determinado query.
   
-  
+  > req.params: Se utiliza cuando necesitamos obtener elementos dinámicos desde la ruta que está llamando el cliente. para poder definir un “parámetro” dentro de la ruta a trabajar, basta con colocar el símbolo de dos puntos (:) antes del 
+    parámetro, de esta manera, express reconoce que queremos que ese elemento sea dinámico.
+    
+  > ¿Qué diferencia hay con params? 
+    La principal diferencia que hay entre req.params y req.query, es que en req.query puedo meter la cantidad de consultas que yo así desee, ya que las queries no vienen inmersas en la ruta, sino que son un elemento aparte.
+    Así, si desconozco el número de cosas que se van a consultar en mi ruta, la mejor opción es utilizar queries, mientras que, si sólo necesito un número específico y reducido de parámetros, habría que optar por params
+    Al final, no hay una mejor que otra, sirven para casos diferentes e incluso podemos utilizar ambas en la misma consulta. 
+    
+  > req.body: 
+
   
   
   
