@@ -1,844 +1,3 @@
-//         $$$$$$$$$$$$$$$ Proyectos $$$$$$$$$$$$$$$
-
-
-/* //Proyecto 1: Bankist
-const labelWelcome = document.querySelector('.welcome');
-const labelDate = document.querySelector('.date');
-const labelBalance = document.querySelector('.balance__value');
-const labelSumIn = document.querySelector('.summary__value--in');
-const labelSumOut = document.querySelector('.summary__value--out');
-const labelSumInterest = document.querySelector('.summary__value--interest');
-const labelTimer = document.querySelector('.timer');
-const containerApp = document.querySelector('.app');
-const containerMovements = document.querySelector('.movements');
-const btnLogin = document.querySelector('.login__btn');
-const btnTransfer = document.querySelector('.form__btn--transfer');
-const btnLoan = document.querySelector('.form__btn--loan');
-const btnClose = document.querySelector('.form__btn--close');
-const btnSort = document.querySelector('.btn--sort');
-const inputLoginUsername = document.querySelector('.login__input--user');
-const inputLoginPin = document.querySelector('.login__input--pin');
-const inputTransferTo = document.querySelector('.form__input--to');
-const inputTransferAmount = document.querySelector('.form__input--amount');
-const inputLoanAmount = document.querySelector('.form__input--loan-amount');
-const inputCloseUsername = document.querySelector('.form__input--user');
-const inputClosePin = document.querySelector('.form__input--pin');
-
-const account1 = {
-    owner: 'Jonas Schmedtmann',
-    movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
-    interestRate: 1.2, // %
-    pin: 1111,
-    movementsDates: [ // Las fechas se muestran con el formato toISOString()
-        '2019-11-18T21:31:17.178Z',
-        '2019-12-23T07:42:02.383Z',
-        '2020-01-28T09:15:04.904Z',
-        '2020-04-01T10:17:24.185Z',
-        '2020-05-08T14:11:59.604Z',
-        '2023-05-27T17:01:17.194Z',
-        '2023-07-23T23:36:17.929Z',
-        '2023-07-18T10:51:36.790Z',
-    ],
-    currency: 'EUR',
-    locale: 'pt-PT', // de-DE
-};
-const account2 = {
-    owner: 'Jessica Davis',
-    movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
-    interestRate: 1.5,
-    pin: 2222,
-    movementsDates: [ // Las fechas se muestran con el formato toISOString()
-        '2019-11-01T13:15:33.035Z',
-        '2019-11-30T09:48:16.867Z',
-        '2019-12-25T06:04:23.907Z',
-        '2020-01-25T14:18:46.235Z',
-        '2020-02-05T16:33:06.386Z',
-        '2020-04-10T14:43:26.374Z',
-        '2020-06-25T18:49:59.371Z',
-        '2020-07-26T12:01:20.894Z',
-    ],
-    currency: 'USD',
-    locale: 'en-US',
-};
-const accounts = [account1, account2]; //Almacenamos la informacion de los 4 objetos en un array.
-
-// FAKE ALWAYS LOGGED IN
-// currentAccount = account1;
-// updateUI(currentAccount);
-// containerApp.style.opacity = 100;
-
-let currentAccount, timer;
-let sorted = false;// For the btnSort, we fix this variable to false so the function displayMovements still recieve false, which means that it doesn't sort the array.
-
-createUserNames(accounts);
-function createUserNames (accs){
-    accs.forEach(function(num_acc){
-        num_acc.username = num_acc.owner.toLowerCase().split(" ").map(name => name[0]).join(""); // We create a new element (num_acc.username) that will contain the lower case letters of each owner's name
-    })
-}
-
-function updateUI(acc){
-    displayMovements(acc);
-    calcDisplayBalance(acc);
-    calcDisplaySummary(acc);
-}
-
-function formatMovementDate(date, locale){
-
-    function calcDaysPassed(date1, date2){
-        return Math.round(Math.abs(date2 - date1) / (1000*60*60*24));
-    }
-
-    const dayPassed = calcDaysPassed(new Date(), date);
-    if (dayPassed === 0) return "Today";
-    if (dayPassed === 1) return "Yesterday";
-    if (dayPassed <= 7)  return `${dayPassed} days`;
-    
-    // // METODO 1
-    // const day = `${date.getDate()}`.padStart(2, 0);
-    // const month = `${date.getMonth() + 1}`.padStart(2, 0);
-    // const year = date.getFullYear();
-    // return `${day}/${month}/${year}`;
-    
-    //METODO 2
-    return new Intl.DateTimeFormat(locale).format(date)
-
-}
-
-function formatCur(value, locale, currency){
-    return new Intl.NumberFormat(locale, {style: "currency", currency: currency}).format(value);
-}
-
-function displayMovements(acc, sort=false){
-
-    containerMovements.innerHTML="";
-    const movs = sort ? acc.movements.slice().sort((a,b) => a - b) : acc.movements;
-    
-    movs.forEach(function(mov, i) {
-        const date = new Date(acc.movementsDates[i]); //Accedemos a las fechas que estan en account1.movementsDates[]
-        const displayDate = formatMovementDate(date, acc.locale);
-
-        const type = mov > 0 ? "deposit" : "withdrawal";    
-
-        //METODO 1
-        // const html = `
-        //     <div class="movements__row">
-        //         <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
-        //         <div class="movements__date">${displayDate}</div>
-        //         <div class="movements__value">${mov.toFixed(2)}€</div>
-        //     </div>`
-        // containerMovements.insertAdjacentHTML("afterbegin", html);
-
-        //METODO 2
-        const formattedMov = formatCur(mov, acc.locale, acc.currency);
-        const html = `
-            <div class="movements__row">
-                <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
-                <div class="movements__date">${displayDate}</div>
-                <div class="movements__value">${formattedMov}</div>
-            </div>`
-        containerMovements.insertAdjacentHTML("afterbegin", html);
-    });
-}
-
-function calcDisplayBalance(acc){
-    acc.balance = acc.movements.reduce(function(acc, mov){
-        return acc + mov;
-    }, 0);
-
-    //METODO 1
-    // labelBalance.textContent = `${acc.balance.toFixed(2)}€`
-
-    //METODO 2
-    const formattedMov = formatCur(acc.balance, acc.locale, acc.currency);
-    labelBalance.textContent = formattedMov;
-}
-
-function calcDisplaySummary(acc){
-    // //METODO 1
-    // const incomes = acc.movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
-    // labelSumIn.textContent = `${incomes.toFixed(2)}€`;
-
-    // const out = acc.movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0);
-    // labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
-
-    // const interest = acc.movements.filter(mov => mov > 0).map( deposit => (deposit*acc.interestRate)/100 ).filter((int) => int >= 1).reduce((acc, int) => acc + int, 0);
-    // labelSumInterest.textContent = `${interest.toFixed(2)}€`;
-
-    //METODO 2
-    const incomes = acc.movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
-    labelSumIn.textContent = formatCur(incomes, acc.locale, acc.currency);
-
-    const out = acc.movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0);
-    labelSumOut.textContent = formatCur(Math.abs(out), acc.locale, acc.currency);
-
-    const interest = acc.movements.filter(mov => mov > 0).map( deposit => (deposit*acc.interestRate)/100 ).filter((int) => int >= 1).reduce((acc, int) => acc + int, 0);
-    labelSumInterest.textContent = formatCur(interest, acc.locale, acc.currency);
-}
-
-function startLogOutTimer(){
-    function tick(){
-        const min = String(Math.trunc(tiempo / 60)).padStart(2, 0);
-        const sec = String(tiempo % 60).padStart(2, 0);
-        labelTimer.textContent = `${min}:${sec}`;
-        if(tiempo === 0) {
-            clearInterval(startLogOutTimer);
-            labelWelcome.textContent = "Log in to get started"
-            containerApp.style.opacity = 0;
-        }
-        tiempo--;
-    }
-
-    let tiempo = 20;
-    tick(); //Llamamos a la funcion antes de que se ejecute el setInterval para que, al final se ejecuten al mismo tiempo. Ya que, de ejecutarse esta funcion dentro del setInterval, entonces obtendremos primero un '1' en la pantalla y luego iniciara el temporizador.
-    return setInterval(tick, 1000); //Volvemos a llamar a la funcion tick en el setInterval para que cada segundo que pase, se vuelva a ejecutar.
-}
-
-btnLogin.addEventListener("click", function(evento){
-    evento.preventDefault();
-    
-    currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value) //We verify if the username typed in the input is the same as the one in the array that is into "accounts". If so, we get the found object.
-
-    if(currentAccount?.pin === Number(inputLoginPin.value)){ //We check if the pin in the object is the same as the one typed in the input. (We must write use "?." so that we can get an "undefined" and not an error)
-        labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(" ")[0]}`; //If so, then we change the sentence in the upper right corner.
-        containerApp.style.opacity = 100; //We do this so that we can see the menu with information.
-
-        //METODO 1
-        // const now = new Date();
-        // const day = `${now.getDate()}`.padStart(2, 0);
-        // const month = `${now.getMonth() + 1}`.padStart(2, 0);
-        // const year = now.getFullYear();
-        // const hour = `${now.getHours()}`.padStart(2, 0);
-        // const min = `${now.getMinutes()}`.padStart(2, 0);
-        // labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
-
-        //METODO 2
-        const now = new Date();
-        const options = {hour:"numeric", minute: "numeric", day: "numeric", month: "numeric", year: "numeric", }; //weekday: "numeric"
-
-        // const locale = navigator.language;
-        labelDate.textContent = new Intl.DateTimeFormat(currentAccount.locale, options).format(now);
-        inputLoginUsername.value = inputLoginPin.value = ""; //Now we delete the written values in our inputs (user and PIN)
-        inputLoginPin.blur(); //This work so that when we want to log in and finally press "enter", then our cursor will disappear.
-
-        if (timer) {//Cuando iniciamos sesion, timer es undefined, por lo que no se ejecuta el if.
-            clearInterval(timer)
-        }
-        timer = startLogOutTimer(); //pero cuando iniciamos sesion, ejecutamos la funcion del conteo y se almacena en timer. Posterior a eso, como ya existira timer, ahora si se ejecutara el if, el cual reiniciara el conteo.
-        updateUI(currentAccount);
-    }
-});
-
-btnTransfer.addEventListener("click", function(evento){
-    evento.preventDefault();
-    const amount = Number(inputTransferAmount.value); //Recuperamos el numero ingresado en el input donde introducimos el dinero
-    const receiverAcc = accounts.find(acc => acc.username === inputTransferTo.value); //Recuperamos el objeto contenido en uno de los arrays de accounts, al verificar si el nombre de usuario existe dentro de los 4 arrays de accounts y si es igual al ingresado en el input.
-    inputTransferAmount.value = inputTransferTo.value = "";
-
-    if (amount > 0 && receiverAcc && currentAccount.balance >= amount && receiverAcc?.username !== currentAccount.username) {
-        currentAccount.movements.push(-amount);
-        receiverAcc.movements.push(amount);
-
-        currentAccount.movementsDates.push(new Date().toISOString());
-        receiverAcc.movementsDates.push(new Date().toISOString());
-
-        updateUI(currentAccount);
-
-        clearInterval(timer); //Cuando iniciamos sesion, timer es undefined, por lo que no se ejecuta el if.
-        timer = startLogOutTimer(); //pero cuando iniciamos sesion, ejecutamos la funcion del conteo y se almacena en timer. Posterior a eso, como ya existira timer, ahora si se ejecutara el if, el cual reiniciara el conteo.
-    }
-});
-
-btnClose.addEventListener("click", function(evento){
-    evento.preventDefault();
-
-    if (inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin) { //We verify if the written values in the inputs are the same as those in the current object.
-        const index = accounts.findIndex(acc => acc.username === currentAccount.username); //If so, we proceed to find the index of the object in the array "accounts"
-        accounts.splice(index, 1);
-        containerApp.style.opacity = 0; 
-        console.log(accounts);
-    }
-
-    inputCloseUsername.value = inputClosePin.value = "";
-});
-
-btnLoan.addEventListener("click", function(evento){
-    evento.preventDefault();
-
-    const amount = Math.floor(inputLoanAmount.value)
-    if (amount > 0 && currentAccount.movements.some(mov => (mov >= amount*0.1))) {
-        
-        setTimeout(function(){
-            currentAccount.movements.push(amount);
-            currentAccount.movementsDates.push(new Date().toISOString());
-
-            updateUI(currentAccount);
-
-            clearInterval(timer);
-            timer = startLogOutTimer();
-        }, 2500);
-
-    }
-    inputLoanAmount.value = "";
-});
-
-btnSort.addEventListener("click", function(evento){
-    evento.preventDefault();
-
-    displayMovements(currentAccount.movements, !sorted); //When clicking the button, then that variable changes to true and the array is sorted.
-    sorted =! sorted; //After that, we need to change the "sorted" variable to the opposite boolean value. We do this so that when we press the button again, this back to normal (unsorted).
-})
-
-labelBalance.addEventListener('click', function () {
-    let valor = document.querySelectorAll('.movements__value'); 
-    const movementsUI = Array.from(valor, function(el){   // Array.from(Array-like or iterable object, mapFunction, thisValue)
-        return Number(el.textContent.replace('€', ''))
-    });  console.log(movementsUI);
-    // const movementsUI2 = [...document.querySelectorAll('.movements__value')];
-
-
-    [...document.querySelectorAll(".movements__row")].forEach(function(row, i){
-        if (i % 2 === 0) row.style.backgroundColor = "orangered";
-        if (i % 3 === 0) row.style.backgroundColor = "blue";
-    })
-}); */
-
-/* //Proyecto 2: Bankist_Advanced-DOM
-const modal = document.querySelector('.modal');
-const overlay = document.querySelector('.overlay');
-const btnCloseModal = document.querySelector('.btn--close-modal');
-const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
-const btnScrollTo = document.querySelector(".btn--scroll-to");
-const section1 = document.querySelector("#section--1");
-const tabsContainer = document.querySelector('.operations__tab-container');
-const tabs = document.querySelectorAll('.operations__tab');
-const tabsContent = document.querySelectorAll('.operations__content');
-const nav = document.querySelector(".nav");
-const header = document.querySelector(".header");
-
-function openModal(evento) {
-    evento.preventDefault();
-    modal.classList.remove('hidden');
-    overlay.classList.remove('hidden');
-};
-
-function closeModal() {
-    modal.classList.add('hidden');
-    overlay.classList.add('hidden');
-};
-
-//Metodo 2
-btnsOpenModal.forEach(function(evento) {
-    evento.addEventListener("click", openModal)
-});
-
-btnCloseModal.addEventListener('click', closeModal);
-overlay.addEventListener('click', closeModal);
-
-//Closing a card by using the keydown method in addEventListener
-document.addEventListener('keydown', function (evento) {
-    if (evento.key === 'Escape' && !modal.classList.contains('hidden')) {
-        closeModal();
-    }
-});
-
-//Finding coordenates and position, and use of scroll
-btnScrollTo.addEventListener("click", function(evento){
-    section1.scrollIntoView({behavior: "smooth"});
-});
-
-//Page navigation
-document.querySelector(".nav__links").addEventListener("click", function(evento){
-    evento.preventDefault();
-
-    //Aqui usamos evento.target porque en este caso estamos utilizando el <ul> como elemento padre, y sus hijos son <li> y <a>. Ahora, con el addEventListener podemos hacer click en el elemento padre o incluso sus hijos y JS ejecutara la tarea deseada. Si usamos this como en el metodo 1, este solo funcionara para elelemento actual o el padre, es decir <ul>.
-    if (evento.target.classList.contains("nav__link")) {
-        const id = evento.target.getAttribute("href"); //Retorna unicamente el nombre del atriuto contenido en esa etiqueta. Si usamos const id = this.href, entonces tendremos el link completo que aparece en la barra de navegacion
-        document.querySelector(id).scrollIntoView({behavior: "smooth"});
-    }
-});
-
-// Building a Tabbed Component
-tabsContainer.addEventListener('click', function (evento) {
-
-    //Debemos añadir el closest(), ya que operations__tab-container tiene de hijos tres elementos botones con un span cada uno. Por lo que al presionar el boton, especificamente el texto (span), no funcionara correctamente el boton. Es por eso que agregamos el closest(), para que al presionar el boton, considere unicamente el elemento mas cercano con el nombre operations__tab (incluyendo su hijo <span>).  Cabe mencionar que, si precionamos donde esta el <div class="operations__tab-container"> entonces tendremos un null en consola, ya que no existe ningun elemento padre con el  class ".operations__tab". Para eso usamos el Guard clause, para que al no haber un click en el botton, simplemente salga de la funcion y no ejecute las lineas siguientes.
-    const clicked = evento.target.closest('.operations__tab');  console.log(clicked);
-    
-    // Guard clause
-    if (!clicked) return;
-
-    //Realizamos un barrido en cada uno de los 3 botones y en cada uno de los 3 contenidos de texto. Dependiendo del boton seleccionado, a este se le eliminaran sus "active"
-    tabs.forEach(evento => evento.classList.remove('operations__tab--active'));
-    tabsContent.forEach(evento => evento.classList.remove('operations__content--active'));
-
-    //Una vez eliminado los "active" en el boton y el contenido seleccinado, ahora se procede a "activar" el boton y su contenido seleccionado.
-    clicked.classList.add('operations__tab--active');
-
-    //Dependiendo del boton que se haya presionado, este realizara la animacion en el boton, y tambien se desplegara el contenido de texto del boton seleccionado.
-    document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active'); 
-});
-
-//Passing Arguments to Event Handlers
-function handleHover(evento) {
-    //Recordar que cuando utilizamos bind(), la keyword "this" representa los parametros que le enviamos a la funcion, en este caso, 0.5 y 1.
-    if (evento.target.classList.contains('nav__link')) {
-        const link = evento.target;
-        const siblings = link.closest('.nav').querySelectorAll('.nav__link');
-
-        siblings.forEach(iter => { //Convertir a arrow function
-            if (iter !== link) iter.style.opacity = this;
-        });
-    }
-};
-
-// Usamos bind para retornar una nueva funcion de esa funcion handleHover, y de esa forma, no tener que usar una funcion que llame a otra funcion.
-nav.addEventListener('mouseover', handleHover.bind(0.5));
-nav.addEventListener('mouseout', handleHover.bind(1));
-
-//Sticky navigation
-function stickyNav(entries, observer){
-    const [entry] = entries; //entries is always an array because the options in IntersectionObserver can have multiple thresholds, and for each threshold, there will be an entry in the array, even if there is only one threshold.
-    // console.log(entry, observer);
-
-    if (entry.isIntersecting) { //When the target isn't intersecting the root, then we want the sticky class to be applied.
-        nav.classList.remove("sticky");
-    }else{
-        nav.classList.add("sticky");
-    }
-}
-
-const options = {
-    root: null, //We select null because we are interested in the entire viewport
-    threshold: 0, //A value of 0 means that even a single visible pixel counts as the target being visible. That's to say, when the header shows a 0% of itself, then the function will get called .
-
-    //We use getBoundingClientRect().height to calculate dynamically the height (for responsive webpages) of the nav without the needed of hard coding and tupe an specific height. It'll be 90px.
-    rootMargin: `-${nav.getBoundingClientRect().height}px` //This value is in pixels and will be applied outside of the target element
-};
-
-const headerObserver = new IntersectionObserver(stickyNav, options);
-headerObserver.observe(header);
-
-
-// Revealing Elements on Scroll
-const allSections = document.querySelectorAll(".section");
-
-const revealSection = function(entries, observer){
-    const [entry] = entries;     //console.log(entry)
-
-    if(entry.isIntersecting === false) return;
-    entry.target.classList.remove("section--hidden");
-
-    observer.unobserve(entry.target);
-};
-const opciones = {
-    root: null,
-    threshold: 0.15, //We use something greater than zero because we don't want to show the section right as it enters the viewport, but a litte latter.
-}
-
-const sectionObserver = new IntersectionObserver(revealSection, opciones)
-
-allSections.forEach(function(section){
-    sectionObserver.observe(section);
-    // section.classList.add("section--hidden");
-});
-
-
-//Lazy Loading Images
-const imgTarget = document.querySelectorAll("img[data-src]");  // console.log(imgTarget);
-
-const loadImg = function(entries, observer){
-    const [entry] = entries;   //console.log(entry);
-
-    if(entry.isIntersecting === false) return;
-
-    //Replace the src ("imgs/grow-lazy.jpg") with data-src ("imgs/grow.jpg"). That's to say, src is the blur image and the data-src is the high-quality image.
-    entry.target.src = entry.target.dataset.src;
-
-    entry.target.addEventListener("load", function(){
-        entry.target.classList.remove("lazy-img");
-    })
-
-    observer.unobserve(entry.target)
-}
-
-const Opciones = {
-    root: null,
-    threshold: 0,
-    rootMargin: "200px"
-}
-
-const imgObserver = new IntersectionObserver(loadImg, Opciones);
-imgTarget.forEach(evento => imgObserver.observe(evento));
-
-
-//Slider
-const slides = document.querySelectorAll('.slide');
-const btnLeft = document.querySelector('.slider__btn--left');
-const btnRight = document.querySelector('.slider__btn--right');
-const dotContainer = document.querySelector(".dots");
-let curSlide = 0;
-const maxSlide = slides.length;
-
-
-function goToSlide(slide) {
-    slides.forEach(function(evento, iter){
-        evento.style.transform = `translateX(${100 * (iter - slide)}%)`; //0%, 100%, 200%
-        // console.log(`${iter} , ${evento.style.transform}`);
-    })
-};
-
-function nextSlide() {
-    curSlide === maxSlide - 1 ? curSlide = 0 : curSlide++;
-    goToSlide(curSlide);
-    activateDot(curSlide)
-};
-
-function prevSlide() {
-    curSlide === 0 ? curSlide = maxSlide - 1 : curSlide--;
-    goToSlide(curSlide);
-    activateDot(curSlide)
-};
-
-function createDots() {
-    slides.forEach(function (_, i) {
-        dotContainer.insertAdjacentHTML('beforeend',
-            `<button class="dots__dot" data-slide="${i}"></button>`
-        );
-    });
-};
-
-function activateDot(slide){
-    document.querySelectorAll('.dots__dot').forEach(dot => dot.classList.remove('dots__dot--active'));
-    document.querySelector(`.dots__dot[data-slide="${slide}"]`).classList.add('dots__dot--active');
-};
-
-function init(){
-    createDots();
-    goToSlide(0);
-    activateDot(0);
-}
-
-init();
-btnRight.addEventListener('click', nextSlide);
-btnLeft.addEventListener('click', prevSlide);
-
-document.addEventListener('keydown', function (evento) {
-    console.log(evento)
-    if (evento.key === 'ArrowLeft') prevSlide();
-    if (evento.key === 'ArrowRight') nextSlide();
-});
-
-dotContainer.addEventListener('click', function (evento) {
-    if (evento.target.classList.contains('dots__dot')) {
-        const slide = evento.target.dataset.slide;  //const { slide } = e.target.dataset;
-        goToSlide(slide);
-        activateDot(slide);
-    }
-}); */
-
-/* //Proyecto 3: Mapty
-
-// Application architecture
-const form = document.querySelector('.form');
-const containerWorkouts = document.querySelector('.workouts');
-const inputType = document.querySelector('.form__input--type');
-const inputDistance = document.querySelector('.form__input--distance');
-const inputDuration = document.querySelector('.form__input--duration');
-const inputCadence = document.querySelector('.form__input--cadence');
-const inputElevation = document.querySelector('.form__input--elevation');
-
-// Parent class and child classes
-class Workout{ 
-    // date = new Date(); //This line and the next one are the same as the line 549 amd 550.
-    // id = (Date.now() + "").slice(-10);  
-    // clicks = 0;
-
-    constructor(coords, distance, duration){
-        this.date = new Date();
-        this.id = (Date.now() + "").slice(-10);  //now() returns the number of milliseconds since midnight Jan 1, 1970
-        this.clicks = 0;
-        this.coords = coords;     // Must be an array [lat, lng]
-        this.distance = distance; // in km
-        this.duration = duration; // in min
-    }
-
-    _setDescription(){
-        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${months[this.date.getMonth()]} ${this.date.getDate()}`;
-    }
-
-    _click(){
-        this.clicks++;
-    }
-}
-
-class Running extends Workout{
-    type = "running"; //This property is gonna be available on all the instances
-    constructor(coords, distance, duration, cadence){
-        super(coords, distance, duration);
-        this.cadence = cadence;
-        this.calcPace();
-        this._setDescription(); //We can't use this method on the Workout object becuase the "type" variable is defined in the child classes. Through this the scope chain this constructor methid will get access to all the methods of the parent class, and of course, that includes the _setDescription() which is in the Workout class.
-    }
-
-    calcPace(){
-        this.pace = this.duration / this.distance;
-        return this.pace;
-    }
-}
-
-class Cycling extends Workout{
-    type = "cycling"; //This property is gonna be available on all the instances
-    constructor(coords, distance, duration, elevationGain){
-        super(coords, distance, duration);
-        this.elevationGain = elevationGain;
-        this.calcSpeed();
-        this._setDescription(); //We can't use this method on the Workout object becuase the "type" variable is defined in the child classes. Through this the scope chain this constructor methid will get access to all the methods of the parent class, and of course, that includes the _setDescription() which is in the Workout class.
-    }
-
-    calcSpeed(){
-        this.speed = this.distance / (this.duration / 60);
-        return this.speed;
-    }
-}
-
-class App{
-    //We're gonna define the map and mapEvent as properties of the object and will use a private class field. Now, both of the will become private instances properties which are gonna be present  on all the instances created through this class.
-    #map;
-    #mapZoomLevel = 13;
-    #mapEvent;
-    #workouts = [];
-
-    constructor(){
-        //Get user's position
-        this._getPosition();
-
-        //Get data from local storage
-        this._getLocalStorage();
-
-        //Atach event handlers
-        form.addEventListener("submit", this._newWorkout.bind(this));  //When we have event listeners inside of a class, you'll have to bind the this keywords all the time. Because if not, this._newWorkout will only point to the form. So we always want our this keywords to still point to the object itself (in this case, the app object, which is what "this" is currently pointing to).
-        inputType.addEventListener("change",this._toggleElevaionField); //In _toggleElevaionField there aren't any this keyword, so we can avoid using the bind() method in inputType.addEventListener
-        containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
-    }
-
-    _getPosition(){
-        if (navigator.geolocation){
-            navigator.geolocation.getCurrentPosition(  //First callback: It will be called on success.  Second callback: It will be called on error
-
-                //JS will callback the _loadMap function here and pass in the position argument as soon as the curent position of the user is determined. This method is called by getCurrentPosition(), and this._loadMap is treated as a regular funcion call NOT AS A METHOD CALL. So, since this._loadMap is a  callback function, we're not calling it ourselves, it is to getCurrentPosition function that we'll call the callback funcion once that it gets its  current position of the user. So, when it calls the _loadMap function, then it does so as a regular function call. And, in a regular function,  the this keyword is set to undefined. To fix that, we bind (bind will simply return a new function) this function and finally the this keyword into bind points  to the current object so that the this is also inside of _loadMap(position). Bind() used when you want 'this' keyword in the method you are calling to point to the object.
-                this._loadMap.bind(this), //First callback of getCurrentPosition. 
-                function(){               //Second callback of getCurrentPosition. 
-                alert("Coultn't get your position!")
-            });
-            // console.dir(this._loadMap);
-        }; 
-    }
-
-    _loadMap(position){ //The getCurrentPosition method passes the GeolocationPosition object to the callback. That's why we don't need to put any parameter in this._loadMap. Into getCurrentPosition we don't invoke _loadMap. We just pass function's name so, there is no any parentheses and parameters. 
-        const {latitude} = position.coords;
-        const {longitude} = position.coords;
-        const coords = [latitude, longitude];
-
-        this.#map = L.map('map').setView(coords, this.#mapZoomLevel); //We use 'this.#map' and 'this.#mapEvent' because this is like a property that is defined on the object itself. It's no longer just a normal variable
-        
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(this.#map);
-
-        this.#map.on("click", this._showForm.bind(this));
-        this.#workouts.forEach(work => this._renderWorkoutMarker(work));
-
-        //console.log(position);
-        //console.log(latitude, longitude); 
-        //console.log(`https://www.google.com.mx/maps/@${latitude},${longitude}`);
-        // console.log(map);
-    }
-
-    _showForm(mapE){
-        this.#mapEvent = mapE;
-        form.classList.remove("hidden");
-        inputCadence.focus();
-    }
-
-    _hideForm(){
-        inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = "";
-        form.style.display = "none";
-        form.classList.add("hidden");
-        setTimeout(function(){
-            form.style.display = "grid";
-        }, 1000)
-    }
-    
-    _toggleElevaionField(){
-        inputElevation.closest('.form__row').classList.toggle("form__row--hidden");
-        inputCadence.closest('.form__row').classList.toggle("form__row--hidden");
-    }
-
-    _newWorkout(event){
-        event.preventDefault();
-
-        function validInputs(...inputs){
-            return inputs.every(inp => Number.isFinite(inp));
-        }
-
-        function allPositives(...inputs){
-            return inputs.every(inp => inp > 0);
-        }
-
-        //Get data from form
-        const type = inputType.value;
-        const distance = Number(inputDistance.value);
-        const duration = Number(inputDuration.value);
-        const {lat, lng} = this.#mapEvent.latlng;    // console.log(this.#mapEvent); console.log(lat, lng);
-        let workout;
-
-        //If workout rining, creat runing object
-        if (type === "running") {
-            const cadence = Number(inputCadence.value);
-
-            //Check if data is valid. (The reason why we did this cheking here inside of the parent if, is because if we did the same out of the if, then we would also want to check for the elevation. That's to say, only one of the cadence and elevation can be defined at the same time. They can't both be defined at the same time)
-            if(!validInputs(distance, duration, cadence) || !allPositives(distance, duration, cadence)){
-                return alert("Inputs have to be positive numbers!"); 
-            }
-
-            workout = new Running([lat, lng], distance, duration, cadence);
-        }
-
-        //If workout cycling, creat cycling object
-        if (type === "cycling") {
-            const elevation = Number(inputElevation.value);
-
-            //Check if data is valid. (The reason why we did this cheking here inside of the parent if, is because if we did the same out of the if, then we would also want to check for the elevation. That's to say, only one of the cadence and elevation can be defined at the same time. They can't both be defined at the same time)
-            if(!validInputs(distance, duration, elevation) || !allPositives(distance, duration)){
-                return alert("Inputs have to be positive numbers!"); 
-            }
-
-            workout = new Cycling([lat, lng], distance, duration, elevation);
-        }
-
-        //Add new object to workout array
-        this.#workouts.push(workout);      console.log(workout);
-
-        //Render workout on map as marker
-        this._renderWorkoutMarker(workout);
-
-        //Render workout on list
-        this._renderWorkout(workout);
-
-        //Hide form + clear input fields
-        this._hideForm();
-
-        //Set local storage to all workouts
-        this._setLocalStorage();
-    }
-
-    _renderWorkoutMarker(workout){
-        L.marker(workout.coords)
-        .addTo(this.#map) //There's no need to use the this keyword in this line because we're already using it in the "render workout on map as marker" line as a method of the this keyword. Besides that, we're calling it ourselves, so it's not a callback funcion of any other funcion in JS. And so therefore, the this keyword in this method here, will still be the current object. And so, no need to using bind in this case.
-        .bindPopup(L.popup({
-            maxWidth: 250,
-            minWidth: 100,
-            autoClose: false,
-            closeOnClick: false,
-            className: `${workout.type}-popup`
-        }))
-        .setPopupContent(`${workout.type === "running" ? "🏃‍♂️" : "🚴‍♀️"} ${workout.description}`)
-        .openPopup()
-    }
-
-    _renderWorkout(workout){
-        let html = `
-            <li class="workout workout--${workout.type}" data-id="${workout.id}">
-            <h2 class="workout__title">${workout.description}</h2>
-            <div class="workout__details">
-                <span class="workout__icon">${workout.type === "running" ? "🏃‍♂️" : "🚴‍♀️"}</span>
-                <span class="workout__value">${workout.distance}</span>
-                <span class="workout__unit">km</span>
-            </div>
-    
-            <div class="workout__details">
-                <span class="workout__icon">⏱</span>
-                <span class="workout__value">${workout.duration}</span>
-                <span class="workout__unit">min</span>
-            </div>
-        `;
-
-        if(workout.type === 'running'){
-            html += `
-                    <div class="workout__details">
-                        <span class="workout__icon">⚡️</span>
-                        <span class="workout__value">${workout.pace.toFixed(1)}</span>
-                        <span class="workout__unit">min/km</span>
-                    </div>
-                    <div class="workout__details">
-                        <span class="workout__icon">🦶🏼</span>
-                        <span class="workout__value">${workout.cadence}</span>
-                        <span class="workout__unit">spm</span>
-                    </div>
-                </li>
-            `;
-        }
-        if(workout.type === 'cycling'){
-            html += `
-                    <div class="workout__details">
-                        <span class="workout__icon">⚡️</span>
-                        <span class="workout__value">${workout.speed.toFixed(1)}</span>
-                        <span class="workout__unit">km/h</span>
-                    </div>
-                    <div class="workout__details">
-                        <span class="workout__icon">⛰</span>
-                        <span class="workout__value">${workout.elevationGain}</span>
-                        <span class="workout__unit">m</span>
-                    </div>
-                </li>
-            `;
-        }
-        
-        form.insertAdjacentHTML('afterend', html);
-    }
-
-    _moveToPopup(event){
-        const workoutEl = event.target.closest(".workout");   // console.log(workoutEl);
-
-        if (!workoutEl) return;
-
-        const workout = this.#workouts.find(event => event.id === workoutEl.dataset.id);      console.log(workoutEl.dataset.id);
-        this.#map.setView(workout.coords, this.#mapZoomLevel, {
-            animate: true, 
-            pan: {duration: 1}
-        });
-        
-        // workout._click(); // using the public interface
-    }
-
-    _setLocalStorage(){
-        localStorage.setItem("workouts", JSON.stringify(this.#workouts));
-    }
-
-    _getLocalStorage(){
-        const data = JSON.parse(localStorage.getItem('workouts'));
-        console.log(data);
-
-        if(!data) return;
-
-        this.#workouts = data; //This method will be executed right at the begining. And data will always start with an empty array with that will be stored in this.#workouts
-        this.#workouts.forEach(work => this._renderWorkout(work)); //We ise _renderWorkout instead of _renderWorkoutMarker because once our page is reloaded right at the beginning, the #map in the _renderWorkoutMarker is not yed defined. So, that's why we get an error. On the other hand, the method _renderWorkout doesn't have this variable (#map).
-
-        //When we convert our objects to a string and then back to a script from object, we lose the prototype chain. So, the new objects that we recover from the local storage are now regular objects. They're now no longer objects that were created by the running class or by the cycling class. And therefore, they won't be able to inherit any of their methods.
-    }
-
-    _reset(){
-        localStorage.removeItem("workouts");
-        location.reload(); //location is basically a big object that contains a lot of methods and properties in the browser. 
-    }
-    
-}
-
-const app = new App();   
-// console.log(app); */
-
-
 //         $$$$$$$$$$$$$$$ Funciones $$$$$$$$$$$$$$$
 
 
@@ -7029,6 +6188,9 @@ server.listen(8080, function(){ //Con este comando definimos el numero de puerto
 import express from "express";
 const app = express();
 
+app.get("/", function(request, response){
+    response.send("<h1>Hello world from express!</h1>");
+});
 
 app.get('/bienvenida', function(request, response){
     response.send(`<h1 style="color: blue">Hello world from express!</h1>`);
@@ -7048,7 +6210,8 @@ app.listen(8080, () => console.log("Sever listenint on port 8080!")); */
 /* //Ejemplo 13: Otras respuestas con express
 import express from "express";
 const app = express();
-app.use(express.urlencoded({extended:true}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 const PORT = 5000;
 
 const usuarios = [
@@ -7097,7 +6260,7 @@ app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 // req.query: Se refiere a las múltiples consultas que se pueden hacer a un determinado endpoint, basta conque en la url coloquemos el símbolo ? , entonces express reconocerá que hay que meter información al objeto 
 //            req.query para poder utilizarlo en el endpoint. Cuando buscamos algo en nuestro navegador, llamamos a un endpoint haciendo un determinado query. Se expresa como:    ?key=valor  */
 
-/* // Ejemplo 14: Desarrollar un servidor basado en express donde podamos hacer consultas a nuestro archivo de productos
+/* //Ejemplo 14: Desarrollar un servidor basado en express donde podamos hacer consultas a nuestro archivo de productos
 // ✓ Se deberá utilizar la clase ProductManager que actualmente utilizamos con persistencia de archivos.
 // ✓ Desarrollar un servidor express que, en su archivo app.js importe al archivo de ProductManager que actualmente tenemos.
 // ✓ El servidor debe contar con los siguientes endpoints:
@@ -7144,14 +6307,194 @@ app.get("/products/:id_Param", async function(request, response){
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
 
+/* //Ejemplo 15: Utilizacion del metodo POST
+import express from "express";
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+const PORT = 5050;
+
+//Datos en memoria
+const usuarios = [];
+
+app.get("/", function(request, response){
+    response.json({
+        mensaje: "Bienvenido a mi API",
+    });
+});  // Endpoints usuarios
+
+// Obtener usuarios
+app.get("/usuarios", function(req, res){
+    res.json({
+        usuarios,
+    });
+});
+
+// Obtener usuarios por id
+app.get("/usuarios/:id", function(req, res){
+    const { id } = req.params;
+    validation(id, res);
+
+    res.json({
+        usuario,
+    });
+});
+
+// Crear usuario
+app.post("/usuarios", function(req, res){
+    // console.log(req.body); //El rec.body captura la info que le llega
+
+    const { id, username, name } = req.body;
+
+    // const usuario = {};
+
+    usuarios.push({
+        id: Number(id),
+        username,
+        name,
+    });
+
+    res.json({
+        status: "Creado",
+    });
+});
+
+// Actualizar usuario
+app.put("/usuarios/:id", function(req, res){
+    const { id } = req.params;
+    const { username, name } = req.body;
+    
+    const index = validation(id, res);
+
+    usuarios[index] = {
+        id: Number(id),
+        username,
+        name,
+    };
+
+    res.json({
+        status: "Actualizado",
+        usuario: {
+            id: Number(id),
+            username,
+            name,
+        }
+    });
+});
+
+app.delete("/usuarios/:id", function(req, res){
+    const { id } = req.params;
+    const index = validation(id, res);
+
+    usuarios.splice(index, 1);
+
+    res.json({
+        status: "Usuario Eliminado",
+    });
+});
+
+function validation(id, res){
+    const index = usuarios.findIndex((user) => user.id === +id);
+
+    if (index === -1) {
+        return res.json({
+            error: "User not found",
+        });
+    }
+
+    return index;
+}
+
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
+
+/* //Ejepmlo 16: Servidor con GET, POST, PUT, DELETE
+// Dada la frase: “Frase inicial”, realizar una aplicación que contenga un servidor en express, el cual cuente con los siguientes métodos:
+// ✓ GET '/api/frase': devuelve un objeto que como campo ‘frase’ contenga la frase completa
+// ✓ GET '/api/palabras/:pos': devuelve un objeto que como campo ‘buscada’ contenga la palabra hallada en la frase en la posición dada (considerar que la primera palabra es la #1).
+// ✓ POST '/api/palabras': recibe un objeto con una palabra bajo el campo ‘palabra’ y la agrega al final de la frase. Devuelve un objeto que como campo ‘agregada’ contenga la palabra agregada, y en el campo ‘pos’ la posición en que se agregó dicha palabra.
+// ✓ PUT '/api/palabras/:pos': recibe un objeto con una palabra bajo el campo ‘palabra’ y reemplaza en la frase aquella hallada en la posición dada. Devuelve un objeto que como campo ‘actualizada’ contenga la nueva palabra, y en el campo ‘anterior’ la anterior.
+// ✓ DELETE '/api/palabras/:pos': elimina una palabra en la frase, según la posición dada (considerar que la primera palabra tiene posición #1).
+// ✓ Utilizar POSTMAN para probar funcionalidad
+
+import express from "express";
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+const PORT = 5500;
+
+const frase = ["frase", "inicial"];
+
+app.get("/", function(request, response){
+    response.json({
+        mensaje: "Bienvenido",
+    });
+});
+
+app.get("/frase", function(request, response){
+    response.json({
+        frase: frase.join(" ")
+    });
+});
+
+app.get("/api/palabras/:pos", function(request, response){
+    const { pos } = request.params;
+
+    response.json({
+        buscada: frase[Number(pos) - 1],
+    });
+});
+
+app.post("/api/palabras", function(request, response){
+    const { palabra } = request.body;
+
+    frase.push(palabra);
+
+    response.json({
+        palabra,
+        posicion: frase.length,
+    });
+});
+
+app.put("/api/palabras/:pos", function(request, response){
+    const { pos } = request.params;
+    const { palabra } = req.body;
+
+    const anterior = frase[Number(pos) - 1];
+    frase[Number(pos) - 1] = palabra;
+
+    response.json({
+        actualizada: palabra,
+        anterior,
+    });
+});
+
+app.delete("/api/palabras/:pos", function(request, response){
+    const { pos } = request.params;
+
+    frase.splice(Number(pos) - 1, 1);
+
+    response.json({
+        status: "Eliminado",
+    });
+});
+
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
+
+//Ejepmlo 17:
+import express from "express";
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+const PORT = 5500;
+
+app.get("/", function(request, response){
+    response.json({
+        mensaje: "Bienvenido",
+    });
+});
 
 
-
-
-
-
-
-
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 
 //         $$$$$$$$$$$$$$$ MODERN JAVASCRIPT DEVELOPMENT: MODULES AND TOOLING $$$$$$$$$$$$$$$
 

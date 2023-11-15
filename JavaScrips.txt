@@ -2008,21 +2008,127 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
-                                                                                                                   Ajax & FETCH
+                                                                                                                   Ajax & FETCH & WEB API'S
+
+- fetch: Fetch is the retrieval of data by a software program, script, or hardware device. After being retrieved, the data is moved to an alternate location or displayed on a screen.
+
+- Hoisting: Es el proceso de mover todas las declaraciones de variables a la parte superior de la función o del entorno. El concepto de hoisting de JavaScript determina que el valor de una variable declarada con var puede subir al 
+  principio del scope de la función dentro de la que está declarada. Esto puede ser peligroso, porque puedes terminar con un valor de tipo undefined a pesar de haberle otorgado valor a tus variables. Es decir, la palabra clave var a veces 
+  nos sorprende con valores indefinidos en variables definidas. El hoisting de JavaScript raras veces genera este comportamiento en variables declaradas con const y con let. Aunque puede suceder, el desarrollador web casi que tiene que 
+  generar este comportamiento a propósito para que suceda.  
+  
+- Asincrónia: La programación asíncrona nos da la capacidad de “diferir” la ejecución de una función a la espera de que se complete una operación, normalmente de I/O (red, disco duro, …), y así evitar bloquear la ejecución hasta que se haya 
+  completado la tarea en cuestión. Esto es posible gracias a que las funciones son ciudadanos de primer nivel (first-class citizens) y pueden ser pasadas como argumentos de otras funciones tal cual lo haríamos con las variables.                                                                                                                   
+  
+-  Node JS: Node.js es un entorno de ejecución de JavaScript, que le permite al código en js ser ejecutado en nuestra computadora. Podemos darle a node un archivo de js y éste puede ejecutarlo, y darle acceso a recursos de nuestra 
+   computadora (IO, Network, Etc). El “Node” de java es conocido como la JVM.
+   
+-  NPM (Node Packager Manager): Cuando usamos Node.js, rápidamente tenemos que instalar módulos nuevos (librerías), ya que al ser un sistema fuertemente modular viene prácticamente “vacío”. Por lo tanto, para utilizar una funcionalidad de 
+   alguna librería publicada, deberemos instalar módulos adicionales. Esta operación se realiza de forma muy sencilla con la herramienta npm (Node Package Manager).
+   Esta herramienta funciona de dos formas:
+     ✓ Como un repositorio ampliamente utilizado para la publicación de proyectos Node.js de código abierto.
+     ✓ Como una herramienta de línea de comandos. Esta utilidad ayuda a instalar y desinstalar paquetes, gestionar versiones y gestionar dependencias necesarias para ejecutar un proyecto.
+
+- JSON (JavaScript Object Notation): It is a format for storing and transporting data. JSON is text, and text can be transported anywhere, and read by any programming language. Es un formato basado en texto plano de intercambio de datos 
+  totalmente independiente del lenguaje de programación, para representar datos estructurados con la sintaxis de objetos de JavaScript. Es comúnmente utilizado para enviar y almacenar datos o información estructurada en aplicaciones web, 
+  entre un servidor y un cliente. Aunque es muy parecido a la sintaxis de JavaScript, puede ser utilizado independientemente de JavaScript, y muchos entornos de programación poseen la capacidad de leer (convertir; parsear) y generar JSON. 
+  JSON es un string con un formato específico. Otros puntos a tener en cuenta son:
+  
+     ~ Los datos contenidos en un archivo en formato JSON deben estructurarse por medio de una colección de pares con nombre y valor o deben ser una lista ordenada de valores. Sus elementos tienen que contener:
+        + Clave: corresponde al identificador del contenido. Por eso, debe ser una string delimitada por comillas.
+        + Valor: representa el contenido correspondiente y puede contener los siguientes tipos de datos: string, array, object, number, boolean o null.
+     ~ Las datos en formato JSON se pueden almacenar en archivos externos .json. Exemplo: datos.json 
+     ~ JSON es sólo un formato de datos - contiene sólo propiedades, no métodos.
+     ~ A diferencia del código JavaScript en que las propiedades del objeto pueden no estar entre comillas, en JSON sólo las cadenas entre comillas pueden ser utilizadas como propiedades.
+     ~ JSON es solo un formato de datos.
+     ~ Requiere usar comillas dobles para las cadenas y los nombres de propiedades. Las comillas simples no son válidas. 
+     ~ Puede tomar la forma de cualquier tipo de datos que sea válido para ser incluido en un JSON, no solo arreglos u objetos. Así, por ejemplo, una cadena o un número único podrían ser objetos JSON válidos.
+     ~ A diferencia del código JavaScript, en el que las propiedades del objeto pueden no estar entre comillas, en JSON solo las cadenas entre comillas pueden ser utilizadas como propiedades.
+      
+  La transferencia de datos entre aplicaciones es realizada por medio de API —Application Programming Interface— que, entre otros formatos, utiliza la notación JSON para estructurar la información enviada.
+  El archivo JSON también se usa para realizar requisiciones AJAX en sitios web, en que se hacen diferentes interacciones con bancos de datos, como el MySql, para realizar operaciones como consulta, inclusión y exclusión de registros.
+  
+  Principales casos de uso para JSON:
+     ~ Generación de un objeto JSON a partir de datos generados por el usuario: JSON es perfecto para el almacenamiento de datos temporales. Por ejemplo, los datos temporales pueden ser generados por el usuario, como un formulario enviado en 
+       un sitio web. JSON también se puede utilizar como formato de datos para cualquier lenguaje de programación a fin de incrementar el nivel de interoperabilidad.
+     ~ Tansferencia de datos entre sistemas: Una base de datos de sitio web tiene la dirección postal de un cliente, pero la dirección debe verificarse a través de una API para garantizar su validez. Envío de los datos de dirección en 
+       formato JSON a la API de servicio de validación de direcciones.
+     ~ Configuración de datos para aplicaciones: Al desarrollar aplicaciones, cada aplicación necesita las credenciales para conectarse a una base de datos, así como una ruta de acceso al archivo log. Las credenciales y la ruta de acceso al 
+       archivo se pueden especificar en un archivo JSON que sea legible y que esté siempre disponible.
+     ~ Simplificación de modelos de datos complejos: JSON simplifica los documentos complejos hasta los componentes que se han identificado como significativos mediante la conversión del proceso de extracción de datos en un archivo JSON 
+       predecible y legible por humanos.
+     
+- API (Application Programming Interfaces): que en español significa interfaz de programación de aplicaciones. Es una aplicación web construida en base a la arquitectura API REST, a la cual podemos solicitar y enviar información desde el 
+  cliente. Tambien, se define como un conjunto de definiciones y reglas que permiten que dos equipos puedan integrarse para trabajar juntos. La mejor analogía que hay para comprender ésto es que una API funge como un “contrato” entre el 
+  front y el back. La API permite entonces que se respondan preguntas como:
+    ✓ ¿A qué endpoint debo apuntar para la tarea que necesito?
+    ✓ ¿Qué método debo utilizar para ese recurso?
+    ✓ ¿Qué información debo enviar para realizar correctamente mi petición? 
+    
+  1) REST: Ya tenemos las reglas para comunicarse, ¿Pero qué tal la estructura del mensaje? Cuando hacemos una petición o cuando recibimos una respuesta, ésta debe tener un formato. REST (REpresentational State Transfer) permite definir la 
+     estructura que deben tener los datos para poder transferirse. La API respondía a preguntas sobre cómo comunicarse correctamente, sin embargo, REST define cómo debe ser el cuerpo del mensaje a transmitir. (puedes llegar a hablar con el 
+     presidente si cumples con el protocolo (HTTP) y las reglas (API), pero ¿de qué nos servirá si la forma en que estructuramos nuestro mensaje (REST) no es correcta?).
+     Los dos formatos más importan tes son JSON y XML. La utilización de la estructura dependerá de las necesidades del proyecto. Nosotros utilizaremos JSON. Como otarás, ¡un JSON parece un objeto! así que es mucho más amigable la sintaxis.
+  2) API REST es: Un modelo completo para tener perfectamente estipulados los protocolos, las reglas, e incluso la estructura de la información, con el fin de poder hacer un sistema de comunicación completo entre las computadoras.
+  3) Características debe tener una API REST: Estas son las caracteristicas mas importantes de una API REST
+     a) Arquitectura Cliente-Servidor sin estado: 
+        ~ Cada mensaje HTTP contiene toda la información necesaria para comprender la petición. 
+        ~ Como resultado, ni el cliente ni el servidor necesitan recordar ningún estado de las comunicaciones entre mensajes.
+        ~ Esta restricción mantiene al cliente y al servidor débilmente acoplados: el cliente no necesita conocer los detalles de implementación del servidor y el servidor se “despreocupa” de cómo son usados los datos que envía al cliente.
+     b) Cacheable: 
+        ~ Debe admitir un sistema de almacenamiento en caché.  
+        ~ La infraestructura de red debe soportar una caché de varios niveles. 
+        ~ Este almacenamiento evita repetir varias conexiones entre el servidor y el cliente, en casos en que peticiones idénticas fueran a generar la misma respuesta.
+     c) Operaciones comunes:
+        ~ Todos los recursos detrás de nuestra API deben poder ser consumidos mediante peticiones HTTP, preferentemente sus principales (POST, GET, PUT y DELETE).
+        ~ Con frecuencia estas operaciones se equiparan a las operaciones CRUD en bases de datos (en inglés: Create, Read, Update, Delete, en español: Alta, Lectura, Modificación, y Baja).  
+        ~ Al tratarse de peticiones HTTP, éstas deberán devolver con sus respuestas los correspondientes códigos de estado, informando el resultado de las mismas. 
+     d) Interfaz uniforme: 
+        ~ En un sistema REST, cada acción (más correctamente, cada recurso) debe contar con una URI (Uniform Resource Identifier), un identificador único.  
+        ~ Ésta nos facilita el acceso a la información, tanto para consultarla, como para modificarla o eliminarla, pero también para compartir su ubicación exacta a terceros.
+     e) Utilización de hipermedios: 
+        ~ Cada vez que se hace una petición al servidor y este devuelve una respuesta, parte de la información devuelta pueden ser también hipervínculos de navegación asociada a otros recursos del cliente.
+        ~ Como resultado de esto, es posible navegar de un recurso REST a muchos otros, simplemente siguiendo enlaces sin requerir el uso de registros u otra infraestructura adicional
+     
+  
+  Generalmente, nos comunicamos con aplicaciones de este tipo y es la tendencia actual de desarrollo. La ventaja de este modelo es que está orientado a recursos y define métodos claros para solicitar y enviar información. Una API
+  suele tener una URL base (el dominio donde está alojada la aplicación) y luego puede tener varios endpoints, es decir, distintas secciones a las que podemos acceder. A la vez, se pueden hacer peticiones con distintos métodos al mismo 
+  endpoint y obtener distintos resultados. Generalmente, similar a cuando queremos incorporar una librería, al momento de consumir una API debemos revisar su documentación. Allí se definen los distintos endpoints disponibles, los métodos a 
+  utilizar para hacer una petición y qué se nos ofrecerá en respuesta.
+  Se trata de un conjunto de definiciones y protocolos que se utiliza para desarrollar e integrar el software de las aplicaciones, permitiendo la comunicación entre dos aplicaciones de software a través de un conjunto de reglas. Así pues, 
+  podemos hablar de una API como una especificación formal que establece cómo un módulo de un software se comunica o interactúa con otro para cumplir una o muchas funciones. Todo dependiendo de las aplicaciones que las vayan a utilizar, y de 
+  los permisos que les dé el propietario de la API a los desarrolladores de terceros.
+  
+  Una de las principales funciones de las API es poder facilitarle el trabajo a los desarrolladores y ahorrarles tiempo y dinero. Por ejemplo, si estás creando una aplicación que es una tienda online, no necesitarás crear desde cero un 
+  sistema de pagos u otro para verificar si hay stock disponible de un producto. Podrás utilizar la API de un servicio de pago ya existente, por ejemplo PayPal, y pedirle a tu distribuidor una API que te permita saber el stock que ellos 
+  tienen. Con ello, no será necesario tener que reinventar la rueda con cada servicio que se crea, ya que podrás utilizar piezas o funciones que otros ya han creado. Imagínate que cada tienda online tuviera que tener su propio sistema de 
+  pago, para los usuarios normales es mucho más cómodo poder hacerlo con los principales servicios que casi todos utilizan. También son útiles para cuando lo único que se quiere es utilizar deliberadamente las funciones de determinado 
+  servicio para ofrecer ventajas a sus usuarios o atraer a los usuarios de ese servicio a que utilicen tu aplicación.
+
 
 - Peticiones HTTP: El mecanismo por el cual se piden y proveen datos a través de internet es HTTP (Hypertext Transfer Protocol). Cuando emitimos una orden al navegador, hace una petición (o request) HTTP a algún servidor. Luego, la recibirá, 
   procesará y nos devolverá una respuesta con información que utilizaremos en la aplicación. Estas peticiones que debemos hacer están definidas por varias partes
   
   > Una URL o dirección: Cuando nos comunicamos con un servidor para pedir información lo hacemos a través de una URL, ya que éste es un programa alojado en algún host y nos comunicamos con él a través de la dirección correcta
   
-  > MÉTODO (method): Cada petición que hacemos está acompañada por un verbo que indica al servidor cuál es nuestra intención. El servidor tiene la capacidad de escuchar distintas peticiones en la misma URL, decidir a cuál responder y cómo. 
+  > MÉTODO (method): Un método es una definición que forma parte del protocolo HTTP, el cual nos sirve para canalizar el tipo de petición queestoy realizando sobre un cierto endpoint. De esta manera, el cliente puede llamar al mismo 
+    endpoint, pero con diferentes métodos, indicando qué operación quiere realizar con dicho recurso.
+    Cada petición que hacemos está acompañada por un verbo que indica al servidor cuál es nuestra intención. El servidor tiene la capacidad de escuchar distintas peticiones en la misma URL, decidir a cuál responder y cómo.     
     Son 4 los verbos más utilizados, aunque hay muchos más: Get, Post, Put & Delete. Las peticiones de tipo POST y PUT van acompañadas de un body (cuerpo de la request) donde se definen los datos o información a enviar al servidor. GET o 
     DELETE, por su parte, no tienen body ya que no necesitan enviar datos adjuntos.
+   
     ~ GET: Para obtener información (o recurso) del servidor. Suelen ser las más utilizadas.
-    ~ POST: Para enviar información al servidor para crear algún recurso.  Significa que el método de la petición será POST Si no lo modificamos será de tipo GET por defecto. 
-    ~ PUT: Para crear o modificar algún recurso en el servidor. En este caso se deben mandar todos los elementos contenidos en el objeto aunque solo se desee modificar unos solo.
-    ~ PATCH: quiero alterar parcialmente. Aqui, unicamente se puede enviar un elemento de todos los contenidos en el objeto.
+   
+    ~ POST: Para enviar información al servidor para crear algún recurso.  Significa que el método de la petición será POST Si no lo modificamos será de tipo GET por defecto. Sirve para “crear” recursos, POST se utiliza para operaciones 
+      donde no necesitamos obtener un recurso, sino añadir uno. Algunos de los casos donde se utilizan son: Registrar un usuario: Loguear un usuario, Crear un producto, Crear carrito de compra, Enviar información para un correoelectrónico. 
+      Se apoya del recurso req.body, donde el body representa la información que el cliente envía para crear. 
+    
+    ~ PUT: Para crear o modificar algún recurso en el servidor. En este caso se deben mandar todos los elementos contenidos en el objeto aunque solo se desee modificar unos solo. 
+      
+    ~ PATCH: quiero alterar parcialmente. Aqui, unicamente se puede enviar un elemento de todos los contenidos en el objeto. 
+    
     ~ DELETE: Para eliminar algún recurso en el servidor
+    
     Estos verbos Nos permiten definir una manera de explicarle al servidor la dirección y nuestras intenciones. Ningún verbo representa una seguridad y/u obligación. Pero si el servidor y el consumidor los respetan, se pueden lograr algunas 
     mejoras como por ejemplo: El navegador sabe que un POST no debería ser cacheado, si hacemos un GET y fuera cacheable el navegador podrá cachearlo, pero nunca lo hará con un recurso con verbo POST
     
@@ -2052,21 +2158,113 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
        + Cada parámetro se puede separar por &
        + http://url.com/find?type=order&id=1234
        
+  > Principios
+    ✓ Una aplicación RESTful requiere un enfoque de diseño distinto a la forma típica de pensar en un sistema: lo contrario a RPC
+    ✓ RPC (Remote Procedure Calls, llamadas a procedimientos remotos) basa su funcionamiento en las operaciones que puede realizar el sistema (acciones, usualmente verbos). Ej: getUsuario()
+    ✓ En REST, por el contrario, el énfasis se pone en los recursos (usualmente sustantivos), especialmente en los nombres que se le asigna a cada tipo de recurso. Ej. Usuarios.
+    ✓ Cada funcionalidad relacionada con este recurso tendría sus propios identificadores y peticiones en HTTP.
+       
      ~ URL Params: Son una convención para incluir el identificador del recurso dentro de la misma url, son más comunes cuando ya se conoce el recurso específico que se buscará.
      
      ~ RECURSOS/RESTFUL: Cuando se crea y provee un servicio basado y pensado en términos de recursos, y se respetan las convenciones de verbo/método y código de respuesta, estamos frente a un diseño arquitectural de tipo REST.
        Si además transferimos javascript o xml, es conocido como AJAX
-      
-     ~ Cors: 
+
+
+
+- Query: Es una solicitud pero con ciertos parametros de busqueda. Se entiende por query o consulta cualquier petición de datos hacia un servicio que los devuelva, como puede ser una base de datos. Dentro de las bases de datos, Query hace 
+  referencia a la repetición de datos que se encuentran almacenados. Por otra parte, Query también es el término de consulta que deriva en una SERP dentro de los buscadores. De esta manera, esta herramienta tiene como objetivo facilitar los 
+  resultados arrojados a una solicitud. Query en bases de datos SQL y NoSQL es una técnica para obtener esos datos que se planea analizar. Por ejemplo, podrás pedir todos los datos del usuario y, además, podrás seleccionar la tabla o pedir 
+  una hoja específica donde se encuentren las direcciones.
+    
+- AJAX (Asynchronous JavaScript and XML): Es un conjunto de técnicas de desarrollo que permiten que las aplicaciones web funcionen de forma asincrónica para procesar tareas en segundo plano. En consecuencia, cualquier app o web que emplee 
+  AJAX puede enviar y recibir datos sin volver a cargar toda la página, evitando la interrupción de acciones realizadas por el usuario, añadiendo interactividad y dinamismo a nuestra aplicación. El objetivo principal de AJAX es hacer que los 
+  sitios y las aplicaciones web sean más fáciles de usar, más rápidos y con mayor capacidad de respuesta. AJAX tiene ciertas ventajas indiscutibles como:
+    > Facilita la navegación, ya que la información se actualiza continuamente y las interacciones entre el usuario y las páginas web se vuelven más rápidas.
+    > Reduce la carga en el servidor, aumentando su velocidad y capacidad, porque no se genera la información de la página completa, sino de una sola parte que debe actualizarse.
+    > Aumenta la interactividad porque los resultados de búsqueda aparecen inmediatamente, lo que optimiza el proceso de búsqueda y mejora la experiencia del usuario.
+
+  El modelo práctico de uso de AJAX tiene los siguientes pasos:
+    > Paso 1. En el navegador se crea una llamada de JavaScript que activa XMLHttpRequest.
+    > Paso 2. En segundo plano el navegador web crea una solicitud HTTP que va al servidor.
+    > Paso 3. El servidor recibe, recupera y manda los datos al navegador web.
+    > Paso 4. Los datos se reciben por la web y aparecen en la página sin que se recargue.
+    
+  En el modelo tradicional se crea una solicitud HTTP que va al servidor. El servidor procesa la solicitud y carga la página HTML sin que el usuario interactúe con la aplicación web. En el caso de AJAX, JS permite que el usuario interactúe 
+  con la aplicación web y modifique la página en segundo plano y solo sus partes necesarias. “En segundo plano” significa que mientras espera que se reciban los datos, el usuario puede hacer otras cosas en la página y optimizar este tiempo.
+ 
+- Promesas (promise): Es un objeto de Javascript que representa un evento a futuro y permite representar y seguir el ciclo de vida de una tarea/operación (función). Es una acción asincrónica que se puede completar en algún momento y 
+  producir un valor, y notificar cuando esto suceda. Una promesa cuenta con tres estados posibles: pending, fulfilled y rejected. Las promesas pueden ser resueltas o rechazadas.
+  Podemos crear promesas a través de su constructor new Promise. Su sintaxis es algo compleja, ya que recibe una función por parámetro que a su vez recibe por parámetro las funciones de resolve y reject
+  
+ 
+- XML (Extensible Markup Language): es un lenguaje de marcado que define un conjunto de reglas para la codificación de documentos. El lenguaje de marcado es un conjunto de códigos que se pueden aplicar en el análisis de datos o la lectura de 
+  textos creados por computadoras o personas. El lenguaje XML proporciona una plataforma para definir elementos para crear un formato y generar un lenguaje personalizado. XML admite el intercambio de información entre sistemas de 
+  computación, como sitios web, bases de datos y aplicaciones de terceros. Las reglas predefinidas facilitan la transmisión de datos como archivos XML a través de cualquier red, ya que el destinatario puede usar esas reglas para leer los 
+  datos de forma precisa y eficiente.
+  Un archivo XML se divide en dos partes: prolog y body. La parte prolog consiste en metadatos administrativos, como declaración XML, instrucción de procesamiento opcional, declaración de tipo de documento y comentarios. La parte del body se 
+  compone de dos partes: estructural y de contenido (presente en los textos simples). El diseño XML se centra en la simplicidad, la generalidad y la facilidad de uso y, por lo tanto, se utiliza para varios servicios web. Tanto es así que hay 
+  sistemas  destinados a ayudar en la definición de lenguajes basados ​​en XML, así como APIs que ayudan en el procesamiento de datos XML - que no deben confundirse con HTML.
+  
+- Microservicio: Los microservicios son un enfoque arquitectónico y organizativo para el desarrollo de software donde el software está compuesto por pequeños servicios independientes que se comunican a través de API bien definidas. Los 
+  propietarios de estos servicios son equipos pequeños independientes. Las arquitecturas de microservicios hacen que las aplicaciones sean más fáciles de escalar y más rápidas de desarrollar. Esto permite la innovación y acelera el tiempo de 
+  comercialización de las nuevas características.
+  Los microservicios son tanto un estilo de arquitectura como un modo de programar software. Con los microservicios, las aplicaciones se dividen en sus elementos más pequeños e independientes entre sí. A diferencia del enfoque tradicional y 
+  monolítico de las aplicaciones, en el que todo se compila en una sola pieza, los microservicios son elementos independientes que funcionan en conjunto para llevar a cabo las mismas tareas. Cada uno de esos elementos o procesos es un 
+  microservicio. Este enfoque de desarrollo de software valora el nivel de detalle, la sencillez y la capacidad para compartir un proceso similar en varias aplicaciones. Es un elemento fundamental de la optimización del desarrollo de ap
+  licaciones hacia un modelo nativo de la nube.
+  Sin embargo, el mayor interrogante es cuáles son las ventajas de utilizar una infraestructura de microservicios. En pocas palabras, el objetivo es distribuir software de calidad con mayor rapidez. Si bien esto se puede lograr con los 
+  microservicios, se deben considerar otras cuestiones. Dividir las aplicaciones en microservicios no es suficiente; es necesario administrarlos, coordinarlos y gestionar los datos que crean y modifican.
+
+- Libreria: Las librerías de programación son conjuntos de archivos de código que se utilizan para desarrollar software. Su objetivo es facilitar la programación, al proporcionar funcionalidades comunes, que ya han sido resueltas previamente 
+  por otros programadores. Como curiosidad, el término proviene de una mala traducción de la palabra inglesa library, que en realidad significa biblioteca. Las librerías (o bibliotecas) son un componente esencial para que los desarrolladores 
+  puedan programar de forma sencilla, evitando la duplicidad de código y minimizando errores. También permiten una mayor agilidad, al reducir el tiempo de desarrollo, así como los costes. A diferencia de un framework, una librería no aporta 
+  la estructura sobre cómo realizar el desarrollo, sino que proporciona funcionalidades comunes, que ya han sido resueltas previamente por otros programadores y evitan la duplicidad de código. Además reducen el tiempo de desarrollo y 
+  aumentan la calidad del mismo.
+   > Librerías estáticas: Estas se graban en un programa como ejecutables. Sirven exclusivamente para esto; después, podemos borrarlas sin problemas, ya que el programa seguirá funcionando con la función necesaria.  
+   > Librerías dinámicas: Son distintas a las estáticas en tanto en cuanto no se copian en el programa al compilarlas. Las subrutinas son cargadas en tiempo de ejecución, en vez de enlazarse en tiempo de compilación.  
+
+- Framework: un framework es un marco de trabajo que tiene como objetivo facilitar la solución de problemas que pueden surgir al programar. Los frameworks aceleran el proceso de programar facilitando tareas como la organización del código o 
+  el trabajo en equipo dentro de un proyecto, por ejemplo. En otras palabras, el objetivo de un framework en programación es facilitar la tarea de los programadores.
+  También hay que destacar que muchos de estos frameworks no sólo facilitan la organización del trabajo, sino que también ofrecen recursos desarrollados por otros programadores. Estos recursos pueden ser informes o códigos que pueden usarse 
+  para solucionar los problemas más habituales que se dan al llevar a cabo determinadas tareas.
+    > Frameworks para software development: Los frameworks para aplicaciones generales se utilizan para mejorar la estructura de una aplicación. Su objetivo es proporcionar una estructura base para los desarrolladores de software con la que 
+      puedan organizar sus proyectos. Eso sí, siempre dentro de un sistema operativo determinado. 
+    > Frameworks para desarrollo web: Al estar relacionados con el diseño web, es evidente que existen diferentes frameworks para los diferentes lenguajes de programación que se utilizan. Un desarrollador backend y uno de frontend usarán 
+      marcos de trabajo distintos, aunque existen algunos ideales para los full stack developers como ReactJS.
+    > Marco de gestión de contenido: De nuevo, un tipo de frameworks relacionados con el diseño web. Aun así, en este caso se trata de interfaces diseñadas para personalizar un CMS. En consecuencia, existen una gran cantidad de CMFs, ideales 
+      para diferentes lenguajes e incluso para diferentes tareas dentro de un lenguajes.
+    
+- Servidor: un equipo informático que forma parte de una red y provee servicios a otros equipos. Es un aparato informático que almacena, distribuye y suministra información. Los servidores funcionan basándose en el modelo “cliente-servidor”. 
+  El cliente puede ser tanto un ordenador como una aplicación que requiere información del servidor para funcionar. Por tanto, un servidor ofrecerá la información demandada por el cliente siempre y cuando el cliente esté autorizado. Los 
+  servidores pueden ser físicos o virtuales.
+  > Servidor proxy: realiza un cierto tipo de funciones a nombre de otros clientes en la red para aumentar el funcionamiento de ciertas operaciones (p. ej., prefetching y depositar documentos u otros datos que se soliciten muy 
+    frecuentemente), también proporciona servicios de seguridad, o sea, incluye un cortafuegos.
+  > Servidor del acceso remoto (RAS): controla las líneas de módem de los monitores u otros canales de comunicación de la red para que las peticiones conecten con la red de una posición remota, responde llamadas telefónicas entrantes y 
+    reconoce la petición de la red.
+  > Servidor web: almacena documentos HTML, imágenes, archivos de texto, escrituras, y demás material Web compuesto por datos (conocidos colectivamente como contenido), y distribuye este contenido a clientes que la piden en la red.
+  > Servidor de base de datos: provee servicios de base de datos a otros programas u otras computadoras, como es definido por el modelo cliente-servidor. También puede hacer referencia a aquellas computadoras (servidores) dedicadas a 
+    ejecutar esos programas, prestando el servicio.
      
-     ~ Push: Es lo contrario a un cliente que solicita informacion de un servidor. Push nace para poder generar engagement, y lograr que los usuarios recuerden que nuestra app existe, y que puede proveerles con algo que les pueda interesar, 
-       en el momento en el que el servidor considere oportuno.
-       
-     ~ Polling: De no utilizar PUSH, deberíamos configurar nuestros client para que estén constantemente preguntando:
-         + ¿Tienes algo nuevo para mí?
-         + ¿Tienes algo nuevo para mí?
-         + ¿Tienes algo nuevo para mí?
-       De manera indefinida, sin optimizar los recursos/datos del usuario y nuestro servidor.
+- codigo de estado: Cuando realizamos alguna petición al servidor mediante el protocolo HTTP, el servidor debe respondernos no sólo con información, sino con un estado del proceso. Este es un código que nos permitirá saber cómo se encuentra 
+  el proceso, o cómo finalizó.    
+  
+- HTTP: Acrónimo para Hyper Text Transfer Protocol. Es el protocolo que nos permite comunicarnos a través de Internet  
+- Protocolo: Conjunto de estándares y normas que deben seguirse para poder llevar a cabo una comunicación correcta
+- Servidor: Sistema que permite recibir peticiones de otras computadoras y devolver una respuesta a éstas
+- HTTP response status codes: HTTP response status codes indicate whether a specific HTTP request has been successfully completed. Cuando el servidor responde con un código de estado, esto permite saber qué ocurrió con la consulta que 
+  estábamos haciendo, y da información al cliente sobre qué ha ocurrido.
+  ✓ 1xx: Status “informativo”
+  ✓ 2xx: Status “ok”. Indica que la petición se procesó correctamente. No hubo ningún tipo de inconveniente desde la consulta hasta la respuesta.
+  ✓ 3xx: Status de redirección. Hace referencia a redirecciones, cuando un recurso se ha movido o necesitamos apuntar a otro servicio.
+  ✓ 4xx: Status de error de cliente. Se utiliza cuando el cliente realiza alguna petición que no cumpla con las reglas de comunicación (una mala consulta, tal vez le faltó enviar un dato, o venía en un formato incorrecto).
+  ✓ 5xx: Status de error en servidor.
+  
+  ~ 200: Indica que la petición se procesó correctamente. No hubo ningún tipo de inconveniente desde la consulta hasta la respuesta
+  ~ 300: Hace referencia a redirecciones, cuando un recurso se ha movido o necesitamos apuntar a otro servicio.
+  ~ 400: Se utiliza cuando el cliente realiza alguna petición que no cumpla con las reglas de comunicación (una mala consulta, tal vez le faltó enviar un dato, o venía en un formato incorrecto).
+  ~ 401: Se utiliza cuando el cliente no se ha identificado con el servidor bajo alguna credencial, no puede acceder al recurso
+  ~ 404: Se utiliza cuando el recurso no se ha encontrado, ya sea algún dato solicitado o incluso el endpoint mismo.
+  ~ 500: Se utiliza cuando algo ocurrió en el servidor, no necesariamente un error del cliente, sino un error o “detalle” que no haya considerado el servidor al tratar con algún caso
        
        
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
@@ -2116,6 +2314,66 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     
 - FormData(): The FormData interface provides a way to construct a set of key/value pairs representing form fields and their values, which can be sent using the fetch(), XMLHttpRequest.send() or navigator.sendBeacon() methods. It uses the 
   same format a form would use if the encoding type were set to "multipart/form-data"    
+  
+  
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
+
+                                                                                                                   Express
+
+- Express js es un framework minimalista que permitirá desarrollar servidores más complejos. Éste nos facilitará:
+   ✓ Utilizar diferentes rutas para las peticiones.
+   ✓ Mejorar la estructura de nuestro proyecto.
+   ✓ Manejar funcionalidades más complejas y utilización de middlewares. 
+  
+  + Paso 1: npm init -y                                                                                                                   
+    Express no es nativo de nodejs, por lo tanto, necesitaremos primero contar con un package.json para gestionar las dependencias a instalar. 
+    Una vez que tenemos package.json en nuestra carpeta, podemos continuar instalando dependencias.
+  
+  + Paso 2: npm install express 
+    Procedemos a instalar de manera local express js. Al ejecutar este comando, notaremos cómo se genera una carpeta node_modules, que es donde se encuentra almacenado express.
+    A partir de este punto, ya contamos con la estructura elemental instalada, el resto es más “flexible”.
+
+  + Paso 3: Estructurar el proyecto 
+    Se recomienda tener una carpeta src, donde vivirá todo nuestro código, dentro del cual crearemos un archivo con el nombre “app.js”
+    Finalmente, el archivo app.js ya puede importar la dependencia instalada de express js, ya sea por commonjs:   const express = require ("express");
+    o bien por module (recordar colocar el type:”module” en package.json):   import express from "express";                                           
+  
+  + Ejemplo de una consulta en Express
+     ✓ Estructurar un servidor basado en express, el cual escuche peticiones en el puerto 8080
+     ✓ Realizar una función para el método GET en la ruta ‘/saludo’, el cual responderá con “¡Hola a todos, pero ahora desde express!”
+     ✓ Ejecutar con nodemon (npm install -g nodemon) y probar en el navegador el endpoint generado.
+     
+- Método GET: Método del protocolo HTTP que permite indicar al servidor que deseamos hacer na consulta de obtención de datos.       .get() 
+- Metodo POST: Sirve para “crear” recursos, POST se utiliza para operaciones donde no necesitamos  obtener un recurso, sino añadir uno. Algunos de los casos donde se utilizan son:
+    ✓ Registrar un usuario
+    ✓ Loguear un usuario
+    ✓ Crear un producto
+    ✓ Crear una mascota
+    ✓ Crear un carrito de compra
+    ✓ Enviar información para un correo electrónico.
+  Se apoya del recurso req.body, donde elbody representa la información que el cliente envía para crear.
+- Método PUT: Sirve Para poder trabajar con PUT, no sólo enviamos el body en el request, sino que demás mandamos por params el id, nombre,  cualquier identificador para que el servidor epa qué recurso específicamente debe ctualizar.
+  Hay dos formas de actualizar un recurso: actualizar sólo los campos requeridos, o bien mandar a actualizar el objeto completo, ambas formas son válidas cuando hablamos de actualización, y dependerá del contexto.
+- Método DELETE: Como bien lo indica el nombre, este método lo utilizamos cuando queremos eliminar algún recurso. Aquí no es necesario enviar nada desde el body, sin embargo, sí es importante indicar en el req.params el identificador para 
+  que el servidor reconozca qué recurso debe eliminar.
+
+      
+- Objeto request: Objeto usado dentro de los servicios de express para poder realizar consultas más complejas.
+  The req object represents the HTTP request and has properties for the request query string, parameters, body, HTTP headers, and so on. In this documentation and by convention, the object is always referred to as req (and 
+  the HTTP response is res) but its actual name is determined by the parameters to the callback function in which you’re working.  
+  
+  > req.query: Como su nombre lo indica, query refiere a las múltiples consultas que se pueden hacer a un determinado endpoint, basta conque en la url coloquemos el símbolo ? , entonces express reconocerá que hay que meter información al 
+    objeto req.query para poder utilizarlo en el endpoint. Cuando buscamos algo en nuestro navegador, llamamos a un endpoint haciendo un determinado query.
+  
+  > req.params: Se utiliza cuando necesitamos obtener elementos dinámicos desde la ruta que está llamando el cliente. para poder definir un “parámetro” dentro de la ruta a trabajar, basta con colocar el símbolo de dos puntos (:) antes del 
+    parámetro, de esta manera, express reconoce que queremos que ese elemento sea dinámico.
+    
+  > ¿Qué diferencia hay con params? 
+    La principal diferencia que hay entre req.params y req.query, es que en req.query puedo meter la cantidad de consultas que yo así desee, ya que las queries no vienen inmersas en la ruta, sino que son un elemento aparte.
+    Así, si desconozco el número de cosas que se van a consultar en mi ruta, la mejor opción es utilizar queries, mientras que, si sólo necesito un número específico y reducido de parámetros, habría que optar por params
+    Al final, no hay una mejor que otra, sirven para casos diferentes e incluso podemos utilizar ambas en la misma consulta. 
+    
+  > req.body:  
         
   
   
@@ -2255,13 +2513,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   
 - callback:   
   
-- fetch: Fetch is the retrieval of data by a software program, script, or hardware device. After being retrieved, the data is moved to an alternate location or displayed on a screen.
-
-- Hoisting: Es el proceso de mover todas las declaraciones de variables a la parte superior de la función o del entorno. El concepto de hoisting de JavaScript determina que el valor de una variable declarada con var puede subir al 
-  principio del scope de la función dentro de la que está declarada. Esto puede ser peligroso, porque puedes terminar con un valor de tipo undefined a pesar de haberle otorgado valor a tus variables. Es decir, la palabra clave var a veces 
-  nos sorprende con valores indefinidos en variables definidas. El hoisting de JavaScript raras veces genera este comportamiento en variables declaradas con const y con let. Aunque puede suceder, el desarrollador web casi que tiene que 
-  generar este comportamiento a propósito para que suceda.    
-
 - Renderizar: El renderizado es un proceso utilizado en desarrollo web para convertir el código de un website en una página con la que las usuarias y usuarios puedan interactuar. Como tal, el término hace referencia a la conversión de los
   códigos HTML, CSS y JS que son los encargados de la interfaz y contenido de la página. El proceso para renderizar una web se realiza con un motor de renderizado o software que, por lo general, ejecutan los navegadores. A estos motores de 
   renderizado también se los conoce comúnmente como motores del navegador. El rendering se desarrolla de la siguiente manera:
@@ -2297,137 +2548,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 -Virtual DOM:               
                                                                                                                    
-- Asincrónia: La programación asíncrona nos da la capacidad de “diferir” la ejecución de una función a la espera de que se complete una operación, normalmente de I/O (red, disco duro, …), y así evitar bloquear la ejecución hasta que se haya 
-  completado la tarea en cuestión. Esto es posible gracias a que las funciones son ciudadanos de primer nivel (first-class citizens) y pueden ser pasadas como argumentos de otras funciones tal cual lo haríamos con las variables.                                                                                                                   
-  
--  Node JS: Node.js es un entorno de ejecución de JavaScript, que le permite al código en js ser ejecutado en nuestra computadora. Podemos darle a node un archivo de js y éste puede ejecutarlo, y darle acceso a recursos de nuestra 
-   computadora (IO, Network, Etc). El “Node” de java es conocido como la JVM.
-   
--  NPM (Node Packager Manager): Cuando usamos Node.js, rápidamente tenemos que instalar módulos nuevos (librerías), ya que al ser un sistema fuertemente modular viene prácticamente “vacío”. Por lo tanto, para utilizar una funcionalidad de 
-   alguna librería publicada, deberemos instalar módulos adicionales. Esta operación se realiza de forma muy sencilla con la herramienta npm (Node Package Manager).
-   Esta herramienta funciona de dos formas:
-     ✓ Como un repositorio ampliamente utilizado para la publicación de proyectos Node.js de código abierto.
-     ✓ Como una herramienta de línea de comandos. Esta utilidad ayuda a instalar y desinstalar paquetes, gestionar versiones y gestionar dependencias necesarias para ejecutar un proyecto.
-
-- JSON (JavaScript Object Notation): It is a format for storing and transporting data. JSON is text, and text can be transported anywhere, and read by any programming language. Es un formato basado en texto plano de intercambio de datos 
-  totalmente independiente del lenguaje de programación, para representar datos estructurados con la sintaxis de objetos de JavaScript. Es comúnmente utilizado para enviar y almacenar datos o información estructurada en aplicaciones web, 
-  entre un servidor y un cliente. Aunque es muy parecido a la sintaxis de JavaScript, puede ser utilizado independientemente de JavaScript, y muchos entornos de programación poseen la capacidad de leer (convertir; parsear) y generar JSON. 
-  JSON es un string con un formato específico. Otros puntos a tener en cuenta son:
-  
-     ~ Los datos contenidos en un archivo en formato JSON deben estructurarse por medio de una colección de pares con nombre y valor o deben ser una lista ordenada de valores. Sus elementos tienen que contener:
-        + Clave: corresponde al identificador del contenido. Por eso, debe ser una string delimitada por comillas.
-        + Valor: representa el contenido correspondiente y puede contener los siguientes tipos de datos: string, array, object, number, boolean o null.
-     ~ Las datos en formato JSON se pueden almacenar en archivos externos .json. Exemplo: datos.json 
-     ~ JSON es sólo un formato de datos - contiene sólo propiedades, no métodos.
-     ~ A diferencia del código JavaScript en que las propiedades del objeto pueden no estar entre comillas, en JSON sólo las cadenas entre comillas pueden ser utilizadas como propiedades.
-     ~ JSON es solo un formato de datos.
-     ~ Requiere usar comillas dobles para las cadenas y los nombres de propiedades. Las comillas simples no son válidas. 
-     ~ Puede tomar la forma de cualquier tipo de datos que sea válido para ser incluido en un JSON, no solo arreglos u objetos. Así, por ejemplo, una cadena o un número único podrían ser objetos JSON válidos.
-     ~ A diferencia del código JavaScript, en el que las propiedades del objeto pueden no estar entre comillas, en JSON solo las cadenas entre comillas pueden ser utilizadas como propiedades.
-      
-  La transferencia de datos entre aplicaciones es realizada por medio de API —Application Programming Interface— que, entre otros formatos, utiliza la notación JSON para estructurar la información enviada.
-  El archivo JSON también se usa para realizar requisiciones AJAX en sitios web, en que se hacen diferentes interacciones con bancos de datos, como el MySql, para realizar operaciones como consulta, inclusión y exclusión de registros.
-  
-  Principales casos de uso para JSON:
-     ~ Generación de un objeto JSON a partir de datos generados por el usuario: JSON es perfecto para el almacenamiento de datos temporales. Por ejemplo, los datos temporales pueden ser generados por el usuario, como un formulario enviado en 
-       un sitio web. JSON también se puede utilizar como formato de datos para cualquier lenguaje de programación a fin de incrementar el nivel de interoperabilidad.
-     ~ Tansferencia de datos entre sistemas: Una base de datos de sitio web tiene la dirección postal de un cliente, pero la dirección debe verificarse a través de una API para garantizar su validez. Envío de los datos de dirección en 
-       formato JSON a la API de servicio de validación de direcciones.
-     ~ Configuración de datos para aplicaciones: Al desarrollar aplicaciones, cada aplicación necesita las credenciales para conectarse a una base de datos, así como una ruta de acceso al archivo log. Las credenciales y la ruta de acceso al 
-       archivo se pueden especificar en un archivo JSON que sea legible y que esté siempre disponible.
-     ~ Simplificación de modelos de datos complejos: JSON simplifica los documentos complejos hasta los componentes que se han identificado como significativos mediante la conversión del proceso de extracción de datos en un archivo JSON 
-       predecible y legible por humanos.
-     
-- API (Application Programming Interfaces): que en español significa interfaz de programación de aplicaciones. Es una aplicación web construida en base a la arquitectura API REST, a la cual podemos solicitar y enviar información desde el 
-  cliente. Generalmente, nos comunicamos con aplicaciones de este tipo y es la tendencia actual de desarrollo. La ventaja de este modelo es que está orientado a recursos y define métodos claros para solicitar y enviar información. Una API
-  suele tener una URL base (el dominio donde está alojada la aplicación) y luego puede tener varios endpoints, es decir, distintas secciones a las que podemos acceder. A la vez, se pueden hacer peticiones con distintos métodos al mismo 
-  endpoint y obtener distintos resultados. Generalmente, similar a cuando queremos incorporar una librería, al momento de consumir una API debemos revisar su documentación. Allí se definen los distintos endpoints disponibles, los métodos a 
-  utilizar para hacer una petición y qué se nos ofrecerá en respuesta.
-  Se trata de un conjunto de definiciones y protocolos que se utiliza para desarrollar e integrar el software de las aplicaciones, permitiendo la comunicación entre dos aplicaciones de software a través de un conjunto de reglas. Así pues, 
-  podemos hablar de una API como una especificación formal que establece cómo un módulo de un software se comunica o interactúa con otro para cumplir una o muchas funciones. Todo dependiendo de las aplicaciones que las vayan a utilizar, y de 
-  los permisos que les dé el propietario de la API a los desarrolladores de terceros.
-  
-  Una de las principales funciones de las API es poder facilitarle el trabajo a los desarrolladores y ahorrarles tiempo y dinero. Por ejemplo, si estás creando una aplicación que es una tienda online, no necesitarás crear desde cero un 
-  sistema de pagos u otro para verificar si hay stock disponible de un producto. Podrás utilizar la API de un servicio de pago ya existente, por ejemplo PayPal, y pedirle a tu distribuidor una API que te permita saber el stock que ellos 
-  tienen. Con ello, no será necesario tener que reinventar la rueda con cada servicio que se crea, ya que podrás utilizar piezas o funciones que otros ya han creado. Imagínate que cada tienda online tuviera que tener su propio sistema de 
-  pago, para los usuarios normales es mucho más cómodo poder hacerlo con los principales servicios que casi todos utilizan. También son útiles para cuando lo único que se quiere es utilizar deliberadamente las funciones de determinado 
-  servicio para ofrecer ventajas a sus usuarios o atraer a los usuarios de ese servicio a que utilicen tu aplicación.
-
-- Query: Es una solicitud pero con ciertos parametros de busqueda. Se entiende por query o consulta cualquier petición de datos hacia un servicio que los devuelva, como puede ser una base de datos. Dentro de las bases de datos, Query hace 
-  referencia a la repetición de datos que se encuentran almacenados. Por otra parte, Query también es el término de consulta que deriva en una SERP dentro de los buscadores. De esta manera, esta herramienta tiene como objetivo facilitar los 
-  resultados arrojados a una solicitud. Query en bases de datos SQL y NoSQL es una técnica para obtener esos datos que se planea analizar. Por ejemplo, podrás pedir todos los datos del usuario y, además, podrás seleccionar la tabla o pedir 
-  una hoja específica donde se encuentren las direcciones.
-    
-- AJAX (Asynchronous JavaScript and XML): Es un conjunto de técnicas de desarrollo que permiten que las aplicaciones web funcionen de forma asincrónica para procesar tareas en segundo plano. En consecuencia, cualquier app o web que emplee 
-  AJAX puede enviar y recibir datos sin volver a cargar toda la página, evitando la interrupción de acciones realizadas por el usuario, añadiendo interactividad y dinamismo a nuestra aplicación. El objetivo principal de AJAX es hacer que los 
-  sitios y las aplicaciones web sean más fáciles de usar, más rápidos y con mayor capacidad de respuesta. AJAX tiene ciertas ventajas indiscutibles como:
-    > Facilita la navegación, ya que la información se actualiza continuamente y las interacciones entre el usuario y las páginas web se vuelven más rápidas.
-    > Reduce la carga en el servidor, aumentando su velocidad y capacidad, porque no se genera la información de la página completa, sino de una sola parte que debe actualizarse.
-    > Aumenta la interactividad porque los resultados de búsqueda aparecen inmediatamente, lo que optimiza el proceso de búsqueda y mejora la experiencia del usuario.
-
-  El modelo práctico de uso de AJAX tiene los siguientes pasos:
-    > Paso 1. En el navegador se crea una llamada de JavaScript que activa XMLHttpRequest.
-    > Paso 2. En segundo plano el navegador web crea una solicitud HTTP que va al servidor.
-    > Paso 3. El servidor recibe, recupera y manda los datos al navegador web.
-    > Paso 4. Los datos se reciben por la web y aparecen en la página sin que se recargue.
-    
-  En el modelo tradicional se crea una solicitud HTTP que va al servidor. El servidor procesa la solicitud y carga la página HTML sin que el usuario interactúe con la aplicación web. En el caso de AJAX, JS permite que el usuario interactúe 
-  con la aplicación web y modifique la página en segundo plano y solo sus partes necesarias. “En segundo plano” significa que mientras espera que se reciban los datos, el usuario puede hacer otras cosas en la página y optimizar este tiempo.
- 
-- Promesas (promise): Es un objeto de Javascript que representa un evento a futuro y permite representar y seguir el ciclo de vida de una tarea/operación (función). Es una acción asincrónica que se puede completar en algún momento y 
-  producir un valor, y notificar cuando esto suceda. Una promesa cuenta con tres estados posibles: pending, fulfilled y rejected. Las promesas pueden ser resueltas o rechazadas.
-  Podemos crear promesas a través de su constructor new Promise. Su sintaxis es algo compleja, ya que recibe una función por parámetro que a su vez recibe por parámetro las funciones de resolve y reject
-  
- 
-- XML (Extensible Markup Language): es un lenguaje de marcado que define un conjunto de reglas para la codificación de documentos. El lenguaje de marcado es un conjunto de códigos que se pueden aplicar en el análisis de datos o la lectura de 
-  textos creados por computadoras o personas. El lenguaje XML proporciona una plataforma para definir elementos para crear un formato y generar un lenguaje personalizado. XML admite el intercambio de información entre sistemas de 
-  computación, como sitios web, bases de datos y aplicaciones de terceros. Las reglas predefinidas facilitan la transmisión de datos como archivos XML a través de cualquier red, ya que el destinatario puede usar esas reglas para leer los 
-  datos de forma precisa y eficiente.
-  Un archivo XML se divide en dos partes: prolog y body. La parte prolog consiste en metadatos administrativos, como declaración XML, instrucción de procesamiento opcional, declaración de tipo de documento y comentarios. La parte del body se 
-  compone de dos partes: estructural y de contenido (presente en los textos simples). El diseño XML se centra en la simplicidad, la generalidad y la facilidad de uso y, por lo tanto, se utiliza para varios servicios web. Tanto es así que hay 
-  sistemas  destinados a ayudar en la definición de lenguajes basados ​​en XML, así como APIs que ayudan en el procesamiento de datos XML - que no deben confundirse con HTML.
-  
-- Microservicio: Los microservicios son un enfoque arquitectónico y organizativo para el desarrollo de software donde el software está compuesto por pequeños servicios independientes que se comunican a través de API bien definidas. Los 
-  propietarios de estos servicios son equipos pequeños independientes. Las arquitecturas de microservicios hacen que las aplicaciones sean más fáciles de escalar y más rápidas de desarrollar. Esto permite la innovación y acelera el tiempo de 
-  comercialización de las nuevas características.
-  Los microservicios son tanto un estilo de arquitectura como un modo de programar software. Con los microservicios, las aplicaciones se dividen en sus elementos más pequeños e independientes entre sí. A diferencia del enfoque tradicional y 
-  monolítico de las aplicaciones, en el que todo se compila en una sola pieza, los microservicios son elementos independientes que funcionan en conjunto para llevar a cabo las mismas tareas. Cada uno de esos elementos o procesos es un 
-  microservicio. Este enfoque de desarrollo de software valora el nivel de detalle, la sencillez y la capacidad para compartir un proceso similar en varias aplicaciones. Es un elemento fundamental de la optimización del desarrollo de ap
-  licaciones hacia un modelo nativo de la nube.
-  Sin embargo, el mayor interrogante es cuáles son las ventajas de utilizar una infraestructura de microservicios. En pocas palabras, el objetivo es distribuir software de calidad con mayor rapidez. Si bien esto se puede lograr con los 
-  microservicios, se deben considerar otras cuestiones. Dividir las aplicaciones en microservicios no es suficiente; es necesario administrarlos, coordinarlos y gestionar los datos que crean y modifican.
-
-- Libreria: Las librerías de programación son conjuntos de archivos de código que se utilizan para desarrollar software. Su objetivo es facilitar la programación, al proporcionar funcionalidades comunes, que ya han sido resueltas previamente 
-  por otros programadores. Como curiosidad, el término proviene de una mala traducción de la palabra inglesa library, que en realidad significa biblioteca. Las librerías (o bibliotecas) son un componente esencial para que los desarrolladores 
-  puedan programar de forma sencilla, evitando la duplicidad de código y minimizando errores. También permiten una mayor agilidad, al reducir el tiempo de desarrollo, así como los costes. A diferencia de un framework, una librería no aporta 
-  la estructura sobre cómo realizar el desarrollo, sino que proporciona funcionalidades comunes, que ya han sido resueltas previamente por otros programadores y evitan la duplicidad de código. Además reducen el tiempo de desarrollo y 
-  aumentan la calidad del mismo.
-   > Librerías estáticas: Estas se graban en un programa como ejecutables. Sirven exclusivamente para esto; después, podemos borrarlas sin problemas, ya que el programa seguirá funcionando con la función necesaria.  
-   > Librerías dinámicas: Son distintas a las estáticas en tanto en cuanto no se copian en el programa al compilarlas. Las subrutinas son cargadas en tiempo de ejecución, en vez de enlazarse en tiempo de compilación.  
-
-- Framework: un framework es un marco de trabajo que tiene como objetivo facilitar la solución de problemas que pueden surgir al programar. Los frameworks aceleran el proceso de programar facilitando tareas como la organización del código o 
-  el trabajo en equipo dentro de un proyecto, por ejemplo. En otras palabras, el objetivo de un framework en programación es facilitar la tarea de los programadores.
-  También hay que destacar que muchos de estos frameworks no sólo facilitan la organización del trabajo, sino que también ofrecen recursos desarrollados por otros programadores. Estos recursos pueden ser informes o códigos que pueden usarse 
-  para solucionar los problemas más habituales que se dan al llevar a cabo determinadas tareas.
-    > Frameworks para software development: Los frameworks para aplicaciones generales se utilizan para mejorar la estructura de una aplicación. Su objetivo es proporcionar una estructura base para los desarrolladores de software con la que 
-      puedan organizar sus proyectos. Eso sí, siempre dentro de un sistema operativo determinado. 
-    > Frameworks para desarrollo web: Al estar relacionados con el diseño web, es evidente que existen diferentes frameworks para los diferentes lenguajes de programación que se utilizan. Un desarrollador backend y uno de frontend usarán 
-      marcos de trabajo distintos, aunque existen algunos ideales para los full stack developers como ReactJS.
-    > Marco de gestión de contenido: De nuevo, un tipo de frameworks relacionados con el diseño web. Aun así, en este caso se trata de interfaces diseñadas para personalizar un CMS. En consecuencia, existen una gran cantidad de CMFs, ideales 
-      para diferentes lenguajes e incluso para diferentes tareas dentro de un lenguajes.
 
 - Buffer: 
-
-- Servidor: un equipo informático que forma parte de una red y provee servicios a otros equipos. Es un aparato informático que almacena, distribuye y suministra información. Los servidores funcionan basándose en el modelo “cliente-servidor”. 
-  El cliente puede ser tanto un ordenador como una aplicación que requiere información del servidor para funcionar. Por tanto, un servidor ofrecerá la información demandada por el cliente siempre y cuando el cliente esté autorizado. Los 
-  servidores pueden ser físicos o virtuales.
-  > Servidor proxy: realiza un cierto tipo de funciones a nombre de otros clientes en la red para aumentar el funcionamiento de ciertas operaciones (p. ej., prefetching y depositar documentos u otros datos que se soliciten muy 
-    frecuentemente), también proporciona servicios de seguridad, o sea, incluye un cortafuegos.
-  > Servidor del acceso remoto (RAS): controla las líneas de módem de los monitores u otros canales de comunicación de la red para que las peticiones conecten con la red de una posición remota, responde llamadas telefónicas entrantes y 
-    reconoce la petición de la red.
-  > Servidor web: almacena documentos HTML, imágenes, archivos de texto, escrituras, y demás material Web compuesto por datos (conocidos colectivamente como contenido), y distribuye este contenido a clientes que la piden en la red.
-  > Servidor de base de datos: provee servicios de base de datos a otros programas u otras computadoras, como es definido por el modelo cliente-servidor. También puede hacer referencia a aquellas computadoras (servidores) dedicadas a 
-    ejecutar esos programas, prestando el servicio.
 
 - Exportacion (export): Now, importing is an operation that requires the permission of the module. Importing is possible only if the module or named property to be imported has been exported in its declaration. In React we use the keyword 
   export to export a particular module or a named parameter or a combination. Let us now see the different ways we can use the import operation in React.
@@ -2441,87 +2563,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 - polyfills: Un polyfill es un fragmento de código (generalmente JavaScript en la Web) que se utiliza para proporcionar una funcionalidad moderna en navegadores antiguos que no lo admiten de forma nativa. Por ejemplo, se podría usar un 
   polyfill para imitar la funcionalidad de un elemento HTML Canvas en Microsoft Internet Explorer 7 usando un complemento de Silverlight, o un soporte mímico para las unidades rem CSS, o text-shadow, o lo que tu quieras.
    
-  
-  
-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
-
-  
-  
-Agile software development: Agile software development is a process where developers build software in stages, dividing their work into short bursts called sprints. This helps to keep code simple and ensure teams can test it frequently.
-Back end: Back end is the server side of the internet or an application. This is the part users don't see. In the back end, programmers connect the web to a database.
-Bug: Programmers use the phrase bug to refer to broken code with a fault or flaw. These are pieces of code that cause a program crash or send an error message.
-Build: Build is the stage of software development in which you create the product. During this stage, developers write code according to the team's goals and the intended functions and features of the product.
-Cloud: The cloud is a remote internet storage solution. Many companies opt to store vital data in cloud-based locations to save room on local devices and promote security and functionality.
-Code review: Code review is the process programmers use to evaluate code, look for bugs and fix errors. Teams complete code reviews together to help increase efficiency.
-Command: A command is an action to ask a computer to perform. For example, when you click to open a file, you're initiating a command that the computer obeys.
-Computer program: A computer program is a collection of codes that tell a computer what to do. These are the instructions to perform a specific task.
-Data: Data refers to any information that a computer can store in its programs. This includes addresses, names and phone numbers.
-Data structure: The format computers use to store data is the data structure. Data structure helps computer process and store high volumes of data, like in databases.
-Debugging: Debugging is the process of identifying and repairing bugs in a program. This task is vital for the deployment of a product.
-Framework: A framework is a set of templates that helps programmers to build projects quickly. These often contain application program interfaces (APIs) and pre-written codes, which allow programmers to have a foundation for beginning their program.
-Front end: Front end is the part of a computer program visible to users and allows them to interact with the program. Front-end developers work to create a positive experience for users.
-Full stack developer: Someone who works on both the front end and back end of a website is a full stack developer. These individuals handle a variety of projects that help with the overall design and code.
-Input: Input refers to the information that goes into the computer, such as the keyboard, mouse and digital camera. A computer output is how the computer expresses itself, such as through graphics and text.
-IP address: An Internet Protocol (IP) address is the number associated with a device or website, which helps computer programmers identify devices on the internet. IP addresses allow a connected computer to communicate with another device over the internet.
-Machine learning: Machine learning is a form of artificial intelligence (AI) in which programs learn and improve from experience. An example of machine learning is image recognition, which helps software identify objects and people.
-Programming language: Programming languages consist of the keywords and special rules coders use to create computer programs and produce a machine code output. Some common programming languages are Python, C and Ruby.
-Project-based learning: Project-based learning is when programmers learn by doing. Instead of only learning concepts, they also work on projects to gain experience.
-Server: A server is a host of websites and data. These store pieces of information for users to access on the internet.
-Source code: Source code is written code that becomes software. This occurs after a compiler translates it into machine code.
-Stack: Stack is when programmers use many programs to build mobile devices and stack data when organizing to help make it easy to access. Common examples of stacks include LAMP, MEAN and WAMP.
-URL: A universal resource locator (URL) is the link that directs users to a website. Different pages on a website may have their own unique URLs that users can access, or you could program a URL to redirect to a different website.
-User experience (UX) design: User experience (UX) design involves the design of interactions between a product and its users. In this process, programmers add features, such as toolbars, to help users find information and use the program more easily.
-User interface (UI) design: User interface (UI) design is a process focused on the visual elements of a computer program. This includes components, such as icons, colors and buttons.
-  
-  
-  
-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
-
-                                                                                                                   Express
-
-- Express js es un framework minimalista que permitirá desarrollar servidores más complejos. Éste nos facilitará:
-   ✓ Utilizar diferentes rutas para las peticiones.
-   ✓ Mejorar la estructura de nuestro proyecto.
-   ✓ Manejar funcionalidades más complejas y utilización de middlewares. 
-  
-  + Paso 1: npm init -y                                                                                                                   
-    Express no es nativo de nodejs, por lo tanto, necesitaremos primero contar con un package.json para gestionar las dependencias a instalar. 
-    Una vez que tenemos package.json en nuestra carpeta, podemos continuar instalando dependencias.
-  
-  + Paso 2: npm install express 
-    Procedemos a instalar de manera local express js. Al ejecutar este comando, notaremos cómo se genera una carpeta node_modules, que es donde se encuentra almacenado express.
-    A partir de este punto, ya contamos con la estructura elemental instalada, el resto es más “flexible”.
-
-  + Paso 3: Estructurar el proyecto 
-    Se recomienda tener una carpeta src, donde vivirá todo nuestro código, dentro del cual crearemos un archivo con el nombre “app.js”
-    Finalmente, el archivo app.js ya puede importar la dependencia instalada de express js, ya sea por commonjs:   const express = require ("express");
-    o bien por module (recordar colocar el type:”module” en package.json):   import express from "express";                                           
-  
-  + Ejemplo de una consulta en Express
-     ✓ Estructurar un servidor basado en express, el cual escuche peticiones en el puerto 8080
-     ✓ Realizar una función para el método GET en la ruta ‘/saludo’, el cual responderá con “¡Hola a todos, pero ahora desde express!”
-     ✓ Ejecutar con nodemon (npm install -g nodemon) y probar en el navegador el endpoint generado.
-     
-     
-- Objeto request: The req object represents the HTTP request and has properties for the request query string, parameters, body, HTTP headers, and so on. In this documentation and by convention, the object is always referred to as req (and 
-  the HTTP response is res) but its actual name is determined by the parameters to the callback function in which you’re working.  
-  
-  > req.query: Como su nombre lo indica, query refiere a las múltiples consultas que se pueden hacer a un determinado endpoint, basta conque en la url coloquemos el símbolo ? , entonces express reconocerá que hay que meter información al 
-    objeto req.query para poder utilizarlo en el endpoint. Cuando buscamos algo en nuestro navegador, llamamos a un endpoint haciendo un determinado query.
-  
-  > req.params: Se utiliza cuando necesitamos obtener elementos dinámicos desde la ruta que está llamando el cliente. para poder definir un “parámetro” dentro de la ruta a trabajar, basta con colocar el símbolo de dos puntos (:) antes del 
-    parámetro, de esta manera, express reconoce que queremos que ese elemento sea dinámico.
+- 
+   
     
-  > ¿Qué diferencia hay con params? 
-    La principal diferencia que hay entre req.params y req.query, es que en req.query puedo meter la cantidad de consultas que yo así desee, ya que las queries no vienen inmersas en la ruta, sino que son un elemento aparte.
-    Así, si desconozco el número de cosas que se van a consultar en mi ruta, la mejor opción es utilizar queries, mientras que, si sólo necesito un número específico y reducido de parámetros, habría que optar por params
-    Al final, no hay una mejor que otra, sirven para casos diferentes e incluso podemos utilizar ambas en la misma consulta. 
-    
-  > req.body: 
-
-  
-  
-  
-  
-  
-  
