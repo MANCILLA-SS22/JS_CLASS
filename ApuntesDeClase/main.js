@@ -6480,8 +6480,11 @@ app.delete("/api/palabras/:pos", function(request, response){
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
 
-//Ejepmlo 17:
+/* //Ejepmlo 17: Router en Express
 import express from "express";
+import petsRouter from "./src/routes/pets.router.js";
+import userRouter from "./src/routes/users.router.js";
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -6493,8 +6496,125 @@ app.get("/", function(request, response){
     });
 });
 
+app.use("/api/pets", petsRouter);
+app.use("/api/users", userRouter);
+
+
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
+
+/* //Ejepmlo 18: Servicio de archivos estáticos con Express
+import express from "express";
+const PORT = 5500;
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/static", express.static("../ApuntesDeClase/src/public"));
+
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
+
+/* //Ejepmlo 19: Carpeta public
+// Partiendo del ejemplo anterior, recrear la estructura con un index.html para poder visualizarse en la ruta raíz.
+// ✓ En este archivo deberá haber un formulario donde podremos ingresar una mascota a partir del método POST. Dicho POST conectará al endpoint raíz del router pets
+// ✓ Configurar el router pets para que pueda recibir el json por parte del formulario (recordar express.json() y express.urlencoded({extended:true}))
+// ✓ Verificar con POSTMAN que la información llegue al servidor y se guarde correctamente.
+
+import express from "express";
+import petsRouter from "./src/routes/pets.router.js";
+import userRouter from "./src/routes/users.router.js";
+const PORT = 5500;
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/static", express.static("../ApuntesDeClase/src/public/"));
+
+app.use("/api/pets", petsRouter);
+app.use("/api/users", userRouter);
+
+
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
+
+/* //Ejemplo 20: Tipos de Middleware
+import express from "express";
+import { Router } from "express";
+const PORT = 5500;
+const router = express.Router();
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// //Middleware de nivel de aplicación
+// function logger(req, res, next) {
+//     console.log("Servidor recibe peticion");
+//     next();
+// }
+
+// app.use(logger);
+
+// //Middleware de nivel de endpoint
+// function middleware(request, response, next){
+//     const { code, productName } = req.body;
+
+//     if (!code || code === "") {
+//         return res.json({
+//             error: "Esta el campo code vacio",
+//         });
+//     }
+
+//     next();
+// }
+
+// app.get("/", middleware, function(request, response){ //Ejecutamos primero la ruta "/", despues se ejecuta la funcion middleware y, si todo sale bien, se ejecuta la funcion next, y pasamos al siguiente middleware. En este caso, al no haber, simplemente pasa al la funcion.
+//     response.json({
+//         mensaje: "Bienvenido",
+//     });
+// });
+
+// //Middleware de nivel del Router
+// function logger(req, res, next) {
+//     console.log("Servidor recibe peticion");
+//     next();
+// }
+
+// router.use(logger);
+
+// //Middleware de manejo de errores
+// app.use(function (err, req, res, next) {
+//     console.error(err.stack);
+//     res.status(500).send('Something broke!');
+// });
+
+
+
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
+
+//Ejemplo 21: Express Multer
+import express from "express";
+import {loader} from "./src/utils/multer.js"
+
+const PORT = 5500;
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("./src/public/"));
+
+app.post("/", loader.single("file"), function(request, response){
+    if(!request.file){
+        return response.status(500).json({
+            error: "Hubo un error al subir el archivo"
+        });
+    };
+
+    request.json({
+        message: "El archivo se subio correctamente"
+    })
+});
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+
+
+
 
 //         $$$$$$$$$$$$$$$ MODERN JAVASCRIPT DEVELOPMENT: MODULES AND TOOLING $$$$$$$$$$$$$$$
 
