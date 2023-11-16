@@ -2364,6 +2364,14 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   
   > req.query: Como su nombre lo indica, query refiere a las múltiples consultas que se pueden hacer a un determinado endpoint, basta conque en la url coloquemos el símbolo ? , entonces express reconocerá que hay que meter información al 
     objeto req.query para poder utilizarlo en el endpoint. Cuando buscamos algo en nuestro navegador, llamamos a un endpoint haciendo un determinado query.
+    
+    Conforme incrementa el dinamismo en las urls, es importante configurar el servidor para que reciba datos complejos desde la url, por ello hay que utilizar la línea:
+                   app.use(express.urlencoded({ extended: true }));
+    La línea anterior permitirá que el servidor pueda interpretar mejor los datos complejos que viajen desde la url, y mapearlos correctamente en el req.query.
+    Es decir, cuando hagamos una peticion POST, cuando lleguen, que podamos recivir esos datos. Sino, llegara un objeto vacio. 
+    
+    Tambien tenemos la siguiente linea que dice que, cuando nosotros hagamos peticiones por POST, lleguen. O de lo cotrario, nos llegarian como undefined.
+                   app.use(express.json());
   
   > req.params: Se utiliza cuando necesitamos obtener elementos dinámicos desde la ruta que está llamando el cliente. para poder definir un “parámetro” dentro de la ruta a trabajar, basta con colocar el símbolo de dos puntos (:) antes del 
     parámetro, de esta manera, express reconoce que queremos que ese elemento sea dinámico.
@@ -2375,8 +2383,39 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     
   > req.body:  
         
+- Router en Express: Un router en express nos permitirá separar los endpoints “comunes” en entidades separadas que fungirán como “mini aplicaciones”, las cuales tomarán peticiones que concuerden con dicho endpoint y así redireccionarse a 
+  esta mini aplicación. De esta manera, nuestro código resultará más organizado, y las diferentes entidades tendrán aislado el comportamiento interno, como configuraciones, middlewares, etc.
   
+  > ¿Cómo aplicar un router? Primero recordemos la estructura de nuestro proyecto, hasta el momento, sabemos que la estructura básica de nuestro proyecto consiste en la distribución como lo indica la imagen: una carpeta donde vive el 
+    proyecto, dentro una carpeta src donde vivirá nuestro código, y nuestro servidor dentro.
+    Despues, agregaremos una carpeta “routes” donde vivirán nuestros diferentes routers (Nota que app.js se queda fuera de routes, pero sigue dentro de src).
+
+- ¿Cómo convertir una carpeta en un recurso estático? 
+  Para poder utilizar los recursos de una carpeta de manera estática, basta conque en el servidor especifiquemos como “express.static” dicha carpeta con la siguiente sintaxis: app.use(express.static('public')) Indicamos que, todo lo que viva 
+  en la carpeta public, podrá ser accedido directamente desde la carpeta public. A continuación podemos cargar los archivos que queramos en el directorio public:
+  http://localhost:3000/hello.html
+  http://localhost:3000/images/kitten.jpg
+  Nota: Express busca los archivos relativos al directorio estático, por lo que el nombre del directorio estático no forma parte del URL.
   
+  > Prefijo virtual: Para crear un prefijo virtual (donde el path de acceso no existe realmente en el sistema de archivos) para los archivos servidos por express.static, debemos especificar un path de acceso de montaje para el directorio 
+    estático:  app.use('/static', express.static('public'));
+    Así podemos cargar los archivos que hay en el directorio public desde el prefijo /static.
+    http://localhost:3000/static/hello.html
+    http://localhost:3000/static/images/kitten.jpg
+    
+  > Path absoluto: El path que se proporciona a la función express.static es relativo al directorio desde donde inicia el proceso node. Por eso si ejecutamos la aplicación Express desde cualquier otro directorio, es más seguro utilizar el 
+    path absoluto del directorio al que desea dar servicio:   app.use('/static', express.static(__dirname + '/public'))
+    
+- middleware: Seguramente te has dado cuenta de que que hemos utilizado mucho la sintaxis app.use. ¿Qué pasa de manera interna en este punto?
+  Cada vez que utilizamos un app.use estamos utilizando un middleware. Éstas son operaciones que se ejecutan de manera intermedia entre la petición del cliente, y el servicio de nuestro servidor.
+  Como lo indica el nombre: “middleware” hace referencia a un intermediario, siempre se ejecuta antes de llegar al endpoint que corresponde. los middlewares se ejecutan EN ORDEN, eso quiere decir que, si algún middleware depende de que se 
+  haya realizado otra operación ejecutada por un middleware previo, los coloquemos en cascada según prioridad. Podemos utilizar un middleware para:
+    ✓ Dar información sobre las consultas que se están haciendo (logs) 
+    ✓ Autorizar o rechazar usuarios antes de que lleguen al endpoint (seguridad) 
+    ✓ Agregar o alterar información al método req antes de que llegue al endpoint (formato) 
+    ✓ Redireccionar según sea necesario (router) 
+    ✓ En ciertos casos, finalizar la petición sin que llegue al endpoint (seguridad)
+    
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
                                                                                                                    GitHub

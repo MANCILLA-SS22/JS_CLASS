@@ -7,13 +7,14 @@
     "leaflet": "^1.9.4",
     "lodash-es": "^4.17.21",
     "moment": "^2.29.4",
+    "multer": "^1.4.5-lts.1",
     "parcel": "^2.9.3",
     "regenerator-runtime": "^0.14.0"
   },
   "name": "forkify",
   "description": "Reciepe application",
   "version": "1.0.0",
-  "type":"module",
+  "type": "module",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.9.3"
   },
