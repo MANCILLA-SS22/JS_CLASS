@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 class ProductManager{
-    constructor(products){ // ./products.txt
+    constructor(products){ // ./products.json
         this.products = products; 
         this.res;
         
@@ -47,7 +47,6 @@ class ProductManager{
 
     async saveFile(data){
         try {
-            console.log([...data])
             await fs.promises.writeFile(this.products, JSON.stringify([...data], null, "\t"));
             return true;
         } catch (error) {

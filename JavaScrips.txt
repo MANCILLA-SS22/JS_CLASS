@@ -1853,7 +1853,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      nosotros desde cero. Así, crear un archivo con contenido será tan fácil como escribir un par de líneas de código, en lugar de tener que lidiar con los datos binarios y transformaciones complejas y de un nivel más bajo en la computadora.
      fs existe desde el momento en el que instalamos Nodejs en nuestro computador, por lo que, para utilizarlo, podemos llamarlo desde cualquier archivo que tengamos de nuestro código con la siguiente línea:
                                                                                    
-                                                                                   const = fs = require("fs");
+                                                                                   const fs = require("fs");
                                                                                    
      De ahí en adelante todo el módulo de FileSystem estará contenido en la variable fs. Sólo debemos utilizarlo llamando sus métodos como una clase. Esto podremos hacerlo de 3 formas: síncrono, con callbacks o con promesas.                                                                                   
      Para utilzar de forma adecuada el fs, sólo utilizaremos la palabra Sync después de cada operación que queramos realizar. Las principales operaciones que podemos hacer con fs síncrono son:
@@ -1873,7 +1873,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
       
      Si queremos utilizar promesas, entonces qudarian como:
       ✓ fs.promises.writeFile
-      ✓ fs.promises.readFil
+      ✓ fs.promises.readFile
       ✓ fs.promises.appendFile
       ✓ fs.promises.unlink    
 
@@ -2406,7 +2406,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   > Path absoluto: El path que se proporciona a la función express.static es relativo al directorio desde donde inicia el proceso node. Por eso si ejecutamos la aplicación Express desde cualquier otro directorio, es más seguro utilizar el 
     path absoluto del directorio al que desea dar servicio:   app.use('/static', express.static(__dirname + '/public'))
     
-- middleware: Seguramente te has dado cuenta de que que hemos utilizado mucho la sintaxis app.use. ¿Qué pasa de manera interna en este punto?
+- middleware: Funciones que se colocan en medio de la ruta y el callback (req, res) que se ejecutarán antes de comenzar a procesar la petición.
   Cada vez que utilizamos un app.use estamos utilizando un middleware. Éstas son operaciones que se ejecutan de manera intermedia entre la petición del cliente, y el servicio de nuestro servidor.
   Como lo indica el nombre: “middleware” hace referencia a un intermediario, siempre se ejecuta antes de llegar al endpoint que corresponde. los middlewares se ejecutan EN ORDEN, eso quiere decir que, si algún middleware depende de que se 
   haya realizado otra operación ejecutada por un middleware previo, los coloquemos en cascada según prioridad. Podemos utilizar un middleware para:
@@ -2415,6 +2415,32 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     ✓ Agregar o alterar información al método req antes de que llegue al endpoint (formato) 
     ✓ Redireccionar según sea necesario (router) 
     ✓ En ciertos casos, finalizar la petición sin que llegue al endpoint (seguridad)
+    
+- Tipos de middleware: Una aplicación Express puede utilizar los siguientes tipos de middleware:
+  ✓ Middleware a nivel de aplicación
+  ✓ Middleware a nivel endpoint
+  ✓ Middleware a nivel del Router
+  ✓ Middleware de manejo de errores
+  ✓ Middleware incorporado
+  ✓ Middleware de terceros
+
+- Middleware de carga de archivos: 
+  MULTER Middleware desarrollado para poder realizar carga de archivos dentro de las peticiones, con el fin de que el cliente pueda manejar archivos como imágenes, vídeos o documentos; dentro de una petición.
+  En ocasiones el cliente necesitará subir una imagen, un vídeo o un archivo, según sea nuestra aplicación, ello nos lleva a configurar nuestro servidor para soportar estos archivos y poder almacenarlos en donde nosotros le indiquemos. Al
+  ser de terceros, necesitaremos instalarlo para poder utilizarlo. 
+    1) MULTER es una dependencia de terceros, de manera que, al igual que express, necesitaremos instalarlo dentro de nuestro package.json
+    2) Una vez que tenemos MULTER instalado, podemos importarlo en nuestro proyecto y configurarlo donde lo necesitemos (puede ser directamente en app, o bien se recomienda hacerlo en un archivo al mismo nivel de app llamado “utils”) Contar 
+       con un uploader externo a app.js, brindará más dinamismo al momento de utilizarlo, ya que podemos colocarlo en el router que necesitemos y no necesariamente instanciarlo a nivel general
+    3) Una vez que nuestro uploader está listo para utilizarse, podemos importarlo en el router que necesitemos y colocarlo en la ruta donde lo necesitemos, recuerda que, al ser un middleware, éste va enmedio de la ruta y de la función 
+       callback (req,res).    app.post("/", uploader.single("file"), function(request, response){}
+     
+       Podemos utilizar el uploader de dos formas principalmente:
+         ✓ uploader.single(‘nombre del campo’): permitirá subir un único archivo, su resultado estará en req.file
+         ✓ uploader.array(‘nombre de campos’): permitirá subir múltiples archivos, su resultado estará en req.files
+   
+   Cuando subimos un archivo (imagen, vídeo, etc), estamos hablando de un flujo de datos. lo cual no puede plasmarse en un JSON. Cuando enviamos información a un endpoint donde sabemos que utilizamos MULTER, debemos enviarlo como FormData, 
+   no como JSON.
+  
     
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
@@ -2585,9 +2611,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   HTML, SVG, or XML documents as objects are not part of the core JavaScript language. The DOM represents a document with a logical tree. Each branch of the tree ends in a node, and each node contains objects. DOM methods allow programmatic 
   access to the tree. With them, you can change the document's structure, style, or content. Nodes can also have event handlers attached to them. Once an event is triggered, the event handlers get executed.                                                                                         
 
--Virtual DOM:               
+- Virtual DOM:               
                                                                                                                    
-
 - Buffer: 
 
 - Exportacion (export): Now, importing is an operation that requires the permission of the module. Importing is possible only if the module or named property to be imported has been exported in its declaration. In React we use the keyword 
@@ -2602,6 +2627,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 - polyfills: Un polyfill es un fragmento de código (generalmente JavaScript en la Web) que se utiliza para proporcionar una funcionalidad moderna en navegadores antiguos que no lo admiten de forma nativa. Por ejemplo, se podría usar un 
   polyfill para imitar la funcionalidad de un elemento HTML Canvas en Microsoft Internet Explorer 7 usando un complemento de Silverlight, o un soporte mímico para las unidades rem CSS, o text-shadow, o lo que tu quieras.
    
-- 
+- Router: 
+
+- Middleware
    
     

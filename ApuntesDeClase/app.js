@@ -310,7 +310,10 @@ const greetArr = greeting => name => console.log(`${greeting} ${name}`);
 greetArr('Hey')('there'); */
 
 /* // Ejemplo 6.5: The call() method
-const lufthansa = {airline: 'Lufthansa',iataCode: 'LH',bookings: [],
+const lufthansa = {
+    airline: 'Lufthansa',
+    iataCode: 'LH',
+    bookings: [],
     book: function(flightNum, name) {
         console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
         this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
@@ -2535,6 +2538,40 @@ objetos.forEach((objeto) => {
 
 console.log(productos);
 console.log(totalVendidos); */
+
+/* // Ejemplo 37: Desestructurando un array de objetos
+const data = [
+    {
+        "id": 101,
+        "title": {
+            "rendered": "CTC20180018"
+        },
+        "acf": {
+            "fielda": "valuea",
+            "fieldb": "valueb",
+            "fieldc": "valuec"
+        }
+    },
+    {
+        "id": 102,
+        "title": {
+            "rendered": "D2021063365"
+        },
+        "acf": {
+            "fielda": "valuea",
+            "fieldb": "valueb",
+            "fieldc": "valuec"
+        }
+    }
+]
+
+const result = data.map(({id,title,acf}) => ({
+    id: id,
+    title: title.rendered,
+    ...acf
+}));
+
+console.log(result); */
 
 
 //         $$$$$$$$$$$$$$$ STRINGS & MODERN OPERATORS $$$$$$$$$$$$$$$
@@ -6588,7 +6625,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
 
-//Ejemplo 21: Express Multer
+/* //Ejemplo 21: Express Multer
 import express from "express";
 import {loader} from "./src/utils/multer.js"
 const app = express();
@@ -6601,24 +6638,150 @@ app.use(express.static("src/public/"));
 
 app.post("/", loader.single("file"), function(request, response){
     if(!request.file){
-        return response.status(500).json({
-            error: "Hubo un error al subir el archivo"
-        });
+        return response.status(500).json({error: "Hubo un error al subir el archivo"});
     }else{
-        return response.json({
-            message: "El archivo se subio correctamente"
-        });
+        return response.json({message: "El archivo se subio correctamente"});
     }
-
-    
 });
+
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
+
+/* //Ejemplo 22: Express + multer
+// Basado en el formulario para ingresar una mascota al sistema:
+// ✓ Configurar el formulario para añadir un campo input type=”file” name “file” para que la mascota a agregar pueda tener una “imagen representativa”.
+// ✓ El nombre del archivo guardado se formará con el nombre original anteponiéndole un timestamp (Date.now()) seguido con un guión. Ej: 1610894554093-clase1.zip.
+// ✓ Corroborar que la imagen se guarde correctamente. Guardar la ruta del archivo guardado en un campo “thumbnail”.
+
+import express from "express";
+import router from "./src/router/postRoutes.js";
+import { logger } from "./src/utils/logger.js";
+
+const app = express();
+const PORT = 5500;
+
+function appGet1(req, res){
+    res.json({
+        message: "Bienvenido",
+    });
+}
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.get("/", appGet1);
+app.use(logger);
+app.use("/api/posts/", router);
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
+
+/* //Ejemplo 23: Servidor basado en Node.JS y express de un carrito de compras (Primera entrega CoderHouse)
+import express from "express";
+import routerMain from "./router/main.js";
+
+const PORT = 5500;
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+routerMain(app);
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 
 
+// - Paso 1: Debemos crear los produtos que se encuentran en ProductManager. En este archivo hasta el final se encuentran los objetos que serviran 
+// para copiar y pegar en postman y asi crear los productos en un archivo products.json
+// - Paso 2: El siguiente metodo es crear el o los carritos deseados, los cuales contendran un arreglo "products" vacio y un id. Es importante crearlos
+// antes de introducir los productos al carrito o de lo contrario obtendremos un error.
+// - Paso 3: Finalmente podemos agregar elementos al arreglo products en el archivo carts.json. */
+
+/* //Ejemplo 24: Handlebars
+import express from "express";
+import __dirname from "./utils.js"
+import handlebars from "express-handlebars";
+import viewRouter from "./src/router/views.routes.js";
+
+const app = express();
+const PORT = 5500;
+
+// Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Configuramos el engine
+app.engine("hbs", handlebars.engine({
+    extname: "hbs",
+    defaultLayout: "main",
+}));
+
+// Seteamos nuestro motor
+app.set("view engine", "hbs");
+app.set("views", `${__dirname}/src/views`);
+
+// Public
+app.use(express.static(`${__dirname}/public`));
+
+// Routes
+app.use("/", viewRouter);
+
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
+
+/* //Ejemplo 25: Handlebars con express
+// Realizar un formulario en una nueva plantilla.
+// ✓ Se creará un archivo “register.handlebars” como nueva plantilla, donde se colocará un form
+// ✓ Dicho form debe servir para registrar un usuario, por lo que contará con nombre, correo, y contraseña
+// ✓ Enviar los datos a una ruta POST ‘/user’, y guardar el usuario en un arreglo. Confirmar que el guardado se realice exitosamente.
+import express from "express";
+import __dirname from "./utils.js"
+import handlebars from "express-handlebars";
+import viewRouter from "./src/router/desafioView.routes.js";
+
+const app = express();
+const PORT = 5500;
+
+// Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
+app.engine("hbs", handlebars.engine({
+        extname: "hbs", //index.hbs
+        defaultLayout: "main", //Plantilla principal
+    })
+);
+
+// Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
+app.set("views", `${__dirname}/src/views`);
+
+//Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
+app.set("view engine", "hbs");
+
+// Public. Sentamos de manera estatica la carpeta public
+app.use(express.static(`${__dirname}/src/public`));
+
+// Routes
+app.use("/", viewRouter);
+
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
+
+/* //Ejemplo 26: Handlebars (Datos personales)
+// Basándonos en el ejemplo anterior, desarrollar una vista web que permita mostrar los datos personales de múltiples usuarios.
+//  ✓ Utilizar la misma estructura mostrada por el profesor, para poder levantar un servidor que utilice handlebars como motor de plantillas.
+//  ✓ Configurar la plantilla para que muestre los siguientes datos: nombre, apellido, edad, correo, teléfono.
+//  ✓ Crear un array “users” que cuente con 5 usuarios de tipo objeto, cada uno con los datos mencionados arriba.
+//  ✓ Al llamar al método get ‘/’, generar un número random para elegir a alguno de los usuarios y mostrar el usuario seleccionado al azar en la plantilla. 
+//  ✓ Observar los diferentes resultados en el navegador. */
+
 
 
 //         $$$$$$$$$$$$$$$ MODERN JAVASCRIPT DEVELOPMENT: MODULES AND TOOLING $$$$$$$$$$$$$$$
+
+
+
+
+
+
+
+
+
 
 
 /* //Ejemplo 1: Importing and exporting modules
@@ -6754,3 +6917,5 @@ import 'core-js/stable';
 
 // Polifilling async functions
 import 'regenerator-runtime/runtime'; */
+
+//Ejemplo 9: Redux
