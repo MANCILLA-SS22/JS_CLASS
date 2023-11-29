@@ -2440,132 +2440,76 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
    
    Cuando subimos un archivo (imagen, vídeo, etc), estamos hablando de un flujo de datos. lo cual no puede plasmarse en un JSON. Cuando enviamos información a un endpoint donde sabemos que utilizamos MULTER, debemos enviarlo como FormData, 
    no como JSON.
-  
-    
+   
+   
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
+                                                       
+                                                                                                                   Multer
+
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
-                                                                                                                   GitHub
+                                                                                                                   Redux
+                                                                                                                   
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
+
+                                                                                                                   Websocket
+                                                                                                                   
+- Websocket: es un protocolo de comunicación basado en TCP para poder establecer esa conexión entre el cliente y el servidor, justo como sabemos, es el mismo objetivo que cubre HTTP.  
+  A pesar de que websocket y HTTP son protocolos como lo mencionamos anteriormente, websocket tiene una característica muy importante: Su protocolo TCP establece dos endpoints de comunicación, a cada endpoint se le conoce como socket.
+  El contar con estos dos sockets permitirá establecer una comunicación bidireccional entre el cliente y el servidor. La comunicación bidireccional implica: 
+   ✓ Que el cliente puede obtener recursos del servidor cuando lo solicite (como en HTTP).
+   ✓ Que el servidor pueda entregar información al cliente sin necesidad de que el cliente haga una petición.                      
+   
+  Websockets es un protocolo excelente para esta situación ya que:  
+   ✓ El cliente no tendrá que estar actualizando la página constantemente 
+   ✓ En cuanto el servidor reciba una actualización de una nueva puja, actualizará a todos los clientes conectados, permitiendo dar información en tiempo real
+   ✓ Una vez que termina la subasta, el socket se cierra y el servidor deja de notificar innecesariamente al cliente.
+   
+- Funcionamiento de un Websocket: Primero, el cliente tiene que enviar una solicitud HTTP llamada Handshake (apretón de manos). Este apretón de manos será un “acuerdo” o “contrato” de confianza para que el servidor pueda actualizar al 
+  cliente sin que éste se lo pida. El servidor recibe la petición de Handshake y procede a “responderle el saludo”, a esto se le llama “Abrir conexión”.
+  A partir de este punto, el canal queda abierto de manera bidireccional, por lo que el cliente se puede comunicar con el servidor cuando quiera y viceversa. La comunicación es “persistente” hasta que alguno de los dos lados decida cerrar el 
+  canal de comunicación.
+   
+- El protocolo Websocket: principios   
+  ✓ Websocket permitió por primera vez acceder a una web de forma dinámica en tiempo real.
+  ✓ Basta con que el cliente establezca una conexión con el servidor, que se confirma ediante el llamado apretón de manos o Websocket Protocol Handshake.
+  ✓ Con él, el cliente envía al servidor todos los datos de identificación necesarios para el intercambio de información.
+  ✓ El canal de comunicación queda “abierto” tras el handshake.
+  ✓ El servidor puede activarse por sí mismo y poner toda la información a disposición del cliente, sin que este tenga que pedírselo. Si dispone de nueva información, se lo comunica al cliente, sin necesidad de recibir una solicitud 
+    específica para ello.
+  ✓ Las notificaciones push de las páginas web funcionan según este principio.
   
-  - GIT: Sistema de control de versiones gratuito y de código abierto, diseñado para manejar desde pequeños a grandes proyectos de manera rápida y eficaz. Se entiende como control de versiones a 
-    todas las herramientas que nos permiten hacer modificaciones en nuestro proyecto. Este sistema registra los cambios realizados sobre un archivo o conjunto de archivos a lo largo del tiempo.
-    Con GIT, podemos ir a versiones anteriores, muy útil para errores, y para la organización.
-    Con GIT, podemos ir a versiones anteriores, muy útil para errores, y para la organización.
+- Websocket y comparación con HTTP: HTTP no es reemplazo de Websocket, ni websocket es reemplazo de HTTP. Ambos son complementos que se pueden utilizar en conjunto, con el fin de hacer sistemas completos y complejos.
+  HTTP --> Son peticiones al servidor que esperan una respuesta. Como un walkie talkie. 
+  Websocket --> Es un canal abierto entre servidor y cliente. Como una llamada telefónica.
+  HTTP --> Se solicita información y se espera una respuesta. Ej: un formulario de login
+  Websocket --> Se usa para comunicación en tiempo real. Ej: un chat
+  HTTP --> Se usa para consumir APIs y recursos web Se usa para escuchar información en tiempo real
+  Protocolo HTTP Es un protocolo de comunicación
+  HTTP --> Conexión de una sola vía 
+  Websocket --> Conexión de doble vía
+  HTTP --> No sustituye a WebSockets 
+  Websocket --> No sustituye a HTTP
+
+- Socket.io: 
+  ✓ Es una biblioteca de Javascript para poder implementar los sockets anteriormente mencionados.
+  ✓ Debido al funcionamiento que hemos visto en clase. socket.io debe instanciarse tanto de lado del cliente, como del servidor.
+  ✓ Permite utilizar todo el potencial mencionado de los websockets, y cuenta con una API casi idéntica para cliente y para servidor. 
+  ✓ Socket.IO utiliza principalmente el protocolo Websocket proporcionando la misma interfaz.
+  ✓ Se puede usar como un contenedor para Websocket aunque proporciona muchas más funciones, incluida la transmisión a múltiples sockets, el almacenamiento de datos asociados con cada cliente y E/S asíncronas.
+  ✓ Se puede instalar con npm.
+  ✓ Fiabilidad: Las conexiones se establecen incluso en presencia de:
+  ✓ proxies y balanceadores de carga.
+  ✓ firewall personal y software antivirus.
+  ✓ Soporte de reconexión automática: A menos que se le indique lo contrario, un cliente desconectado intentará siempre volver a conectarse, hasta que el servidor vuelva a estar disponible.
+  ✓ Detección de desconexión: Se implementa un mecanismo de heartbeat, lo que permite que tanto el servidor como el cliente sepan cuando el otro ya no responde.
+  ✓ Soporte binario: Se puede emitir cualquier estructura de datos serializable, que incluye:
+  ✓ ArrayBuffer y Blob en el navegador
+  ✓ ArrayBuffer y Buffer en Node.js
+
+                                                                                              
+
     
-    > Los 3 estados de GIT
-      1. estado (el que trabajamos) “preparamos las cajas”. 
-      2. estado (archivos listos) “agregamos las cajas listas”. 
-      3. estado (registro de todos los archivos) “lote listo”.
-      
-    > Configurando GIT por primera vez
-      ~ Tu identidad: Lo primero que deberías hacer cuando instalas Git es establecer tu nombre de usuario y dirección de correo electrónico. Esto es importante porque las confirmaciones de
-         cambios (commits) en Git usan esta información, y es introducida de manera inmutable en los commits que envías.               john@MyShopSolutions: ~$ git --version                    
-      ~ Elige un nombre de usuario que recuerdes fácil, y el email que en la próxima clase usarás en Github    
-      ~ Establece el nombre con el comando: git config --global user.name "Nombre Apellido".       
-      ~ Establece el correo a usar con el comando. git config --global user.email johndoe@example.com
-            
-    > Comprobando tu configuración  
-      ~ Vamos a comprobar si guardamos bien el usuario usando el comando: git config --list
-      ~ Puedes también comprobar qué valor tiene la clave nombre en Git ejecutando: git config user.name
-             
-    > Comandos básicos
-       ✓ /?: si quieres saber más de un comando, añade /? para ver la ayuda relacionada. Te será muy útil para ver las muchas opciones de cada comando.
-       ✓ HELP: te mostrará una lista de comandos disponibles.
-       ✓ DIR: es el comando más conocido de DOS y sirve para ver elcontenido de una carpeta (en MAC-OS usar LS).
-       ✓ CD: sirve para entrar en una carpeta o salir de ella (CD…).
-       ✓ CLEAR: limpia la consola.     
-       ✓ MKDIR: con este comando crearás una carpeta nueva. Con RMDIR podrás eliminarla.
-       ✓ MOVE y COPY: son los comandos para mover y copiar archivos respectivamente. Deberás indicar el nombre del archivo con su ruta (si está en otra carpeta en la que te encuentras) y la
-           ruta de destino.
-       ✓ RENAME: sirve para renombrar un archivo o carpeta. Hay que indicar el nombre original y el definitivo.
-       ✓ DEL: es el comando para eliminar un archivo. Recuerda que no irá a la Papelera, así que piensa muy bien antes de borrar algo. Y para eliminar carpeta usa el comando RD (en MAC-OS usar
-           RM para archivos / para eliminar carpetas RM -RF).
-       ✓ EXIT: cierra la ventana de la línea de comandos o símbolo del sistema.
-       ✓ COPY CON: crear archivos (en MAC-OS usar TOUCH).
-          
-    > Comandos
-      ✓ git help config    /   git config --help     /     git-config   obtener ayuda
-      ✓ git init: indicarle que en ese directorio, donde ejecutamos este comando, será usado con GIT. 
-      ✓ git add .: agregar todos los archivos creados, modificados, eliminados al estado 2 (stage)
-      ✓ git commit -m “Mensaje”: mensaje obligatorio para indicar que hemos cambiado por ejemplo, al estado 3.
-      ✓ Git log --online: para conocer loscódigos de los commits realizados.
-      ✓ Git checkout rama: para cambiar de rama o ir a un commit específico (debemos conocer su código anteriormente)
-      ✓ git merge rama: debemos estar en MASTER para fusionar.
-      ✓ git branch rama: creación de una rama (si queremos eliminar una rama ponemos git branch -D nombre-rama)
-      ✓ git branch -D rama: borrar ramas
-      ✓ git remote -v: Ver url del repositorio
-      ✓ git reflog: Ver historial
-      
-      ✓ git init initializes your local directory as a new git repository. You must run this before you can commit any of your work.
-      ✓ git status shows the current status of your repo. It will show you if you have any work that is unstaged, what branch you are on, how many commits you are ahead of the master remote on github, and other useful things.
-      ✓ git diff shows you the changes in your unstaged code.
-      ✓ git remote -v shows you all the remotes for your repo. The v stands for verbose, which shows you the URL of the repository on github, if any, that your local repository is pointing to rather than just the name of the remote repo.
-      ✓ git add . takes all unstaged work and stages it, making it ready to be committed. You can also specify a particular file to stage with git add file-path/name-of-file
-      ✓ git commit -m "write commit message here" commits all staged work. It’s important to write a brief, clear commit message so you know what each commit is for. “Final commit” is not the commit message you’re looking for exactly 100% of 
-           the time.
-      ✓ git pull once you've committed all your local work and running git status shows that you have nothing to commit, you pull down any changes from your remote. By default, this will pull from the origin remote’s master branch. To be 
-           specific about which remote and branch to pull from, you can use: git pull name-of-remote name-of-branch
-      ✓ git push pushes your local changes up to your remote. By default, this will push to the origin remote’s master branch. Like pull, you can push to a specific remote and branch with: git push name-of-remote name-of-branch. This is 
-           useful if you are using branches and pull requests. If you get an error message, it’s probably because you haven’t pushed your local branch up to github yet. Try git push -u name-of-remote name-of-branch.
-      ✓ git branch shows you all your local branches and indicates which branch you are currently on.
-      ✓ git checkout -b name-of-new-branch makes a new branch and switches to that branch.
-      ✓ git merge name-of-branch will merge the specified branch into the branch you are currently on.
-      ✓ git branch -d name-of-branch-to-delete deletes the specified branch
-      ✓ git log will show you the full list of commits and authors for your repo
-      ✓ history will show you your past git commands
-      ✓ git stash stashes any unstaged changes in your repository. They will not be present in your codebase, but they are not deleted.
-      ✓ git stash pop gives you back the last staged changes you stashed
-      ✓ git blame file-path/name-of-file shows you line-by-line who wrote the code in the specified file. Useful when you have a question about how something works and want to figure out who to ask, and also great source of shame when you 
-          realize you wrote the chunk of code you’ve been swearing at for the last hour.
-            
-      + Configurar global main como nombre de rama principal:
-        git config --global init.defaultBranch main
-
-      + error: remote origin already exists:
-        git remote set-url origin [url]
- 
-      + Ver url del repositorio:
-        git remote -v
-
-      + Eliminar commit especifico:
-        git revert [commit]
-        (cerrar ventana del editor)(se crea nuevo commit)
-
-      + Clonar repositorio:
-        git clone [url]
-
-      + Ver historial:
-        git reflog
- 
-      + Deshace todos los commits después de [commit], preservando los cambios localmente:
-        git reset [commit]
- 
-      + Desecha todo el historial y regresa al commit especificado:
-        git reset --hard [commit]
-        
-        
-     > Para iniciar sesion cuando se requiera, debemos:
-       1. Credenciales de Windows 
-       
-       2. Cambiar el username y email de Git
-          git config --global user.name "new name"
-          git config --global user.email newcorreo@example.com 
-       
-       3. Cambiar el usuario de Credenciales
-          git config credential.username "new name"
-          
-       4. En caso de que la terminal diga que no reconozca, debemos escribir lo siguiente para que podamos iniciar sesion desde el navegador y que aparezca la ventanilla
-          git push --set-upstream origin main        
-       
-       5. Para validar la configuración actual
-          git config --global -e    
-          
-     > Si quiero agregar cambios a Github desde VS code, necesito:
-       1. git add .
-       2. git commit -m "escribir cualquier nombre al cambio"
-       3. git push      o tambien     git push -u origin main
-
-  
-  
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
                                                                                                                    Glosario

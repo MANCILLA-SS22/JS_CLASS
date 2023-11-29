@@ -6770,152 +6770,117 @@ app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
 //  ✓ Al llamar al método get ‘/’, generar un número random para elegir a alguno de los usuarios y mostrar el usuario seleccionado al azar en la plantilla. 
 //  ✓ Observar los diferentes resultados en el navegador. */
 
+/* //Ejemplo 27: Socket.io
+import express from "express";
+import __dirname from "./utils.js"
+import handlebars from "express-handlebars";
+import viewRouter from "./src/router/socketView.routes.js";
+import { Server } from "socket.io";
+
+const app = express();
+const PORT = 5500;
+const httpServer = app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+const socketServer = new Server(httpServer); //Instanciar websocket
+
+// Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
+app.engine("hbs", handlebars.engine({
+        extname: "hbs", //index.hbs
+        defaultLayout: "main", //Plantilla principal
+    })
+);
+app.set("views", `${__dirname}/src/views`); // Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
+app.set("view engine", "hbs"); //Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
+app.use(express.static(`${__dirname}/src/public`)); // Public. Sentamos de manera estatica la carpeta public
+app.use("/", viewRouter); // Routes
 
 
-//         $$$$$$$$$$$$$$$ MODERN JAVASCRIPT DEVELOPMENT: MODULES AND TOOLING $$$$$$$$$$$$$$$
+const users = [];
+
+//Socket comunication
+socketServer.on('connection', function(socketClient){ //El cliente se conecta con su websocket al socketServer (socketServer.on significa que está escuchando porque algo pase), entonces, cuando socketServer escucha que hay una nueva conexión (connection), muestra en consola el mensaje “Nuevo cliente conectado”. Es por eso que aparece el mensaje en la consola del Visual Studio Code. 
+    console.log("Nuevo cliente conectado");
+    
+    socketClient.on("message", function(data){ //Esta vez, una vez que el socket se ha conectado, podemos escuchar eventos de dicho socket, a partir de la sintaxis indicada: socket.on(“nombre_del_evento_a_escuchar”,callback con la data que me hayan enviado); Este “evento a escuchar” tiene un identificador que el cliente tiene que colocar de su lado para poder enviar información. Podemos tener múltiples socket.on, para tener así escuchar diferentes eventos.
+        console.log(data);
+        socketClient.emit("send_message", data);
+    });
+    
+    socketClient.emit("server_message", "Mensaje desde el servidor"); //el carácter de un websocket debe ser bidireccional, eso significa que el servidor también debe poder enviar mensajes al cliente. 
+    socketClient.emit("message_all",  "Mensaje para todos"); //Mensaje para todos incluyendo el sender
+
+    socketClient.broadcast.emit("message_all_1", "Mensaje a todos los sockets, sin incluir al sender"); //broadcast va a enviar algo a todos los que esten conectados, menos al ultimo que se conecta o al sender
+    // socketClient.broadcast.emit("message_all_2",  `${socketClient.id} Conectado`); //Esto se puede ver mejor si lo probamos entrando a localhost desde otro navegador 
+
+    socketClient.on("form_message", function(data){
+        console.log(data);
+        users.push(data);
+        socketClient.emit("users_list", users);
+    });
+    socketClient.emit("users_list", users);
+}); */
+
+/* //Ejemplo 27: Servidor con Websockets (after class)
+// ✓ Sobre la estructura anteriormente creada, agregar en la vista de cliente un elemento de entrada de texto donde al introducir texto, el mensaje se vea reflejado en todos 
+//   los clientes conectados en un párrafo por debajo del input. El texto debe ser enviado caracter a caracter y debe reemplazar el mensaje previo.
+// ✓ Basado en el ejercicio que venimos realizando, ahora los mensajes enviados por los clientes deberán ser almacenados en el servidor y reflejados por debajo del elemento 
+//   de entrada de texto cada vez que el usuario haga un envío. La estructura de almacenamiento será un arrayde objetos, donde cada objeto tendrá la siguiente estructura:
+//                                  { socketid: (el socket.id del que envió el mensaje), mensaje: (texto enviado)}
+
+// - Cada cliente que se conecte recibirá la lista de mensajes completa.
+// - Modificar el elemento de entrada en el cliente para que disponga de un botón de envío de mensaje.
+// - Cada mensaje de cliente se representará en un renglón aparte, anteponiendo el socket id. */
+
+/* //Ejemplo 28: Desafio con websockets: Configurar nuestro proyecto para que trabaje con Handlebars y websocket
+// ✓ Configurar el servidor para integrar el motor de plantillas Handlebars e instalar un servidor de socket.io al mismo.
+// ✓ Crear una vista “home.handlebars” la cual contenga una lista de todos los productos agregados hasta el momento
+// ✓ Además, crear una vista “realTimeProducts.handlebars”, la cual vivirá en el endpoint “/realtimeproducts” en nuestro views router, ésta contendrá la misma lista de 
+//  productos, sin embargo, ésta trabajará con websockets.
+// ✓ Al trabajar con websockets, cada vez que creemos un producto nuevo, o bien cada vez que eliminemos un producto, se debe actualizar automáticamente en dicha vista la lista.
+// ✓ Ya que la conexión entre una consulta HTTP y websocket no está contemplada dentro de la clase. Se recomienda que, para la creación y eliminación de un producto, Se cree un 
+//   formulario simple en la vista realTimeProducts.handlebars. Para que el contenido se envíe desde websockets y no HTTP. Sin embargo, esta no es la mejor solución, leer el siguiente punto.
+// ✓ Si se desea hacer la conexión de socket emits con HTTP, deberás buscar la forma de utilizar el servidor io de Sockets dentro de la petición POST. 
+//   ¿Cómo utilizarás un emit dentro del POST? */
+
+//Ejemplo 29: Aplicación chat con websocket
+// Nuestro chat comunitario contará con:
+// ✓ Una vista que cuente con un formulario para poder identificarse. El usuario podrá elegir el nombre de usuario con el cual aparecerá en el chat.
+// ✓ Un cuadro de input sobre el cual el usuario podrá escribir el mensaje.
+// ✓ Un panel donde todos los usuarios conectados podrán visualizar los mensajes en tiempo real
+// ✓ Una vez desarrollada esta aplicación, subiremos nuestro código a glitch.com, para que todos puedan utilizarlo
+
+import express from "express";
+import __dirname from "./utils.js"
+import handlebars from "express-handlebars";
+import viewRouter from "./src/router/socketView.routes.js";
+import { Server } from "socket.io";
+
+const app = express();
+const PORT = 5500;
+const httpServer = app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+const socketServer = new Server(httpServer); //Instanciar websocket
+
+// Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
+app.engine("hbs", handlebars.engine({
+        extname: "hbs", //index.hbs
+        defaultLayout: "main", //Plantilla principal
+    })
+);
+app.set("views", `${__dirname}/src/views`); // Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
+app.set("view engine", "hbs"); //Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
+app.use(express.static(`${__dirname}/src/public`)); // Public. Sentamos de manera estatica la carpeta public
+app.use("/", viewRouter); // Routes
+
+//Socket comunication
+socketServer.on('connection', function(socketClient){ //El cliente se conecta con su websocket al socketServer (socketServer.on significa que está escuchando porque algo pase), entonces, cuando socketServer escucha que hay una nueva conexión (connection), muestra en consola el mensaje “Nuevo cliente conectado”. Es por eso que aparece el mensaje en la consola del Visual Studio Code. 
+    console.log("Nuevo cliente conectado");
+});
 
 
-
-
-
-
-
-
-
-
-
-/* //Ejemplo 1: Importing and exporting modules
-console.log("Importing modile");  //Variables that are declared inside of a module, are actually sculpt to the module. So basically inside a module, the module itself is like the top level scope. And so by default, this means that all top level variables are private inside of this variable.
-import "./shoppingCart.js";       //All the modules are first executed before the rest of the code. */
-
-/* //Ejemplo 2: Named exports
-import { addToCart, totalPrice as price, tq } from './shoppingCart.js'; //When we use named exports, we must use curly braces.
-addToCart('bread', 5);
-console.log(price, tq); */
-
-/* //Ejemplo 3: Getting an arror by not exporting a module
-console.log(shippingCost); //This will give us an error because we haven't exported the shippingCost variable from shoppingCart.js */
-
-/* //Ejemplo 4: Import all the exports of a module at the same time into an object
-import * as ShoppingCart from './shoppingCart.js'; //This will create an object containing everything that is exported from the module that we will specify here.
-ShoppingCart.addToCart('bread', 5);
-console.log(ShoppingCart.totalPrice); */
-
-/* //Ejemplo 5: Default exports
-// import add, { addToCart, totalPrice as price, tq } from './shoppingCart.js'; //We must avoid using named and default exports at the same time because this is a bad practice.
-// import add from './shoppingCart.js'; //When we use named exports, we must not use curly braces.
-import add, { cart } from './shoppingCart.js';
-add('pizza', 2);
-add('bread', 5);
-add('apples', 4);
-
-//We do not see that empty object, that we export, but instead we have the array with the objects that we just added to the cart, by calling the add function. And so that proves
-//that this import here, is in fact, not simply a copy of the value, that we exported here. Because if it was, then here we would simply get the empty array.
-//Imports are not copies of the exports. They are instead like a live connection, and what this means is that I point to the same place of memory
-console.log(cart); */
-
-/* //Ejemplo 6: The Module Pattern (old way)
-
-// All of this data here is private because it is inside of the scope of the function. And so now all we have to do is to return some of this stuff in order to basically return a public API.
-const ShoppingCart2 = (function(){
-    const cart = [];
-    const shippingCost = 10;
-    const totalPrice = 237;
-    const totalQuantity = 23;
-
-    function addToCart (product, quantity) {
-        cart.push({
-            product: product, 
-            quantity: product
-        });
-        console.log(`${quantity} ${product} added to cart (sipping cost is ${shippingCost})`);
-    };
-
-    function orderStock (product, quantity) {
-        console.log(`${quantity} ${product} ordered from suplier`);
-    };
-
-    //we simply return an object, which contains the stuff that we want to make public here.
-    return {
-        addToCart,
-        orderStock,
-        cart,
-        totalPrice,
-        totalQuantity,
-    };
-
-}) ();
-
-ShoppingCart2.addToCart('apple', 4);
-ShoppingCart2.orderStock('pizza', 2);
-console.log(ShoppingCart2);
-console.log(ShoppingCart2.shippingCost); */
-
-/* //Ejemplo 7: CommonJS Modules
-
-// Export
-exports.addTocart = function (product, quantity) {
-    cart.push({ product, quantity });
-    console.log(
-        `${quantity} ${product} added to cart (sipping cost is ${shippingCost})`
-    );
-};
-
-// Import
-const { addTocart } = require('./shoppingCart.js'); */
-
-/* //Ejemplo 8: Introduction to NPM
-import add, { cart } from './shoppingCart';
-add('pizza', 2);
-add('bread', 5);
-console.log(cart);
-
-
-import cloneDeep from '../node_modules/lodash-es/cloneDeep.js';
-// import cloneDeep from 'lodash-es';
-
-const state = {
-    cart: [
-        { product: 'bread', quantity: 5 },
-        { product: 'pizza', quantity: 5 },
-    ],
-    user: { loggedIn: true },
-};
-
-const stateClone = Object.assign({}, state);
-const stateDeepClone = cloneDeep(state);
-
-state.user.loggedIn = false;
-console.log(stateClone);
-
-console.log(stateDeepClone);
-
-//The goal of using Parcel is to bunddle the three modules together, which are script.js, shoppingCart.js and cloneDeep.js
-
-
-if (module.hot) {
-    module.hot.accept();
-}
-
-class Person {
-    #greeting = 'Hey';
-    constructor(name) {
-        this.name = name;
-        console.log(`${this.#greeting}, ${this.name}`);
-    }
-}
-const jonas = new Person('Jonas');
-
-console.log('Jonas' ?? null);
-
-console.log(cart.find(el => el.quantity >= 2));
-Promise.resolve('TEST').then(x => console.log(x));
-
-import 'core-js/stable';
-// import 'core-js/stable/array/find';
-// import 'core-js/stable/promise';
-
-// Polifilling async functions
-import 'regenerator-runtime/runtime'; */
-
-//Ejemplo 9: Redux
