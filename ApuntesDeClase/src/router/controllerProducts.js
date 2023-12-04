@@ -40,6 +40,12 @@ routerProducts.post("/", async function(request, response){
     const parametersExist = nuevoProducto.hasOwnProperty("title") && nuevoProducto.hasOwnProperty("description") && nuevoProducto.hasOwnProperty("price") && nuevoProducto.hasOwnProperty("thumbnail") && nuevoProducto.hasOwnProperty("code") && nuevoProducto.hasOwnProperty("stock") && nuevoProducto.hasOwnProperty("status");
     if (parametersExist) {
         const crearProducto = await Product.addProduct(nuevoProducto);
+
+        if(crearProducto?.error) {
+            response.status(409).json({error: crearProducto.error})
+            return;
+        }
+
         response.status(200).json({message: crearProducto});
     }else{
         response.status(404).json({message: "Not enough information."});

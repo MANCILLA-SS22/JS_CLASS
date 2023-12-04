@@ -39,7 +39,7 @@ router.get("/food", function(request, response) {
 
 // Form
 router.get("/form", function(request, response) {
-  response.render("form", {
+  response.render("formSocket", {
     title: "Form example",
     fileCss: "styles.css",
   });

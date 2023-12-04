@@ -1,5 +1,6 @@
-function validatePost(req, res, next) {
-  const { userId, id, title, body } = req.body;
+// function validatePost(req, res, next) {
+function validatePost({userId, id, title, body}) {
+  // const { userId, id, title, body } = req.body;
 
   if (!userId) return res.json({error: "User id is required"});
   if (!id)     return res.json({error: "Id is required"});

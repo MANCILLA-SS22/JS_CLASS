@@ -6249,7 +6249,7 @@ import express from "express";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const PORT = 5000;
+const PORT = 5500;
 
 const usuarios = [
     {
@@ -6543,31 +6543,39 @@ app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
 import express from "express";
 const PORT = 5500;
 const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/static", express.static("../ApuntesDeClase/src/public"));
+
+app.use("/static", express.static("src/public/"));  //Probar con --> http://localhost:5500/static/saiga.jpg
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
 
 /* //Ejepmlo 19: Carpeta public
-// Partiendo del ejemplo anterior, recrear la estructura con un index.html para poder visualizarse en la ruta raíz.
+// ✓ El router de users debe tener la ruta principal /api/users
+// ✓ El router de pets debe tener la ruta principal /api/pets
+// ✓ Ambos deben tener, de manera interna, un array para almacenarlos.
+// ✓ Ambos deben contar con un método get en su ruta raíz para poder obtener el arreglo.
+// ✓ Ambos deben contar con un método POST en su ruta raíz para poder agregar un usuario omascota según sea el router.
+// ✓ Conectar los routers al archivo app.js para tener listo el apuntador al router.
+// ✓ Probar funcionalidad con Postman.
+// ✓ recrear la estructura con un index.html para poder visualizarse en la ruta raíz.
 // ✓ En este archivo deberá haber un formulario donde podremos ingresar una mascota a partir del método POST. Dicho POST conectará al endpoint raíz del router pets
 // ✓ Configurar el router pets para que pueda recibir el json por parte del formulario (recordar express.json() y express.urlencoded({extended:true}))
 // ✓ Verificar con POSTMAN que la información llegue al servidor y se guarde correctamente.
 
 import express from "express";
-import petsRouter from "./src/routes/pets.router.js";
-import userRouter from "./src/routes/users.router.js";
+import petsRouter from "./src/router/pets.router.js";
+import userRouter from "./src/router/users.router.js";
 const PORT = 5500;
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/static", express.static("../ApuntesDeClase/src/public/"));
+app.use("/static", express.static("src/public/")); // Si no se quiere usar POSTMAN, usar el siguiente link --> http://localhost:5500/static/html/indexLayout.html
 
 app.use("/api/pets", petsRouter);
 app.use("/api/users", userRouter);
-
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
 
@@ -6631,7 +6639,6 @@ import {loader} from "./src/utils/multer.js"
 const app = express();
 const PORT = 5500;
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("src/public/"));
@@ -6693,9 +6700,28 @@ app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 // antes de introducir los productos al carrito o de lo contrario obtendremos un error.
 // - Paso 3: Finalmente podemos agregar elementos al arreglo products en el archivo carts.json. */
 
-/* //Ejemplo 24: Handlebars
+/* //Ejemplo 24: Uso de app.get(name, value);
 import express from "express";
-import __dirname from "./utils.js"
+
+const PORT = 5500;
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Setting the value to name
+app.set('title', 'Welcome to TutorialsPoint!!');
+
+// Creating an endpoint
+app.get('/', (req, res) => {
+    res.send(app.get('title'));
+})
+
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
+
+/* //Ejemplo 25: Handlebars
+import express from "express";
+import {__dirname} from "./utils.js"
 import handlebars from "express-handlebars";
 import viewRouter from "./src/router/views.routes.js";
 
@@ -6712,25 +6738,27 @@ app.engine("hbs", handlebars.engine({
     defaultLayout: "main",
 }));
 
-// Seteamos nuestro motor
-app.set("view engine", "hbs");
-app.set("views", `${__dirname}/src/views`);
+// Seteamos nuestro motor.     //View engines allow us to render web pages using template files. These templates are filled with actual data and served to the client.
+app.set("view engine", "hbs"); //Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo. 
+app.set("views", `${__dirname}/src/view`); //Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
 
 // Public
-app.use(express.static(`${__dirname}/public`));
+app.use(express.static(`${__dirname}/src/public`));
 
 // Routes
 app.use("/", viewRouter);
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
 
-/* //Ejemplo 25: Handlebars con express
+/* //Ejemplo 26: Handlebars con express
 // Realizar un formulario en una nueva plantilla.
 // ✓ Se creará un archivo “register.handlebars” como nueva plantilla, donde se colocará un form
 // ✓ Dicho form debe servir para registrar un usuario, por lo que contará con nombre, correo, y contraseña
 // ✓ Enviar los datos a una ruta POST ‘/user’, y guardar el usuario en un arreglo. Confirmar que el guardado se realice exitosamente.
+// ✓ Al llamar al método get ‘/’, generar un número random para elegir a alguno de los usuarios y mostrar el usuario seleccionado al azar en la plantilla. 
+
 import express from "express";
-import __dirname from "./utils.js"
+import {__dirname} from "./utils.js"
 import handlebars from "express-handlebars";
 import viewRouter from "./src/router/desafioView.routes.js";
 
@@ -6748,39 +6776,24 @@ app.engine("hbs", handlebars.engine({
     })
 );
 
-// Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
-app.set("views", `${__dirname}/src/views`);
-
-//Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
-app.set("view engine", "hbs");
-
-// Public. Sentamos de manera estatica la carpeta public
-app.use(express.static(`${__dirname}/src/public`));
-
-// Routes
-app.use("/", viewRouter);
+app.set("views", `${__dirname}/src/view`); //Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
+app.set("view engine", "hbs"); //Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
+app.use(express.static(`${__dirname}/src/public`)); // Public. Sentamos de manera estatica la carpeta public
+app.use("/", viewRouter);// Routes
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
 
-/* //Ejemplo 26: Handlebars (Datos personales)
-// Basándonos en el ejemplo anterior, desarrollar una vista web que permita mostrar los datos personales de múltiples usuarios.
-//  ✓ Utilizar la misma estructura mostrada por el profesor, para poder levantar un servidor que utilice handlebars como motor de plantillas.
-//  ✓ Configurar la plantilla para que muestre los siguientes datos: nombre, apellido, edad, correo, teléfono.
-//  ✓ Crear un array “users” que cuente con 5 usuarios de tipo objeto, cada uno con los datos mencionados arriba.
-//  ✓ Al llamar al método get ‘/’, generar un número random para elegir a alguno de los usuarios y mostrar el usuario seleccionado al azar en la plantilla. 
-//  ✓ Observar los diferentes resultados en el navegador. */
-
 /* //Ejemplo 27: Socket.io
 import express from "express";
-import __dirname from "./utils.js"
+import {__dirname} from "./utils.js"
 import handlebars from "express-handlebars";
-import viewRouter from "./src/router/socketView.routes.js";
+import viewRouter from "./src/router/socketIntro.routes.js";
 import { Server } from "socket.io";
 
 const app = express();
 const PORT = 5500;
 const httpServer = app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
-const socketServer = new Server(httpServer); //Instanciar websocket
+const io = new Server(httpServer); //Instanciar websocket
 
 // Middlewares
 app.use(express.json());
@@ -6792,7 +6805,7 @@ app.engine("hbs", handlebars.engine({
         defaultLayout: "main", //Plantilla principal
     })
 );
-app.set("views", `${__dirname}/src/views`); // Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
+app.set("views", `${__dirname}/src/view`); // Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
 app.set("view engine", "hbs"); //Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
 app.use(express.static(`${__dirname}/src/public`)); // Public. Sentamos de manera estatica la carpeta public
 app.use("/", viewRouter); // Routes
@@ -6801,7 +6814,7 @@ app.use("/", viewRouter); // Routes
 const users = [];
 
 //Socket comunication
-socketServer.on('connection', function(socketClient){ //El cliente se conecta con su websocket al socketServer (socketServer.on significa que está escuchando porque algo pase), entonces, cuando socketServer escucha que hay una nueva conexión (connection), muestra en consola el mensaje “Nuevo cliente conectado”. Es por eso que aparece el mensaje en la consola del Visual Studio Code. 
+io.on('connection', function(socketClient){ //El cliente se conecta con su websocket al io (io.on significa que está escuchando porque algo pase), entonces, cuando io escucha que hay una nueva conexión (connection), muestra en consola el mensaje “Nuevo cliente conectado”. Es por eso que aparece el mensaje en la consola del Visual Studio Code. 
     console.log("Nuevo cliente conectado");
     
     socketClient.on("message", function(data){ //Esta vez, una vez que el socket se ha conectado, podemos escuchar eventos de dicho socket, a partir de la sintaxis indicada: socket.on(“nombre_del_evento_a_escuchar”,callback con la data que me hayan enviado); Este “evento a escuchar” tiene un identificador que el cliente tiene que colocar de su lado para poder enviar información. Podemos tener múltiples socket.on, para tener así escuchar diferentes eventos.
@@ -6820,10 +6833,11 @@ socketServer.on('connection', function(socketClient){ //El cliente se conecta co
         users.push(data);
         socketClient.emit("users_list", users);
     });
+
     socketClient.emit("users_list", users);
 }); */
 
-/* //Ejemplo 27: Servidor con Websockets (after class)
+//Ejemplo 28: Servidor con Websockets (after class)
 // ✓ Sobre la estructura anteriormente creada, agregar en la vista de cliente un elemento de entrada de texto donde al introducir texto, el mensaje se vea reflejado en todos 
 //   los clientes conectados en un párrafo por debajo del input. El texto debe ser enviado caracter a caracter y debe reemplazar el mensaje previo.
 // ✓ Basado en el ejercicio que venimos realizando, ahora los mensajes enviados por los clientes deberán ser almacenados en el servidor y reflejados por debajo del elemento 
@@ -6832,9 +6846,40 @@ socketServer.on('connection', function(socketClient){ //El cliente se conecta co
 
 // - Cada cliente que se conecte recibirá la lista de mensajes completa.
 // - Modificar el elemento de entrada en el cliente para que disponga de un botón de envío de mensaje.
-// - Cada mensaje de cliente se representará en un renglón aparte, anteponiendo el socket id. */
+// - Cada mensaje de cliente se representará en un renglón aparte, anteponiendo el socket id.
 
-/* //Ejemplo 28: Desafio con websockets: Configurar nuestro proyecto para que trabaje con Handlebars y websocket
+import express from "express";
+import { Server } from "socket.io";
+import routerMain from "./src/router/desafio3.js";
+import { ManagerPost } from "./src/utils/ManagerPost.js";
+
+const app = express();
+const PORT = 5500;
+
+routerMain(app); 
+
+const manager = new ManagerPost("./data/post.json");
+const httpServer = app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+const io = new Server(httpServer); //Instanciar websocket
+
+
+io.on("connection", function(socket){
+    console.log("Nuevo cliente conectado");
+
+    socket.on("post_send", async function(data){
+        try {
+            await manager.savePost(data);
+            socket.emit("posts", manager.getPosts());
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+    socket.emit("posts", manager.getPosts());
+
+});
+
+/* //Ejemplo 29: Desafio con websockets: Configurar nuestro proyecto para que trabaje con Handlebars y websocket
 // ✓ Configurar el servidor para integrar el motor de plantillas Handlebars e instalar un servidor de socket.io al mismo.
 // ✓ Crear una vista “home.handlebars” la cual contenga una lista de todos los productos agregados hasta el momento
 // ✓ Además, crear una vista “realTimeProducts.handlebars”, la cual vivirá en el endpoint “/realtimeproducts” en nuestro views router, ésta contendrá la misma lista de 
@@ -6845,15 +6890,17 @@ socketServer.on('connection', function(socketClient){ //El cliente se conecta co
 // ✓ Si se desea hacer la conexión de socket emits con HTTP, deberás buscar la forma de utilizar el servidor io de Sockets dentro de la petición POST. 
 //   ¿Cómo utilizarás un emit dentro del POST? */
 
-//Ejemplo 29: Aplicación chat con websocket
+/* //Ejemplo 30: Aplicación chat con websocket
 // Nuestro chat comunitario contará con:
 // ✓ Una vista que cuente con un formulario para poder identificarse. El usuario podrá elegir el nombre de usuario con el cual aparecerá en el chat.
 // ✓ Un cuadro de input sobre el cual el usuario podrá escribir el mensaje.
 // ✓ Un panel donde todos los usuarios conectados podrán visualizar los mensajes en tiempo real
 // ✓ Una vez desarrollada esta aplicación, subiremos nuestro código a glitch.com, para que todos puedan utilizarlo
+// ✓ Cuando el usuario se autentique correctamente, el servidor le mande los logs de todo el chat.
+// ✓ Cuando el usuario se autentique correctamente, todos los demás usuarios (menos el que se acaba de registrar) reciban una notificación indicando qué usuario se acaba de conectar. (utiliza Swal toast).
 
 import express from "express";
-import __dirname from "./utils.js"
+import {__dirname} from "./utils.js"
 import handlebars from "express-handlebars";
 import viewRouter from "./src/router/socketView.routes.js";
 import { Server } from "socket.io";
@@ -6861,26 +6908,38 @@ import { Server } from "socket.io";
 const app = express();
 const PORT = 5500;
 const httpServer = app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
-const socketServer = new Server(httpServer); //Instanciar websocket
+const io = new Server(httpServer); //Instanciar websocket
 
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
-app.engine("hbs", handlebars.engine({
+app.engine("hbs", handlebars.engine({ 
         extname: "hbs", //index.hbs
         defaultLayout: "main", //Plantilla principal
     })
 );
-app.set("views", `${__dirname}/src/views`); // Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
+
+app.set("views", `${__dirname}/src/view`); // Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
 app.set("view engine", "hbs"); //Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
 app.use(express.static(`${__dirname}/src/public`)); // Public. Sentamos de manera estatica la carpeta public
 app.use("/", viewRouter); // Routes
 
 //Socket comunication
-socketServer.on('connection', function(socketClient){ //El cliente se conecta con su websocket al socketServer (socketServer.on significa que está escuchando porque algo pase), entonces, cuando socketServer escucha que hay una nueva conexión (connection), muestra en consola el mensaje “Nuevo cliente conectado”. Es por eso que aparece el mensaje en la consola del Visual Studio Code. 
-    console.log("Nuevo cliente conectado");
-});
+const messages = [];
+io.on('connection', function(socket){//El cliente se conecta con su websocket al io (io.on significa que está escuchando porque algo pase), entonces, cuando io escucha que hay una nueva conexión (connection), muestra en consola el mensaje “Nuevo cliente conectado”. Es por eso que aparece el mensaje en la consola del Visual Studio Code. 
+
+    socket.on("inicio", function(data){ //2. Recivimos el nombre
+        socket.broadcast.emit("connected", data); //3. Lo enviamos a todos los usuarios menos al ultimo
+    })
+
+    socket.on("message", function(data){//7. Recivimos el mensaje que se capturo en el imput
+        messages.push(data);
+        io.emit("messages", messages); //8. lo enviamos a todo los demas. (Esto es para indicar que se envia a todos y no solo a uno o a todos menos el ultimo, como con broadcast)
+    });
+
+    socket.emit("messages", messages);//Al cargar la pagina, se envia un array vacio. Cuando un usuario nuevo entre o cuando uno actualice el navegador, podra ver el array de mensajes. De lo contrario, aparecera en blanco.
+}); */
 
 

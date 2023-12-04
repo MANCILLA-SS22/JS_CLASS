@@ -107,13 +107,19 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
       
   > Anonymus function: 
   
-  > Callback function: Lo primero que tenemos que saber es que en Javascript, las funciones son objetos de primera clase. Como tales, podemos trabajar con ellos de la misma forma que trabajamos con otros objetos, como asignarlos a variables 
-    y pasarlos como argumentos a otras funciones. Esto es importante, porque esta última técnica nos permite ampliar la funcionalidad de nuestras aplicaciones.
-    JavaScript ejecuta el código secuencialmente en orden descendente. Sin embargo, hay algunos casos en los que el código se ejecuta (o debe ejecutarse) después de que ocurra otra cosa y también de forma no secuencial. Esto se llama 
-    programación asíncrona.
-    Los callbacks aseguran que una función no se va a ejecutar antes de que se complete una tarea, sino que se ejecutará justo después de que la tarea se haya completado. Nos ayuda a desarrollar código JavaScript asíncrono y nos mantiene a 
-    salvo de problemas y errores.
-    En JavaScript, la forma de crear una función callback es pasándola como parámetro a otra función, y luego llamarla de vuelta justo después de que haya ocurrido algo o se haya completado alguna tarea.
+  > Funciones (function): Lo primero que tenemos que saber es que en Javascript, las funciones son objetos de primera clase. Como tales, podemos trabajar con ellos de la misma forma que trabajamos con otros objetos, como asignarlos a 
+    variables y pasarlos como argumentos a otras funciones. Esto es importante, porque esta última técnica nos permite ampliar la funcionalidad de nuestras aplicaciones. JavaScript ejecuta el código secuencialmente en orden descendente. Sin 
+    embargo, hay algunos casos en los que el código se ejecuta (o debe ejecutarse) después de que ocurra otra cosa y también de forma no secuencial. Esto se llama programación asíncrona.
+    
+  > Callback function: Aseguran que una función no se va a ejecutar antes de que se complete una tarea, sino que se ejecutará justo después de que la tarea se haya completado. Nos ayuda a desarrollar código JavaScript asíncrono y nos 
+    mantiene a salvo de problemas y errores. Una función callback es aquella que es pasada como argumento a otra función para que sea "llamada de nuevo" (call back) en un momento posterior. Una función que acepta otras funciones como 
+    argumentos es llamada función de orden-superior (High-Order), y contiene la lógica para determinar cuándo se ejecuta la función callback. Es la combinación de estas dos la que nos permite ampliar nuestra funcionalidad. La forma de crear 
+    una función callback es pasándola como parámetro a otra función, y luego llamarla de vuelta justo después de que haya ocurrido algo o se haya completado alguna tarea.
+    
+    A callback function is a function passed into another function as an argument, which is then invoked inside the outer function to complete some kind of routine or action.
+    Callbacks make sure that a function is not going to run before a task is completed but will run right after the task has completed. It helps us develop asynchronous JavaScript code and keeps us safe from problems and errors.
+    In JavaScript, the way to create a callback function is to pass it as a parameter to another function, and then to call it back right after something has happened or some task is completed. 
+        
         
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
@@ -2267,54 +2273,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   ~ 500: Se utiliza cuando algo ocurrió en el servidor, no necesariamente un error del cliente, sino un error o “detalle” que no haya considerado el servidor al tratar con algún caso
        
        
-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
-
-                                                                                                                   WEB API'S
-
-> IntersectionObserver: The IntersectionObserver interface of the Intersection Observer API provides a way to asynchronously observe changes in the intersection of a target element with an ancestor element or with a top-level document's 
-  viewport. The ancestor element or viewport is referred to as the root.
-  When an IntersectionObserver is created, it's configured to watch for given ratios of visibility within the root. The configuration cannot be changed once the IntersectionObserver is created, so a given observer object is only useful for 
-  watching for specific changes in degree of visibility; however, you can watch multiple target elements with the same observer.            
-  
-  ~ constructor: The IntersectionObserver() constructor creates and returns a new IntersectionObserver object.
-    The rootMargin, if specified, is checked to ensure it's syntactically correct. If not specified, or an empty string, the default is 0px 0px 0px 0px.
-    The thresholds, if specified, are checked to ensure that they're all in the range 0.0 and 1.0 inclusive, and the threshold list is sorted in ascending numeric order. If the threshold list is empty, it's set to the array [0.0].      
-  
-                                                                                   new IntersectionObserver(callback, options);
-  
-    callback: A function which is called when the percentage of the target element is visible crosses a threshold. The callback receives as input two parameters:
-    
-    entries: An array of IntersectionObserverEntry objects, each representing one threshold which was crossed, either becoming more or less visible than the percentage specified by that threshold.
-    
-    observer: The IntersectionObserver for which the callback is being invoked.
-    
-    options Optional: An optional object which customizes the observer. If options isn't specified, the observer uses the document's viewport as the root, with no margin, and a 0% threshold (meaning that even a one-pixel change is enough to
-    trigger a callback). You can provide any combination of the following options:
-    
-    root: An Element or Document object which is an ancestor of the intended target, whose bounding rectangle will be considered the viewport. Any part of the target not visible in the visible area of the root is not considered visible.
-    root property identifies the Element or Document whose bounds are treated as the bounding box of the viewport for the element which is the observer's target. 
-    If the root is null, then the bounds of the actual document viewport are used, the owning document is used as the root, and the bounds its viewport (that is, the visible area of the document) are used as the root bounds.
-    
-    rootMargin: A string which specifies a set of offsets to add to the root's bounding_box when calculating intersections, effectively shrinking or growing the root for calculation purposes. The syntax is approximately the same as that for 
-    the CSS margin property; see The intersection root and root margin for more information on how the margin works and the syntax. The default is "0px 0px 0px 0px".
-    
-    threshold: Either a single number or an array of numbers between 0.0 and 1.0, specifying a ratio of intersection area to total bounding box area for the observed target. A value of 0 means that even a single visible pixel counts as the 
-    target being visible. 1.0 means that the entire target element is visible. See Thresholds for a more in-depth description of how thresholds are used. The default is a threshold of 0.0.                                                                                                                                                                                 
-    
-    
-    disconnect(): stops watching all of its target elements for visibility changes.
-    
-    observe(): adds an element to the set of target elements being watched by the IntersectionObserver. One observer has one set of thresholds and one root, but can watch multiple target elements for visibility changes in keeping with those.
-    To stop observing the element, call IntersectionObserver.unobserve().
-    
-    takeRecords(): returns an array of IntersectionObserverEntry objects, one for each targeted element which has experienced an intersection change since the last time the intersections were checked, either explicitly through a call to this 
-    method or implicitly by an automatic call to the observer's callback.
-    
-    unobserve(): instructs the IntersectionObserver to stop observing the specified target element.
-    
-- FormData(): The FormData interface provides a way to construct a set of key/value pairs representing form fields and their values, which can be sent using the fetch(), XMLHttpRequest.send() or navigator.sendBeacon() methods. It uses the 
-  same format a form would use if the encoding type were set to "multipart/form-data"    
-  
   
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
@@ -2356,6 +2314,10 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   Hay dos formas de actualizar un recurso: actualizar sólo los campos requeridos, o bien mandar a actualizar el objeto completo, ambas formas son válidas cuando hablamos de actualización, y dependerá del contexto.
 - Método DELETE: Como bien lo indica el nombre, este método lo utilizamos cuando queremos eliminar algún recurso. Aquí no es necesario enviar nada desde el body, sin embargo, sí es importante indicar en el req.params el identificador para 
   que el servidor reconozca qué recurso debe eliminar.
+  
+  
+- Metodos en express js
+  > // app.set(name, value); is used to assign the setting name to value. You may store any value that you want, but certain names can be used to configure the behavior of the server. 
 
       
 - Objeto request: Objeto usado dentro de los servicios de express para poder realizar consultas más complejas.
@@ -2390,9 +2352,19 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     proyecto, dentro una carpeta src donde vivirá nuestro código, y nuestro servidor dentro.
     Despues, agregaremos una carpeta “routes” donde vivirán nuestros diferentes routers (Nota que app.js se queda fuera de routes, pero sigue dentro de src).
 
+- Servicio de archivos estáticos con Express: 
+   ✓ Nuestro servidor tiene la posibilidad de alojar recursos que pueden ser visibles para el cliente de manera directa.
+   ✓ Podemos configurar una carpeta para que el usuario pueda acceder y ver dichos recursos de manera directa sólo con acceder a la ruta donde se encuentra ubicada.
+   ✓ En este curso y en proyectos profesionales podrás encontrar estos archivos en la carpeta “public”, haciendo referencia como dice el nombre, a recursos públicos de fácil acceso para el cliente.
+  
+  Los dos casos principales para los cuales encontrarás el uso de esta carpeta “public” para archivos estáticos son:
+   ✓ Cuando necesitemos alojar imágenes y servirlas directamente al cliente.
+   ✓ Cuando necesitemos alojar una página web en todos sus sentidos: html, css, js. En esta clase haremos una página sencilla para mostrar el alcance de public.
+
 - ¿Cómo convertir una carpeta en un recurso estático? 
-  Para poder utilizar los recursos de una carpeta de manera estática, basta conque en el servidor especifiquemos como “express.static” dicha carpeta con la siguiente sintaxis: app.use(express.static('public')) Indicamos que, todo lo que viva 
-  en la carpeta public, podrá ser accedido directamente desde la carpeta public. A continuación podemos cargar los archivos que queramos en el directorio public:
+  Para poder utilizar los recursos de una carpeta de manera estática, basta conque en el servidor especifiquemos como “express.static” dicha carpeta con la siguiente sintaxis: 
+                                                               app.use(express.static('public'));
+  Indicamos que, todo lo que viva en la carpeta public, podrá ser accedido directamente desde la carpeta public. A continuación podemos cargar los archivos que queramos en el directorio public:
   http://localhost:3000/hello.html
   http://localhost:3000/images/kitten.jpg
   Nota: Express busca los archivos relativos al directorio estático, por lo que el nombre del directorio estático no forma parte del URL.
@@ -2449,6 +2421,11 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
                                                                                                                    Redux
+
+- configureStore();
+- createSlice();
+- useSelector: Read data from the store with the useSelector hook
+- useDispatch: Get the dispatch function with the useDispatch hook, and dispatch actions as needed                                                                                                                   
                                                                                                                    
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
@@ -2464,6 +2441,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
    ✓ El cliente no tendrá que estar actualizando la página constantemente 
    ✓ En cuanto el servidor reciba una actualización de una nueva puja, actualizará a todos los clientes conectados, permitiendo dar información en tiempo real
    ✓ Una vez que termina la subasta, el socket se cierra y el servidor deja de notificar innecesariamente al cliente.
+
+- Hanshake: Acuerdo entre cliente y servidor que permite establecer una conexión abierta entre ambos puntos.      
    
 - Funcionamiento de un Websocket: Primero, el cliente tiene que enviar una solicitud HTTP llamada Handshake (apretón de manos). Este apretón de manos será un “acuerdo” o “contrato” de confianza para que el servidor pueda actualizar al 
   cliente sin que éste se lo pida. El servidor recibe la petición de Handshake y procede a “responderle el saludo”, a esto se le llama “Abrir conexión”.
@@ -2507,72 +2486,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   ✓ ArrayBuffer y Blob en el navegador
   ✓ ArrayBuffer y Buffer en Node.js
 
-                                                                                              
-
-    
-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
-
-                                                                                                                   Glosario
-                                                                                                                   
-- Parse: Parsing is the process of analyzing text made of a sequence of tokens to determine its grammatical structure with respect to a given (more or less) formal grammar. The parser then builds a data structure based on the tokens. This 
-  data structure can then be used by a compiler, interpreter or translator to create an executable program or library.
-  To parse, in computer science, is where a string of commands – usually a program – is separated into more easily processed components, which are analyzed for correct syntax and then attached to tags that define each component. The 
-  computer can then process each program chunk and transform it into machine language. To parse is to break up a sentence or group of words into separate components, including the definition of each part’s function or form. The technical 
-  definition implies the same concept.
-  
-- callback:   
-  
-- Renderizar: El renderizado es un proceso utilizado en desarrollo web para convertir el código de un website en una página con la que las usuarias y usuarios puedan interactuar. Como tal, el término hace referencia a la conversión de los
-  códigos HTML, CSS y JS que son los encargados de la interfaz y contenido de la página. El proceso para renderizar una web se realiza con un motor de renderizado o software que, por lo general, ejecutan los navegadores. A estos motores de 
-  renderizado también se los conoce comúnmente como motores del navegador. El rendering se desarrolla de la siguiente manera:
-    > Construcción de un DOM y un CSSOM partiendo de un código sin formato
-       + Mientras se carga el sitio, el servidor web envía una carpeta o archivo que contiene los códigos HTML, CSS y JS al navegador de la usuaria o usuario.
-       + Seguidamente, el navegador convierte los datos (bytes) en caracteres (código HTML).
-       + A continuación, se descompone los caracteres en tokens (en el tokenizardor) y luego se verifican en nodos (parser).
-       + A partir de aquí el motor del navegador enlaza los nodos en una estructura de tipo árbol, conocida como DOM, del inglés: Document Object Model o Modelo de Objeto de Documento, que es la representación del Javascript del HTML.
-       + Simultáneamente, el navegador convierte el código CSS en un CSSOM (Modelo de objeto CSS) mediante un proceso similar.
-    > Uso del árbol de renderizado para crear una página web final
-       + El motor del navegador combina los archivos DOM y CSSOM para crear una estructura similar a un árbol que se llama “árbol de renderizado” y que incluye la información de contenido y estilo que necesitan los navegadores para llenar la
-         página que las o los internautas van a ver. También estima el diseño para cada elemento visible del sitio y les da color en la pantalla para lograr el resultado final que él y la usuaria verán.
-       + El siguiente paso es la operación del diseño final. Mediante el árbol de renderizado, el motor del navegador calcula la posición de cada elemento visible en la página final.
-       + Por último, el motor del navegador añade o colorea los elementos en la pantalla para que la persona pueda visualizar el resultado.
-      Una vez completados los pasos en ambas secuencias, se puede decir que la página está renderizada.
-    > Renderizado dinámico: Javascript es una elección frecuente para renderizar una página, porque permite crear una experiencia de usabilidad intuitiva. Sin embargo, muchos rastreadores suelen presentar problemas al procesar Javascript. 
-      En consecuencia, los sitios que utilizan Javascript para almacenar la mayor parte de su contenido y navegabilidad corren el riesgo de ser invisibles para los rastreadores. No obstante, el renderizado dinámico soluciona este tipo de 
-      problemas al renderizar una página para las y los internautas, como se describe en los párrafos anteriores, mientras que también renderiza el HTML estático para que los bots puedan rastrearla e indexarla.
-                                                                                                                   
-- DOM documents (Document Object Model): El Modelo de Objetos del Documento (DOM) es una estructura de objetos generada por el navegador, la cual representa la página HTML actual. Con JavaScript la empleamos para acceder y  modificar de 
-  forma dinámica elementos de la  interfaz. 
-  La estructura de un documento HTML son las etiquetas. En el Modelo de Objetos del Documento (DOM), cada etiqueta HTML es un objeto, al que podemos llamar nodo. Las etiquetas anidadas son llamadas “nodos 
-  hijos” de la etiqueta “nodo padre” que las contiene. Todos estos objetos son accesibles empleando JavaScript mediante el objeto global document.   
-  Es una interfaz de programación que nos permite crear, cambiar, o remover elementos del documento. También podemos agregar eventos a esos elementos para hacer más dinámica nuestra página.
-  El DOM visualiza el documento de HTML como un árbol de tres nodos. Un nodo representa un documento de HTML.            
-  
-  The Document Object Model (DOM) is a programming interface for web documents. It represents the page so that programs can change the document structure, style, and content. The DOM represents the document as nodes and objects; that way,
-  programming languages can interact with the page. A web page is a document that can be either displayed in the browser window or as the HTML source. In both cases, it is the same document but the Document Object Model (DOM) representation 
-  allows it to be manipulated. As an object-oriented representation of the web page, it can be modified with a scripting language such as JavaScript. 
-  It connects web pages to scripts or programming languages by representing the structure of a document—such as the HTML representing a web page—in memory. Usually it refers to JavaScript, even though modeling 
-  HTML, SVG, or XML documents as objects are not part of the core JavaScript language. The DOM represents a document with a logical tree. Each branch of the tree ends in a node, and each node contains objects. DOM methods allow programmatic 
-  access to the tree. With them, you can change the document's structure, style, or content. Nodes can also have event handlers attached to them. Once an event is triggered, the event handlers get executed.                                                                                         
-
-- Virtual DOM:               
-                                                                                                                   
-- Buffer: 
-
-- Exportacion (export): Now, importing is an operation that requires the permission of the module. Importing is possible only if the module or named property to be imported has been exported in its declaration. In React we use the keyword 
-  export to export a particular module or a named parameter or a combination. Let us now see the different ways we can use the import operation in React.
-
-  > Exportación por defecto: Para exportar un componente por defecto, usamos la palabra reservada default. La gran desventaja que tiene la exportación por defecto es que a la hora de importarlo puedes usar el nombre que quieras. Y esto trae 
-    problemas, ya que puedes no usar siempre el mismo en el proyecto o usar un nombre que no sea correcto con lo que importas.
-  > Exportación nombrada: Los exports nombrados nos obligan a usar el mismo nombre en todos los archivos y, por tanto, nos aseguramos de que siempre estamos usando el nombre correcto.
-
-- pluggins: 
-
-- polyfills: Un polyfill es un fragmento de código (generalmente JavaScript en la Web) que se utiliza para proporcionar una funcionalidad moderna en navegadores antiguos que no lo admiten de forma nativa. Por ejemplo, se podría usar un 
-  polyfill para imitar la funcionalidad de un elemento HTML Canvas en Microsoft Internet Explorer 7 usando un complemento de Silverlight, o un soporte mímico para las unidades rem CSS, o text-shadow, o lo que tu quieras.
-   
-- Router: 
-
-- Middleware
-   
+                                                                                               
+                                                                                               
     

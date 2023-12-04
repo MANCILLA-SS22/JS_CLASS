@@ -1,12 +1,24 @@
 import { Router } from "express";
-
 const router = Router();
 
 const users = [];
 
 router.get("/", function(request, response){
-  console.log()
-  response.render("index", {
+
+  let x;
+    for (let i = 0; i < users.length; i++) {
+      x = generateRandomNumber(0, users.length);
+  }
+    
+  function generateRandomNumber (limiteInferior, limiteSuperior){
+      return Math.trunc(Math.random()*(limiteSuperior-limiteInferior) + limiteInferior);
+  }
+
+  response.render("indexLayout", {
+    user: {
+        name: users[x]?.name,
+        email: users[x]?.email,
+    },
     title: "Ejercicio",
     name: "German",
     fileCss: "styles.css",

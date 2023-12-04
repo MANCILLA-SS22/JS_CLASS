@@ -25,9 +25,9 @@ export default class ProductManager{
                 this.res.length === 0 ? product.id = 1 : product.id = this.res.length + 1;
                 this.res.push(product);
                 await this.saveFile(this.res);
-                return console.error("Product added successfully");
+                return "Product added successfully";
             }else{
-                return console.error("Product already in stock");
+                return "Product already in stock";
             }
 
         } catch (error) {

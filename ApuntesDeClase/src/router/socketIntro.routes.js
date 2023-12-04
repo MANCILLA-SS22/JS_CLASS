@@ -1,8 +1,11 @@
 import { Router } from "express";
+
 const router = Router();
 
+const users = [];
+
 router.get("/", function(request, response){
-    response.render("index", {
+    response.render("current", {
         title: "Ejercicio",
         name: "German",
         fileCss: "styles.css",
@@ -16,13 +19,12 @@ router.get("/form", (request, response) => {
     });
 });
 
-// router.post("/user", (request, response) => {
-//     const { name, age } = request.body;
-//     const users = [];
-//     users.push({
-//         name,
-//         age,
-//     });
-// });
+router.post("/user", (request, response) => {
+    const { name, age } = request.body;
+    users.push({
+        name,
+        age,
+    });
+});
 
 export default router;
