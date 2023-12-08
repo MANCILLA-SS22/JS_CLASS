@@ -6837,7 +6837,7 @@ io.on('connection', function(socketClient){ //El cliente se conecta con su webso
     socketClient.emit("users_list", users);
 }); */
 
-//Ejemplo 28: Servidor con Websockets (after class)
+/* //Ejemplo 28: Servidor con Websockets (after class)
 // ✓ Sobre la estructura anteriormente creada, agregar en la vista de cliente un elemento de entrada de texto donde al introducir texto, el mensaje se vea reflejado en todos 
 //   los clientes conectados en un párrafo por debajo del input. El texto debe ser enviado caracter a caracter y debe reemplazar el mensaje previo.
 // ✓ Basado en el ejercicio que venimos realizando, ahora los mensajes enviados por los clientes deberán ser almacenados en el servidor y reflejados por debajo del elemento 
@@ -6877,7 +6877,7 @@ io.on("connection", function(socket){
 
     socket.emit("posts", manager.getPosts());
 
-});
+}); */
 
 /* //Ejemplo 29: Desafio con websockets: Configurar nuestro proyecto para que trabaje con Handlebars y websocket
 // ✓ Configurar el servidor para integrar el motor de plantillas Handlebars e instalar un servidor de socket.io al mismo.
