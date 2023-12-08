@@ -310,6 +310,14 @@ const greetArr = greeting => name => console.log(`${greeting} ${name}`);
 greetArr('Hey')('there'); */
 
 /* // Ejemplo 6.5: The call() method
+const arr = [1,2,3,4,5]
+Object.prototype.toString.call(arr) // returns "[object Array]"
+
+const str = 'test'
+str.toString() // returns 'test'
+Object.prototype.toString.call(str) // returns "[object String]" */
+
+/* // Ejemplo 6.5: The call() method
 const lufthansa = {
     airline: 'Lufthansa',
     iataCode: 'LH',
@@ -2539,7 +2547,7 @@ objetos.forEach((objeto) => {
 console.log(productos);
 console.log(totalVendidos); */
 
-/* // Ejemplo 37: Desestructurando un array de objetos
+/* //Ejemplo 37: Desestructurando un array de objetos
 const data = [
     {
         "id": 101,
@@ -2572,6 +2580,105 @@ const result = data.map(({id,title,acf}) => ({
 }));
 
 console.log(result); */
+
+/* //Ejemplo 38: Write a JavaScript function to check whether an `input` is an array or not.
+
+//Metodo 1
+// const array = [1,2,3];
+// const val = "hi";
+
+// isArray(val);
+// isArray(array);
+
+// function isArray(res){
+//     typeof res !== "object" ? console.log("It is NOT an array") : console.log("It is an array");
+// }
+
+//Metodo 2
+// function is_array(input) {
+//     if (Object.prototype.toString.call(input) === "[object Array]") return true;
+//     return false;   
+// };
+
+// console.log(is_array('w3resource'));
+// console.log(is_array([1, 2, 4, 0])); */
+
+/* //Ejemplo 39: Write a JavaScript function to clone an array.
+
+//Metodo 1
+// function array_Clone(res){
+//     const clone = res.slice();
+//     console.log("The cloned array is: ", clone);
+// }
+
+// array_Clone([1, 2, 4, 0]);
+// array_Clone([1, 2, [4, 0]]);
+
+//Metodo 2
+// let x = [1,2,3];
+// let y = [...x];
+
+//Metodo 3
+// let x = [1,2,3];
+// let y = Array.from(x);
+
+//Metodo 4
+// let x = [1,2,3];
+// let y = x.slice();
+
+//Metodo 5
+// let x = [1,2,3];
+// let y = x.map(event => event);
+
+//Metodo 6
+// let x = [1,2,3];
+// let y = x.filter(() => true); */
+
+/* //Ejemplo 40: Write a JavaScript function to get the first element of an array. Passing the parameter 'n' will return the first 'n' elements of the array.
+function first(array, n){
+    if(n === undefined) return array[0];
+    if(array === null)  return void 0; // void 0  -->  undefined
+    if(n < 0)           return [];
+
+    return array.slice(0, n);
+}
+
+console.log(first([7, 9, 0, -2]));
+console.log(first([],3));
+console.log(first([7, 9, 0, -2],3));
+console.log(first([7, 9, 0, -2],6));
+console.log(first([7, 9, 0, -2],-3));
+console.log(first(3)); */
+
+/* //Ejemplo 41: Write a JavaScript function to get the last element of an array. Passing the parameter 'n' will return the last 'n' elements of the array.
+function last(array, n){
+    if(n === undefined) return array[array.length-1];
+    if(array === null)  return void 0; // void 0  -->  undefined
+
+    return array.slice( Math.max(array.length-n, 0) );
+}
+
+console.log(last([7, 9, 0, -2]));
+console.log(last([7, 9, 0, -2],3));
+console.log(last([7, 9, 0, -2],6)); */
+
+//Ejemplo 42: Write a simple JavaScript program to join all elements of the following array into a string.
+
+//Ejemplo 43:
+
+//Ejemplo 44:
+
+//Ejemplo 45:
+
+//Ejemplo 46:
+
+//Ejemplo 47:
+
+//Ejemplo 48:
+
+//Ejemplo 49:
+
+
 
 
 //         $$$$$$$$$$$$$$$ STRINGS & MODERN OPERATORS $$$$$$$$$$$$$$$
