@@ -2662,23 +2662,623 @@ console.log(last([7, 9, 0, -2]));
 console.log(last([7, 9, 0, -2],3));
 console.log(last([7, 9, 0, -2],6)); */
 
-//Ejemplo 42: Write a simple JavaScript program to join all elements of the following array into a string.
+/* //Ejemplo 42: Write a simple JavaScript program to join all elements of the following array into a string. "Red,Green,White,Black" "Red,Green,White,Black" "Red+Green+White+Black"
+const myColor = ["Red", "Green", "White", "Black"];
+const res1 = myColor.join(",");
+const res2 = myColor.join("+");
 
-//Ejemplo 43:
+console.log(res1);
+console.log(res2); */
 
-//Ejemplo 44:
+/* //Ejemplo 43: Write a JavaScript program that accepts a number as input and inserts dashes (-) between each even number. For example if you accept 025468 the output should be 0-254-6-8.
 
-//Ejemplo 45:
+//Metodo 1
+// const array = [0,2,5,4,6,8,4,7,2,9,3,5];
+// const newArray = []
+// for(let i=0; i < array.length; i++){
+//     if(array[i-1]%2 === 0 && array[i]%2 === 0){
+//         newArray.push("-", array[i]);
+//     }else{
+//         newArray.push(array[i]);
+//     }
+// }
 
-//Ejemplo 46:
+// console.log(newArray.join(""));
 
-//Ejemplo 47:
+//Metodo 2
+// function dashes(){
+//     var number = "025468".split('');
+//     for(let i = 0,j = 0; i < number.length; i++){
+//     if(number[i] % 2 === 0 && number[i + 1] % 2 === 0){
+//     number.splice(i + 1,0,'-');
+//     }
+//     };
+    
+//     console.log(number.join(''));
+// };
+// dashes(); */
 
-//Ejemplo 48:
+/* //Ejemplo 44: Write a JavaScript program to sort the items of an array.
+let arr1 = [ -3, 8, 7, 6, 5, -4, 3, 2, 1 ];
+let arr2 = arr1.slice();
 
-//Ejemplo 49:
+arr2.sort(function(a, b){
+    return a - b; //Orden ascendente
+    // return b - a; //Orden descendente
+});
 
 
+console.log(arr2); */
+
+/* //Ejemplo 45: Write a JavaScript program to find the most frequent item in an array
+//Metodo 1
+// let i,j;
+// let arr1=[3, 6, 6, 6 , 2, 3, 6, 3, 6, 2, 4, 9, 3];
+// let repeatedItem;
+// let mf = 0;// Variable que retiene el numero mas grande de valores repetidos
+// let m = 0; //Contador
+
+// for(i=0; i < arr1.length-1; i++){
+//     for (j=i; j < arr1.length-1; j++){
+//         console.log(arr1[i], arr1[j]);
+//         if(arr1[i] === arr1[j]){
+//             m++;
+//         }
+//         if (mf < m){ //mf aumenta dependiendo de cuantas veces se repita un item. Este if no se ejecutara si un el valor del contador es menor al numero de veces que se retiene en el ultimo item iterado.
+//             mf=m; //Se actualiza el valor del numero que tenia el valor mas grande.
+//             repeatedItem = arr1[i]; //Se almacena en otra variable el item con el mayor numero de repeticiones.
+//         }
+//     }
+//     m=0; //Se reinicia el ontador
+// }
+
+// console.log(`${repeatedItem} ( ${mf} times ) `);
+
+//Metodo 2
+// let arr1=[3, 'a', 'a', 'a', 2, 3, 'a', 3, 'a', 2, 4, 9, 3];
+// console.log("The most repeated item is: ", `(${mostFrequentOnArrayBySorting(arr1)})`);
+
+// function mostFrequentOnArrayBySorting(array){
+//     const sortedArray = array.sort()
+//     let currentItemFrequency = 0;
+//     let totalFrequency = 0;
+//     let mostFrequentItem;
+
+//     for (let i = 0; i < sortedArray.length; i++) {
+//         if (sortedArray[i] === sortedArray[i + 1]) {
+//             currentItemFrequency++
+//             if (currentItemFrequency > totalFrequency) {
+//                 totalFrequency = currentItemFrequency
+//                 mostFrequentItem = sortedArray[i]
+//             }
+//         } else {
+//             currentItemFrequency = 0;
+//         }
+//     }   
+//     return mostFrequentItem
+// };
+
+
+//Metodo 3
+// let array=[3, 'a', 'a', 'a', 2, 3, 'a', 3, 'a', 2, 4, 9, 3];
+// let max = 0, letter;
+// for (let i = 0; i < array.length; i++ ) {
+//     let count = 0;
+//     for (let j = 0; j < array.length; j++ ) {
+//         if (array[i] === array[j]) {
+//             ++count;
+//         }
+//     }
+//     if (max < count) { max = count; letter = array[i] }
+// }
+
+// console.log(letter + ' : ' + max + ' times' );
+
+//Metodo 4
+// function helem(givenArray){
+//     let itemsMap = {};
+//     let maxValue = 0;
+//     let maxCount = 0;
+    
+//     for (let item of givenArray) {
+//         if (itemsMap[item] == null) {
+//             itemsMap[item] = 1;
+//         } else {
+//             itemsMap[item]++;
+//         }
+        
+//         if (itemsMap[item] > maxCount) {
+//             maxValue = item;
+//             maxCount = itemsMap[item];
+//         }
+//     }
+//     return `Value : ${maxValue}, Count : ${maxCount}`;
+// }
+
+// console.log(helem([1, 2, 3, 4, 1, 1, 2, 3, 4])); */
+
+/* //Ejemplo 46: Write a JavaScript program that accepts a string as input and swaps the case of each character. For example if you input 'The Quick Brown Fox' the output should be 'tHE qUICK bROWN fOX'.
+
+//Metodo 1
+// const UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+// const LOWER = 'abcdefghijklmnopqrstuvwxyz';
+// const input = "HELLO";
+// const array = [];
+
+// for(let i=0; i < input.length; i++){
+//     if(UPPER.indexOf(input[i]) !== -1){
+//     console.log(UPPER.indexOf(input[i]));
+//         array.push(input[i].toLowerCase());
+
+//     }else if (LOWER.indexOf(input[i]) !== -1) {
+//     console.log(LOWER.indexOf(input[i]));
+//         array.push(input[i].toUpperCase());
+
+//     }else{
+//         array.push(input[i]);
+//     }
+// }
+
+// console.log(array.join(""));
+
+//Metodo 2
+// function swapCase([...rest]){
+//     const res = rest.map( function(item){
+//         return item === item.toUpperCase() ? item.toLocaleLowerCase() : item.toUpperCase();
+//     }).join('');
+    
+//     return res;
+// }
+
+// console.log(swapCase("hELLO wORLD"));
+
+//Metodo 3
+// function ex9(str){
+//     str = str.split(''); //Return a new array based on a string as input
+//     for(let i = 0; i < str.length; i++){
+//         (str[i] === str[i].toLowerCase()) ? str[i] = str[i].toUpperCase() : str[i] = str[i].toLowerCase();
+//     }
+//     return str.join('');
+// }
+
+// console.log(ex9("Hello World")); */
+
+/* //Ejemplo 47: Write a JavaScript program that prints the elements of the following array. (Use nested for loops)
+//Metodo 1
+// let a = [
+//     [1, 2, 1, 24], 
+//     [8, 11, 9, 4], 
+//     [7, 0, 7, 27], 
+//     [7, 4, 28, 14], 
+//     [3, 10, 26, 7]
+// ];
+
+// for (let i = 0; i < a.length-1; i++) {
+//     console.log("Row", i+1)
+//     for (let j = 0; j < a.length-1; j++) {
+//         console.log(a[i][j])
+//     }
+// }
+
+//Metodo 2
+// let a = [[1, 2, 1, 24], [8, 11, 9, 4], [7, 0, 7, 27], [7, 4, 28, 14], [3, 10, 26, 7]];
+
+// for (let i in a){
+//     console.log("row " + i);
+//     for (let j in a[i]) {
+//         console.log(" " + a[i][j]);
+//     }
+// }
+
+//Metodo 3
+// let a = [[1, 2, 1, 24], [8, 11, 9, 4], [7, 0, 7, 27], [7, 4, 28, 14], [3, 10, 26, 7]];
+
+// a.forEach(function(element, i){
+//     console.log("row" + i);
+//     element.map( (item) => console.log(item));
+// });
+
+//Metodo 4
+// let a = [[1, 2, 1, 24], [8, 11, 9, 4], [7, 0, 7, 27], [7, 4, 28, 14], [3, 10, 26, 7]];
+
+// for(let i in a){
+//     console.log(`row ${i}`)
+//     for (let value of a[i]) {
+//         console.log(value);
+//     }
+// }; */
+
+/* //Ejemplo 48: Write a JavaScript program to find the sum of squares of a numerical vector.
+//Metodo 1
+// function sum(array){
+//     const res = array.map(event => event*event).reduce((acc, cur) => acc + cur, 0);
+//     return res;
+// }
+
+// console.log(sum([0,1,2,3,4,5,6,7,8,9,10]));
+
+//Metodo 2
+// function sum_sq(array) {
+//     let sum = 0
+    
+//     for(let i=0; i < array.length; i++){
+//         sum += Math.pow(array[i], 2);
+//     }
+        
+//     return sum;
+// }
+
+// console.log(sum_sq([0,1,2,3,4])); */
+
+/* //Ejemplo 49: Write a JavaScript program to remove duplicate items from an array (ignore case sensitivity).
+//Metodo 1
+// const nums = [1, 2, 2, 3, 1, 2, 4, 5, 4, 2, 6];
+// const res = [...new Set(nums)];
+// console.log(res);
+
+//Metodo 2
+// function removeDup(array) {
+//     let arr1 = [];
+//     for (let i = 0; i < array.length; i++) {
+//         if (!arr1.includes(array[i])) {
+//             arr1.push(array[i]);
+//         }
+//     }
+//     return arr1
+// }
+
+// console.log(removeDup([1, 2, 2, 3, 1, 2, 4, 5, 4, 2, 6]));
+
+//Metodo 3   
+// const array = [1, 1, 2, 2, "a", "a", 3, 3];
+// const newArray = array.filter(function(value, index){    console.log(array.indexOf(value), index)
+//     return array.indexOf(value) === index;
+// });
+
+// console.log(newArray);
+
+//Metodo 4
+// const array = [1,2,3,2,3,4,5];
+
+// for(let i = 0; i < array.length; i++){
+//     for(let j=i+1; j < array.length; j++){
+//         if(array[i] === array[j]){
+//             array.splice(j, 1); // At position j, remove 1 items
+//         }
+//     }
+// }
+
+// console.log(array); */
+
+/* //Ejemplo 50: Write a JavaScript program to display the colors in the following way: 
+// "1st choice is Blue ." "2nd choice is Green." "3rd choice is Red." (Use ordinal numbers to tell their position.)
+
+//Metodo 1
+// const color = ["Blue ", "Green", "Red", "Orange", "Violet", "Indigo", "Yellow", "black"];
+// const out = ["th","st","nd","rd"];
+
+// for(let i = 0; i < color.length; i++){
+//     let y = (i+1) + (out[i+1] || out[0]);
+//     let output = (`${y} choice is ${color[i]}`); 
+//     console.log(output);
+// };
+
+//Metodo 2
+// let color = ["Blue", "Green", "Red", "Orange", "Violet", "Indigo", "Yellow"];
+// let ordinal = ["th","st","nd","rd"];
+// let output = "";
+// for (let i = 0; i < color.length; i++) {
+// 	switch(i){
+// 		case 0: output += "1" + ordinal[1] + " choice is " + color[i] + "\n"; break;
+// 		case 1: output += "2" + ordinal[2] + " choice is " + color[i] + "\n"; break;
+// 		case 2: output += "3" + ordinal[3] + " choice is " + color[i] + "\n"; break;
+// 		default: output += i+1 + ordinal[0] + " choice is " + color[i] + "\n"; break;
+// 	}
+// }
+
+// console.log(output)
+
+// //Metodo 3
+// let color = ["Blue ", "Green", "Red", "Orange", "Violet", "Indigo", "Yellow "];
+// let ordinal = ["th","st","nd","rd"];
+
+// for(let i = 0; i < color.length; i++) {
+//     i <= 2 ? console.log(i+1 + ordinal[i+1] + " choice is " + color[i]) : console.log(i+1 + ordinal[0] + " choice is " + color[i]);
+// } */
+
+/* //Ejemplo 51: Write a JavaScript program to find the leap years in a given range of years.
+
+//Metodo 1
+// const arr = [];
+// const arrLeapYears = [];
+
+// function leapYears(year1, year2){
+    
+
+//     for (let i = year1; i <= year2; i++) {
+//         arr.push(i);
+//     }
+//     verify(arr);
+// }
+
+// function verify(res){
+//     res.forEach(function(event){
+//         if( (event % 4 === 0 && event % 100 !== 0) || (event % 100 === 0 && event % 400 === 0) ){
+//             arrLeapYears.push(event)
+//         }
+//     });
+// }
+
+
+// leapYears(1900, 2020);
+// console.log("The new array with leap years is:", arrLeapYears);
+
+//Metodo 2
+// function leapYears(start, end) {
+//     let leaps = "";
+//     for (let i = start; i <= end; i++) {
+//         if ((i % 4 === 0 && i % 100 !== 0) || (i % 100 === 0 && i % 400 === 0 )) {
+//             leaps = leaps + i + "\n";
+//         }
+//     }
+//     return leaps;
+// }
+
+// console.log(leapYears(2000, 2016));
+
+//Metodo 3
+// function leap_year(start, end){
+//     var arr_of_years = [];
+    
+//     for(var i = start; i <= end; i++){
+//         if(!(i%4 && i%100 && i%400)){
+//             arr_of_years.push(i);
+//         }
+//     }
+//     return arr_of_years;
+// }
+
+// console.log(leap_year(2000, 2012)); */
+
+/* //Ejemplo 52: Write a JavaScript program to shuffle an array
+
+//Metodo 1
+// const arr = [1, 2, 3, 4, 5, 6, 7];
+// let i = arr.length-1;
+
+// for (i; i > 0; i--) {
+//     let rnd = Math.floor(Math.random()*i);
+//     let temp = arr[i];
+//     arr[i] = arr[rnd];
+//     arr[rnd] = temp;
+// }
+
+// console.log(arr); 
+
+//Metodo 2
+// const arr = [1, 2, 3, 4, 5, 6, 7];
+// for (let i=0; i < arr.length-1; i++) {
+//     let rnd = Math.floor(Math.random()*i);
+//     let temp = arr[i];
+//     arr[i] = arr[rnd];
+//     arr[rnd] = temp;
+// }
+
+// console.log(arr);
+
+
+//Metodo 3
+// let array = [1, 2, 3, 4, 5, 6];
+// let newArray = [];
+
+// for (let i = array.length; i>0 ; i--) {
+//     let rand = Math.floor(Math.random()*(i)); //Genera un numero aleatorio que va desde 0 hasta 6. Despues, conforme disminuya la iteracion, este numero sera 5, luego 4 hasta llegar a 0.
+//     let res = array.splice(rand, 1)[0]; //La variable res captura el elemento que se elmino dentro del array. rand es el numero elatorio que servira como indice dentro del splice, y el 1 es la cantidad de elementos a eliminar. [0] sirve para capturar el elemento sin que este dentro de un arreglo. "array" simplemente mostrara el arrgelo actualizado, el cual se ira reduciendo hasta que quede vacio
+//     newArray.push(res);
+// }
+// console.log(newArray);
+
+//Metodo 4
+// let max = 6;
+// let random = [];
+
+// for(let i = 0; i<max ; i++){
+//     let temp = Math.floor(Math.random()*(max)+1);
+//     // console.log(i, temp);
+
+//     if(random.indexOf(temp) === -1){ //Verificamos si existe un numero en el array. Si no existe, lo agregamos
+//         random.push(temp);
+//     }
+//     else{ //Si el numero ya existe, unicamente reducimmos el valor de "i" en lugar de aumentarlo para que el array no quede incompleto. Es decir, si la iteracion va en 3 y el numero ya existe en el array, reducimos el valor de i a 2, pero al terminar el ciclo, se aumentara otra vez, por lo que el valor de i permanecera en 3, hasta que se obtenga un numero diferente en "temp".
+//         i--;
+//     }
+// }
+// console.log(random);
+
+//Metodo 5
+// function shuffle (arr) {
+//     return arr.sort(() => Math.random() - 0.5);
+// }
+// console.log(shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])); */
+
+/* //Ejemplo 52: Write a JavaScript program to perform a binary search. 
+
+//Metodo 1
+// //           L           p           R            
+// let items = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+// console.log(binary_Search(items, 0, items.length-1, 8)); 
+
+// function binary_Search(items, firstIndex, lastIndex, num){
+
+//     let pivot = Math.floor((firstIndex + lastIndex)/2); //4
+
+//     while(items[pivot] !== num && firstIndex < lastIndex){ //Verificamos que el indice menor sea mayor al ultimo indice. De ser asi, se sale de la funcion. Y verificamos tambien que el numero que queremos encontrar es el mismo que el pivote. De ser asi, retornamos el numero del pivote.   
+//         if (num < items[pivot]){
+//             lastIndex = pivot - 1;
+//             console.log("Primero", lastIndex)
+//         } 
+//         if (num > items[pivot]){
+//             firstIndex = pivot + 1;
+//             console.log("Segundo", firstIndex);
+//         }
+//         console.log("Tercero");
+//         pivot = Math.floor((lastIndex + firstIndex)/2);
+//         console.log("--> ", pivot)
+//     }
+    
+//     return pivot;  
+// }
+
+//Metodo 2
+// let items = [1, 2, 3, 4, 5, 7, 8, 9];
+// console.log(binary_Search(items, 0, items.length-1, 8)); 
+
+// function binary_Search(items, firstIndex, lastIndex, num){
+//     if(firstIndex > lastIndex) return -1;
+//     let pivot = Math.floor((firstIndex + lastIndex)/2);
+//     if(items[pivot] === num) return pivot;
+
+//     if (items[pivot] < num){
+//         return binary_Search(items, pivot+1, lastIndex, num)
+//     }else{
+//         return binary_Search(items, firstIndex, pivot-1, num)
+//     }
+// }
+
+//Metodo 3
+// function binary_Search(arr, start, end, val) {
+//     while (start <= end) {
+//         let mid = Math.floor((start + end) / 2);
+
+//         if (arr[mid] === val) return mid;
+
+//         val < arr[mid] ? end = mid - 1 : start = mid + 1;
+//     }
+//     return -1;
+// }
+
+// var items = [1, 2, 3, 4, 5, 7, 8, 9];
+
+// console.log(binary_Search(items, 0, items.length-1, 5));  */
+
+/* //Ejemplo 53: Write a JavaScript program to compute the sum of each individual index value in the given array.
+
+//Metodo 1
+// const array1 = [1,0,2,3,4];
+// const array2 = [3,5,6,7,8,13];
+// const newArray = [];
+
+// for (let i=0; i < array1.length; i++) {
+//     newArray.push(array1[i] + array2[i]);
+// }
+
+// console.log(newArray);
+
+//Metodo 2
+// function Arrays_sum (arr1, arr2) {
+//     let resultSum = [];
+//     let arrlength;
+
+//     if (arr1.length > arr2.length) {
+//         arrlength = arr1;
+//     } else {
+//         arrlength = arr2;
+//     }
+    
+//     for (let i = 0; i < arrlength.length; i++) {
+//         if (arr1[i] === undefined) arr1[i] = 0;
+//         if (arr2[i] === undefined) arr2[i] = 0;
+//         resultSum.push(arr1[i] + arr2[i]);
+//     }
+//     return resultSum;
+// }
+
+// console.log(Arrays_sum([1,0,2,3,4], [3,5,6,7,8,13])); */
+
+/* //Ejemplo 54: Write a JavaScript program to find duplicate values in a JavaScript array.
+//Metodo 1
+// function find_duplicate_in_array(arra1) {
+//         const object = {};
+//         const result = [];
+
+//         arra1.forEach(item => {
+//             if(!object[item])
+//                 object[item] = 0;
+//             object[item] += 1;
+//         })
+
+//         for (const prop in object) {
+//             if(object[prop] >= 2) {
+//                 result.push(prop);
+//             }
+//         }
+
+//         return result;
+
+//     }
+
+//     console.log(find_duplicate_in_array([1, 2, -2, 4, 5, 4, 7, 8, 7, 7, 71, 3, 6]));
+
+// }
+
+//Metodo 2
+// let newArray = [];
+// const arr = [1, 2, -2, 4, 5, 4, 7, 8, 7, 7, 7, 3, 6];
+
+// arr.forEach(function(val){
+//     console.log(arr.indexOf(val), arr.lastIndexOf(val));
+//     if(arr.indexOf(val) !== arr.lastIndexOf(val)) newArray.push(val); //indexOf retorna el primer indice del numero que se repite, mientras que lastIndexOf retorna el ultimo indice, lo que nos permite saber si algo esta repetido o no, ya que si tanto indexOf como lastIndexOf son iguales, entonces quiere decir que no se repite nada.
+// });
+
+// console.log(newArray);
+
+//Metodo 3
+// const arr = [1, 2, -2, 4, 5, 4, 7, 8, 7, 7, 1, 3, 6];
+// let result = [];
+
+// for (let i=0; i < arr.length-1; i++){
+//     for (let j=i+1; j < arr.length-1; j++){
+//         if (arr[i] === arr[j] && result.indexOf(arr[i]) === -1) result.push(arr[i]);
+//     }
+// }
+// console.log(result);
+
+//Metodo 4
+// function findDuplicate(arr) {
+//     const result = arr.filter((value, index, array) => array.indexOf(value) !== index);
+//     return result;
+// }
+
+// console.log(findDuplicate(["a", "a", "a", "b", "c", "c", -2, 2, -2, 5, 4, 5]));
+
+//Metodo 5
+// const findDuplicates = arr => [...new Set(arr.filter(v => arr.indexOf(v) !== arr.lastIndexOf(v)))];
+// console.log(findDuplicates([1, 2, -2, 4, 5, 4, 7, 8, 7, 7, 71, 3, 6])); */
+
+
+//Ejemplo 55:
+
+//Ejemplo 56:
+
+//Ejemplo 57:
+
+//Ejemplo 58:
+
+//Ejemplo 59:
+
+//Ejemplo 61:
+
+//Ejemplo 62:
+
+//Ejemplo 63:
+
+//Ejemplo 64:
+
+//Ejemplo 65:
+
+//Ejemplo 66:
+
+//Ejemplo 67:
 
 
 //         $$$$$$$$$$$$$$$ STRINGS & MODERN OPERATORS $$$$$$$$$$$$$$$

@@ -799,9 +799,10 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         2) Necesitas una estructura de datos donde los objetos pueden ser ordenados.
         3) Necesitas realizar búsquedas eficientes en los datos (sin utilizar librerías externas).
         
-   ~ Set: Es una colección de elementos unicos que pueden ser de cualquier tipo, muy similar a un arreglo. Esta también es una colección ordenada de elementos. Puedes crear e inicializar un Set usando new. Al igual que Map, Set también tiene 
-      métodos que te permiten agregar o eliminar elementos del mismo. Set también cuenta con el método Set.has(element) para saber si un element está o no en un set, además del método Set.delete(element) para eliminar un elemento. Para 
-      iterar sobre un Set puedes usar el método Set.values() que retorna un SetIterator, sobre este iterador puedes utilizar forEach o for-of. Set y Array son similarres y puedes convertirlos entre sí utilizando el operador spread.
+   ~ Set: Es una colección de elementos unicos (no se pueden repetir los mismos valores) que pueden ser de cualquier tipo, muy similar a un arreglo. Esta también es una colección ordenada de elementos. Puedes crear e inicializar un Set 
+      usando new. Al igual que Map, Set también tiene métodos que te permiten agregar o eliminar elementos del mismo. Set también cuenta con el método Set.has(element) para saber si un element está o no en un set, además del método 
+      Set.delete(element) para eliminar un elemento. 
+      Para iterar sobre un Set puedes usar el método Set.values() que retorna un SetIterator, sobre este iterador puedes utilizar forEach o for-of. Set y Array son similarres y puedes convertirlos entre sí utilizando el operador spread.
    
    
 
@@ -884,7 +885,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
    
     > entries()	      Returns a key/value pair Array Iteration Object
    
-    > every()	      Checks if every element in an array pass a test
+    >* every()	      Checks if every element in an array pass a test
    
     > fill()	      Fill the elements in an array with a static value
     
@@ -979,8 +980,13 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                       con restar uno al otro, y el orden indica si será ordenado de forma ascendente o descendente. Para ordenar un array por algún string, debemos definir una función comparadora que retorne un valor numérico de referencia, 
                       según queramos el orden ascendente o descendente. No se necesita crear una variable cuando utilicemos este metodo, puesto que el array original mismo es el que se modifica.
     
-    > splice()	      Adds/Removes elements from an array. Permite eliminar uno o varios elementos de un array en cualquier posición. Funciona con 2 parámetros: el primero es el índice donde se ubica el método para trabajar, y el segundo es 
-                      la cantidad de elementos a eliminar desde esa posición.
+    > splice()	      Adds/Removes elements from an array. Permite eliminar uno o varios elementos de un array en cualquier posición. Este modifica el array original pero con o sin los elementos establecidos. 
+                      Funciona con 2 parámetros: el primero es el índice donde se ubica el método para trabajar, y el segundo es  la cantidad de elementos a eliminar desde esa posición.
+                      Si creamos una varaible y la igualamos a un arreglo que utiliza splice(), entonces obtendremos NO el array, sino los elementos eliminados o agregados.
+                      splice returns an array. When you push an array into an array, you get an array of arrays. By adding the [0], you push the first element of the array instead    -->  array.splice(0, 1)[0];
+                      
+    > split()	      Splits a string into an array of substrings. Returns the new array, does not change the original string. If (" ") is used as separator, the string is split between words.
+                      
     > toString()	      Converts an array to a string, and returns the result
     > typeof:         You can use the typeof operator to find the data type of a JavaScript variable. The typeof operator can return one of two complex types: function and object.
                       The typeof operator returns "object" for objects, arrays, and null. The typeof operator does not return "object" for functions.
