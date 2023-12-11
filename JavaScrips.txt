@@ -887,7 +887,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
    
     >* every()	      Checks if every element in an array pass a test
    
-    > fill()	      Fill the elements in an array with a static value
+    > fill()	      Fill the elements in an array with a static value   array.fill(value, start, end)
     
     > flat()	      Concatenates sub-array elements
     
