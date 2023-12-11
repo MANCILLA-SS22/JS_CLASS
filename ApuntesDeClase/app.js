@@ -2916,16 +2916,16 @@ console.log(arr2); */
 // const res = [...new Set(nums)];
 // console.log(res);
 
-//Metodo 2
-// function removeDup(array) {
-//     let arr1 = [];
-//     for (let i = 0; i < array.length; i++) {
-//         if (!arr1.includes(array[i])) {
-//             arr1.push(array[i]);
-//         }
-//     }
-//     return arr1
-// }
+Metodo 2
+function removeDup(array) {
+    let arr1 = [];
+    for (let i = 0; i < array.length; i++) {
+        if (!arr1.includes(array[i])) {
+            arr1.push(array[i]);
+        }
+    }
+    return arr1
+}
 
 // console.log(removeDup([1, 2, 2, 3, 1, 2, 4, 5, 4, 2, 6]));
 
@@ -3196,37 +3196,39 @@ console.log(arr2); */
 // console.log(Arrays_sum([1,0,2,3,4], [3,5,6,7,8,13])); */
 
 /* //Ejemplo 54: Write a JavaScript program to find duplicate values in a JavaScript array.
-//Metodo 1
-// function find_duplicate_in_array(arra1) {
-//         const object = {};
-//         const result = [];
+// //Metodo 1
 
-//         arra1.forEach(item => {
-//             if(!object[item])
-//                 object[item] = 0;
-//             object[item] += 1;
-//         })
+// // const arra1 = [1, 2, 9, 4, 5, 4, 7, 8, 7, 7, 1, 3, 6];
+// const arra1 = [1, 2, 5, 2, 2, 2, 3, 4, 5];
+// const object = [];
+// const result = [];
 
-//         for (const prop in object) {
-//             if(object[prop] >= 2) {
-//                 result.push(prop);
-//             }
-//         }
+// arra1.forEach(item => {
+//     if(!object[item]) object[item] = 0;
 
-//         return result;
+//     object[item]++;
+//     console.log(object)
+// });
 
-//     }
-
-//     console.log(find_duplicate_in_array([1, 2, -2, 4, 5, 4, 7, 8, 7, 7, 71, 3, 6]));
-
+// for (const prop in object) {
+//     if(object[prop] > 1) result.push(prop);
 // }
+
+// console.log(result);
+// //Si no existe object[item], entonces lo inicializamos con 0. Por ejemplo, al iterar "arra1", el primer valor es 1, por lo que, verificamos 
+// //ahora si el array "object" en la posicion de 1, existe. Como no existe, inicializamos la posicion object[1]=0 y despues se le suma 1 
+// //para indicar que ha sido encontrado una vez. Ahora, en caso de que se toque un numero repetido, como en el caso del valor 2, 
+// //primeramente se inicializa en 0 esa posicion, es decir object[2]=0 y luego lo aumentamos a 1. Despues, cuando vuelva a repetirse el 
+// //numero 2, el if no se ejecutara, puesto que ya existe un valor en la posicion [2] y simplemente ese numero aumentara en 1 nuevamente, 
+// //lo que dara como resultado 2 en lugar de 1. Y asi sucesivamente. Finalmente, con un for-in, iteramos los indices en el "arra1" y
+// //verificamos si el valor perteneciente a ese indice object[prop] es mayor a 1. De ser asi, lo agregamos a un nuevo array para indicar los numeros que fueron repetidos.
+
 
 //Metodo 2
 // let newArray = [];
 // const arr = [1, 2, -2, 4, 5, 4, 7, 8, 7, 7, 7, 3, 6];
 
-// arr.forEach(function(val){
-//     console.log(arr.indexOf(val), arr.lastIndexOf(val));
+// arr.forEach(function(val){   console.log(arr.indexOf(val), arr.lastIndexOf(val));    
 //     if(arr.indexOf(val) !== arr.lastIndexOf(val)) newArray.push(val); //indexOf retorna el primer indice del numero que se repite, mientras que lastIndexOf retorna el ultimo indice, lo que nos permite saber si algo esta repetido o no, ya que si tanto indexOf como lastIndexOf son iguales, entonces quiere decir que no se repite nada.
 // });
 
@@ -3244,41 +3246,815 @@ console.log(arr2); */
 // console.log(result);
 
 //Metodo 4
-// function findDuplicate(arr) {
-//     const result = arr.filter((value, index, array) => array.indexOf(value) !== index);
-//     return result;
-// }
+// const arr = ["a", "a", "c", 3, 2, 3, 5]
+// const result = arr.filter(function(value, index){
+//     console.log(value, arr.indexOf(value), index)
+//     return arr.indexOf(value) !== index;
+// });
 
-// console.log(findDuplicate(["a", "a", "a", "b", "c", "c", -2, 2, -2, 5, 4, 5]));
+// console.log(result);
 
 //Metodo 5
 // const findDuplicates = arr => [...new Set(arr.filter(v => arr.indexOf(v) !== arr.lastIndexOf(v)))];
 // console.log(findDuplicates([1, 2, -2, 4, 5, 4, 7, 8, 7, 7, 71, 3, 6])); */
 
+/* //Ejemplo 55: Write a JavaScript program to flatten a nested (any depth) array. If you pass shallow, the array will only be flattened to a single level
 
-//Ejemplo 55:
+//Metodo 1
+// function flatten(input) {
+//     for (let i = 0; i < input.length-1; i++) {
+//         input = input.reduce(function(a, b){
+// 			return a.concat(b);
+// 		},[]);
+//     }
 
-//Ejemplo 56:
+// 	return input;
+// }
+// console.log(flatten([1, [2], [3, [[4]]], [5,6]]));
 
-//Ejemplo 57:
 
-//Ejemplo 58:
+//Metodo 2
+// function flat(arr,deep){
+// let result = arr.flat(deep)
+// return result;
 
-//Ejemplo 59:
+// }
+// console.log(flat([1, [2], [3, [[4]]], [5,6]], 3));
+// console.log(flat([1, [2], [3, [[4]]], [5,6], true]));
 
-//Ejemplo 61:
+//Metodo 3
+// const ar = [];
+// const ams = flatten([1, [2], [3, [[4]]],[5,6], [6, [8, [6, ["sal"]]]], "hola"]); 
 
-//Ejemplo 62:
+// function flatten(array) {
+//     for (let i = 0; i < array.length; i++) {
+//         if(typeof array[i] === "number" || typeof array[i] === "string") ar.push(array[i]);  //or Number.isInteger(array[i])
+//         if(Array.isArray(array[i])) flatten(array[i]);
+//     }
 
-//Ejemplo 63:
+// }
+// console.log(ar);
 
-//Ejemplo 64:
+//Metodo 4
+// function flatten(arr){
+//     var result = [];
+    
+//     one_dim_arr(arr);
+    
+//     function one_dim_arr(arg) {
+//         if (!Array.isArray(arg)){ 
+//             result.push(arg);
 
-//Ejemplo 65:
+//         } else {
+//             for (var a in arg) one_dim_arr(arg[a]);
+//         }
+//     }
+    
 
-//Ejemplo 66:
+//     return result;
+// }
+// console.log(flatten( [1, [2], [3, [[4]]], [5,6], false] )); 
 
-//Ejemplo 67:
+//First we send the array to the function and then we create an eampty arraty that will contain the flattened elements from the array. 
+//After that, we call the one_dim_arr function and we pass it in the array to verify if it's an array or not. Firstly, it won't be 
+//executed the if statement but else statement, and we us recursivity to re-execute the one_dim_arr function again and verify if the 
+//values in the "a" index are are arrays or not. If so, we simply push the value into a new array. If not, we re-execute the fucntion
+//until we get the value and not an array.
+
+//Metodo 5
+// function flatten(a, shallow, r) {
+//     if(!r) r = [];
+    
+//     if (shallow) {
+//         return r.concat(...a);
+//     }
+
+//     for(let i=0; i<a.length; i++){
+//         //a[i].constructor === Array ? flatten(a[i],shallow,r) : r.push(a[i]);
+//         if(a[i].constructor === Array){
+//             console.log("Primer if")
+//             flatten(a[i],shallow,r);
+//         }else{
+//             console.log("Segundo if")
+//             r.push(a[i]);
+//         }
+//     }
+//     return r;
+// };
+
+// console.log(flatten([1, [2], [3, [[4]]], [5,6]]));
+
+//Metodo 6
+// function differenceOf2Arrays (array2) {
+//     return array2 = array2.toString().split(',').map(event => +event);
+// }
+
+// console.log(differenceOf2Arrays([1, 2, 3, 4, 5], [1, [2], [3, [[4]]],[5,6]])); */
+
+/* //Ejemplo 56: Write a JavaScript program to compute the union of two arrays.
+//Metodo 1
+// const arr1 = [1, 2, 3];
+// const arr2 = [100, 2, 1, 10];
+// const concat = arr1.concat(arr2);
+// const sort = concat.slice(concat.sort((a, b) => a - b));
+// const twoArrays = []
+// for (let i=0; i < sort.length; i++) {
+//     if (!twoArrays.includes(sort[i])) {
+//         twoArrays.push(sort[i]);
+//     }
+// }
+
+// console.log(sort);      //[1, 1, 2, 2, 3, 10, 100]
+// console.log(twoArrays); //[1, 2, 3, 10, 100]
+
+//Metodo 2
+// function union(arra1, arra2) {
+//     if ((arra1 == null) || (arra2==null)) return void 0;
+
+//     let concatArray = [];
+//     let res = [];
+
+//     for (let i=0; i < arra1.length; i++){
+//         concatArray[arra1[i]] = arra1[i];
+//     }
+
+//     for (let i=0; i < arra2.length; i++){
+//         concatArray[arra2[i]] = arra2[i];
+//     }
+
+//     console.log(concatArray); //We get an array with empty spaces (empty strings)
+
+//     const newConcatArray = concatArray.filter(n => n); //We create a new array by filter the newConcatArray and displaying only the numbers
+//     return newConcatArray;
+// }
+
+// console.log(union([1, 2, 3], [5, 32, 1, 9]));
+
+//Metodo 3
+// function union(arra1, arra2) {
+//     if ((arra1 == null) || (arra2==null)) return void 0;
+
+//     let concatArray = {};
+//     let res = [];
+
+//     for (let i=0; i < arra1.length; i++){
+//         concatArray[arra1[i]] = arra1[i]; 
+//     }
+//     console.log(concatArray)
+//     for (let i=0; i < arra2.length; i++){
+//         concatArray[arra2[i]] = arra2[i];
+//     }
+
+//     // console.log(concatArray)
+
+//     for (let n in concatArray){
+//         if (concatArray.hasOwnProperty(n)) res.push(concatArray[n]);
+//     }
+
+//     return res;
+// }
+
+// console.log(union([1, 2, 3], [100, 2, 1, 10]));
+
+//Metodo 4
+// function union (arr1, arr2) {
+// var concatArr = arr1.concat(arr2).sort((a, b) => a - b);
+// return [...new Set(concatArr)];
+// }
+// console.log(union([1, 2, 3], [100, 2, 1, 10]));
+
+//Metodo 5
+// let arr1 = [2, 3, 1];
+// let arr2 = [100, 2, 1, 10, 2, 5];
+
+// let arrSorted = [];
+// let newArray = [];
+
+// arr1.sort((a,b) => a - b);
+// arr2.sort((a,b) => a - b);
+// arrSorted.push(...arr1, ...arr2);
+// arrSorted.sort(function(a,b){return a - b});
+
+// for (let i=0; i < arrSorted.length; i++) {
+//     if(arrSorted[i] !== arrSorted[i+1]){
+//         newArray.push(arrSorted[i]);
+//     }
+// }
+
+// console.log(newArray);
+
+//Metodo 6
+// console.log(union([3, 5, 3, 3, 6], [100, 2, 9, 6, 2, 1, 10]));
+
+// function union(arr1, arr2) {
+//     var newArr = arr1.concat(arr2); // [3, 5, 3, 3, 6, 100, 2, 9, 6, 2, 1, 10]
+
+//     const res = newArr.filter(function(item, pos){  
+//         console.log(newArr.indexOf(item)+ " --- "+ pos);
+//         return newArr.indexOf(item) === pos;
+//     })
+
+//     return res;
+// }
+
+//Verificamos que la posicion de los elementos del array sea igual al de la iteracion perteneciente del filter. Por ejemplo, la posicion
+//del primer numero que es 3, es igual a 0. Y de igual manera, "pos" es 0. Como "newArr.indexOf(item) === pos" coinciden, retornamos el 
+//valor en un nuevo array. Cuando se repita un numero, tendremos que "newArr.indexOf(item) ≠ pos", ya que indexOf retorna el indice del 
+//primer indice del numero que se repite. Es decir, tenemos el numero 3 en la posicion 0, y el 3 nuevamente pero en la posicion 2.
+//Por lo que, indexOf nos retornara el 3 pero en la posicon 0, y no el de la posicion 2. */
+
+/* //Ejemplo 57: Write a JavaScript function to find the difference between two arrays. (non-repeated values)
+
+//Metodo 1
+// console.log(difference([1, 2, 3], [100, 2, 1, 10]));
+// // console.log(difference([1, 2, 3, 4, 5], [1, [2], [3, [[4]]],[5,6]]));
+
+// function difference(array1, array2){
+//     let newArray = [];
+//     let res;
+
+//     newArray = array1.concat(array2); console.log(newArray)
+//     res = newArray.filter(function(event){
+//         return newArray.indexOf(event) === newArray.lastIndexOf(event);
+//     });
+
+//     return res;
+// }
+
+//Metodo 2
+// function differenceOf2Arrays (array1, array2) {
+//     var temp = [];
+//     array1 = array1.toString().split(',').map(event => +event);
+//     array2 = array2.toString().split(',').map(event => +event);
+
+//     for (let i in array1){
+//         if(array2.indexOf(array1[i]) === -1) temp.push(array1[i]);
+//     }
+//     for (let i in array2){
+//         if(array1.indexOf(array2[i]) === -1) temp.push(array2[i]);
+//     }
+
+//     return temp.sort((a,b) => a-b);
+// }
+
+// differenceOf2Arrays([1, 2, 3], [100, 2, 1, 10]);
+// differenceOf2Arrays([1, 2, 3, 4, 5], [1, [2], [3, [[4]]],[5,6]]);
+
+//Metodo 3
+// function ex23(array1, array2){
+//     var res = "";
+
+//     let inA = array1.filter(event => !array2.includes(event));
+//     let inB = array2.filter(event => !array1.includes(event));
+//     res = inA + ','+ inB.sort();
+    
+//     return res;
+// }
+
+// console.log(ex23([1, 2, 3], [100, 2, 1, 10]));
+
+//Metodo 4
+// function difference(arr1, arr2){
+//     let diff = [];
+    
+//     let array1 = arr1.flat(Infinity);
+//     let array2 = arr2.flat(Infinity);
+
+//     array1.forEach( (value) => array2.includes(value) ? null : diff.push(value) );
+//     array2.forEach( (value) => array1.includes(value) ? null : diff.push(value) );
+    
+//     return diff;
+// }
+
+// console.log(difference([1, 2, 3], [100, 2, 1, 10]));
+
+//Metodo 5
+// function difference(arr1, arr2) {
+//     let compact = [];
+    
+//     arr1 = arr1.flat(Infinity);
+//     arr2 = arr2.flat(Infinity);
+
+//     for (let i = 0; i < arr1.length; i++) {
+//         if (!arr2.includes(arr1[i])) compact.push(arr1[i]);
+//     }
+
+//     for (let i = 0; i < arr2.length; i++) {
+//         if (!arr1.includes(arr2[i])) compact.push(arr2[i]);
+//     }
+
+//     return compact.sort((a, b) => a - b);
+// }
+
+// console.log(difference([1, 2, 3], [100, 2, 1, 10]));
+// console.log(difference([1, 2, 3, 4, 5], [1, [2], [3, [[4]]], [5, 6]]));
+// console.log(difference([1, 2, 3], [100, 2, 1, 10])); */
+
+/* //Ejemplo 58: Write a JavaScript function to remove. 'null', '0', '""', 'false', 'undefined' and 'NaN' values from an array.
+
+//Metodo 1
+// const array = [NaN, 0, 15, false, -22, '',undefined, 47, null];
+// const newArray = [];
+
+// for (let i = 0; i < array.length; i++) {
+//     if (Number(array[i]) || !array[i] === 0) {
+//         newArray.push(array[i]);
+//     }
+// }
+// console.log(newArray);
+
+//Metodo 2
+// function removeFalse(arr) {
+//     const arr2 = [];
+    
+//     arr.forEach(item => {
+//         if (item) arr2.push(item);
+//     });
+    
+//     return arr2;
+// }
+
+// console.log(removeFalse([NaN, 0, 15, false, -22, '',undefined, 47, null]));
+
+//Metodo 3
+// function filterFalse(arr){
+//     return arr.filter(val => val);
+// }
+
+// console.log(filterFalse([NaN, 0, 15, false, -22, '',undefined, 47, null]));
+
+//Metodo 4
+// function filter_array(test_array) {
+//     let result = [];
+//     let index = -1;
+//     let resIndex = -1;
+
+//     while (++index < test_array.length) {
+//         let value = test_array[index];
+
+//         if (value) {
+//             result[++resIndex] = value;
+//         }
+//     }
+
+//     return result;
+// }
+// console.log(filter_array([NaN, 0, 15, false, -22, '',undefined, 47, null])); */
+
+/* //Ejemplo 59: Write a JavaScript function to sort the following array of objects by title value.
+
+//Metodo 1
+// var library = [ 
+//     { author: 'Bill Gates', title: 'The Road Ahead', libraryID: 1254},
+//     { author: 'Steve Jobs', title: 'Walter Isaacson', libraryID: 4264},
+//     { author: 'Suzanne Collins', title: 'Mockingjay: The Final Book of The Hunger Games', libraryID: 3245}
+// ];
+
+// let newLibrary = []
+
+// library.map(function(event, index){
+//     return newLibrary.push(event.title)
+// })
+
+// newLibrary.sort();
+// console.log(newLibrary);
+
+//Metodo 2
+// var library = [ 
+//     { author: 'Bill Gates', title: 'The Road Ahead', libraryID: 1254},
+//     { author: 'Steve Jobs', title: 'Walter Isaacson', libraryID: 4264},
+//     { author: 'Suzanne Collins', title: 'Mockingjay: The Final Book of The Hunger Games', libraryID: 3245}
+// ];
+
+// library.sort(function(a, b){
+//     let prop = "title"
+//     const [e1, e2] = [a[prop], b[prop]];   //return a[prop] === b[prop] ? 0 : a[prop] < b[prop] ? -1 : 1;
+    
+//     if(e1 === e2){
+//         return 0;
+//     }else if(e1 < e2){
+//         return -1;
+//     }else{
+//         return 1;
+//     }
+    
+// });
+
+// console.log(library)
+
+//Metodo 3
+// var library = [ 
+//     { author: 'Bill Gates', title: 'The Road Ahead', libraryID: 1254},
+//     { author: 'Steve Jobs', title: 'Walter Isaacson', libraryID: 4264},
+//     { author: 'Suzanne Collins', title: 'Mockingjay: The Final Book of The Hunger Games', libraryID: 3245}
+// ];
+
+// function compare_to_sort(x,y){
+//     if (x.title < y.title) return -1;
+//     if (x.title > y.title) return 1;
+
+//     return 0;
+// }
+
+// console.log(library.sort(compare_to_sort)); */
+
+/* //Ejemplo 61: Write a JavaScript program to find a pair of elements (indices of the two numbers) in a given array whose sum equals a specific target number.
+
+//Metodo 1
+// let numbers = [10,20,10,40,50,60,70];
+// let target = 50;
+// let str = [];
+// for (let i=0; i < numbers.length; i++) {
+//     for (let j=i; j < numbers.length; j++) {
+//         let res = numbers[i] + numbers[j]
+//         if(res === target){
+//             str.push(i, j);
+//         }
+//     }
+//     break
+// }
+
+// console.log(str);
+
+//Metodo 2
+// function findMe(arr, target){
+// 	var output = [];
+
+// 	for (let i = 0; i < arr.length; i++) {
+// 		for (let j=i+1; j < arr.length; j++) {
+// 			if (arr[i]+arr[j]==target) {
+// 				output.push("Array[" + i + "] + Array[" + j +"] = "+ target);
+// 			}
+// 		}
+// 	}
+// 	return output;
+// }
+// console.log(findMe([10,20,10,40,50,60,70], 50));
+
+//Metodo 3
+// function twoSum(nums, target_num) {
+//     var map = [];
+//     var indexnum = [];
+
+//     for (var x = 0; x < nums.length; x++){
+//         if (map[nums[x]] != null){
+//             var index = map[nums[x]];
+//             indexnum[0] = index;
+//             indexnum[1] = x;
+            
+//             break;
+//         }
+//         else{
+//             map[target_num - nums[x]] = x;
+//         }
+//     }
+//     return indexnum;
+// }
+// console.log(twoSum([10,20,10,40,50,60,70],50)); */
+
+//Ejemplo 62: Write a JavaScript function to retrieve the value of a given property from all elements in an array.
+// const array = [NaN, 0, 15, false, -22, '',undefined, 47, null];
+
+/*//Ejemplo 63: Write a JavaScript function to find the longest common starting substring in a set of strings.
+
+//Metodo 1
+// let aux;
+// let arr = [];
+
+// longString(['german', "andres", 'mancilla', "plascencia", "ali", "schweinsteiger", "arnold"]);
+
+// function longString(res){
+//     for (let i = 0; i < res.length; i++) {
+//         for (let j=i+1; j < res.length; j++) {
+//             if(res[i].length < res[j].length){
+//                 aux = res[i];
+//             }else if(res[i].length === res[j].length){
+//                 arr.push(res[i], res[j]);
+//             }
+//         }
+//     }
+//     return aux
+// }
+
+// console.log("Longest string: ", aux);
+// // console.log("Strings with the same length", arr)
+
+//Metodo 2
+// function longest_common_starting_substring(arr1){
+//     let arr= arr1.concat().sort(); //onsole.log(arr1)
+//     let a1= arr[0];
+//     let a2= arr[arr.length-1]; 
+//     let L= a1.length;
+//     let i= 0;
+
+//     while(i< L && a1.charAt(i) === a2.charAt(i)) i++;
+    
+//     return a1.substring(0, i);
+// }
+
+// longest_common_starting_substring(['go', 'google']); 
+// longest_common_starting_substring(['SQLInjection', 'SQLTutorial']); 
+// longest_common_starting_substring(['abcd', '1234']); 
+
+//Metodo 3
+// function longest_common(arr){
+//     let [a, b] = arr;
+//     let i = 1;
+//     let result = null;
+//     while(i <= a.length){
+//         if(b.startsWith(a.slice(0, i))) {
+//             result = a.slice(0,i);
+//             i++;
+//         }  
+//         else{
+//             break;
+//         }
+//     }
+//     return result;
+// }
+// console.log(longest_common(['go', 'google']));
+
+//Metodo 4
+// function longest_common_deeper(arr){
+//     let result = '', tmp = '';
+
+//     arr.sort().forEach((e,i,a) => {
+//         if(i === a.length - 1) return;
+//         let idx = 1;
+//         while(idx <= e.length){
+//             if(a[i+1].startsWith(e.slice(0, idx))) {
+//                 tmp = e.slice(0,idx);
+//                 idx++;
+//             }else{
+//                 break;
+//             }
+//         }
+//         result = (tmp.length > result.length) ? tmp : result;
+//     });
+//     return result;
+// }
+
+// console.log(longest_common_deeper(['goog', 'google', 'googlesearch', 'answerme', 'answer', 'answerm', 'answera']));
+// console.log(longest_common_deeper( ['goo', 'google', 'googlesearch', 'abcdefg', 'abcdefgh', 'abcdefg2', 'abcdefgt', 'abcdefgp'])); */
+
+/* //Ejemplo 64: Write a JavaScript function to fill an array with values (numeric, string with one character) within supplied bounds.
+//Metodo 1
+// function num_string_range(start, end, step){
+//     var range = [];
+//     if ((step === 0) || (typeof start == "undefined" || typeof end ==    "undefined") || (typeof start != typeof end)) return false;
+    
+//     if (end < start){ //Si la iteracion es de mayor a menor, debemos cambiar el signo del intervalo (step), lo que indica que la iteracion va desde algo mayor a algo menor.
+//         step = step*-1; // step =- step; Otro metodo de cambiar el signo de una variable
+//     }
+    
+//     if (typeof start === "number"){
+//         while (step > 0 ? end >= start : end <= start) {
+//             range.push(start);
+//             start += step;
+//         }
+//     }else if (typeof start == "string") {
+//         if (start.length != 1 || end.length != 1) throw TypeError("Strings with one character are supported.");
+
+//         start = start.charCodeAt(0);
+//         end = end.charCodeAt(0);
+
+//         while (step > 0 ? end > start : end < start) {
+//             range.push(String.fromCharCode(start));
+//             start += step;
+//         }
+//     }else{
+//         throw TypeError("Only string and number are supported");
+//     }
+
+//     return range;
+// }
+
+// console.log(num_string_range('a', "z", 2));
+// console.log(num_string_range("Z", "A", 2));
+// console.log(num_string_range(0, -5, 1));
+// console.log(num_string_range(0, 25, 5));
+// console.log(num_string_range(20, 5, 5));
+
+//Metodo 2
+// function fill(x, y, num){
+//     let newArra = [];
+    
+//     for(let i = 0; i < 26; i += num){
+//         let newAlph = String.fromCharCode(65 + i);
+//         newArra.push(newAlph);
+//     }
+
+//     return newArra;
+// }
+
+// console.log(fill('a','z',2))
+
+//Metodo 3
+// function numStringRange(start , end ,jump ) {
+//     var alphabet = "abcdefghijklmnopqrstuvwxyz";
+//     var letters = [];
+    
+//     for (let i = alphabet.indexOf(start); i <= alphabet.indexOf(end); i++) {
+//         letters.push(alphabet[i]);
+//         i = i + jump-1;
+//         console.log(i)
+//     }
+//     return letters;
+// }
+// console.log(numStringRange( "a", "z", 2));
+
+//Metodo 4
+// function strRange(start, end, gap) {
+//     const range = [];
+//     let [lowest, highest] = [start, end];
+
+//     if (typeof start !== typeof end || gap === 0) return null;
+    
+//     if (typeof start === 'string' && typeof end === 'string') {
+//         [start, end] = [start, end].map(el => el.charCodeAt());
+//         var str = true;
+//     }    
+
+//     if (start > end) {
+//         gap = ~gap + 1;
+//         [highest, lowest] = [start, end];
+//     }
+
+//     while (start >= lowest && start <= highest) {
+//         range.push(start);
+//         start += gap;
+//     }
+
+//     return typeof str !== 'undefined' ? String.fromCharCode(...range).split('') : range;
+// }
+// console.log(strRange(1, 10, 1)); 
+// console.log(strRange("z", "k", 2)); */
+
+/* //Ejemplo 65: Write a JavaScript function that merges two arrays and removes all duplicate elements.  [3, 2, 30, 1]
+
+//Metodo 1
+// let array1 = [1, 2, 3];
+// let array2 = [2, 30, 1];
+// let concatArray = array1.concat(array2); //[1, 2, 3, 2, 30, 1];
+// let newArray = [];
+// let assoc = [];
+
+// for (let i=concatArray.length-1; i>=0; i--) {
+//     let item = concatArray[i];
+
+//     if(!assoc[item]){ 
+//         newArray.unshift(item);
+//         assoc[item] = true;
+//     }
+// }
+
+// console.log(newArray);
+
+//Metodo 2
+// let array1 = [1, 2, 3];
+// let array2 = [2, 30, 1];
+// let concatArray = array1.concat(array2); //[1, 2, 3, 2, 30, 1];
+// let sortArray = concatArray.sort((a,b) => a-b);
+// let newArray = [] //[3, 2, 30, 1]
+
+// let val = sortArray.filter(function(item, index, input){ //let val = sortArray.filter(function(item, index){ 
+//     return input.indexOf(item) === index;                //return sortArray.indexOf(item) === index;
+// });
+
+// console.log(val);
+
+//Metodo 3
+// function merge_array (arr1, arr2) {
+//     var merged = arr1.concat(arr2);
+//     return [...new Set(merged)];
+// }
+// console.log(merge_array([1, 2, 3], [2, 30, 1]));
+// console.log(merge_array(array1, array2)); //[3, 2, 30, 1];
+
+//Metodo 4
+// function mergeArrays(arr1, arr2 ) {
+//     var obj = {};
+//     var totalArray = arr1.concat(arr2);
+
+//     totalArray.forEach(function(value) {
+//         obj[value] = "";
+//     })
+    
+//     return Object.keys(obj);
+// }
+// console.log(mergeArrays([1, 2, 3], [2, 30, 1] ));
+
+//Metodo 5
+// function mergeArrays(arr1, arr2){
+//     const stack = [...arr1.flat(), ...arr2.flat()].sort( (a, b) => a - b); // [1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 6, 6]
+    
+//     const result = []; //[1, 2, 3 ,4, 5, 6]
+
+//     while(stack.length){
+//         let next = stack.shift(); //Reducimos la longitud del array "stack" hasta que sea 0 y deje de ejecutarse el while
+
+//         if (!result.includes(next)) result.push(next);
+//     } 
+    
+//     return result;
+// }
+
+// console.log(mergeArrays([1, 2, 3, 4, 5, 6], [1, 2, 1, 4, 6, 3] ));
+
+//Metodo 6
+// function merge_array(arr1, arr2) {
+//     const concatArray = arr1.concat(arr2);    
+
+//     //Con reduce
+//     // const uniq = concatArray.reduce(function(a, b){ //Inicializamos uniq con un array vacio. Por lo que a = [], y b = 1. Donde "b" son los elementos de arrayConcat
+//     //     console.log(a, b)
+//     //     if (!a.includes(b)) a.push(b);
+//     //     return a;
+//     // }, []);
+    
+//     //Con filter
+//     const newArray = [];
+//     const uniq = concatArray.filter(function(event){
+//         if(!newArray.includes(event)){
+//             return newArray.push(event)
+//         }
+//     })
+
+//     return uniq;
+// }
+// // merge_array([1, 2, 3], [2, 30, 1]);
+// console.log(merge_array([1, 2, 3], [2, 30, 1]));
+
+//Metodo 7
+// function merge() {
+//     const obj = {};
+//     for (let i = 0; i < arguments.length; i++) {
+//         let keys = arguments[i];
+//         for (let j = 0; j < keys.length; j++) {
+//             obj[keys[j]] = keys[j];
+//         }
+//     }
+//     return Object.values(obj);
+// }
+// console.log(merge([1,2,3], [2,30,1])); // [ 1, 2, 3, 30 ] */
+
+/* //Ejemplo 66: Write a JavaScript function to remove a specific element from an array.
+
+//Metodo 1
+// console.log(remove_array_element([2, 5, 9, 6], 5));   //[2, 9, 6]
+
+// function remove_array_element(array, numRemove){
+//     let res = array.filter(function(event, index){
+//         return array[index] !== numRemove;
+//     });
+
+//     return res;
+// }
+
+//Metodo 2
+// function remove_array_element(array, n){
+//     var index = array.indexOf(n);
+//     if (index > -1) array.splice(index, 1);
+    
+//     return array;
+// }
+
+// console.log(remove_array_element([2, 5, 9, 6], 5));
+
+//Metodo 3
+// function remove(arr,b) {
+//     let res =  arr.filter(function (num) {
+//         return num !== b;
+//     });
+
+//     return res
+// }
+// console.log(remove([2, 5, 9, 6, 5, 5], 5));
+
+//Metodo 4
+// function func(arr, target){
+//     for (const v of arr){
+        
+//         if(v === target) arr.splice(arr.indexOf(v), 1);
+
+//         return arr;
+//     } 
+// }
+// console.log(func([2, 9, 5, 6], 2)); */
+
+//Ejemplo 67: Write a JavaScript function to find an array containing a specific element.  [true]
+arr = [2, 5, 9, 6];
+console.log(contains(arr, 5));
+
+function contains(array, numVerify){
+    
+}
+
+
+//Ejemplo 68: Write a JavaScript script to empty an array while keeping the original.
+
+
+
 
 
 //         $$$$$$$$$$$$$$$ STRINGS & MODERN OPERATORS $$$$$$$$$$$$$$$

@@ -877,7 +877,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     > at()        	Returns an indexed element of an array
 
     > concat()	      Joins arrays and returns an array with the joined arrays. Mediante el método concat podemos combinar dos Arrays en un único Array resultante. se usa para unir dos o más arrays. Este método no cambia los arrays 
-                      existentes, sino que devuelve un nuevo array.
+                      existentes, sino que devuelve un nuevo array. Tambien se puede usar para unir ya sea un numero y un array, por ejemplo: 1 y [2] daria como resultado [1,2].
    
     > constructor     Returns the function that created the Array object's prototype
    
@@ -957,6 +957,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
                       parámetros: 
                       1.El primero es la función que ordena qué queremos resumir del array. Recibe un parámetro que funciona como acumulador, y el elemento del array que iteramos. 
                       2.El segundo es el valor inicial del acumulador.
+                      3. El tercer parametro pertenece a la inicializacion. Puede ser opcional su uso y debe ir despues del afuncion
     
    
     > reduceRight()   Reduce the values of an array to a single value (going right-to-left)
