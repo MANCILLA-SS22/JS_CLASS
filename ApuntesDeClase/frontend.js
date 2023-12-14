@@ -2284,6 +2284,40 @@ console.log(overalBalance);
 const overalBalance2 = accounts.flatMap(acc => acc.movements).reduce((acc, mov) => acc + mov, 0);
 console.log(overalBalance2); */
 
+/* //Ejemplo 30: Deep dive into reduce();
+
+// Metodo 1
+// const people = [
+//     {name: "Kyle", age: 26},
+//     {name: "Cartman", age: 31},
+//     {name: "Kenny", age: 42},
+//     {name: "Stan", age: 42}
+// ];
+
+// const result = people.reduce(function(grupedPeople, person){
+//     if(grupedPeople[person.age] === undefined){ //Al principio siempre sera undefined, puesto que no hay ningun arreglo en el objeto, a no ser que haya un numero repetido, como lo sera el 42.
+//         grupedPeople[person.age] = []; //Despues, creamos un aray vacio cuando estemos en el person.age. Por ejemplo, primero tendremos {26: []}, despues {31: []} y asi sucecivamente
+//     }
+
+//     grupedPeople[person.age].push(person); //Cuando ya tengamos el array vacio en ese valor, simplemente agregaremos el objeto "person" en el que nos encontremos. 
+//     return grupedPeople;
+// }, {});
+
+// console.log(result)
+
+//Metodo 2
+// const arr = [1,2,3,4,5,6,8,9,10];
+// const res = arr.reduce(function(cur, item){
+//     if(item%2 === 0){
+//         cur = [...cur, item*2]; 
+//         // return [...cur, item*2];
+//         // cur.push(item*2);
+//     }
+//     return cur; //Si el if no se ejecuta, simplemente retornamos lo que se encuentra en "cur" para despues seguir iterando.
+// }, []);
+
+// console.log(res, "\n"); */
+
 /* //Ejemplo 31: Ejercicio practico #1
 // Julia and Kate are doing a study on dogs. So each of them asked 5 dog owners about their dog's age, and stored the data into an array (one array for each). For now, they are 
 // just interested in knowing whether a dog is an adult or a puppy. A dog is an adult if it is at least 3 years old, and it's a puppy if it's less than 3 years old. Your tasks:
@@ -2581,7 +2615,81 @@ const result = data.map(({id,title,acf}) => ({
 
 console.log(result); */
 
-/* //Ejemplo 38: Write a JavaScript function to check whether an `input` is an array or not.
+/* //Ejemplo 38: Write a JavaScript program to Remove empty elements from an array in Javascript
+
+//Metodo 1
+// var arr = [1,2,,3,,-3,null,,0,,undefined,4,,4,,5,,6,,,,];
+// arr.filter(n => n);      // [1, 2, 3, -3, 4, 4, 5, 6]
+// arr.filter(Number);      // [1, 2, 3, -3, 4, 4, 5, 6]
+// arr.filter(Boolean);     // [1, 2, 3, -3, 4, 4, 5, 6]
+// arr.join('').split('');  // ["1","2","3","4","5"]
+
+//Metodo 2
+// var arr = [1,2,null, undefined,3,,3,,,0,,,[],,{},,5,,6,,,,]
+// for(let i = 0; i < arr.length; i++ ){
+//     arr[i] && arr.push(arr[i]);  // copy non-empty values to the end of the array
+// }
+
+// arr.splice(0 , len);  // cut the array and leave only the non-empty values
+
+//Metodo 3
+// function cleanArray(actual) {
+//   var newArray = new Array();
+//   for (var i = 0; i < actual.length; i++) {
+//     if (actual[i]) {
+//       newArray.push(actual[i]);
+//     }
+//   }
+//   return newArray;
+// }
+
+// cleanArray([1, 2,, 3,, 3,,,,,, 4,, 4,, 5,, 6,,,,]);
+
+//Metodo 4
+// var array = [0, 1, null, 2, "", 3, undefined, 3,,,,,, 4,, 4,, 5,, 6,,,,];
+
+// var filtered = array.filter(function (el) {
+//     return el != null;
+// });
+
+// console.log(filtered); */
+
+/* //Ejemplo 39: Write a JavaScript program to find largest integer in an array in JavaScript [duplicate]
+
+//Metodo 1
+// var arr = [3, 6, 2, 56, 32, 5, 89, 32];
+// var largest = arr[0];
+
+// for (var i = 0; i < arr.length; i++) {
+//     if (arr[i] > largest ) {
+//         largest = arr[i];
+//     }
+// }
+// console.log(largest);
+
+//Metodo 2
+// var array = [3 , 6, 2, 56, 32, 5, 89, 32],
+// largest = array.sort((a,b)=>a-b).reverse()[0]; //largest = array.sort((a,b)=>a-b)[array.length - 1]; */
+
+/* //Ejemplo 40: Write a JavaScript program to convert an Object {} to an Array [] of key-value pairs in JavaScript
+
+//Metodo 1
+// const obj = {"1":5,"2":7,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0,"11":0,"12":0};
+// var result = Object.keys(obj).map((key) => [key, obj[key]]);   
+// var result = Object.entries(obj);
+// console.log(result);
+
+//Metodo 2 
+// const obj = {"1":5,"2":7,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0,"11":0,"12":0};
+
+// const toNumericPairs = input => {
+//     const entries = Object.entries(input);
+//     return entries.map(entry => Object.assign(entry, { 0: +entry[0] })); //We can switch map with forEach
+// }
+
+// console.log(toNumericPairs(obj)); */
+
+/* //Ejemplo 41: Write a JavaScript function to check whether an `input` is an array or not.
 
 //Metodo 1
 // const array = [1,2,3];
@@ -2603,7 +2711,7 @@ console.log(result); */
 // console.log(is_array('w3resource'));
 // console.log(is_array([1, 2, 4, 0])); */
 
-/* //Ejemplo 39: Write a JavaScript function to clone an array.
+/* //Ejemplo 42: Write a JavaScript function to clone an array.
 
 //Metodo 1
 // function array_Clone(res){
@@ -2634,7 +2742,7 @@ console.log(result); */
 // let x = [1,2,3];
 // let y = x.filter(() => true); */
 
-/* //Ejemplo 40: Write a JavaScript function to get the first element of an array. Passing the parameter 'n' will return the first 'n' elements of the array.
+/* //Ejemplo 43: Write a JavaScript function to get the first element of an array. Passing the parameter 'n' will return the first 'n' elements of the array.
 function first(array, n){
     if(n === undefined) return array[0];
     if(array === null)  return void 0; // void 0  -->  undefined
@@ -2650,7 +2758,7 @@ console.log(first([7, 9, 0, -2],6));
 console.log(first([7, 9, 0, -2],-3));
 console.log(first(3)); */
 
-/* //Ejemplo 41: Write a JavaScript function to get the last element of an array. Passing the parameter 'n' will return the last 'n' elements of the array.
+/* //Ejemplo 44: Write a JavaScript function to get the last element of an array. Passing the parameter 'n' will return the last 'n' elements of the array.
 function last(array, n){
     if(n === undefined) return array[array.length-1];
     if(array === null)  return void 0; // void 0  -->  undefined
@@ -2662,7 +2770,7 @@ console.log(last([7, 9, 0, -2]));
 console.log(last([7, 9, 0, -2],3));
 console.log(last([7, 9, 0, -2],6)); */
 
-/* //Ejemplo 42: Write a simple JavaScript program to join all elements of the following array into a string. "Red,Green,White,Black" "Red,Green,White,Black" "Red+Green+White+Black"
+/* //Ejemplo 45: Write a simple JavaScript program to join all elements of the following array into a string. "Red,Green,White,Black" "Red,Green,White,Black" "Red+Green+White+Black"
 const myColor = ["Red", "Green", "White", "Black"];
 const res1 = myColor.join(",");
 const res2 = myColor.join("+");
@@ -2670,7 +2778,7 @@ const res2 = myColor.join("+");
 console.log(res1);
 console.log(res2); */
 
-/* //Ejemplo 43: Write a JavaScript program that accepts a number as input and inserts dashes (-) between each even number. For example if you accept 025468 the output should be 0-254-6-8.
+/* //Ejemplo 46: Write a JavaScript program that accepts a number as input and inserts dashes (-) between each even number. For example if you accept 025468 the output should be 0-254-6-8.
 
 //Metodo 1
 // const array = [0,2,5,4,6,8,4,7,2,9,3,5];
@@ -2698,7 +2806,7 @@ console.log(res2); */
 // };
 // dashes(); */
 
-/* //Ejemplo 44: Write a JavaScript program to sort the items of an array.
+/* //Ejemplo 47: Write a JavaScript program to sort the items of an array.
 let arr1 = [ -3, 8, 7, 6, 5, -4, 3, 2, 1 ];
 let arr2 = arr1.slice();
 
@@ -2710,7 +2818,7 @@ arr2.sort(function(a, b){
 
 console.log(arr2); */
 
-/* //Ejemplo 45: Write a JavaScript program to find the most frequent item in an array
+/* //Ejemplo 48: Write a JavaScript program to find the most frequent item in an array
 //Metodo 1
 // let i,j;
 // let arr1=[3, 6, 6, 6 , 2, 3, 6, 3, 6, 2, 4, 9, 3];
@@ -2797,7 +2905,7 @@ console.log(arr2); */
 
 // console.log(helem([1, 2, 3, 4, 1, 1, 2, 3, 4])); */
 
-/* //Ejemplo 46: Write a JavaScript program that accepts a string as input and swaps the case of each character. For example if you input 'The Quick Brown Fox' the output should be 'tHE qUICK bROWN fOX'.
+/* //Ejemplo 49: Write a JavaScript program that accepts a string as input and swaps the case of each character. For example if you input 'The Quick Brown Fox' the output should be 'tHE qUICK bROWN fOX'.
 
 //Metodo 1
 // const UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -2843,7 +2951,7 @@ console.log(arr2); */
 
 // console.log(ex9("Hello World")); */
 
-/* //Ejemplo 47: Write a JavaScript program that prints the elements of the following array. (Use nested for loops)
+/* //Ejemplo 50: Write a JavaScript program that prints the elements of the following array. (Use nested for loops)
 //Metodo 1
 // let a = [
 //     [1, 2, 1, 24], 
@@ -2888,7 +2996,7 @@ console.log(arr2); */
 //     }
 // }; */
 
-/* //Ejemplo 48: Write a JavaScript program to find the sum of squares of a numerical vector.
+/* //Ejemplo 51: Write a JavaScript program to find the sum of squares of a numerical vector.
 //Metodo 1
 // function sum(array){
 //     const res = array.map(event => event*event).reduce((acc, cur) => acc + cur, 0);
@@ -2910,7 +3018,7 @@ console.log(arr2); */
 
 // console.log(sum_sq([0,1,2,3,4])); */
 
-/* //Ejemplo 49: Write a JavaScript program to remove duplicate items from an array (ignore case sensitivity).
+/* //Ejemplo 52: Write a JavaScript program to remove duplicate items from an array (ignore case sensitivity).
 //Metodo 1
 // const nums = [1, 2, 2, 3, 1, 2, 4, 5, 4, 2, 6];
 // const res = [...new Set(nums)];
@@ -2950,7 +3058,7 @@ console.log(arr2); */
 
 // console.log(array); */
 
-/* //Ejemplo 50: Write a JavaScript program to display the colors in the following way: 
+/* //Ejemplo 53: Write a JavaScript program to display the colors in the following way: 
 // "1st choice is Blue ." "2nd choice is Green." "3rd choice is Red." (Use ordinal numbers to tell their position.)
 
 //Metodo 1
@@ -2986,7 +3094,7 @@ console.log(arr2); */
 //     i <= 2 ? console.log(i+1 + ordinal[i+1] + " choice is " + color[i]) : console.log(i+1 + ordinal[0] + " choice is " + color[i]);
 // } */
 
-/* //Ejemplo 51: Write a JavaScript program to find the leap years in a given range of years.
+/* //Ejemplo 54: Write a JavaScript program to find the leap years in a given range of years.
 
 //Metodo 1
 // const arr = [];
@@ -3040,7 +3148,7 @@ console.log(arr2); */
 
 // console.log(leap_year(2000, 2012)); */
 
-/* //Ejemplo 52: Write a JavaScript program to shuffle an array
+/* //Ejemplo 55: Write a JavaScript program to shuffle an array
 
 //Metodo 1
 // const arr = [1, 2, 3, 4, 5, 6, 7];
@@ -3101,7 +3209,7 @@ console.log(arr2); */
 // }
 // console.log(shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])); */
 
-/* //Ejemplo 52: Write a JavaScript program to perform a binary search. 
+/* //Ejemplo 56: Write a JavaScript program to perform a binary search. 
 
 //Metodo 1
 // //           L           p           R            
@@ -3161,7 +3269,7 @@ console.log(arr2); */
 
 // console.log(binary_Search(items, 0, items.length-1, 5));  */
 
-/* //Ejemplo 53: Write a JavaScript program to compute the sum of each individual index value in the given array.
+/* //Ejemplo 57: Write a JavaScript program to compute the sum of each individual index value in the given array.
 
 //Metodo 1
 // const array1 = [1,0,2,3,4];
@@ -3195,7 +3303,7 @@ console.log(arr2); */
 
 // console.log(Arrays_sum([1,0,2,3,4], [3,5,6,7,8,13])); */
 
-/* //Ejemplo 54: Write a JavaScript program to find duplicate values in a JavaScript array.
+/* //Ejemplo 58: Write a JavaScript program to find duplicate values in a JavaScript array.
 
 // //Metodo 1
 // // const arra1 = [1, 2, 9, 4, 5, 4, 7, 8, 7, 7, 1, 3, 6];
@@ -3258,7 +3366,7 @@ console.log(arr2); */
 // const findDuplicates = arr => [...new Set(arr.filter(v => arr.indexOf(v) !== arr.lastIndexOf(v)))];
 // console.log(findDuplicates([1, 2, -2, 4, 5, 4, 7, 8, 7, 7, 71, 3, 6])); */
 
-/* //Ejemplo 55: Write a JavaScript program to flatten a nested (any depth) array. If you pass shallow, the array will only be flattened to a single level
+/* //Ejemplo 59: Write a JavaScript program to flatten a nested (any depth) array. If you pass shallow, the array will only be flattened to a single level
 
 //Metodo 1
 // function flatten(input) {
@@ -3351,7 +3459,7 @@ console.log(arr2); */
 
 // console.log(differenceOf2Arrays([1, 2, 3, 4, 5], [1, [2], [3, [[4]]],[5,6]])); */
 
-/* //Ejemplo 56: Write a JavaScript program to compute the union of two arrays.
+/* //Ejemplo 60: Write a JavaScript program to compute the union of two arrays.
 //Metodo 1
 // const arr1 = [1, 2, 3];
 // const arr2 = [100, 2, 1, 10];
@@ -3463,7 +3571,7 @@ console.log(arr2); */
 //primer indice del numero que se repite. Es decir, tenemos el numero 3 en la posicion 0, y el 3 nuevamente pero en la posicion 2.
 //Por lo que, indexOf nos retornara el 3 pero en la posicon 0, y no el de la posicion 2. */
 
-/* //Ejemplo 57: Write a JavaScript function to find the difference between two arrays. (non-repeated values)
+/* //Ejemplo 61: Write a JavaScript function to find the difference between two arrays. (non-repeated values)
 
 //Metodo 1
 // console.log(difference([1, 2, 3], [100, 2, 1, 10]));
@@ -3550,7 +3658,7 @@ console.log(arr2); */
 // console.log(difference([1, 2, 3, 4, 5], [1, [2], [3, [[4]]], [5, 6]]));
 // console.log(difference([1, 2, 3], [100, 2, 1, 10])); */
 
-/* //Ejemplo 58: Write a JavaScript function to remove. 'null', '0', '""', 'false', 'undefined' and 'NaN' values from an array.
+/* //Ejemplo 62: Write a JavaScript function to remove. 'null', '0', '""', 'false', 'undefined' and 'NaN' values from an array.
 
 // Metodo 1
 // const array = [NaN, 0, 15, false, -22, '',undefined, 47, null];
@@ -3601,7 +3709,7 @@ console.log(arr2); */
 // }
 // console.log(filter_array([NaN, 0, 15, false, -22, '',undefined, 47, null])); */
 
-/* //Ejemplo 59: Write a JavaScript function to sort the following array of objects by title value.
+/* //Ejemplo 63: Write a JavaScript function to sort the following array of objects by title value.
 
 //Metodo 1
 // var library = [ 
@@ -3658,7 +3766,7 @@ console.log(arr2); */
 
 // console.log(library.sort(compare_to_sort)); */
 
-/* //Ejemplo 61: Write a JavaScript program to find a pair of elements (indices of the two numbers) in a given array whose sum equals a specific target number.
+/* //Ejemplo 64: Write a JavaScript program to find a pair of elements (indices of the two numbers) in a given array whose sum equals a specific target number.
 
 //Metodo 1
 // let numbers = [10,20,10,40,50,60,70];
@@ -3712,7 +3820,7 @@ console.log(arr2); */
 // }
 // console.log(twoSum([10,20,10,40,50,60,70],50)); */
 
-/* //Ejemplo 62: Write a JavaScript function to retrieve the value of a given property from all elements in an array.
+/* //Ejemplo 65: Write a JavaScript function to retrieve the value of a given property from all elements in an array.
 const array = [NaN, 0, 15, false, -22, '',undefined, 47, null];    //[15, -22, 47]
 const newArray = [];
 const falsy = []
@@ -3729,7 +3837,7 @@ array.filter(function(item){
 console.log(newArray)
 console.log(falsy) */
 
-/* //Ejemplo 63: Write a JavaScript function to find the longest common starting substring in a set of strings.
+/* //Ejemplo 66: Write a JavaScript function to find the longest common starting substring in a set of strings.
 
 //Metodo 1
 // let aux;
@@ -3811,7 +3919,7 @@ console.log(falsy) */
 // console.log(longest_common_deeper(['goog', 'google', 'googlesearch', 'answerme', 'answer', 'answerm', 'answera']));
 // console.log(longest_common_deeper( ['goo', 'google', 'googlesearch', 'abcdefg', 'abcdefgh', 'abcdefg2', 'abcdefgt', 'abcdefgp'])); */
 
-/* //Ejemplo 64: Write a JavaScript function to fill an array with values (numeric, string with one character) within supplied bounds.
+/* //Ejemplo 67: Write a JavaScript function to fill an array with values (numeric, string with one character) within supplied bounds.
 //Metodo 1
 // function num_string_range(start, end, step){
 //     var range = [];
@@ -3904,7 +4012,7 @@ console.log(falsy) */
 // console.log(strRange(1, 10, 1)); 
 // console.log(strRange("z", "k", 2)); */
 
-/* //Ejemplo 65: Write a JavaScript function that merges two arrays and removes all duplicate elements.  [3, 2, 30, 1]
+/* //Ejemplo 68: Write a JavaScript function that merges two arrays and removes all duplicate elements.  [3, 2, 30, 1]
 
 //Metodo 1
 // let array1 = [1, 2, 3];
@@ -4012,7 +4120,7 @@ console.log(falsy) */
 // }
 // console.log(merge([1,2,3], [2,30,1])); // [ 1, 2, 3, 30 ] */
 
-/* //Ejemplo 66: Write a JavaScript function to remove a specific element from an array.
+/* //Ejemplo 69: Write a JavaScript function to remove a specific element from an array.
 
 //Metodo 1
 // console.log(remove_array_element([2, 5, 9, 6], 5));   //[2, 9, 6]
@@ -4056,7 +4164,7 @@ console.log(falsy) */
 // }
 // console.log(func([2, 9, 5, 6], 2)); */
 
-/* //Ejemplo 67: Write a JavaScript function to find an array containing a specific element.  [true]
+/* //Ejemplo 70: Write a JavaScript function to find an array containing a specific element.  [true]
 
 //Metodo 1
 // console.log(contains([2, 5, 9, 6], 5));
@@ -4088,7 +4196,7 @@ console.log(falsy) */
 // console.log(contains([2, 5, 9, 6], 5));
 // console.log(contains([2, 5, 9, 6], 15)); */
 
-/* //Ejemplo 68: Write a JavaScript script to empty an array while keeping the original.
+/* //Ejemplo 71: Write a JavaScript script to empty an array while keeping the original.
 //Metodo 1
 // let arr = [1, 3, 6, 3, -5];
 // console.log(arr);
@@ -4102,7 +4210,7 @@ console.log(falsy) */
 // arr.length = 0;
 // console.log(arr); */
 
-/* //Ejemplo 69: Write a JavaScript function to get the nth largest element from an unsorted array.
+/* //Ejemplo 72: Write a JavaScript function to get the nth largest element from an unsorted array.
 //Metodo 1
 // let flag = [0];
 // function nthlargest(array, num){
@@ -4213,12 +4321,12 @@ console.log(falsy) */
 //     return (arra[(highest - 1)]);	
 // } */
 
-/* //Ejemplo 70: Write a JavaScript function to get random items from an array.
+/* //Ejemplo 73: Write a JavaScript function to get random items from an array.
 let items = [254, 45, 212, 365, 2543];
 let random = Math.floor(Math.random()*items.length);
 console.log(items[random]); */
 
-/* //Ejemplo 71: Write a JavaScript function to create a specified number of elements with a pre-filled numeric value array.
+/* //Ejemplo 74: Write a JavaScript function to create a specified number of elements with a pre-filled numeric value array.
 
 //Metodo 1
 // function array_filled(limit, number){
@@ -4256,7 +4364,7 @@ console.log(items[random]); */
 // console.log(array_filled(6, 0));
 // console.log(array_filled(4, 11)); */
 
-/* //Ejemplo 72: Write a JavaScript function to create a specified number of elements with a pre-filled string value array.
+/* //Ejemplo 75: Write a JavaScript function to create a specified number of elements with a pre-filled string value array.
 
 //Metodo 1
 // function array_filled(n, val){
@@ -4278,7 +4386,7 @@ console.log(items[random]); */
 // console.log(array_filled(3, 'default value'));
 // console.log(array_filled(4, 'password')); */
 
-/* //Ejemplo 73: Write a JavaScript function to interchange an array element from one position to another.
+/* //Ejemplo 76: Write a JavaScript function to interchange an array element from one position to another.
 //Metodo 1
 function move(array, num1, num2){
     let res1, res2, aux;  // 10, 30
@@ -4299,7 +4407,7 @@ function move(array, num1, num2){
 
 console.log(move([10, 20, 30, 40, 50], 0, 2));   //[20, 30, 10, 40, 50] */
 
-/* //Ejemplo 74: Write a JavaScript function to move an array element from one position to another.
+/* //Ejemplo 77: Write a JavaScript function to move an array element from one position to another.
 
 //Metodo 1
 // function move(arr, old_index, new_index) {
@@ -4373,7 +4481,7 @@ console.log(move([10, 20, 30, 40, 50], 0, 2));   //[20, 30, 10, 40, 50] */
 // }
 // console.log(move([10,20,30,40,50], 0, 2)); // [30, 20, 10, 40, 50] */
 
-/* //Ejemplo 75: Write a JavaScript function to filter false, null, 0 and blank values from an array.
+/* //Ejemplo 78: Write a JavaScript function to filter false, null, 0 and blank values from an array.
 // console.log(filter_array_values([58, '', 'abcd', true, null, false, 0]));  //[58, "abcd", true]
 // function filter_array_values(arr) {
 //     const arrTruty = []
@@ -4387,7 +4495,7 @@ console.log(move([10, 20, 30, 40, 50], 0, 2));   //[20, 30, 10, 40, 50] */
 //     return [arrTruty, arrFalsy];
 // } */
 
-/* //Ejemplo 76: Write a JavaScript function to generate an array of integer numbers, increasing one from the starting position, of a specified length.
+/* //Ejemplo 79: Write a JavaScript function to generate an array of integer numbers, increasing one from the starting position, of a specified length.
 
 //Metodo 1
 // function array_range(firstIndex, lastIndex){
@@ -4439,7 +4547,7 @@ console.log(move([10, 20, 30, 40, 50], 0, 2));   //[20, 30, 10, 40, 50] */
 // }
 // console.log(func(-6, 4)); */
 
-/* //Ejemplo 77: Write a JavaScript function to generate an array between two integers of 1 step length.
+/* //Ejemplo 80: Write a JavaScript function to generate an array between two integers of 1 step length.
 
 //Metodo 1
 // function rangeBetween(initial, limit){
@@ -4476,7 +4584,7 @@ console.log(move([10, 20, 30, 40, 50], 0, 2));   //[20, 30, 10, 40, 50] */
 // console.log(rangeBetwee(4, 7));
 // console.log(rangeBetwee(-4, 7)); */
 
-/* //Ejemplo 78: Write a JavaScript function to find unique elements in two arrays
+/* //Ejemplo 81: Write a JavaScript function to find unique elements in two arrays
 
 //Metodo 1
 // console.log(difference([1, 2, 3], [100, 2, 1, 10])); //["1", "2", "3", "10", "100"]
@@ -4546,7 +4654,7 @@ console.log(move([10, 20, 30, 40, 50], 0, 2));   //[20, 30, 10, 40, 50] */
 // console.log(difference([1, 2, 3], [100, 2, 1, 10]));
 // console.log(difference([[1,2],3,[[4,4, [5, [6, 7,[9,[11]]]]]]], [1,4,5,6,7,8,8]));// and a deeper array structure */
 
-/* //Ejemplo 79: Write a JavaScript program to find all the unique values in a set of numbers.
+/* //Ejemplo 82: Write a JavaScript program to find all the unique values in a set of numbers.
 
 // Metodo 1
 function removeDup(array) {
@@ -4563,7 +4671,7 @@ console.log(removeDup([1, 2, 2, 3, 4, 4, 5]));
 console.log(removeDup([1, 2, 3, 4, 5]));
 console.log(removeDup([1, -2, -2, 3, 4, -5, -6, -5])); */
 
-/* //Ejemplo 80: Write a JavaScript program that takes an array of integers and returns false if every number is not prime. Otherwise, return true.
+/* //Ejemplo 83: Write a JavaScript program that takes an array of integers and returns false if every number is not prime. Otherwise, return true.
 function test(arr){
     for (let i=0; i<arr.length; i++) {
         if ( (arr[i] === 1 || arr[i] > 2) && arr[i]%2 === 0) return false;
@@ -4577,7 +4685,7 @@ let nums2 = [2, 3, 5, 7, 8];
 console.log("Original array of integers: "+ [2, 3, 5, 7, 11] +" and the answer is: " + test(nums1))
 console.log("Original array of integers: "+ [2, 3, 5, 7, 8] +" and the answer is: " + test(nums2)) */
 
-/* //Ejemplo 81: Write a JavaScript program that takes an array of numbers and returns the third smallest number.
+/* //Ejemplo 84: Write a JavaScript program that takes an array of numbers and returns the third smallest number.
 
 function test(arr){
     let res1 = arr.sort((a,b) => a-b); //[1, 2, 3, 5, 7]
@@ -4597,7 +4705,7 @@ console.log("Original array of numbers: "+nums1+" and the Third smallest number 
 let nums2 = [2, 3, 0, 5, 7, 8, -2, -4]
 console.log("Original array of numbers: "+nums2+" and the Third smallest number of the said array of numbers: " +test(nums2)); */
 
-/* //Ejemplo 82: Write a JavaScript program that takes an array with mixed data type and calculates the sum of all numbers.
+/* //Ejemplo 85: Write a JavaScript program that takes an array with mixed data type and calculates the sum of all numbers.
 let arr_mix1 = [2, "11", 3, "a2", false, 5, 7, 1]
 console.log("Original array: "+arr_mix1+" and the answer is: "+ test(arr_mix1))
 let arr_mix2 = [2, 3, 0, 5, 7, 8, true, false]
@@ -4614,7 +4722,7 @@ function test(arr){
     return acc;
 } */
 
-/* //Ejemplo 83: Write a JavaScript program to check if an array is a factor chain or not. A factor chain is an array in which the previous element is a factor of the next consecutive element. The following is a factor chain:
+/* //Ejemplo 86: Write a JavaScript program to check if an array is a factor chain or not. A factor chain is an array in which the previous element is a factor of the next consecutive element. The following is a factor chain:
 // [2, 4, 8, 16, 32]
 // 2 is a factor of 4
 // 4 is a factor of 8
@@ -4662,7 +4770,7 @@ function test(arr){
 // let nums3 = [2, 4, 16, 32, 68]
 // console.log("Original array: ",nums3, " and the answer is: ", test(nums3)); */
 
-/* //Ejemplo 84: Write a JavaScript program to get all the indexes where NaN is found in a given array of numbers and NaN.
+/* //Ejemplo 87: Write a JavaScript program to get all the indexes where NaN is found in a given array of numbers and NaN.
 
 //Metodo 1
 // function test(arr){
@@ -4701,7 +4809,7 @@ function test(arr){
 // console.log(test([2, 4, NaN, 16, 32, NaN]));
 // console.log(test([2, 4, 16, 32])); */
 
-/* //Ejemplo 85: Write a JavaScript program to count the number of arrays inside a given array.
+/* //Ejemplo 88: Write a JavaScript program to count the number of arrays inside a given array.
 
 //Metodo 1
 // function test(array){
@@ -4725,24 +4833,23 @@ function test(arr){
 // console.log(test(([2,8,[6],3,3,5,3,4,[5,4]]))); //2
 // console.log(test(([2,8,[6,3,3],[4],5,[3,4,[5,4]]]))); //3 */
 
-/* //Ejemplo 86: Write a JavaScript program to remove all false values from an object or array. (pending)
+/* //Ejemplo 89: Write a JavaScript program to remove all false values from an object or array. (pending)
 function test(val){
     let data; let verify; 
 
     if(Array.isArray(val)){
         data = val.filter(Boolean)
-        console.log(data)
         verify = [];
     }else{
         data = val;
         verify = {};
     }
-
-    let res =  Object.keys(data).reduce(function(acc, key){
-        const value = data[key];
+    let keys = Object.keys(data); //Obtenemos las keys del objeto "obj" y las metemos en un array
+    let res =  keys.reduce(function(acc, item){
+        const value = data[item]; console.log(value)
         
         if (Boolean(value)){
-            acc[key] = (typeof value === 'object' ? test(value) : value);
+            acc[item] = (typeof value === 'object' ? test(value) : value);
         }
 
         return acc;
@@ -4751,22 +4858,61 @@ function test(val){
     return res;
 };
 
-const obj = {   //{"c":true,"e":1,"g":"a","h":[true,1,"a"],"i":{"l":"a"}}
-    a: null,
-    b: false,
-    c: true,
-    d: 0,
-    e: 1,
-    f: '',
-    g: 'a',
-    h: [null, false, '', true, 1, 'a'],
-    i: { j: 0, k: false, l: 'a' }
-}
+//{"c":true,"e":1,"g":"a","h":[true,1,"a"],"i":{"l":"a"}}
+const obj = {a: null,b: false,c: true,d: 0,e: 1,f: '',g: 'a',h: [null, false, '', true, 1, 'a'],i: { j: 0, k: false, l: 'a' }}
 
 // test(obj);
-console.log(test(obj)) */
+console.log(test(obj)); */
 
-/* //Ejemplo 87: Write a JavaScript function to create an array of arrays, ungrouping the elements in an array produced by zip. (pending)
+/* //Ejemplo 90: Write a JavaScript program to generate all permutations of an array's elements including duplicates. (pending)
+//Metodo 1
+// function permutations(arr){
+//     if (arr.length <= 2){
+//         let res = arr.length === 2 ? [arr, [arr[1], arr[0]]] : arr;
+//         return res;
+//     }
+
+//     let res = arr.reduce(function(acc, item, i){
+//         let res1 = permutations([...arr.slice(i + 1), ...arr.slice(0, i)]);   //console.log(res1);
+//         let res2 = res1.map(val => [item, ...val]);                           //console.log(res2);
+//         let res3 = acc.concat(res2);                                          //console.log(res3)
+
+//         return res3;
+//     }, []);
+
+//     console.log(res)
+//     return res;
+// };
+// // permutations([1, 33, 5]);
+// permutations([1, 3, 5, 7]);
+// // console.log(permutations([2, 4]))
+
+//Metodo 2
+// const a = [1, 2, 3];
+// function permutations(a){
+//     const _permutations = [];
+//     permute(a);
+
+//     function permute(arr, permutation = []){
+//         if(!arr.length){
+//             console.log("res")
+//             _permutations.push(permutation);
+//             return;
+//         }
+
+//         for (let i=0; i<arr.length; i++) {
+//             let curr = arr.slice(); //Creamos un nuevo array para no trabajar sobre el original.
+//             let next = curr.splice(i, 1); //Despues, en cada iteracion tomaremos 
+//             console.log(curr, " --- ", next)
+//             permute(curr, permutation.concat(next));
+//         }
+//     }
+//     return _permutations;
+// }
+// permutations(a);
+// // console.log(permutations(a)); */
+
+/* //Ejemplo 91: Write a JavaScript function to create an array of arrays, ungrouping the elements in an array produced by zip. (pending)
 
 //Metodo 1
 // function unzip(arr){
@@ -4792,35 +4938,6 @@ console.log(test(obj)) */
 //     }, {});
 //     return Object.values(tempObj);
 // }; */
-
-/* //Ejemplo 88: Write a JavaScript program to generate all permutations of an array's elements including duplicates. (pending)
-//Metodo 1
-function permutations(arr){
-
-    if (arr.length <= 2){
-        let res = arr.length === 2 ? [arr, [arr[1], arr[0]]] : arr;
-        return res;
-    }
-
-    let res = arr.reduce(function(acc, item, i){
-        let res1 = permutations([...arr.slice(0, i), ...arr.slice(i + 1)]);
-        let res2 = res1.map(val => [item, ...val]);
-        let res3 = acc.concat(res2);
-
-        return res3;
-    }, []);
-
-    return res;
-};
-console.log(permutations([1, 33, 5]));
-// console.log(permutations([1, 3, 5, 7]));
-// console.log(permutations([2, 4])) */
-
-
-
-
-
-
 
 
 //         $$$$$$$$$$$$$$$ STRINGS & MODERN OPERATORS $$$$$$$$$$$$$$$
@@ -7874,1321 +7991,5 @@ console.log("lastPost", lastPost);
 
 const lastPost2 = await getLastPost();
 console.log("lastPost2", lastPost2); */
-
-
-//         $$$$$$$$$$$$$$$ Node, express, files $$$$$$$$$$$$$$$
-
-
-/* //Ejemplo 0: Uso del file system (fs) node.js
-const fs = require("fs"); //console.log(fs);
-
-fs.writeFileSync("./text.txt", "Escribiendo en un archivo nuevo \nOtro texto");
-if(fs.existsSync("./text.txt")){
-    console.log("Si existe");
-    let contenido = fs.readFileSync("./text.txt", "utf-8");
-    console.log(contenido);
-    
-    fs.appendFileSync("./text.txt", "\nContenido añadido");
-
-    contenido = fs.readFileSync("./text.txt", "utf-8");
-    console.log(contenido);
-
-    fs.unlinkSync("./text.txt");    
-} */
-
-/* //Ejemplo 1: Uso del file system (fs) con callbacks
-const fs = require("fs");
-fs.writeFile("./texto_callback.txt", "Escribiendo en un callback", function(error){
-
-    if (error) return console.log("Hubo un error al escribir el archivo");
-
-    fs.readFile("./texto_callback.txt", "utf-8", function(error, contenido){
-        if (error) return console.log("Hubo un error al leer el archivo");
-    
-        console.log(contenido);
-    
-        fs.appendFile("./texto_callback.txt","\nTexto recién salido del horno", function(error){
-            if (error) return console.log("Hubo un error al agregar contenido al archivo");
-    
-            fs.readFile("./texto_callback.txt", "utf-8", function(error, contenido){
-                if (error) return console.log("Hubo un error al leer el archivo");
-                console.log(contenido);
-    
-                fs.unlink("./texto_callback.txt", function(error){
-                    if (error) return console.log("Hubo un error al eliminar el archivo");
-                });
-            });
-        });
-    });
-}); */
-
-/* //Ejemplo 2: Ejercicio practico con fs.
-const fs = require("fs");
-const fecha = new Date().toLocaleString();
-
-fs.writeFile("./texto_callback.txt", fecha, function(error){
-
-    if (error) return console.log("Hubo un error al escribir el archivo");
-
-    fs.readFile("./texto_callback.txt", "utf-8", function(error, contenido){
-        if (error) return console.log("Hubo un error al leer el archivo");
-        console.log("La fecha del arcghivo es: ", contenido);
-    });
-}); */
-
-/* //Ejemplo 3: Uso del file system (fs) con callbacks Y promesas
-const fs = require("fs");
-
-async function operaciones(fileName) {
-    try {
-        await fs.promises.writeFile(fileName, "Escribiendo en un archivo con promesas");
-        let contenido = await fs.promises.readFile(fileName, "utf-8"); console.log(contenido);
-        
-        await fs.promises.appendFile(fileName, "\nAgregando contenido");
-        contenido = await fs.promises.readFile(fileName, "utf-8"); console.log(contenido);
-
-        await fs.promises.unlink(fileName);
-
-    } catch (error) {
-        console.log("Hubo un error");
-    }
-};
-
-operaciones("./texto.txt"); */
-
-/* //Ejemplo 4: Manejo de datos complejos con fs.promise
-const fs = require("fs");
-
-async function operacion (fileName, objeto){
-    try {
-        await fs.promises.writeFile(fileName, JSON.stringify(objeto, null, "\t"));
-        let contenido = await fs.promises.readFile(fileName, "utf-8");
-        let data = JSON.parse(contenido);
-
-        console.log(contenido);
-        console.log(data);
-        console.log(data.id);
-        console.log(typeof contenido);
-
-        let array = [data, { id: 2, name: "Arturo", age: 25 }];
-        await fs.promises.writeFile(fileName, JSON.stringify(array, null, "\t"));
-    
-    } catch (error) {
-        console.log(error);
-        console.log("Hubo un error");
-    }
-};
-
-operacion("./texto.json", {
-    id: 1,
-    name: "Roberto",
-    age: 24,
-}); */
-
-/* //Ejemplo 5: Ejercicio practico Manager de usuarios
-// Se creará una clase que permita gestionar usuarios usando fs.promises, éste deberá contar sólo con dos métodos: Crear un usuario y consultar los usuarios guardados.
-// ✓ El Manager debe vivir en una clase en un archivo externo llamado ManagerUsuarios.js
-// ✓ El método “Crear usuario” debe recibir un objeto con los campos: Nombre Apellido Edad Curso.
-//   El método debe guardar un usuario en un archivo “Usuarios.json”, deben guardarlos dentro de un arreglo, ya que se trabajarán con múltiples usuarios
-// ✓ El método “ConsultarUsuarios” debe poder leer un archivo Usuarios.json y devolver el arreglo correspondiente a esos usuarios
-
-const fs = require("fs");
-
-class ManagerUsuarios{
-    #usuarios;
-
-    constructor(fileName){ //Mandamos el "fileName", ya que se podria utilizar varios "ManagerUsuarios" con diferentes tipos de usuarios.
-        this.fileName = fileName;
-
-        let comprobacion = fs.existsSync(this.fileName);
-        if (comprobacion) {
-            try { //Recordar que el metodo contructor no puede ser asincrono, y por eso unicamente utilizamos el try-catch.
-                console.log("True");
-                this.usuarios = fs.readFileSync(fileName, "utf-8");
-                this.usuarios = JSON.parse(usuarios);
-            } catch (error) {
-                // console.log(error);
-                this.usuarios = [];
-            }
-        }else {
-            this.usuarios = [];
-        }
-    }
-
-    async saveFile(data) {
-        try {
-            await fs.promises.writeFile(this.fileName, JSON.stringify(data, null, "\t"));
-            return true;
-
-        } catch (error) {
-            console.log(error);
-            return false;
-        }
-    }
-
-    async addUsuario(usuario) {
-        this.usuarios.push(usuario);
-        const respuesta = await this.saveFile(this.usuarios);
-    
-        if (respuesta) {
-            console.log("Usuario creado");
-        } else {
-            console.log("Hubo un error al crear un usuario");
-        }
-    }
-    
-    consultarUsuarios() {
-        console.log(this.usuarios);
-        return this.usuarios;
-    }
-}
-
-class Usuario{
-    constructor(nombre, apellido, edad, curso){
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.edad = edad;
-        this.curso = curso;
-    }
-}
-
-// Pruebas
-const usuario1 = new Usuario("Mariano", "Lopez", 26, "Backend");
-const usuario2 = new Usuario("Felipe", "Lopez", 36, "Backend");
-const usuario3 = new Usuario("Arturo", "Feliz", 26, "Frontend");
-
-const manager = new ManagerUsuarios("./Usuarios.json");
-
-console.log(manager.consultarUsuarios());
-manager.addUsuario(usuario1);
-manager.addUsuario(usuario2);
-manager.addUsuario(usuario3);
-// console.log(manager.consultarUsuarios()); */
-
-/* //Ejemplo 6: Ejercicio practico Manager de posts
-const fs = require("fs");
-
-class ManagerPost{
-    constructor(path){ //El constructor no puede ser asincrono. Por eso se usa readFileSync.
-        this.path = path;
-        this.posts;
-
-        try{
-            this.posts = fs.readFileSync(this.path, "utf-8"); //Creamos una variable "posts" que va a tener los datos (que recibira del archivo)
-            this.posts = JSON.parse(posts); //Despues, el texto que recibimos en la linea de arriba, lo parseamos (convertimos a JSON) y se vuelve a almacenar en el atributo de la clase.
-        } catch (error) {
-            this.posts = []; //En caso de que no exista, simplemente almacenamos un array vacio.
-        }
-    }
-
-    async savePost(post){
-        if(!post) return console.log("El post esta vacio");
-
-        const existPost = this.posts.find(event => event.id === post.id);
-        if(existPost) return console.log("El post ya existe!");
-
-        try{
-            this.posts.push(post);
-            await fs.promises.writeFile(this.path, JSON.stringify(this.posts, null, "\t"))
-        }catch (error) {
-            console.log(`Hubo un error al guardar los datos: ${error}`);
-            return;
-        }
-    }
-
-    async deletePost(id) {
-        const post = this.posts.find((p) => p.id === id);
-
-        if (!post) {
-            return console.log("El post no existe");
-        }
-
-        const index = this.posts.findIndex(post);
-
-        try {
-            this.posts.splice(index, 1);
-            await fs.promises.writeFile(this.path, JSON.stringify(this.posts, null, "\t") );
-        } catch (error) {
-            console.log(`Hubo un error al guardar los datos: ${error}`);
-            return;
-        }
-    }
-
-    validate(post){
-        if(!post.userId || !post.id || !post.title || !post.body){
-            return false;
-        }else{
-            return true;
-        }
-    }
-
-    getPosts(){
-        return this.posts;
-    }
-
-};
-
-class Post{
-    constructor(userId, id, title, body){
-        this.userId = userId;
-        this.id = id;
-        this.title = title;
-        this.body = body;
-    }
-}
-
-async function fetchDatos() {
-    try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-    const data = await response.json();
-    
-    const manager = new ManagerPost("./posts.json");
-    for (let i = 0; i < 10; i++) {
-        const post = new Post(
-            data[i].userId,
-            data[i].id,
-            data[i].title,
-            data[i].body,
-        );
-        manager.savePost(post);
-    }
-
-    console.log(manager.getPosts());
-    
-    } catch (error) {
-    console.log(`Hubo un error ${error}`);
-    }
-}
-
-fetchDatos(); */
-
-/* //Ejemplo 7: Manejo de archivos (Segundo desafio)
-//  ✓ Realizar una clase de nombre “ProductManager”, el cual permitirá trabajar con múltiples productos. Éste debe poder agregar, consultar, modificar y eliminar un producto y manejarlo en persistencia de archivos.
-//  ✓ La clase debe contar con una variable this.path, el cual se inicializará desde el constructor y debe recibir la ruta a trabajar desde el momento de generar su instancia.
-//  ✓ Debe guardar objetos con el siguiente formato:
-//    - id (se debe incrementar automáticamente, no enviarse desde el cuerpo)
-//    - title (nombre del producto)
-//    - description (descripción del producto)
-//    - price (precio)
-//    - thumbnail (ruta de imagen)
-//    - code (código identificador)
-//    - stock (número de piezas disponibles)
-//  ✓ Debe tener un método addProduct el cual debe recibir un objeto con el formato previamente especificado, asignarle un id autoincrementable y guardarlo en el arreglo (recuerda siempre guardarlo como un array en el archivo).
-//  ✓ Debe tener un método getProducts, el cual debe leer el archivo de productos y devolver todos los productos en formato de arreglo.
-//  ✓ Debe tener un método getProductById, el cual debe recibir un id, y tras leer el archivo, debe buscar el producto con el id especificado y devolverlo en formato objeto
-//  ✓ Debe tener un método updateProduct, el cual debe recibir el id del producto a actualizar, así también como el campo a actualizar (puede ser el objeto completo, como en una DB), y debe actualizar el producto que tenga ese id en el archivo. NO DEBE BORRARSE SU ID
-//  ✓ Debe tener un método deleteProduct, el cual debe recibir un id y debe eliminar el producto que tenga ese id en el archivo.
-
-const fs = require("fs");
-
-class ProductManager{
-    constructor(products){ // ./products.txt
-        this.products = products; 
-        this.res;
-        
-        let comprobacion = fs.existsSync(this.products);
-        if (comprobacion) {
-            try { //Recordar que el metodo contructor no puede ser asincrono, y por eso unicamente utilizamos el try-catch.
-                console.log("True");
-                this.res = fs.readFileSync(products, "utf-8"); //Leemos (y obtenemos) un array vacio justo cuando no hemos cargado ningun producto
-                this.res = JSON.parse(this.res); //Una vez cargado el producto, lo parseamos para poder obtenerlo el objeto proveniente del formato JSON.
-            } catch (error) {
-                this.res = [];
-            }
-        }else {
-            this.res = [];
-        }
-    }
-
-    async addProduct (product){
-        try {
-            const verifyExistence = this.res.some((e) => e.code === product.code); //Verificamos que el codigo de cada producto sea igual. Si son iguales, entonces el producto ya existe y no es necesario agreagarlo
-            if (!verifyExistence){
-                // if (this.res.length === 0) {
-                //     product.id = this.res.length+1;
-                // }else{
-                //     if(this.res[this.res.length-1].id === this.res.length){
-                //         product.id = this.res.length + 1;
-                //     } 
-                //     else{
-                //         product.id = this.res[this.res.length-1].id+1;
-                //     }
-                // }
-                this.res.length === 0 ? product.id = 1 : product.id = this.res.length + 1;
-                this.res.push(product);
-                await fs.promises.writeFile(this.products, JSON.stringify([...this.res, product], null, "\t"));
-                // return console.error("Product added successfully");
-            }else{
-                return console.error("Product already in stock");
-            }
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async deletePost(id) {
-        try {
-            const post = this.res.find((p) => p.id === id); console.log(post)
-            if(post){
-                const deleteById = this.res.filter(event => event.id !== id);
-                console.log("Nuevi array", deleteById)
-                await fs.promises.writeFile(this.products, JSON.stringify(deleteById, null, "\t"));
-                return console.log("Removed product successfully");
-            }else{
-                return console.log("El post no existe");
-            }
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async updateProduct (id, product){
-        try {
-            const parametersExist = product.hasOwnProperty("title") && product.hasOwnProperty("description") && product.hasOwnProperty("price") && product.hasOwnProperty("thumbnail") && product.hasOwnProperty("code") && product.hasOwnProperty("stock");
-            const val = this.res.find((p) => p.id === id); 
-
-            if (val){
-                if (parametersExist){
-                    val.title = product.title;
-                    val.description = product.description;
-                    val.price = product.price;
-                    val.thumbnail = product.thumbnail;
-                    val.code = product.code;
-                    val.stock = product.stock;
-
-                    await fs.promises.writeFile(this.products, JSON.stringify(this.res, null, "\t")); 
-                    return console.log("updated product successfully");
-                }else{
-                    return console.error("Not enough information.");
-                }
-            }else{
-                return console.error("Not found id.");
-            }            
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    getProducts (){
-        return this.res;
-    }
-
-    getProductById (id){
-        const num = this.res.find(event => event.id === id);
-        num ? console.log("The product found by id is: ", num) : console.log("Product not found by id");
-    }
-
-}
-
-class GestionDeProductos{
-    constructor(title, description, price, thumbnail, code, stock){
-        this.title = title;
-        this.description = description;
-        this.price = price;
-        this.thumbnail = thumbnail;
-        this.code = code;
-        this.stock = stock;
-    }
-}
-
-const Product = new ProductManager("./products.txt");
-
-// Obtenemos el array vacio
-// console.log(Product.getProducts());
-
-// Agregamos productos al arreglo vacio
-const producto1 = Product.addProduct(new GestionDeProductos(
-    "AK-47", 
-    "Assault riffle", 
-    9, 
-    "https://www.therange702.com/wp-content/uploads/2021/09/AK47-768x513-1.jpg.webp",
-    "SS1998",
-    5
-));
-
-const producto2 = Product.addProduct(new GestionDeProductos(
-    "P-90", 
-    "Sub machine gun", 
-    6, 
-    "https://www.therange702.com/wp-content/uploads/2022/12/fn-p90-sqsh.jpg.webp",
-    "SS1999",
-    5
-));
-
-const producto3 = Product.addProduct(new GestionDeProductos(
-    "Saiga-12", 
-    "Shotgun", 
-    10, 
-    "http://dissidentarms.com/wp-content/uploads/2016/12/20210201_181025-scaled.jpg",
-    "SS2000",
-    5
-));
-
-const producto4 = Product.addProduct(new GestionDeProductos(
-    "RPG", 
-    "Launchers", 
-    200, 
-    "http://dissidentarms.com/wp-content/uploads/2016/12/20210201_181025-scaled.jpg",
-    "SS2001",
-    5
-));
-
-const productiActualizar = {
-    title: "new title", 
-    description: "new description", 
-    price: 1000, 
-    thumbnail: "new url image", 
-    code: "new code", 
-    stock: 10 
-}
-
-// console.log(Product.getProducts());
-
-// console.log(Product.getProductById(3));
-// console.log(Product.getProducts());
-
-// Product.deletePost(4);
-// console.log(Product.getProducts());
-
-// console.log(Product.getProducts());
-// console.log(Product.getProducts());
-
-// Product.updateProduct(1, productiActualizar);
-// console.log(Product.getProducts()); */
-
-/* //Ejemplo 8: Lectura y escritura de archivos
-Escribir un programa ejecutable bajo node.js que realice las siguientes acciones:
-✓ Abra una terminal en el directorio del archivo y ejecute la instrucción: npm init -y. Esto creará un archivo especial (lo veremos más adelante) de nombre package.json
-✓ Lea el archivo package.json y declare un objeto con el siguiente formato y datos:
-    const info = {
-        contenidoStr: (contenido del archivo leído en formato string),
-        contenidoObj: (contenido del archivo leído en formato objeto),
-        size: (tamaño en bytes del archivo)
-    }
-✓ Muestre por consola el objeto info luego de leer el archivo
-✓ Guardar el objeto info en un archivo llamado info.json dentro de la misma carpeta de package.json
-✓ Incluir el manejo de errores (con throw new Error)
-✓ Utilizar el módulo promises de fs dentro de una función async/await y utilizar JSON.stringify + JSON.parse para poder hacer las transformaciones json->objeto y viceversa. */
-
-/* //Ejemplo 9: Práctica de módulos nativos: fs + crypto
-// Se creará una clase “UserManager” que permitirá guardar usuarios en un archivo. El usuario se recibirá con una contraseña en string plano, y se deberá guardar la contraseña 
-// hasheada con crypto. Utilizar los módulos nativos fs y crypto, El manager debe contar con los siguientes métodos:
-// ✓ El método “Crear usuario” debe recibir un objeto con los campos: Nombre, Apellido, Nombre de usuario, y Contraseña
-//    El método debe guardar un usuario en un archivo “Usuarios.json”, recordando que la contraseña debe estar hasheada por seguridad
-// ✓ El método “Validar Usuario” recibirá el nombre de usuario que quiero validar, seguido de la contraseña, debe poder leer el json previamente generado con el arreglo de 
-//    usuarios y hacer la comparación de contraseñas, Si coinciden el usuario y la contraseña, devolver un mensaje “Logueado”, caso contrario indicar error si el usuario no existe, o si la contraseña no coincide.
-
-const fs = require("fs");
-const crypto = require("crypto");
-
-class UserManager {
-    constructor(path) {
-        try {
-            this.path = path;
-            this.users = fs.readFileSync(path, "utf-8");
-            this.users = JSON.parse(users);
-        } catch {
-            this.users = [];
-        }
-    }
-
-    async crearUsuario(user){
-        const hashPassword = crypto.createHash("sha256").update(user.password).digest("hex");
-        user.password = hashPassword;
-        this.users.push(user);
-
-        try {
-            await fs.promises.writeFile(this.path, JSON.stringify(this.users, null, "\t"));
-            console.log("User Created")
-        } catch (error) {
-            console.log("Error creating user: "+ error);
-        }
-
-    }
-
-    validarUsuario(username, password) {
-        const userExists = this.users.find((user) => user.username === username);
-        if (!userExists) return console.log("User does not exists");
-
-        const hashPassword = crypto.createHash("sha256").update(password).digest("hex");
-        userExists.password === hashPassword ? console.log("Logged!") : console.log("Invalid Password");
-    }
-}
-
-class User {
-    constructor(nombre, apellido, username, password) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.username = username;
-        this.password = password;
-    }
-}
-
-const user = new UserManager("./Users.json");
-user.crearUsuario(new User("emi", "perez", "emiperez", "123"));
-user.crearUsuario(new User("yessi", "perez", "yessiperez", "1234"));
-user.crearUsuario(new User("facu", "perez", "facuperez", "pauli"));
-user.crearUsuario(new User("paula", "perez", "pauperez", "facu123"));
-
-// user.validarUsuario("emiperez", "123");
-// user.validarUsuario("pauperez", "facu123");
-// user.validarUsuario("yessiperez", "123");
-// user.validarUsuario("yessuperez", "123"); */
-
-/* //Ejemplo 10: Calculadora de edad
-// Realizar un programa que utilice la dependencia momentjs (deberá instalarse por npm install).
-// ✓ Debe contar con una variable que almacene la fecha actual (utilizar moment())
-// ✓ Debe contar con una variable que almacene sólo la fecha de tu nacimiento (utilizar moment).
-// ✓ Validar con un if que la variable contenga una fecha válida (utilizar el método isValid());
-// ✓ Finalmente, mostrar por consola cuántos días han pasado desde que naciste hasta el día de hoy. (utilizar el método diff()
-// ✓ Extra: Cambia tu moment a la versión 1.6.0, al no ser la misma versión mayor, nota el cambio al correr el programa.
-
-const moment = require("moment");
-const fechaActual = moment();
-const fechaPropia = moment("1998-04-22");
-const transcurso = fechaActual.diff(fechaPropia, "days");
-
-if (!fechaPropia.isValid()){
-    return console.log("Please fix the date introduced!");
-}else{
-    return console.log(`La cantidad de dias pasados es de: ${transcurso} dias`)
-} */
-
-/* //Ejemplo 11: Nodemon ~ Solucion a error en consola: https://www.alexmedina.net/habilitar-la-ejecucion-de-scripts-para-powershell/ ~
-const http = require("http"); //console.log(http);
-const server = http.createServer((request, response) => {
-    console.log(request.url);
-    if(request.method === "GET" && request.url === "/")  response.end("Mi primer servidor con node js"); //Con .end enviamos una respuesta
-    if(request.url !== "/") response.end("Error pagina no encontrada!");
-});
-
-server.listen(8080, function(){ //Con este comando definimos el numero de puerto
-    console.log("Server listening on port 8080");
-}); */
-
-/* //Ejemplo 12: Trabajando con express
-// const express = require("express");
-import express from "express";
-const app = express();
-
-app.get("/", function(request, response){
-    response.send("<h1>Hello world from express!</h1>");
-});
-
-app.get('/bienvenida', function(request, response){
-    response.send(`<h1 style="color: blue">Hello world from express!</h1>`);
-});
-
-app.get("/usuario", function(request, response){
-    response.json({
-        nombre: "German",
-        apellido: "Mancilla",
-        edad: "26",
-        correo: "german@gmail.com"
-    });
-});
-
-app.listen(8080, () => console.log("Sever listenint on port 8080!")); */
-
-/* //Ejemplo 13: Otras respuestas con express
-import express from "express";
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-const PORT = 5500;
-
-const usuarios = [
-    {
-        id: 1,
-        nombre: "German",
-        edad: 25,
-    },
-    {
-        id: 2,
-        nombre: "Karla",
-        edad: 25,
-    },
-];
-
-app.get("/", function(request, response){
-    console.log(request.params);
-    console.log(request.query.nombre);
-
-    const { nombre, edad, ciudad } = request.query;
-    console.log(nombre, edad, ciudad); // http://localhost:5000/?nombre=Emiliano&edad=26&ciudad=tijuana
-    if (nombre) {
-        const usuario = usuarios.find((user) => user.nombre === nombre);
-        if (usuario) {
-            return response.send(`Bienvenido ${usuario.nombre}!`);
-        }else{
-            return response.send("Bienvenido invitado!");
-        }
-    }
-});
-
-app.get("/usuarios", function(request, response){
-    response.json(usuarios);
-});
-
-app.get("/usuarios/:id_user", function(request, response){   console.log(request.params); // Ejemplo URL: http://localhost:5000/usuarios/valor
-    const { id_user } = request.params; // id_user es el nombre de la variable donde se almacenara el param. En este caso, debe ser el mismo nombre tanto en la barra de navegacion como en js
-    const usuario = usuarios.find((user) => user.id === +id_user);
-    usuario ? response.json(usuario) : response.json({ error: "User not found" });
-});
-
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
-
-// req.params: Se utiliza cuando necesitamos obtener elementos dinámicos desde la ruta que está llamando el cliente. para poder definir un “parámetro” dentro de la ruta a trabajar, basta con colocar el símbolo de 
-//             dos puntos : antes del parámetro, de esta manera, express reconoce que queremos que ese elemento sea dinámico.
-// req.query: Se refiere a las múltiples consultas que se pueden hacer a un determinado endpoint, basta conque en la url coloquemos el símbolo ? , entonces express reconocerá que hay que meter información al objeto 
-//            req.query para poder utilizarlo en el endpoint. Cuando buscamos algo en nuestro navegador, llamamos a un endpoint haciendo un determinado query. Se expresa como:    ?key=valor  */
-
-/* //Ejemplo 14: Desarrollar un servidor basado en express donde podamos hacer consultas a nuestro archivo de productos
-// ✓ Se deberá utilizar la clase ProductManager que actualmente utilizamos con persistencia de archivos.
-// ✓ Desarrollar un servidor express que, en su archivo app.js importe al archivo de ProductManager que actualmente tenemos.
-// ✓ El servidor debe contar con los siguientes endpoints:
-//   ○ ruta ‘/products’, la cual debe leer el archivo de productos y devolverlos dentro de un objeto. Agregar el soporte para recibir por query param el valor ?limit= el cual 
-//     recibirá un límite de resultados.
-//     - Si no se recibe query de límite, se devolverán todos los productos
-//     - Si se recibe un límite, sólo devolver el número de productos solicitados
-//   ○ ruta ‘/products/:id’, la cual debe recibir por req.params el id (product Id), y devolver sólo el producto solicitado, en lugar de todos los productos. 
-
-const { ProductManager } = require("./src/ProductManager");
-const Product = new ProductManager("./data/products.json")
-const express = require ("express");
-const app = express();
-const PORT = 5000;
-
-app.use(express.urlencoded({extended:true}));
-
-app.get("/products", async function(request, response){
-    const products = await Product.getProducts();
-    const {limit} = request.query;
-    
-    limit ? response.json(Object.values(products).slice(0, limit)) : response.json(products);
-});
-
-app.get("/products/:id_Param", async function(request, response){
-    const allProducts = await Product.getProducts();
-    const {id_Param} = request.params;
-
-    //Metodo 1:
-    // const findId = allProducts.find((user) => user.id === +id_product);
-    // findId ? response.json(findId) : response.json({ error: "User not found" });
-
-    //Metodo 2:
-    const maxValue = Object.values(allProducts).length;
-    if (+id_Param < +maxValue && +id_Param > 0) {
-        const getProductId = Product.getProductById(+id_Param);
-        console.log(getProductId)
-        response.json(getProductId);
-    } else {
-        response.send(`<h1>Something went wrong!</h1>`)
-        // response.json({ error: "User not found" });
-    }
-});
-
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
-
-/* //Ejemplo 15: Utilizacion del metodo POST
-import express from "express";
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-const PORT = 5050;
-
-//Datos en memoria
-const usuarios = [];
-
-app.get("/", function(request, response){
-    response.json({
-        mensaje: "Bienvenido a mi API",
-    });
-});  // Endpoints usuarios
-
-// Obtener usuarios
-app.get("/usuarios", function(req, res){
-    res.json({
-        usuarios,
-    });
-});
-
-// Obtener usuarios por id
-app.get("/usuarios/:id", function(req, res){
-    const { id } = req.params;
-    validation(id, res);
-
-    res.json({
-        usuario,
-    });
-});
-
-// Crear usuario
-app.post("/usuarios", function(req, res){
-    // console.log(req.body); //El rec.body captura la info que le llega
-
-    const { id, username, name } = req.body;
-
-    // const usuario = {};
-
-    usuarios.push({
-        id: Number(id),
-        username,
-        name,
-    });
-
-    res.json({
-        status: "Creado",
-    });
-});
-
-// Actualizar usuario
-app.put("/usuarios/:id", function(req, res){
-    const { id } = req.params;
-    const { username, name } = req.body;
-    
-    const index = validation(id, res);
-
-    usuarios[index] = {
-        id: Number(id),
-        username,
-        name,
-    };
-
-    res.json({
-        status: "Actualizado",
-        usuario: {
-            id: Number(id),
-            username,
-            name,
-        }
-    });
-});
-
-app.delete("/usuarios/:id", function(req, res){
-    const { id } = req.params;
-    const index = validation(id, res);
-
-    usuarios.splice(index, 1);
-
-    res.json({
-        status: "Usuario Eliminado",
-    });
-});
-
-function validation(id, res){
-    const index = usuarios.findIndex((user) => user.id === +id);
-
-    if (index === -1) {
-        return res.json({
-            error: "User not found",
-        });
-    }
-
-    return index;
-}
-
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
-
-/* //Ejepmlo 16: Servidor con GET, POST, PUT, DELETE
-// Dada la frase: “Frase inicial”, realizar una aplicación que contenga un servidor en express, el cual cuente con los siguientes métodos:
-// ✓ GET '/api/frase': devuelve un objeto que como campo ‘frase’ contenga la frase completa
-// ✓ GET '/api/palabras/:pos': devuelve un objeto que como campo ‘buscada’ contenga la palabra hallada en la frase en la posición dada (considerar que la primera palabra es la #1).
-// ✓ POST '/api/palabras': recibe un objeto con una palabra bajo el campo ‘palabra’ y la agrega al final de la frase. Devuelve un objeto que como campo ‘agregada’ contenga la palabra agregada, y en el campo ‘pos’ la posición en que se agregó dicha palabra.
-// ✓ PUT '/api/palabras/:pos': recibe un objeto con una palabra bajo el campo ‘palabra’ y reemplaza en la frase aquella hallada en la posición dada. Devuelve un objeto que como campo ‘actualizada’ contenga la nueva palabra, y en el campo ‘anterior’ la anterior.
-// ✓ DELETE '/api/palabras/:pos': elimina una palabra en la frase, según la posición dada (considerar que la primera palabra tiene posición #1).
-// ✓ Utilizar POSTMAN para probar funcionalidad
-
-import express from "express";
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-const PORT = 5500;
-
-const frase = ["frase", "inicial"];
-
-app.get("/", function(request, response){
-    response.json({
-        mensaje: "Bienvenido",
-    });
-});
-
-app.get("/frase", function(request, response){
-    response.json({
-        frase: frase.join(" ")
-    });
-});
-
-app.get("/api/palabras/:pos", function(request, response){
-    const { pos } = request.params;
-
-    response.json({
-        buscada: frase[Number(pos) - 1],
-    });
-});
-
-app.post("/api/palabras", function(request, response){
-    const { palabra } = request.body;
-
-    frase.push(palabra);
-
-    response.json({
-        palabra,
-        posicion: frase.length,
-    });
-});
-
-app.put("/api/palabras/:pos", function(request, response){
-    const { pos } = request.params;
-    const { palabra } = req.body;
-
-    const anterior = frase[Number(pos) - 1];
-    frase[Number(pos) - 1] = palabra;
-
-    response.json({
-        actualizada: palabra,
-        anterior,
-    });
-});
-
-app.delete("/api/palabras/:pos", function(request, response){
-    const { pos } = request.params;
-
-    frase.splice(Number(pos) - 1, 1);
-
-    response.json({
-        status: "Eliminado",
-    });
-});
-
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
-
-/* //Ejepmlo 17: Router en Express
-import express from "express";
-import petsRouter from "./src/routes/pets.router.js";
-import userRouter from "./src/routes/users.router.js";
-
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-const PORT = 5500;
-
-app.get("/", function(request, response){
-    response.json({
-        mensaje: "Bienvenido",
-    });
-});
-
-app.use("/api/pets", petsRouter);
-app.use("/api/users", userRouter);
-
-
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
-
-/* //Ejepmlo 18: Servicio de archivos estáticos con Express
-import express from "express";
-const PORT = 5500;
-const app = express();
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.use("/static", express.static("src/public/"));  //Probar con --> http://localhost:5500/static/saiga.jpg
-
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
-
-/* //Ejepmlo 19: Carpeta public
-// ✓ El router de users debe tener la ruta principal /api/users
-// ✓ El router de pets debe tener la ruta principal /api/pets
-// ✓ Ambos deben tener, de manera interna, un array para almacenarlos.
-// ✓ Ambos deben contar con un método get en su ruta raíz para poder obtener el arreglo.
-// ✓ Ambos deben contar con un método POST en su ruta raíz para poder agregar un usuario omascota según sea el router.
-// ✓ Conectar los routers al archivo app.js para tener listo el apuntador al router.
-// ✓ Probar funcionalidad con Postman.
-// ✓ recrear la estructura con un index.html para poder visualizarse en la ruta raíz.
-// ✓ En este archivo deberá haber un formulario donde podremos ingresar una mascota a partir del método POST. Dicho POST conectará al endpoint raíz del router pets
-// ✓ Configurar el router pets para que pueda recibir el json por parte del formulario (recordar express.json() y express.urlencoded({extended:true}))
-// ✓ Verificar con POSTMAN que la información llegue al servidor y se guarde correctamente.
-
-import express from "express";
-import petsRouter from "./src/router/pets.router.js";
-import userRouter from "./src/router/users.router.js";
-const PORT = 5500;
-const app = express();
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use("/static", express.static("src/public/")); // Si no se quiere usar POSTMAN, usar el siguiente link --> http://localhost:5500/static/html/indexLayout.html
-
-app.use("/api/pets", petsRouter);
-app.use("/api/users", userRouter);
-
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
-
-/* //Ejemplo 20: Tipos de Middleware
-import express from "express";
-import { Router } from "express";
-const PORT = 5500;
-const router = express.Router();
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// //Middleware de nivel de aplicación
-// function logger(req, res, next) {
-//     console.log("Servidor recibe peticion");
-//     next();
-// }
-
-// app.use(logger);
-
-// //Middleware de nivel de endpoint
-// function middleware(request, response, next){
-//     const { code, productName } = req.body;
-
-//     if (!code || code === "") {
-//         return res.json({
-//             error: "Esta el campo code vacio",
-//         });
-//     }
-
-//     next();
-// }
-
-// app.get("/", middleware, function(request, response){ //Ejecutamos primero la ruta "/", despues se ejecuta la funcion middleware y, si todo sale bien, se ejecuta la funcion next, y pasamos al siguiente middleware. En este caso, al no haber, simplemente pasa al la funcion.
-//     response.json({
-//         mensaje: "Bienvenido",
-//     });
-// });
-
-// //Middleware de nivel del Router
-// function logger(req, res, next) {
-//     console.log("Servidor recibe peticion");
-//     next();
-// }
-
-// router.use(logger);
-
-// //Middleware de manejo de errores
-// app.use(function (err, req, res, next) {
-//     console.error(err.stack);
-//     res.status(500).send('Something broke!');
-// });
-
-
-
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
-
-/* //Ejemplo 21: Express Multer
-import express from "express";
-import {loader} from "./src/utils/multer.js"
-const app = express();
-const PORT = 5500;
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static("src/public/"));
-
-app.post("/", loader.single("file"), function(request, response){
-    if(!request.file){
-        return response.status(500).json({error: "Hubo un error al subir el archivo"});
-    }else{
-        return response.json({message: "El archivo se subio correctamente"});
-    }
-});
-
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
-
-/* //Ejemplo 22: Express + multer
-// Basado en el formulario para ingresar una mascota al sistema:
-// ✓ Configurar el formulario para añadir un campo input type=”file” name “file” para que la mascota a agregar pueda tener una “imagen representativa”.
-// ✓ El nombre del archivo guardado se formará con el nombre original anteponiéndole un timestamp (Date.now()) seguido con un guión. Ej: 1610894554093-clase1.zip.
-// ✓ Corroborar que la imagen se guarde correctamente. Guardar la ruta del archivo guardado en un campo “thumbnail”.
-
-import express from "express";
-import router from "./src/router/postRoutes.js";
-import { logger } from "./src/utils/logger.js";
-
-const app = express();
-const PORT = 5500;
-
-function appGet1(req, res){
-    res.json({
-        message: "Bienvenido",
-    });
-}
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.get("/", appGet1);
-app.use(logger);
-app.use("/api/posts/", router);
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
-
-/* //Ejemplo 23: Servidor basado en Node.JS y express de un carrito de compras (Primera entrega CoderHouse)
-import express from "express";
-import routerMain from "./router/main.js";
-
-const PORT = 5500;
-const app = express();
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-routerMain(app);
-
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
-
-
-// - Paso 1: Debemos crear los produtos que se encuentran en ProductManager. En este archivo hasta el final se encuentran los objetos que serviran 
-// para copiar y pegar en postman y asi crear los productos en un archivo products.json
-// - Paso 2: El siguiente metodo es crear el o los carritos deseados, los cuales contendran un arreglo "products" vacio y un id. Es importante crearlos
-// antes de introducir los productos al carrito o de lo contrario obtendremos un error.
-// - Paso 3: Finalmente podemos agregar elementos al arreglo products en el archivo carts.json. */
-
-/* //Ejemplo 24: Uso de app.get(name, value);
-import express from "express";
-
-const PORT = 5500;
-const app = express();
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Setting the value to name
-app.set('title', 'Welcome to TutorialsPoint!!');
-
-// Creating an endpoint
-app.get('/', (req, res) => {
-    res.send(app.get('title'));
-})
-
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
-
-/* //Ejemplo 25: Handlebars
-import express from "express";
-import {__dirname} from "./utils.js"
-import handlebars from "express-handlebars";
-import viewRouter from "./src/router/views.routes.js";
-
-const app = express();
-const PORT = 5500;
-
-// Middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Configuramos el engine
-app.engine("hbs", handlebars.engine({
-    extname: "hbs",
-    defaultLayout: "main",
-}));
-
-// Seteamos nuestro motor.     //View engines allow us to render web pages using template files. These templates are filled with actual data and served to the client.
-app.set("view engine", "hbs"); //Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo. 
-app.set("views", `${__dirname}/src/view`); //Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
-
-// Public
-app.use(express.static(`${__dirname}/src/public`));
-
-// Routes
-app.use("/", viewRouter);
-
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
-
-/* //Ejemplo 26: Handlebars con express
-// Realizar un formulario en una nueva plantilla.
-// ✓ Se creará un archivo “register.handlebars” como nueva plantilla, donde se colocará un form
-// ✓ Dicho form debe servir para registrar un usuario, por lo que contará con nombre, correo, y contraseña
-// ✓ Enviar los datos a una ruta POST ‘/user’, y guardar el usuario en un arreglo. Confirmar que el guardado se realice exitosamente.
-// ✓ Al llamar al método get ‘/’, generar un número random para elegir a alguno de los usuarios y mostrar el usuario seleccionado al azar en la plantilla. 
-
-import express from "express";
-import {__dirname} from "./utils.js"
-import handlebars from "express-handlebars";
-import viewRouter from "./src/router/desafioView.routes.js";
-
-const app = express();
-const PORT = 5500;
-
-// Middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
-app.engine("hbs", handlebars.engine({
-        extname: "hbs", //index.hbs
-        defaultLayout: "main", //Plantilla principal
-    })
-);
-
-app.set("views", `${__dirname}/src/view`); //Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
-app.set("view engine", "hbs"); //Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
-app.use(express.static(`${__dirname}/src/public`)); // Public. Sentamos de manera estatica la carpeta public
-app.use("/", viewRouter);// Routes
-
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
-
-/* //Ejemplo 27: Socket.io
-import express from "express";
-import {__dirname} from "./utils.js"
-import handlebars from "express-handlebars";
-import viewRouter from "./src/router/socketIntro.routes.js";
-import { Server } from "socket.io";
-
-const app = express();
-const PORT = 5500;
-const httpServer = app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
-const io = new Server(httpServer); //Instanciar websocket
-
-// Middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
-app.engine("hbs", handlebars.engine({
-        extname: "hbs", //index.hbs
-        defaultLayout: "main", //Plantilla principal
-    })
-);
-app.set("views", `${__dirname}/src/view`); // Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
-app.set("view engine", "hbs"); //Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
-app.use(express.static(`${__dirname}/src/public`)); // Public. Sentamos de manera estatica la carpeta public
-app.use("/", viewRouter); // Routes
-
-
-const users = [];
-
-//Socket comunication
-io.on('connection', function(socketClient){ //El cliente se conecta con su websocket al io (io.on significa que está escuchando porque algo pase), entonces, cuando io escucha que hay una nueva conexión (connection), muestra en consola el mensaje “Nuevo cliente conectado”. Es por eso que aparece el mensaje en la consola del Visual Studio Code. 
-    console.log("Nuevo cliente conectado");
-    
-    socketClient.on("message", function(data){ //Esta vez, una vez que el socket se ha conectado, podemos escuchar eventos de dicho socket, a partir de la sintaxis indicada: socket.on(“nombre_del_evento_a_escuchar”,callback con la data que me hayan enviado); Este “evento a escuchar” tiene un identificador que el cliente tiene que colocar de su lado para poder enviar información. Podemos tener múltiples socket.on, para tener así escuchar diferentes eventos.
-        console.log(data);
-        socketClient.emit("send_message", data);
-    });
-    
-    socketClient.emit("server_message", "Mensaje desde el servidor"); //el carácter de un websocket debe ser bidireccional, eso significa que el servidor también debe poder enviar mensajes al cliente. 
-    socketClient.emit("message_all",  "Mensaje para todos"); //Mensaje para todos incluyendo el sender
-
-    socketClient.broadcast.emit("message_all_1", "Mensaje a todos los sockets, sin incluir al sender"); //broadcast va a enviar algo a todos los que esten conectados, menos al ultimo que se conecta o al sender
-    // socketClient.broadcast.emit("message_all_2",  `${socketClient.id} Conectado`); //Esto se puede ver mejor si lo probamos entrando a localhost desde otro navegador 
-
-    socketClient.on("form_message", function(data){
-        console.log(data);
-        users.push(data);
-        socketClient.emit("users_list", users);
-    });
-
-    socketClient.emit("users_list", users);
-}); */
-
-/* //Ejemplo 28: Servidor con Websockets (after class)
-// ✓ Sobre la estructura anteriormente creada, agregar en la vista de cliente un elemento de entrada de texto donde al introducir texto, el mensaje se vea reflejado en todos 
-//   los clientes conectados en un párrafo por debajo del input. El texto debe ser enviado caracter a caracter y debe reemplazar el mensaje previo.
-// ✓ Basado en el ejercicio que venimos realizando, ahora los mensajes enviados por los clientes deberán ser almacenados en el servidor y reflejados por debajo del elemento 
-//   de entrada de texto cada vez que el usuario haga un envío. La estructura de almacenamiento será un arrayde objetos, donde cada objeto tendrá la siguiente estructura:
-//                                  { socketid: (el socket.id del que envió el mensaje), mensaje: (texto enviado)}
-
-// - Cada cliente que se conecte recibirá la lista de mensajes completa.
-// - Modificar el elemento de entrada en el cliente para que disponga de un botón de envío de mensaje.
-// - Cada mensaje de cliente se representará en un renglón aparte, anteponiendo el socket id.
-
-import express from "express";
-import { Server } from "socket.io";
-import routerMain from "./src/router/desafio3.js";
-import { ManagerPost } from "./src/utils/ManagerPost.js";
-
-const app = express();
-const PORT = 5500;
-
-routerMain(app); 
-
-const manager = new ManagerPost("./data/post.json");
-const httpServer = app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
-const io = new Server(httpServer); //Instanciar websocket
-
-
-io.on("connection", function(socket){
-    console.log("Nuevo cliente conectado");
-
-    socket.on("post_send", async function(data){
-        try {
-            await manager.savePost(data);
-            socket.emit("posts", manager.getPosts());
-        } catch (error) {
-            console.log(error);
-        }
-    });
-
-    socket.emit("posts", manager.getPosts());
-
-}); */
-
-/* //Ejemplo 29: Desafio con websockets: Configurar nuestro proyecto para que trabaje con Handlebars y websocket
-// ✓ Configurar el servidor para integrar el motor de plantillas Handlebars e instalar un servidor de socket.io al mismo.
-// ✓ Crear una vista “home.handlebars” la cual contenga una lista de todos los productos agregados hasta el momento
-// ✓ Además, crear una vista “realTimeProducts.handlebars”, la cual vivirá en el endpoint “/realtimeproducts” en nuestro views router, ésta contendrá la misma lista de 
-//  productos, sin embargo, ésta trabajará con websockets.
-// ✓ Al trabajar con websockets, cada vez que creemos un producto nuevo, o bien cada vez que eliminemos un producto, se debe actualizar automáticamente en dicha vista la lista.
-// ✓ Ya que la conexión entre una consulta HTTP y websocket no está contemplada dentro de la clase. Se recomienda que, para la creación y eliminación de un producto, Se cree un 
-//   formulario simple en la vista realTimeProducts.handlebars. Para que el contenido se envíe desde websockets y no HTTP. Sin embargo, esta no es la mejor solución, leer el siguiente punto.
-// ✓ Si se desea hacer la conexión de socket emits con HTTP, deberás buscar la forma de utilizar el servidor io de Sockets dentro de la petición POST. 
-//   ¿Cómo utilizarás un emit dentro del POST? */
-
-/* //Ejemplo 30: Aplicación chat con websocket
-// Nuestro chat comunitario contará con:
-// ✓ Una vista que cuente con un formulario para poder identificarse. El usuario podrá elegir el nombre de usuario con el cual aparecerá en el chat.
-// ✓ Un cuadro de input sobre el cual el usuario podrá escribir el mensaje.
-// ✓ Un panel donde todos los usuarios conectados podrán visualizar los mensajes en tiempo real
-// ✓ Una vez desarrollada esta aplicación, subiremos nuestro código a glitch.com, para que todos puedan utilizarlo
-// ✓ Cuando el usuario se autentique correctamente, el servidor le mande los logs de todo el chat.
-// ✓ Cuando el usuario se autentique correctamente, todos los demás usuarios (menos el que se acaba de registrar) reciban una notificación indicando qué usuario se acaba de conectar. (utiliza Swal toast).
-
-import express from "express";
-import {__dirname} from "./utils.js"
-import handlebars from "express-handlebars";
-import viewRouter from "./src/router/socketView.routes.js";
-import { Server } from "socket.io";
-
-const app = express();
-const PORT = 5500;
-const httpServer = app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
-const io = new Server(httpServer); //Instanciar websocket
-
-// Middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
-app.engine("hbs", handlebars.engine({ 
-        extname: "hbs", //index.hbs
-        defaultLayout: "main", //Plantilla principal
-    })
-);
-
-app.set("views", `${__dirname}/src/view`); // Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
-app.set("view engine", "hbs"); //Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
-app.use(express.static(`${__dirname}/src/public`)); // Public. Sentamos de manera estatica la carpeta public
-app.use("/", viewRouter); // Routes
-
-//Socket comunication
-const messages = [];
-io.on('connection', function(socket){//El cliente se conecta con su websocket al io (io.on significa que está escuchando porque algo pase), entonces, cuando io escucha que hay una nueva conexión (connection), muestra en consola el mensaje “Nuevo cliente conectado”. Es por eso que aparece el mensaje en la consola del Visual Studio Code. 
-
-    socket.on("inicio", function(data){ //2. Recivimos el nombre
-        socket.broadcast.emit("connected", data); //3. Lo enviamos a todos los usuarios menos al ultimo
-    })
-
-    socket.on("message", function(data){//7. Recivimos el mensaje que se capturo en el imput
-        messages.push(data);
-        io.emit("messages", messages); //8. lo enviamos a todo los demas. (Esto es para indicar que se envia a todos y no solo a uno o a todos menos el ultimo, como con broadcast)
-    });
-
-    socket.emit("messages", messages);//Al cargar la pagina, se envia un array vacio. Cuando un usuario nuevo entre o cuando uno actualice el navegador, podra ver el array de mensajes. De lo contrario, aparecera en blanco.
-}); */
 
 
