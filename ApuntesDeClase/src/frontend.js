@@ -2284,40 +2284,6 @@ console.log(overalBalance);
 const overalBalance2 = accounts.flatMap(acc => acc.movements).reduce((acc, mov) => acc + mov, 0);
 console.log(overalBalance2); */
 
-/* //Ejemplo 30: Deep dive into reduce();
-
-// Metodo 1
-// const people = [
-//     {name: "Kyle", age: 26},
-//     {name: "Cartman", age: 31},
-//     {name: "Kenny", age: 42},
-//     {name: "Stan", age: 42}
-// ];
-
-// const result = people.reduce(function(grupedPeople, person){
-//     if(grupedPeople[person.age] === undefined){ //Al principio siempre sera undefined, puesto que no hay ningun arreglo en el objeto, a no ser que haya un numero repetido, como lo sera el 42.
-//         grupedPeople[person.age] = []; //Despues, creamos un aray vacio cuando estemos en el person.age. Por ejemplo, primero tendremos {26: []}, despues {31: []} y asi sucecivamente
-//     }
-
-//     grupedPeople[person.age].push(person); //Cuando ya tengamos el array vacio en ese valor, simplemente agregaremos el objeto "person" en el que nos encontremos. 
-//     return grupedPeople;
-// }, {});
-
-// console.log(result)
-
-//Metodo 2
-// const arr = [1,2,3,4,5,6,8,9,10];
-// const res = arr.reduce(function(cur, item){
-//     if(item%2 === 0){
-//         cur = [...cur, item*2]; 
-//         // return [...cur, item*2];
-//         // cur.push(item*2);
-//     }
-//     return cur; //Si el if no se ejecuta, simplemente retornamos lo que se encuentra en "cur" para despues seguir iterando.
-// }, []);
-
-// console.log(res, "\n"); */
-
 /* //Ejemplo 31: Ejercicio practico #1
 // Julia and Kate are doing a study on dogs. So each of them asked 5 dog owners about their dog's age, and stored the data into an array (one array for each). For now, they are 
 // just interested in knowing whether a dog is an adult or a puppy. A dog is an adult if it is at least 3 years old, and it's a puppy if it's less than 3 years old. Your tasks:
@@ -2615,7 +2581,25 @@ const result = data.map(({id,title,acf}) => ({
 
 console.log(result); */
 
-/* //Ejemplo 38: Write a JavaScript program to Remove empty elements from an array in Javascript
+/* //Ejemplo 38: Write a JavaScript program to convert an array of objects to a single object keyed by id (with map and filter)
+const users = [
+    { id: 1, email: 'dcontreras@email.tld' },
+    { id: 2, email: 'afeher@email.tld' },
+    { id: 3, email: 'odj@email.tld' },
+];
+
+const profiles = [
+    { userId: 1, firstName: 'Danielle', lastName: 'Contreras' },
+    { userId: 2, firstName: 'Alfredas', lastName: 'Fehér' },
+    { userId: 3, firstName: 'Orpheus', lastName: 'De Jong' },
+];
+
+const usersWithProfiles = users.map((user) => {
+    const profile = profiles.find((profile) => (user.id === profile.userId));
+    return { ...user, profile };
+}); */
+
+/* //Ejemplo 39: Write a JavaScript program to Remove empty elements from an array in Javascript
 
 //Metodo 1
 // var arr = [1,2,,3,,-3,null,,0,,undefined,4,,4,,5,,6,,,,];
@@ -2654,7 +2638,7 @@ console.log(result); */
 
 // console.log(filtered); */
 
-/* //Ejemplo 39: Write a JavaScript program to find largest integer in an array in JavaScript [duplicate]
+/* //Ejemplo 40: Write a JavaScript program to find largest integer in an array in JavaScript [duplicate]
 
 //Metodo 1
 // var arr = [3, 6, 2, 56, 32, 5, 89, 32];
@@ -2671,7 +2655,7 @@ console.log(result); */
 // var array = [3 , 6, 2, 56, 32, 5, 89, 32],
 // largest = array.sort((a,b)=>a-b).reverse()[0]; //largest = array.sort((a,b)=>a-b)[array.length - 1]; */
 
-/* //Ejemplo 40: Write a JavaScript program to convert an Object {} to an Array [] of key-value pairs in JavaScript
+/* //Ejemplo 41: Write a JavaScript program to convert an Object {} to an Array [] of key-value pairs in JavaScript
 
 //Metodo 1
 // const obj = {"1":5,"2":7,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0,"11":0,"12":0};
@@ -2689,7 +2673,7 @@ console.log(result); */
 
 // console.log(toNumericPairs(obj)); */
 
-/* //Ejemplo 41: Write a JavaScript function to check whether an `input` is an array or not.
+/* //Ejemplo 42: Write a JavaScript function to check whether an `input` is an array or not.
 
 //Metodo 1
 // const array = [1,2,3];
@@ -2711,7 +2695,7 @@ console.log(result); */
 // console.log(is_array('w3resource'));
 // console.log(is_array([1, 2, 4, 0])); */
 
-/* //Ejemplo 42: Write a JavaScript function to clone an array.
+/* //Ejemplo 43: Write a JavaScript function to clone an array.
 
 //Metodo 1
 // function array_Clone(res){
@@ -2742,7 +2726,7 @@ console.log(result); */
 // let x = [1,2,3];
 // let y = x.filter(() => true); */
 
-/* //Ejemplo 43: Write a JavaScript function to get the first element of an array. Passing the parameter 'n' will return the first 'n' elements of the array.
+/* //Ejemplo 44: Write a JavaScript function to get the first element of an array. Passing the parameter 'n' will return the first 'n' elements of the array.
 function first(array, n){
     if(n === undefined) return array[0];
     if(array === null)  return void 0; // void 0  -->  undefined
@@ -2758,7 +2742,7 @@ console.log(first([7, 9, 0, -2],6));
 console.log(first([7, 9, 0, -2],-3));
 console.log(first(3)); */
 
-/* //Ejemplo 44: Write a JavaScript function to get the last element of an array. Passing the parameter 'n' will return the last 'n' elements of the array.
+/* //Ejemplo 45: Write a JavaScript function to get the last element of an array. Passing the parameter 'n' will return the last 'n' elements of the array.
 function last(array, n){
     if(n === undefined) return array[array.length-1];
     if(array === null)  return void 0; // void 0  -->  undefined
@@ -2770,7 +2754,7 @@ console.log(last([7, 9, 0, -2]));
 console.log(last([7, 9, 0, -2],3));
 console.log(last([7, 9, 0, -2],6)); */
 
-/* //Ejemplo 45: Write a simple JavaScript program to join all elements of the following array into a string. "Red,Green,White,Black" "Red,Green,White,Black" "Red+Green+White+Black"
+/* //Ejemplo 46: Write a simple JavaScript program to join all elements of the following array into a string. "Red,Green,White,Black" "Red,Green,White,Black" "Red+Green+White+Black"
 const myColor = ["Red", "Green", "White", "Black"];
 const res1 = myColor.join(",");
 const res2 = myColor.join("+");
@@ -2778,7 +2762,7 @@ const res2 = myColor.join("+");
 console.log(res1);
 console.log(res2); */
 
-/* //Ejemplo 46: Write a JavaScript program that accepts a number as input and inserts dashes (-) between each even number. For example if you accept 025468 the output should be 0-254-6-8.
+/* //Ejemplo 47: Write a JavaScript program that accepts a number as input and inserts dashes (-) between each even number. For example if you accept 025468 the output should be 0-254-6-8.
 
 //Metodo 1
 // const array = [0,2,5,4,6,8,4,7,2,9,3,5];
@@ -2806,7 +2790,7 @@ console.log(res2); */
 // };
 // dashes(); */
 
-/* //Ejemplo 47: Write a JavaScript program to sort the items of an array.
+/* //Ejemplo 48: Write a JavaScript program to sort the items of an array.
 let arr1 = [ -3, 8, 7, 6, 5, -4, 3, 2, 1 ];
 let arr2 = arr1.slice();
 
@@ -2818,7 +2802,7 @@ arr2.sort(function(a, b){
 
 console.log(arr2); */
 
-/* //Ejemplo 48: Write a JavaScript program to find the most frequent item in an array
+/* //Ejemplo 49: Write a JavaScript program to find the most frequent item in an array
 //Metodo 1
 // let i,j;
 // let arr1=[3, 6, 6, 6 , 2, 3, 6, 3, 6, 2, 4, 9, 3];
@@ -2905,7 +2889,7 @@ console.log(arr2); */
 
 // console.log(helem([1, 2, 3, 4, 1, 1, 2, 3, 4])); */
 
-/* //Ejemplo 49: Write a JavaScript program that accepts a string as input and swaps the case of each character. For example if you input 'The Quick Brown Fox' the output should be 'tHE qUICK bROWN fOX'.
+/* //Ejemplo 50: Write a JavaScript program that accepts a string as input and swaps the case of each character. For example if you input 'The Quick Brown Fox' the output should be 'tHE qUICK bROWN fOX'.
 
 //Metodo 1
 // const UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -2951,7 +2935,7 @@ console.log(arr2); */
 
 // console.log(ex9("Hello World")); */
 
-/* //Ejemplo 50: Write a JavaScript program that prints the elements of the following array. (Use nested for loops)
+/* //Ejemplo 51: Write a JavaScript program that prints the elements of the following array. (Use nested for loops)
 //Metodo 1
 // let a = [
 //     [1, 2, 1, 24], 
@@ -2996,7 +2980,7 @@ console.log(arr2); */
 //     }
 // }; */
 
-/* //Ejemplo 51: Write a JavaScript program to find the sum of squares of a numerical vector.
+/* //Ejemplo 52: Write a JavaScript program to find the sum of squares of a numerical vector.
 //Metodo 1
 // function sum(array){
 //     const res = array.map(event => event*event).reduce((acc, cur) => acc + cur, 0);
@@ -3018,7 +3002,7 @@ console.log(arr2); */
 
 // console.log(sum_sq([0,1,2,3,4])); */
 
-/* //Ejemplo 52: Write a JavaScript program to remove duplicate items from an array (ignore case sensitivity).
+/* //Ejemplo 53: Write a JavaScript program to remove duplicate items from an array (ignore case sensitivity).
 //Metodo 1
 // const nums = [1, 2, 2, 3, 1, 2, 4, 5, 4, 2, 6];
 // const res = [...new Set(nums)];
@@ -3058,7 +3042,7 @@ console.log(arr2); */
 
 // console.log(array); */
 
-/* //Ejemplo 53: Write a JavaScript program to display the colors in the following way: 
+/* //Ejemplo 54: Write a JavaScript program to display the colors in the following way: 
 // "1st choice is Blue ." "2nd choice is Green." "3rd choice is Red." (Use ordinal numbers to tell their position.)
 
 //Metodo 1
@@ -3094,7 +3078,7 @@ console.log(arr2); */
 //     i <= 2 ? console.log(i+1 + ordinal[i+1] + " choice is " + color[i]) : console.log(i+1 + ordinal[0] + " choice is " + color[i]);
 // } */
 
-/* //Ejemplo 54: Write a JavaScript program to find the leap years in a given range of years.
+/* //Ejemplo 55: Write a JavaScript program to find the leap years in a given range of years.
 
 //Metodo 1
 // const arr = [];
@@ -3148,7 +3132,7 @@ console.log(arr2); */
 
 // console.log(leap_year(2000, 2012)); */
 
-/* //Ejemplo 55: Write a JavaScript program to shuffle an array
+/* //Ejemplo 56: Write a JavaScript program to shuffle an array
 
 //Metodo 1
 // const arr = [1, 2, 3, 4, 5, 6, 7];
@@ -3209,7 +3193,7 @@ console.log(arr2); */
 // }
 // console.log(shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])); */
 
-/* //Ejemplo 56: Write a JavaScript program to perform a binary search. 
+/* //Ejemplo 57: Write a JavaScript program to perform a binary search. 
 
 //Metodo 1
 // //           L           p           R            
@@ -3269,7 +3253,7 @@ console.log(arr2); */
 
 // console.log(binary_Search(items, 0, items.length-1, 5));  */
 
-/* //Ejemplo 57: Write a JavaScript program to compute the sum of each individual index value in the given array.
+/* //Ejemplo 58: Write a JavaScript program to compute the sum of each individual index value in the given array.
 
 //Metodo 1
 // const array1 = [1,0,2,3,4];
@@ -3303,7 +3287,7 @@ console.log(arr2); */
 
 // console.log(Arrays_sum([1,0,2,3,4], [3,5,6,7,8,13])); */
 
-/* //Ejemplo 58: Write a JavaScript program to find duplicate values in a JavaScript array.
+/* //Ejemplo 59: Write a JavaScript program to find duplicate values in a JavaScript array.
 
 // //Metodo 1
 // // const arra1 = [1, 2, 9, 4, 5, 4, 7, 8, 7, 7, 1, 3, 6];
@@ -3364,9 +3348,96 @@ console.log(arr2); */
 
 //Metodo 5
 // const findDuplicates = arr => [...new Set(arr.filter(v => arr.indexOf(v) !== arr.lastIndexOf(v)))];
-// console.log(findDuplicates([1, 2, -2, 4, 5, 4, 7, 8, 7, 7, 71, 3, 6])); */
+// console.log(findDuplicates([1, 2, -2, 4, 5, 4, 7, 8, 7, 7, 71, 3, 6]));
 
-/* //Ejemplo 59: Write a JavaScript program to flatten a nested (any depth) array. If you pass shallow, the array will only be flattened to a single level
+//Metodo 6
+// function toFindDuplicates(arry) {
+//     const uniqueElements = new Set(arry);
+//     const filteredElements = arry.filter(item => {
+//         if (uniqueElements.has(item)) {
+//             uniqueElements.delete(item);
+//         } else {
+//             return item;
+//         }
+//     });
+
+//     return [...new Set(uniqueElements)]
+// }
+
+// const arry = [1, 2, 1, 3, 4, 3, 5];
+// const duplicateElements = toFindDuplicates(arry);
+// console.log(duplicateElements);
+
+//Metodo 7
+// const arry = [1, 2, 1, 3, 4, 3, 5];
+
+// const toFindDuplicates = arry => arry.filter((item, index) => arr.indexOf(item) !== index)
+// const duplicateElements = tofindDuplicates(arry);
+// console.log(duplicateElements);
+
+//Metodo 8
+// let arry = [1, 2, 1, 3, 4, 3, 5];
+// let toMap = {};
+// let resultToReturn = false;
+
+// for (let i=0; i<arry.length; i++){
+//     if (toMap[arry[i]]){
+//         resultToReturn = true;
+//         // terminate the loop
+//         break;
+//     }
+//     toMap[arry[i]] = true;
+// }
+
+// resultToReturn ? console.log('Duplicate elements exist') : console.log('Duplicates dont exist');    
+
+//Metodo 9
+// let arry = [1, 2, 1, 3, 4, 3, 5];
+// let resultToReturn = false;
+
+// resultToReturn = arry.some(function(element, index){
+//     return arry.indexOf(element) !== index;
+// });
+
+// resultToReturn ? console.log('Duplicate elements exist') : console.log('Duplicates dont exist');
+
+//Metodo 10
+// let arry = [1, 2, 1, 3, 4, 3, 5];
+// let resultToReturn = false;
+
+// for (let i = 0; i < arry.length; i++){
+//     for (let j = 0; j < arry.length; j++) {
+//         if (i !== j) {                    // prevents the element from comparing with itself
+//             if (arry[i] === arry[j]) {    // check if elements' values are equal
+//                 resultToReturn = true;    // duplicate element present
+//                 break;                    // terminate inner loop
+//             }
+//         }
+//     }
+                                                                    
+//     if (resultToReturn) break;
+// }
+
+//Metodo 11
+// let array = [6, 9, 15, 6, 13, 9, 11, 15];
+// let index = 0, newArr = [];
+// const length = array.length; // to get length of array
+
+// function findDuplicates(arr) {
+//     for (let i = 0; i < length - 1; i++) {
+//         for (let j = i + 1; j < length; j++) {
+//             if (arr[i] === arr[j]) {
+//                 newArr[index] = arr[i];
+//                 index++;
+//             }
+//         }
+//     }
+//     return newArr;
+// }
+
+// findDuplicates(array); */
+
+/* //Ejemplo 60: Write a JavaScript program to flatten a nested (any depth) array. If you pass shallow, the array will only be flattened to a single level
 
 //Metodo 1
 // function flatten(input) {
@@ -3459,7 +3530,7 @@ console.log(arr2); */
 
 // console.log(differenceOf2Arrays([1, 2, 3, 4, 5], [1, [2], [3, [[4]]],[5,6]])); */
 
-/* //Ejemplo 60: Write a JavaScript program to compute the union of two arrays.
+/* //Ejemplo 61: Write a JavaScript program to compute the union of two arrays.
 //Metodo 1
 // const arr1 = [1, 2, 3];
 // const arr2 = [100, 2, 1, 10];
@@ -3571,7 +3642,7 @@ console.log(arr2); */
 //primer indice del numero que se repite. Es decir, tenemos el numero 3 en la posicion 0, y el 3 nuevamente pero en la posicion 2.
 //Por lo que, indexOf nos retornara el 3 pero en la posicon 0, y no el de la posicion 2. */
 
-/* //Ejemplo 61: Write a JavaScript function to find the difference between two arrays. (non-repeated values)
+/* //Ejemplo 62: Write a JavaScript function to find the difference between two arrays. (non-repeated values)
 
 //Metodo 1
 // console.log(difference([1, 2, 3], [100, 2, 1, 10]));
@@ -3658,7 +3729,7 @@ console.log(arr2); */
 // console.log(difference([1, 2, 3, 4, 5], [1, [2], [3, [[4]]], [5, 6]]));
 // console.log(difference([1, 2, 3], [100, 2, 1, 10])); */
 
-/* //Ejemplo 62: Write a JavaScript function to remove. 'null', '0', '""', 'false', 'undefined' and 'NaN' values from an array.
+/* //Ejemplo 63: Write a JavaScript function to remove. 'null', '0', '""', 'false', 'undefined' and 'NaN' values from an array.
 
 // Metodo 1
 // const array = [NaN, 0, 15, false, -22, '',undefined, 47, null];
@@ -3709,7 +3780,7 @@ console.log(arr2); */
 // }
 // console.log(filter_array([NaN, 0, 15, false, -22, '',undefined, 47, null])); */
 
-/* //Ejemplo 63: Write a JavaScript function to sort the following array of objects by title value.
+/* //Ejemplo 64: Write a JavaScript function to sort the following array of objects by title value.
 
 //Metodo 1
 // var library = [ 
@@ -3766,7 +3837,7 @@ console.log(arr2); */
 
 // console.log(library.sort(compare_to_sort)); */
 
-/* //Ejemplo 64: Write a JavaScript program to find a pair of elements (indices of the two numbers) in a given array whose sum equals a specific target number.
+/* //Ejemplo 65: Write a JavaScript program to find a pair of elements (indices of the two numbers) in a given array whose sum equals a specific target number.
 
 //Metodo 1
 // let numbers = [10,20,10,40,50,60,70];
@@ -3820,7 +3891,7 @@ console.log(arr2); */
 // }
 // console.log(twoSum([10,20,10,40,50,60,70],50)); */
 
-/* //Ejemplo 65: Write a JavaScript function to retrieve the value of a given property from all elements in an array.
+/* //Ejemplo 66: Write a JavaScript function to retrieve the value of a given property from all elements in an array.
 const array = [NaN, 0, 15, false, -22, '',undefined, 47, null];    //[15, -22, 47]
 const newArray = [];
 const falsy = []
@@ -3837,7 +3908,7 @@ array.filter(function(item){
 console.log(newArray)
 console.log(falsy) */
 
-/* //Ejemplo 66: Write a JavaScript function to find the longest common starting substring in a set of strings.
+/* //Ejemplo 67: Write a JavaScript function to find the longest common starting substring in a set of strings.
 
 //Metodo 1
 // let aux;
@@ -3919,7 +3990,7 @@ console.log(falsy) */
 // console.log(longest_common_deeper(['goog', 'google', 'googlesearch', 'answerme', 'answer', 'answerm', 'answera']));
 // console.log(longest_common_deeper( ['goo', 'google', 'googlesearch', 'abcdefg', 'abcdefgh', 'abcdefg2', 'abcdefgt', 'abcdefgp'])); */
 
-/* //Ejemplo 67: Write a JavaScript function to fill an array with values (numeric, string with one character) within supplied bounds.
+/* //Ejemplo 68: Write a JavaScript function to fill an array with values (numeric, string with one character) within supplied bounds.
 //Metodo 1
 // function num_string_range(start, end, step){
 //     var range = [];
@@ -4012,7 +4083,7 @@ console.log(falsy) */
 // console.log(strRange(1, 10, 1)); 
 // console.log(strRange("z", "k", 2)); */
 
-/* //Ejemplo 68: Write a JavaScript function that merges two arrays and removes all duplicate elements.  [3, 2, 30, 1]
+/* //Ejemplo 69: Write a JavaScript function that merges two arrays and removes all duplicate elements.  [3, 2, 30, 1]
 
 //Metodo 1
 // let array1 = [1, 2, 3];
@@ -4120,7 +4191,7 @@ console.log(falsy) */
 // }
 // console.log(merge([1,2,3], [2,30,1])); // [ 1, 2, 3, 30 ] */
 
-/* //Ejemplo 69: Write a JavaScript function to remove a specific element from an array.
+/* //Ejemplo 70: Write a JavaScript function to remove a specific element from an array.
 
 //Metodo 1
 // console.log(remove_array_element([2, 5, 9, 6], 5));   //[2, 9, 6]
@@ -4164,7 +4235,7 @@ console.log(falsy) */
 // }
 // console.log(func([2, 9, 5, 6], 2)); */
 
-/* //Ejemplo 70: Write a JavaScript function to find an array containing a specific element.  [true]
+/* //Ejemplo 71: Write a JavaScript function to find an array containing a specific element.  [true]
 
 //Metodo 1
 // console.log(contains([2, 5, 9, 6], 5));
@@ -4196,7 +4267,7 @@ console.log(falsy) */
 // console.log(contains([2, 5, 9, 6], 5));
 // console.log(contains([2, 5, 9, 6], 15)); */
 
-/* //Ejemplo 71: Write a JavaScript script to empty an array while keeping the original.
+/* //Ejemplo 72: Write a JavaScript script to empty an array while keeping the original.
 //Metodo 1
 // let arr = [1, 3, 6, 3, -5];
 // console.log(arr);
@@ -4210,7 +4281,7 @@ console.log(falsy) */
 // arr.length = 0;
 // console.log(arr); */
 
-/* //Ejemplo 72: Write a JavaScript function to get the nth largest element from an unsorted array.
+/* //Ejemplo 73: Write a JavaScript function to get the nth largest element from an unsorted array.
 //Metodo 1
 // let flag = [0];
 // function nthlargest(array, num){
@@ -4321,12 +4392,12 @@ console.log(falsy) */
 //     return (arra[(highest - 1)]);	
 // } */
 
-/* //Ejemplo 73: Write a JavaScript function to get random items from an array.
+/* //Ejemplo 74: Write a JavaScript function to get random items from an array.
 let items = [254, 45, 212, 365, 2543];
 let random = Math.floor(Math.random()*items.length);
 console.log(items[random]); */
 
-/* //Ejemplo 74: Write a JavaScript function to create a specified number of elements with a pre-filled numeric value array.
+/* //Ejemplo 75: Write a JavaScript function to create a specified number of elements with a pre-filled numeric value array.
 
 //Metodo 1
 // function array_filled(limit, number){
@@ -4364,7 +4435,7 @@ console.log(items[random]); */
 // console.log(array_filled(6, 0));
 // console.log(array_filled(4, 11)); */
 
-/* //Ejemplo 75: Write a JavaScript function to create a specified number of elements with a pre-filled string value array.
+/* //Ejemplo 76: Write a JavaScript function to create a specified number of elements with a pre-filled string value array.
 
 //Metodo 1
 // function array_filled(n, val){
@@ -4386,7 +4457,7 @@ console.log(items[random]); */
 // console.log(array_filled(3, 'default value'));
 // console.log(array_filled(4, 'password')); */
 
-/* //Ejemplo 76: Write a JavaScript function to interchange an array element from one position to another.
+/* //Ejemplo 77: Write a JavaScript function to interchange an array element from one position to another.
 //Metodo 1
 function move(array, num1, num2){
     let res1, res2, aux;  // 10, 30
@@ -4407,7 +4478,7 @@ function move(array, num1, num2){
 
 console.log(move([10, 20, 30, 40, 50], 0, 2));   //[20, 30, 10, 40, 50] */
 
-/* //Ejemplo 77: Write a JavaScript function to move an array element from one position to another.
+/* //Ejemplo 78: Write a JavaScript function to move an array element from one position to another.
 
 //Metodo 1
 // function move(arr, old_index, new_index) {
@@ -4481,7 +4552,7 @@ console.log(move([10, 20, 30, 40, 50], 0, 2));   //[20, 30, 10, 40, 50] */
 // }
 // console.log(move([10,20,30,40,50], 0, 2)); // [30, 20, 10, 40, 50] */
 
-/* //Ejemplo 78: Write a JavaScript function to filter false, null, 0 and blank values from an array.
+/* //Ejemplo 79: Write a JavaScript function to filter false, null, 0 and blank values from an array.
 // console.log(filter_array_values([58, '', 'abcd', true, null, false, 0]));  //[58, "abcd", true]
 // function filter_array_values(arr) {
 //     const arrTruty = []
@@ -4495,7 +4566,7 @@ console.log(move([10, 20, 30, 40, 50], 0, 2));   //[20, 30, 10, 40, 50] */
 //     return [arrTruty, arrFalsy];
 // } */
 
-/* //Ejemplo 79: Write a JavaScript function to generate an array of integer numbers, increasing one from the starting position, of a specified length.
+/* //Ejemplo 80: Write a JavaScript function to generate an array of integer numbers, increasing one from the starting position, of a specified length.
 
 //Metodo 1
 // function array_range(firstIndex, lastIndex){
@@ -4547,7 +4618,7 @@ console.log(move([10, 20, 30, 40, 50], 0, 2));   //[20, 30, 10, 40, 50] */
 // }
 // console.log(func(-6, 4)); */
 
-/* //Ejemplo 80: Write a JavaScript function to generate an array between two integers of 1 step length.
+/* //Ejemplo 81: Write a JavaScript function to generate an array between two integers of 1 step length.
 
 //Metodo 1
 // function rangeBetween(initial, limit){
@@ -4584,7 +4655,7 @@ console.log(move([10, 20, 30, 40, 50], 0, 2));   //[20, 30, 10, 40, 50] */
 // console.log(rangeBetwee(4, 7));
 // console.log(rangeBetwee(-4, 7)); */
 
-/* //Ejemplo 81: Write a JavaScript function to find unique elements in two arrays
+/* //Ejemplo 82: Write a JavaScript function to find unique elements in two arrays
 
 //Metodo 1
 // console.log(difference([1, 2, 3], [100, 2, 1, 10])); //["1", "2", "3", "10", "100"]
@@ -4654,7 +4725,7 @@ console.log(move([10, 20, 30, 40, 50], 0, 2));   //[20, 30, 10, 40, 50] */
 // console.log(difference([1, 2, 3], [100, 2, 1, 10]));
 // console.log(difference([[1,2],3,[[4,4, [5, [6, 7,[9,[11]]]]]]], [1,4,5,6,7,8,8]));// and a deeper array structure */
 
-/* //Ejemplo 82: Write a JavaScript program to find all the unique values in a set of numbers.
+/* //Ejemplo 83: Write a JavaScript program to find all the unique values in a set of numbers.
 
 // Metodo 1
 function removeDup(array) {
@@ -4671,7 +4742,7 @@ console.log(removeDup([1, 2, 2, 3, 4, 4, 5]));
 console.log(removeDup([1, 2, 3, 4, 5]));
 console.log(removeDup([1, -2, -2, 3, 4, -5, -6, -5])); */
 
-/* //Ejemplo 83: Write a JavaScript program that takes an array of integers and returns false if every number is not prime. Otherwise, return true.
+/* //Ejemplo 84: Write a JavaScript program that takes an array of integers and returns false if every number is not prime. Otherwise, return true.
 function test(arr){
     for (let i=0; i<arr.length; i++) {
         if ( (arr[i] === 1 || arr[i] > 2) && arr[i]%2 === 0) return false;
@@ -4685,7 +4756,7 @@ let nums2 = [2, 3, 5, 7, 8];
 console.log("Original array of integers: "+ [2, 3, 5, 7, 11] +" and the answer is: " + test(nums1))
 console.log("Original array of integers: "+ [2, 3, 5, 7, 8] +" and the answer is: " + test(nums2)) */
 
-/* //Ejemplo 84: Write a JavaScript program that takes an array of numbers and returns the third smallest number.
+/* //Ejemplo 85: Write a JavaScript program that takes an array of numbers and returns the third smallest number.
 
 function test(arr){
     let res1 = arr.sort((a,b) => a-b); //[1, 2, 3, 5, 7]
@@ -4705,7 +4776,7 @@ console.log("Original array of numbers: "+nums1+" and the Third smallest number 
 let nums2 = [2, 3, 0, 5, 7, 8, -2, -4]
 console.log("Original array of numbers: "+nums2+" and the Third smallest number of the said array of numbers: " +test(nums2)); */
 
-/* //Ejemplo 85: Write a JavaScript program that takes an array with mixed data type and calculates the sum of all numbers.
+/* //Ejemplo 86: Write a JavaScript program that takes an array with mixed data type and calculates the sum of all numbers.
 let arr_mix1 = [2, "11", 3, "a2", false, 5, 7, 1]
 console.log("Original array: "+arr_mix1+" and the answer is: "+ test(arr_mix1))
 let arr_mix2 = [2, 3, 0, 5, 7, 8, true, false]
@@ -4722,7 +4793,7 @@ function test(arr){
     return acc;
 } */
 
-/* //Ejemplo 86: Write a JavaScript program to check if an array is a factor chain or not. A factor chain is an array in which the previous element is a factor of the next consecutive element. The following is a factor chain:
+/* //Ejemplo 87: Write a JavaScript program to check if an array is a factor chain or not. A factor chain is an array in which the previous element is a factor of the next consecutive element. The following is a factor chain:
 // [2, 4, 8, 16, 32]
 // 2 is a factor of 4
 // 4 is a factor of 8
@@ -4770,7 +4841,7 @@ function test(arr){
 // let nums3 = [2, 4, 16, 32, 68]
 // console.log("Original array: ",nums3, " and the answer is: ", test(nums3)); */
 
-/* //Ejemplo 87: Write a JavaScript program to get all the indexes where NaN is found in a given array of numbers and NaN.
+/* //Ejemplo 88: Write a JavaScript program to get all the indexes where NaN is found in a given array of numbers and NaN.
 
 //Metodo 1
 // function test(arr){
@@ -4809,7 +4880,7 @@ function test(arr){
 // console.log(test([2, 4, NaN, 16, 32, NaN]));
 // console.log(test([2, 4, 16, 32])); */
 
-/* //Ejemplo 88: Write a JavaScript program to count the number of arrays inside a given array.
+/* //Ejemplo 89: Write a JavaScript program to count the number of arrays inside a given array.
 
 //Metodo 1
 // function test(array){
@@ -4833,7 +4904,205 @@ function test(arr){
 // console.log(test(([2,8,[6],3,3,5,3,4,[5,4]]))); //2
 // console.log(test(([2,8,[6,3,3],[4],5,[3,4,[5,4]]]))); //3 */
 
-/* //Ejemplo 89: Write a JavaScript program to remove all false values from an object or array. (pending)
+/* //Ejemplo 90: Deep dive into reduce();
+
+// Metodo 1
+// const people = [
+//     {name: "Kyle", age: 26},
+//     {name: "Cartman", age: 31},
+//     {name: "Kenny", age: 42},
+//     {name: "Stan", age: 42}
+// ];
+
+// const result = people.reduce(function(grupedPeople, person){
+//     if(grupedPeople[person.age] === undefined){ //Al principio siempre sera undefined, puesto que no hay ningun arreglo en el objeto, a no ser que haya un numero repetido, como lo sera el 42.
+//         grupedPeople[person.age] = []; //Despues, creamos un aray vacio cuando estemos en el person.age. Por ejemplo, primero tendremos {26: []}, despues {31: []} y asi sucecivamente
+//     }
+
+//     grupedPeople[person.age].push(person); //Cuando ya tengamos el array vacio en ese valor, simplemente agregaremos el objeto "person" en el que nos encontremos. 
+//     return grupedPeople;
+// }, {});
+
+// console.log(result)
+
+//Metodo 2
+// const arr = [1,2,3,4,5,6,8,9,10];
+// const res = arr.reduce(function(cur, item){
+//     if(item%2 === 0){
+//         cur = [...cur, item*2]; 
+//         // return [...cur, item*2];
+//         // cur.push(item*2);
+//     }
+//     return cur; //Si el if no se ejecuta, simplemente retornamos lo que se encuentra en "cur" para despues seguir iterando.
+// }, []);
+
+// console.log(res, "\n"); */
+
+/* //Ejemplo 91: Write a JavaScript program to create a tally (counter) with the Reduce
+const fruitBasket = ['banana', 'cherry', 'orange', 'apple', 'cherry', 'orange', 'apple', 'banana', 'cherry', 'orange', 'fig' ];
+
+const count = fruitBasket.reduce(function(tally, fruit){
+    !tally[fruit] ? tally[fruit] = 1 : tally[fruit]++;  //tally[fruit] = (tally[fruit] || 0) + 1; (option 2)
+    return tally;
+} , {})
+
+console.log(count); */
+
+/* //Ejemplo 92: Write a JavaScript program to create a counter in which you create an acumulator object by using reduce.
+//Metodo 1
+// var numbers = [5, 3, 8, 6, 9, 1, 0, 2, 2];
+
+// function isOdd(n) {
+//     return !!(n % 2);
+// }
+
+// var oddEvenCounts = numbers.reduce(function(counts, number) {
+//     if (isOdd(number)) {
+//         counts.odd++;
+//         // counts["odd"]++;
+//     } else {
+//         counts.even++; 
+//         // counts["even"]++;
+//     }
+
+//     return counts; // return the accumulator
+// }, {odd: 0, even: 0}); // set the initial values of odd and even
+
+// console.log(oddEvenCounts);
+
+//Metodo 2
+// var names = ['Alice', 'Bob', 'Tiff', 'Bruce', 'Alice'];
+
+// var countedNames = names.reduce(function(allNames, name){ 
+//     if (name in allNames) {
+//         allNames[name]++;
+//     }
+//     else {
+//         allNames[name] = 1;
+//     }
+//     return allNames;
+// }, {});
+
+// console.log(countedNames);/*
+
+/* //Ejemplo 92: Write a JavaScript program to convert an array of objects to a single object keyed by id (with reduce and filter)
+const users = [
+    { id: 1, email: 'dcontreras@email.tld' },
+    { id: 2, email: 'afeher@email.tld' },
+    { id: 3, email: 'odj@email.tld' },
+];
+
+const profiles = [
+    { userId: 1, firstName: 'Danielle', lastName: 'Contreras' },
+    { userId: 2, firstName: 'Alfredas', lastName: 'Fehér' },
+    { userId: 3, firstName: 'Orpheus', lastName: 'De Jong' },
+];
+
+
+const profilesByUserId = profiles.reduce(function(next, profile){  // Transform the profiles into an object keyed by the userId:
+    const { userId } = profile;
+    next = { ...next, [userId]: profile }
+    return next;
+}, {}); 
+
+const usersWithProfiles = users.map(function(user){  // Look up the profiles by id:
+    return { ...user, profile: profilesByUserId[user.id]};
+});
+
+console.log(usersWithProfiles); */ 
+
+/* //Ejemplo 93: Write a JavaScript program to flatten an array of arrays with the Reduce 
+//Metodo 1
+// const data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+
+// const flat = data.reduce(function(total, amount){
+//     return total.concat(amount);
+// }, []);
+
+// console.log(flat);
+
+//Metodo 2
+// const data = [
+//     {a: 'happy', b: 'robin', c: ['blue','green']}, 
+//     {a: 'tired', b: 'panther', c: ['green','black','orange','blue']}, 
+//     {a: 'sad', b: 'goldfish', c: ['green','red']}
+// ];
+
+// const colors = data.reduce(function(total, amount){
+//     amount.c.forEach( color => {
+//         total.push(color);
+//     })
+//     return total;
+// }, []);
+
+//Metodo 3
+// const data = [
+//     {a: 'happy', b: 'robin', c: ['blue','green']}, 
+//     {a: 'tired', b: 'panther', c: ['green','black','orange','blue']}, 
+//     {a: 'sad', b: 'goldfish', c: ['green','red']}
+// ];
+// const uniqueColors = data.reduce(function(total, amount){
+//     amount.c.forEach( color => {
+//         if (total.indexOf(color) === -1){
+//             total.push(color);
+//         }
+//     });
+//     return total;
+// }, []);
+
+// console.log(uniqueColors); */
+
+/* //Ejemplo 94: Write a JavaScript program to copy an object with filtered properties
+// Metodo 1
+// const person = {
+//     firstName: 'Orpheus',
+//     lastName: 'De Jong',
+//     phone: '+1 123-456-7890',
+//     email: 'fake@email.tld'
+// };
+// const allowedProperties = ['firstName', 'lastName'];
+
+// const allKeys = Object.keys(person);
+// const result = allKeys.reduce(function(next, key){
+//     if (allowedProperties.includes(key)) {
+//         return { ...next, [key]: person[key] };
+//     } else {
+//         return next;
+//     }
+// }, {});
+
+// console.log(result);
+
+// Metodo 3
+// function filterAllowedObjectProperties(obj, allowedProperties = []){
+//   return Object.keys(obj).reduce((next, key) => {
+// 	if (allowedProperties.includes(key)) {
+// 	  return { ...next, [key]: obj[key] };
+// 	} else {
+// 	  return next;
+// 	}
+//   }, {});
+// } */
+
+/* //Ejemplo 95: Write a JavaScript program to merging two objects, preferring values from one
+const obj1 = {key1: 'value 1.1',key2: null,key3: 'value 1.3',key4: ''};
+const obj2 = {key1: 'value 2.1',key2: 'value 2.2',key3: 'value 2.3',key4: 'value 2.4',key5: 'value 2.5'};
+
+// Spread the keys from both objects into an array.
+const allKeys = [ ...Object.keys(obj1), ...Object.keys(obj2) ]; console.log(allKeys)
+
+// Convert the array of keys to a set to remove duplicate values, then spread the unique values into a new array.
+const uniqueKeys = [ ...new Set(allKeys) ];
+
+// Reduce the unique keys into a new object containing the value for each key from obj1, falling back to the value from obj2 if obj1[key] is falsey.
+const result = uniqueKeys.reduce((next, key) => {
+    const value = obj1[key] || obj2[key];
+    return { ...next, [key]: value };
+}, {});
+
+// console.log(result) */
+
+/* //Ejemplo 96: Write a JavaScript program to remove all false values from an object or array. (pending)
 function test(val){
     let data; let verify; 
 
@@ -4864,7 +5133,7 @@ const obj = {a: null,b: false,c: true,d: 0,e: 1,f: '',g: 'a',h: [null, false, ''
 // test(obj);
 console.log(test(obj)); */
 
-/* //Ejemplo 90: Write a JavaScript program to generate all permutations of an array's elements including duplicates. (pending)
+/* //Ejemplo 97: Write a JavaScript program to generate all permutations of an array's elements including duplicates. (pending)
 //Metodo 1
 // function permutations(arr){
 //     if (arr.length <= 2){
@@ -4912,7 +5181,7 @@ console.log(test(obj)); */
 // permutations(a);
 // // console.log(permutations(a)); */
 
-/* //Ejemplo 91: Write a JavaScript function to create an array of arrays, ungrouping the elements in an array produced by zip. (pending)
+/* //Ejemplo 98: Write a JavaScript function to create an array of arrays, ungrouping the elements in an array produced by zip. (pending)
 
 //Metodo 1
 // function unzip(arr){

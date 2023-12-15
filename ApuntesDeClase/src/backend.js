@@ -1273,7 +1273,7 @@ io.on("connection", function(socket){
 import express from "express";
 import {__dirname} from "./utils.js"
 import handlebars from "express-handlebars";
-import viewRouter from "./src/router/socketView.routes.js";
+import viewRouter from "./router/socketView.routes.js";
 import { Server } from "socket.io";
 
 const app = express();
@@ -1292,9 +1292,9 @@ app.engine("hbs", handlebars.engine({
     })
 );
 
-app.set("views", `${__dirname}/src/view`); // Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
+app.set("views", `${__dirname}/view`); // Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
 app.set("view engine", "hbs"); //Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
-app.use(express.static(`${__dirname}/src/public`)); // Public. Sentamos de manera estatica la carpeta public
+app.use(express.static(`${__dirname}/public`)); // Public. Sentamos de manera estatica la carpeta public
 app.use("/", viewRouter); // Routes
 
 //Socket comunication
@@ -1313,4 +1313,70 @@ io.on('connection', function(socket){//El cliente se conecta con su websocket al
     socket.emit("messages", messages);//Al cargar la pagina, se envia un array vacio. Cuando un usuario nuevo entre o cuando uno actualice el navegador, podra ver el array de mensajes. De lo contrario, aparecera en blanco.
 }); */
 
-//Ejemplo 31:
+//Ejemplo 31: Usando mongoose from scratch
+import express from "express";
+import {__dirname} from "./utils.js"
+import handlebars from "express-handlebars";
+import viewRouter from "./router/clase14.js";
+import usersRoutes from "./router/users.routes.js"
+import {password, PORT, db_name} from "./env.js";
+import mongose from "mongoose";
+
+const app = express();
+
+mongose.connect(`mongodb+srv://germanss22:${password}@atlascluster.cna9ibu.mongodb.net/${db_name}?retryWrites=true&w=majority`)
+.then(() => console.log("DB connected"))
+.catch(err =>{
+    console.log("Hubo un error");
+    console.log(err);
+});
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.engine("hbs", handlebars.engine({ // Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
+        extname: "hbs", //index.hbs
+        defaultLayout: "main", //Plantilla principal
+    })
+);
+app.set("views", `${__dirname}/view`); // Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
+app.set("view engine", "hbs"); //Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
+app.use(express.static(`${__dirname}/public`)); // Public. Sentamos de manera estatica la carpeta public
+app.use("/", viewRouter);
+app.use("/api/users", usersRoutes); // Routes
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+
+/* //Ejemplo 31: CRUD con Mongoose
+// Realizar un proyecto en Node.js que se conecte a una base de datos MongoDB Atlas llamada colegio. Utilizar mongoose importándolo en Módulo (import) y gestionar sus acciones a través de promesas.
+// ✓ Crear una colección llamada "estudiantes" que incorporará 10 documentos con la siguiente estructura y datos que se detallan a continuación:
+//   a) nombre: tipo string
+//   b) apellido: tipo string
+//   c) edad: tipo number
+//   d) dni: tipo string (campo único)
+//   e) curso: tipo string
+//   f) nota: tipo number
+//   Tod0s los campos deben ser requeridos obligatoriamente ({ required: true })
+// ✓ Insertar un arreglo de estudiantes a dicha colección
+// ✓ Desarrollar los endpoints correspondientes al CRUD pensado para trabajar con esta colección
+// ✓ Corroborar los resultados con Postman. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
