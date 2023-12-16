@@ -1313,7 +1313,7 @@ io.on('connection', function(socket){//El cliente se conecta con su websocket al
     socket.emit("messages", messages);//Al cargar la pagina, se envia un array vacio. Cuando un usuario nuevo entre o cuando uno actualice el navegador, podra ver el array de mensajes. De lo contrario, aparecera en blanco.
 }); */
 
-/* //Ejemplo 31: Usando mongoose from scratch
+/* //Ejemplo 31: Usando mongoose desde cero
 import express from "express";
 import {__dirname} from "./utils.js"
 import handlebars from "express-handlebars";
@@ -1359,24 +1359,53 @@ app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
 // ✓ Desarrollar los endpoints correspondientes al CRUD pensado para trabajar con esta colección
 // ✓ Corroborar los resultados con Postman. */
 
-//Ejemplo 33: Práctica integradora
-
-
-/* //Ejemplo 34:
+/* //Ejemplo 33: Práctica integradora
 import express from "express";
-import {__dirname} from "./utils.js"
 import handlebars from "express-handlebars";
-import Handlebars from "handlebars"
+import mongoose from "mongoose";
+import Handlebars from "handlebars"; // Esto sirve para recorrer arrays en handlebars
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
+import {__dirname} from "./utils.js";
 
-import viewRouter from "./router/after4.js";
-import usersRoutes from "./router/users.routes.js";
-import postRouter from "./router/postRoutes.js";
-
-import mongose from "mongoose";
+import viewsRoutes from "./router/views15.routes.js";
+import productRoutes from "./router/product.routes.js";
 
 const app = express();
 
-mongose.connect(`mongodb+srv://germanss22:${password}@atlascluster.cna9ibu.mongodb.net/${db_name}?retryWrites=true&w=majority`)
+mongoose.connect("mongodb+srv://SoldadoSS22:coder1234@clase15coder.msx0xsz.mongodb.net/Clase15?retryWrites=true&w=majority")
+.then(() => console.log("DB connected"))
+.catch((err) => console.log(err));
+
+app.engine("hbs", handlebars.engine({
+        extname: "hbs",
+        defaultLayout: "main",
+        handlebars: allowInsecurePrototypeAccess(Handlebars)
+    })
+);
+app.set("view engine", "hbs"); //Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
+app.set("views", `${__dirname}/view`); // Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(`${__dirname}/public`)); // Public. Sentamos de manera estatica la carpeta public
+app.use("/", viewsRoutes);
+app.use("/api/products", productRoutes); // Routes
+app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
+
+//Ejemplo 34:
+import express from "express";
+import {__dirname} from "./utils.js"
+import handlebars from "express-handlebars";
+import Handlebars from "handlebars";
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
+import mongose from "mongoose";
+
+import viewRouter from "./router/after4.js";
+import usersRoutes from "./router/user.routes.js";
+import postRouter from "./router/post.routes.js";
+
+const app = express();
+
+mongose.connect("mongodb+srv://german_SS22:coder1234@ClusterAfter4.hobtu25.mongodb.net/After4?retryWrites=true&w=majority")
 .then(() => console.log("DB connected"))
 .catch(err =>{
     console.log("Hubo un error");
@@ -1388,6 +1417,7 @@ app.use(express.urlencoded({ extended: true }));
 app.engine("hbs", handlebars.engine({ // Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
         extname: "hbs", //index.hbs
         defaultLayout: "main", //Plantilla principal
+        handlebars: allowInsecurePrototypeAccess(Handlebars)
     })
 );
 app.set("views", `${__dirname}/view`); // Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
@@ -1395,7 +1425,8 @@ app.set("view engine", "hbs"); //Finalmente, con este app.set() indicamos que, e
 app.use(express.static(`${__dirname}/public`)); // Public. Sentamos de manera estatica la carpeta public
 app.use("/", viewRouter);
 app.use("/api/users", usersRoutes); // Routes
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
+app.use("/api/posts", postRouter); // Routes
+app.listen(5500, () => console.log(`Server listening on port ${5500}`));
 
 
 
