@@ -19,8 +19,7 @@ router.get("/:id", async (req, res) => {
         const user = await userDao.findById(id);
         const { id } = req.params;
         if (!user) return res.json({ message: "User not found" });
-        res.json({
-        user,message: "User found"});
+        res.json({user,message: "User found"});
 
     } catch (error) {
         console.log(error);

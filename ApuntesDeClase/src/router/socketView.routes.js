@@ -16,13 +16,13 @@ router.get("/form", (request, response) => {
     });
 });
 
-// router.post("/user", (request, response) => {
-//     const { name, age } = request.body;
-//     const users = [];
-//     users.push({
-//         name,
-//         age,
-//     });
-// });
+router.post("/user", (request, response) => {
+    const { name, age } = request.body;
+    const users = [];
+    users.push({
+        name,
+        age,
+    });
+});
 
 export default router;

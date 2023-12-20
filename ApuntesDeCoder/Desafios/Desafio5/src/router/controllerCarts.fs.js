@@ -1,11 +1,11 @@
-import { Router, query } from "express";
-import CartManager from "../classManagers/CartManager.js";
-import ProductManager from "../classManagers/ProductManager.js";
+import { Router } from "express";
+import CartManager from "../dao/fsClassManager/cartsManager/CartManager.js";
+import ProductManager from "../dao/fsClassManager/productsManager/ProductManager.js";
 
 const routerCarts = Router();
 
-const ProductJSON = new ProductManager("./data/products.json");
-const CartJSON = new CartManager("./data/carts.json");
+const ProductJSON = new ProductManager("./dao/fsClassManager/productsManager/data/products.json");
+const CartJSON = new CartManager("./dao/fsClassManager/cartsManager/data/carts.json");
 
 routerCarts.get("/", async function(request, response){
     const allCarts = await CartJSON.getCart();
@@ -39,7 +39,8 @@ routerCarts.get("/:id", function(request, response){
     }
 });
 
-routerCarts.post("/:cartId/products/:productId", async function(request, response){ //http://localhost:5500/api/carts/2/products/1
+//http://localhost:5500/api/carts/2/products/1
+routerCarts.post("/:cartId/products/:productId", async function(request, response){
     const {cartId} = request.params;
     const {productId} = request.params;
     const getCartId = CartJSON.getCartById(+cartId); console.log("1", getCartId);

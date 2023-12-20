@@ -1,0 +1,39 @@
+[
+	{
+		"id": 1,
+		"products": []
+	},
+	{
+		"id": 2,
+		"products": [
+			{
+				"title": "Saiga-12",
+				"description": "Shotgun",
+				"price": 800,
+				"thumbnail": "http://dissidentarms.com/wp-content/uploads/2016/12/20210201_181025-scaled.jpg",
+				"code": "SS2000",
+				"stock": 1,
+				"status": true,
+				"id": 2
+			},
+			{
+				"product": 2,
+				"quantity": 1
+			},
+			{
+				"title": "AA-12",
+				"description": "Shotgun",
+				"price": 3000,
+				"thumbnail": "https://static.wikia.nocookie.net/squad_gamepedia/images/9/9a/RPG-7_real_life.jpg/revision/latest?cb=20170116205104",
+				"code": "SS2002",
+				"stock": 8,
+				"status": true,
+				"id": 1
+			},
+			{
+				"product": 1,
+				"quantity": 2
+			}
+		]
+	}
+]

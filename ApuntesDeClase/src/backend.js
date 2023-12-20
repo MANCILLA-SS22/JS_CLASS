@@ -1050,7 +1050,7 @@ app.use(logger);
 app.use("/api/posts/", router);
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); */
 
-/* //Ejemplo 23: Servidor basado en Node.JS y express de un carrito de compras (Primera entrega CoderHouse)
+/* //Ejemplo 23: Servidor basado en Node.JS y express de un carrito de compras
 import express from "express";
 import routerMain from "./router/main.js";
 
@@ -1391,7 +1391,7 @@ app.use("/", viewsRoutes);
 app.use("/api/products", productRoutes); // Routes
 app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
 
-//Ejemplo 34:
+/* //Ejemplo 34: After 4
 import express from "express";
 import {__dirname} from "./utils.js"
 import handlebars from "express-handlebars";
@@ -1426,7 +1426,7 @@ app.use(express.static(`${__dirname}/public`)); // Public. Sentamos de manera es
 app.use("/", viewRouter);
 app.use("/api/users", usersRoutes); // Routes
 app.use("/api/posts", postRouter); // Routes
-app.listen(5500, () => console.log(`Server listening on port ${5500}`));
+app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
 
 
 
