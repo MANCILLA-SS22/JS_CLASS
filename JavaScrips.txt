@@ -1945,6 +1945,43 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 ✓ db.collection.deleteOne({key:val}) : Elimina sólo el primer elemento que cumpla con el criterio, se usa principalmente para encontrar identificadores específicos. Se recomienda no utilizar si somos conscientes de que el valor a buscar no 
    es repetido.
 ✓ db.collection.deleteMany({key:val}) : Elimina todos los documentos que cumplan con el criterio, se usa cuando sabemos que más de un valor va a contar con ese valor y necesitamos hacer una limpieza general.  
-  
-  
+
+
+
+- Mongoose (aggregation)         https://stackoverflow.com/questions/24714166/full-text-search-with-weight-in-mongoose
+    1. $match --> Filters the document stream to allow only matching documents to pass unmodified into the next pipeline stage. $match uses standard MongoDB queries. For each input document, outputs either one document (a match) or zero 
+       documents (no match).
+    2. $group --> Groups input documents by a specified identifier expression and applies the accumulator expression(s), if specified, to each group. Consumes all input documents and outputs one document per each distinct group. The output 
+       documents only contain the identifier field and, if specified, accumulated fields.
+    3. $sum --> Returns a sum of numerical values. Ignores non-numeric values.
+    4. $first --> Returns the result of an expression for the first document in a group of documents. Only meaningful when documents are in a defined order.
+    6. $sort ---> Reorders the document stream by a specified sort key. Only the order changes; the documents remain unmodified. For each input document, outputs one document.
+    7. $push --> returns an array of all values that result from applying an expression to documents.
+    8. $$ROOT --> significa los resultados del stage anterior
+    10.$project --> Reshapes each document in the stream, such as by adding new fields or removing existing fields. For each input document, outputs one document. Takes a document that can specify the inclusion of fields, the suppression of 
+       the _id field, the addition of new fields, and the resetting of the values of existing fields. Alternatively, you may specify the exclusion of fields.
+    9. $merge --> Writes the resulting documents of the aggregation pipeline to a collection. The stage can incorporate (insert new documents, merge documents, replace documents, keep existing documents, fail the operation, process documents 
+       with a custom update pipeline) the results into an output collection. IT MUST BE USED BY USING A $project BEFORE.    
+    
+    
+- Mongoose (Paginate)       https://stackoverflow.com/questions/5539955/how-to-paginate-with-mongoose-in-node-js
+    ✓ docs: Los documentos devueltos en la página
+  ✓ totalDocs: Los documentos totales de la consulta realizada.
+  ✓ limit: Límite de resultados por página.
+  ✓ page: Página actual en la que nos encontramos
+  ✓ totalPages: Páginas totales que pueden ser solicitadas en la búsqueda.
+  ✓ hasNextPage: Indica si es posible avanzar a una página siguiente.
+  ✓ nextPage: Página siguiente en la búsqueda
+  ✓ hasPrevPage: Indica si es posible retroceder a una página anterior.
+  ✓ prevPage: Página anterior en la búsqueda.
+  ✓ pagingCounter: Número de documento en relación con la página actual
+    
+    
+    
+    
+    
+    
+    
+    
+    
     

@@ -2547,39 +2547,42 @@ objetos.forEach((objeto) => {
 console.log(productos);
 console.log(totalVendidos); */
 
-/* //Ejemplo 37: Desestructurando un array de objetos
-const data = [
-    {
-        "id": 101,
-        "title": {
-            "rendered": "CTC20180018"
-        },
-        "acf": {
-            "fielda": "valuea",
-            "fieldb": "valueb",
-            "fieldc": "valuec"
-        }
-    },
-    {
-        "id": 102,
-        "title": {
-            "rendered": "D2021063365"
-        },
-        "acf": {
-            "fielda": "valuea",
-            "fieldb": "valueb",
-            "fieldc": "valuec"
-        }
-    }
-]
+//Ejemplo 37: Desestructurando un array de objetos
+//Metodo 1
+// const data = [
+//     {
+//         "id": 101,
+//         "title": {
+//             "rendered": "CTC20180018"
+//         },
+//         "acf": {
+//             "fielda": "valuea",
+//             "fieldb": "valueb",
+//             "fieldc": "valuec"
+//         }
+//     },
+//     {
+//         "id": 102,
+//         "title": {
+//             "rendered": "D2021063365"
+//         },
+//         "acf": {
+//             "fielda": "valuea",
+//             "fieldb": "valueb",
+//             "fieldc": "valuec"
+//         }
+//     }
+// ]
 
-const result = data.map(({id,title,acf}) => ({
-    id: id,
-    title: title.rendered,
-    ...acf
-}));
+// const result = data.map(({id,title,acf}) => ({
+//     id: id,
+//     title: title.rendered,
+//     ...acf
+// }));
 
-console.log(result); */
+// console.log(result);
+
+//Metodo 2
 
 /* //Ejemplo 38: Write a JavaScript program to convert an array of objects to a single object keyed by id (with map and filter)
 const users = [

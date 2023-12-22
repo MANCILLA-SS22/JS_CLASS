@@ -1502,7 +1502,7 @@ async function entorno(){
 
 entorno(); */
 
-// Ejemplo 36: Indexacion (Ejercicio propuesto por coderHouse)
+/* //Ejemplo 36: Indexacion (Ejercicio propuesto por coderHouse)
 import mongoose from "mongoose";
 import { studenModel } from "./models/student.model.js";
 import { courseModel } from "./models/course.model.js";
@@ -1535,7 +1535,206 @@ async function entorno(){
     console.log(JSON.stringify(student, null, "\t"))
 };
 
-entorno();
+entorno(); */
+
+/* //Ejemplo 37: Aggregation
+// El equipo de ventas corrobora que hay bajas en el número de peticiones de pizzas medianas y necesita confirmar el monto general que ha habido en las órdenes del tamaño “mediano” (ésto debido a que fue el tamaño protagónico de su última campaña de marketing).
+// Ahora toca analizar los sabores y corroborar cuáles están brindando una mayor rentabilidad, y cuáles deberían salir o sustituirse por un nuevo sabor. ¿Qué debería hacer nuestra aggregation?
+// ✓ Primero, una stage para filtrar las pizzas por su tamaño, ya que sólo nos interesa la campaña de pizzas medianas.
+// ✓ Segundo, agrupar las pizzas por sabor para corroborar cuántos ejemplares se vendieron de dichos sabores.
+
+import mongoose from "mongoose";
+import orderModel from "../src/models/order.model.js";
+import { meals } from "../data/arrays.data.js";
+
+async function environment(){ 
+    await mongoose.connect("mongodb+srv://xxeltiradorxx:coder1234@clusterclase17.a7ymnvl.mongodb.net/Clase17-Aggregations?retryWrites=true&w=majority");
+
+    // const result = await orderModel.insertMany(meals);
+    // console.log(result);
+
+    // // Find
+    // const orders = await orderModel.find();
+    // console.log(result);
+
+
+    const result = await orderModel.aggregate(
+        [
+            {
+                $match: {size: "medium"} //Buscamos todos los elementos que "coincidan" con el tamano mediano.
+            },
+            {
+                $group: {
+                    _id: "$name", 
+                    price: {$first: "$price"},
+                    totalSells:{$sum: "$quantity"}
+                }
+            },
+            {
+                $sort: {totalSells: 1} //Ordena los documentos en la stage actual (1 = descendente, -1, ascendente)
+            },
+            {
+                $group: {
+                    _id: 1, 
+                    orders: {$push: "$$ROOT"} //Se crea un nuevo campo
+                }
+            },
+            {
+                $project: {//Cuando queramos usar $merge, primero devemos crear un projecto. $project no devuelve nada, sino que prepara el documento para incertarlo
+                    _id: 0,//Esto es para que genere un nuevo id pero que no cree un campo
+                    orders: "$orders"
+                } 
+            },
+            {
+                $merge: {into: "reports"} // $merge  siempre debe colocarse hasta el final
+            }
+        ]
+    );
+
+    console.log(result);
+
+};
+
+
+environment(); */
+
+/* //Ejemplo 38: Aggregation (agrupacion de estudiantes)
+// Realizar las siguientes consultas en una colección de estudiantes (students.json). 
+import mongoose from "mongoose";
+import {studentsModel} from "./models/students.model.js";
+// import { studentsData } from "../data/students.data.js";
+
+async function environment(){ 
+    await mongoose.connect("mongodb+srv://xxeltiradorxx:coder1234@clusterclase17.a7ymnvl.mongodb.net/Clase17-Aggregations?retryWrites=true&w=majority");
+
+    // const result = await studentsModel.insertMany(studentsData); console.log(result); //Insertamos el JSON de estudiantes en la base de datos de mongodb
+
+    // 1. Obtener a los estudiantes agrupados por calificación del mejor al peor
+    // const result = await studentsModel.aggregate([
+    //     {
+    //         $group: { // Agrupar por nombre y notas
+    //             _id: "$grade", 
+    //             students: {$push: "$first_name"} 
+    //         } 
+    //     },
+    //     {
+    //         $sort: { _id: -1 } // Ordenar del mejor al peor
+    //     } 
+    // ]);
+    // console.log("1. ", result);
+    
+    // 2. Obtener a los estudiantes agrupados por grupo.
+    // const result = await studentsModel.aggregate([
+    //     { 
+    //         $group: { _id: "$group", students: { $push: "$first_name" } } // Agrupados por grupo
+    //     }
+    // ]);
+    // console.log("2. ",result);
+
+    
+    // 3. Obtener el promedio de los estudiantes del grupo 1B
+    // const result = await studentsModel.aggregate([
+    //     { 
+    //         $match: { group: "1B" }
+    //     },
+    //     {
+    //         $group: { _id: "$group", total: { $sum: "$grade" }, totalStudents: { $sum: 1 } } //$sum: "$grade" sirve para sumar la cantudad de calificaciones existentes, mientras que totalStudents: { $sum: 1 } servira para contar pero la cantidad de estudiantes y asi sacar el promedio. Se inicializa en 1 porque ira iterando de 1 en uno cada que se cuente un estudiante al momento de sumar una calificacion.
+    //     },
+    //     { 
+    //         $project: { _id: 1, promedio: { $divide: ["$total", "$totalStudents"] } } //Se utiliza _id: 1 para que al documento se le genere un nuevo id. Se utiliza  _id: 0 para que genere un nuevo id pero que no cree un campo
+    //     } 
+    // ]);
+    // console.log("3. ",result);
+    
+    // 4. Obtener el promedio de los estudiantes del grupo 1A
+    // const result = await studentsModel.aggregate([
+    //     { 
+    //         $match: { group: "1A" }
+    //     },
+    //     {
+    //         $group: { _id: "$group", total: { $sum: "$grade" }, totalStudents: { $sum: 1 } } // Agrupamos por grupo y notas (total) y cantidad de alumnos
+    //     },
+    //     {
+    //         $project: { _id: 1, promedio: { $divide: ["$total", "$totalStudents"] } }// Creamos un documento con el promedio
+    //     }
+    // ]);
+    // console.log("4. ",result);
+    
+    // 5. Obtener el promedio general de los estudiantes.
+    // const result = await studentsModel.aggregate([
+    //     { 
+    //         $group: { _id: "Total", total: { $sum: "$grade" }, totalStudents: { $sum: 1 } } 
+    //     },
+    //     { 
+    //         $project: { _id: 1, promedio: { $divide: ["$total", "$totalStudents"] } } 
+    //     }
+    // ])
+    // console.log("5. ",result);
+    
+    // 6. Obtener el promedio de calificación de los hombres
+    // const result = await studentsModel.aggregate([
+    //     { 
+    //         $match: { gender: "Male" }
+    //     },
+    //     { 
+    //         $group: { _id: "$gender", total: { $sum: "$grade" }, totalStudents: { $sum: 1 } } 
+    //     },
+    //     { 
+    //         $project: { _id: 1, promedio: { $divide: ["$total", "$totalStudents"] } }
+    //     }
+    // ])
+    // console.log("6. ",result);
+    
+    // 7. Obtener el promedio de calificación de las mujeres.
+    // const result = await studentsModel.aggregate([
+    //     { 
+    //         $match: { gender: "Female" }
+    //     },
+    //     {
+    //         $group: { _id: "$gender", total: { $sum: "$grade" }, totalStudents: { $sum: 1 } }
+    //     },
+    //     {
+    //         $project: { _id: 1, promedio: { $divide: ["$total", "$totalStudents"] } }
+    //     },
+    // ]);
+    // console.log(result);
+}
+
+environment(); */
+
+/* //Ejemplo 39: Pagination
+import express from "express";
+import mongoose from "mongoose";
+import handlebars from "express-handlebars";
+import Handlebars from "handlebars";
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
+import {__dirname} from "./utils.js"
+import viewRouter from "./router/pagination.routes.js";
+
+const app = express();
+
+mongoose.connect("mongodb+srv://xxeltiradorxx:coder1234@clusterclase17.a7ymnvl.mongodb.net/Clase17-Aggregations?retryWrites=true&w=majority")
+.then(() => console.log("DB connected"))
+.catch(err => console.log("Hubo un error", err));
+
+app.engine("hbs", handlebars.engine({ // Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
+        extname: "hbs", //index.hbs
+        defaultLayout: "main", //Plantilla principal
+        handlebars: allowInsecurePrototypeAccess(Handlebars)
+    })
+);
+app.set("views", `${__dirname}/view`); // Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
+app.set("view engine", "hbs"); //Finalmente, con este app.set() indicamos que, el motor que ya inicializamos arriba, es el que queremos utilizar. Es importante saber que, cuando digamos al servidor que renderice, sepa que tiene que hacerlo con el motor de hbs.
+app.use(express.static(`${__dirname}/public`)); // Public. Sentamos de manera estatica la carpeta public
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/", viewRouter);
+app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
+
+
+
+
+
 
 
 
