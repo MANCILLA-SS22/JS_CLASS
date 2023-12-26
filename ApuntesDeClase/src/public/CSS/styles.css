@@ -36,3 +36,29 @@
   text-decoration: none;
   color: black;
 }
+
+body {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 95vh;
+    width: 90%;
+    max-width: 1200px;
+    margin-top: 10px;
+}
+#message-container {
+    border: 1px solid black;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+#message-container div {
+    background-color: #CCC;
+    padding: 5px;
+}
+#form {
+    width: 50%;
+}
+#room {
+    margin-right: 16px;
+}
