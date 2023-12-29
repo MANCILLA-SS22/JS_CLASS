@@ -1,0 +1,20 @@
+<div>
+    <header>
+        <button><a href={{respuestaInfo.prevLink}}>prevLink</a></button>
+        <button><a href={{respuestaInfo.nextLink}}>nextLink</a></button>
+    </header>
+    
+    
+    <div>
+        {{#each respuestaInfo.playload}}
+        <div>
+        <span>
+        <h2>{{this.title}}</h2>
+        <p>price: {{this.price}}</p>
+        <button><a href={{../respuestaInfo.linkMold}}{{this.id}}/>Product details</a></button>
+        <button>Add to card</button>
+        </span>
+    </div>
+        {{/each}}
+    </div>
+</div>

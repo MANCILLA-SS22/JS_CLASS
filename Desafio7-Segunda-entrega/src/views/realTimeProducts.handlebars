@@ -1,0 +1,24 @@
+<h1>Lista de productos en vivo</h1>
+
+<div id="notliveProducts">
+{{#each getAll}}
+    <div class="user-info">
+      <span id="userInfo">
+      <h2>{{this.title}}</h2>
+      <p>description: {{this.description}}</p>
+      <p>price: {{this.price}}</p>
+      <p>thumbnail: {{this.thumbnail}}</p>
+      <p>code: {{this.code}}</p>
+      <p>stock: {{this.stock}}</p>
+      <p>status: {{this.status}}</p>
+      <p>category: {{this.category}}</p>
+      <p>id: {{this.id}}</p>
+      </span>
+    </div>
+  {{/each}}
+  </div>
+
+ <div id="liveProducts"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>

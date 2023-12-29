@@ -8,19 +8,16 @@ const studentSchema = new Schema({
     courses:{
         type:[
             {
-                course:{
-                    type: Schema.Types.ObjectId,
-                    ref: "courses"
-                }
+                course:{type: Schema.Types.ObjectId, ref: "courses"}
             }
         ],
         default: [],
     }
 });
 
-// studentSchema.pre("find", function(){
-//     this.populate("courses.course");
-// });
+studentSchema.pre("find", function(){
+    this.populate("courses.course");
+});
 
 const studenModel = model("students", studentSchema);
 export { studenModel };

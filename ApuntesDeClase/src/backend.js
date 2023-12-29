@@ -1313,7 +1313,7 @@ io.on('connection', function(socket){//El cliente se conecta con su websocket al
     socket.emit("messages", messages);//Al cargar la pagina, se envia un array vacio. Cuando un usuario nuevo entre o cuando uno actualice el navegador, podra ver el array de mensajes. De lo contrario, aparecera en blanco.
 }); */
 
-//Ejemplo 30.1: Aplicación chat con websocket
+/* //Ejemplo 30.1: Aplicación chat con websocket
 import express from "express";
 import {__dirname} from "./utils.js"
 import handlebars from "express-handlebars";
@@ -1377,9 +1377,7 @@ io.on("connection", function(socket){  console.log(socket.id);
         });
     });
     socket.on("ping", n => console.log(n));
-});
-
-
+}); */
 
 /* //Ejemplo 31: Usando mongoose desde cero
 import express from "express";
@@ -1570,7 +1568,7 @@ async function entorno(){
 
 entorno(); */
 
-/* //Ejemplo 36: Indexacion (Ejercicio propuesto por coderHouse)
+//Ejemplo 36: Indexacion (Ejercicio propuesto por coderHouse)
 import mongoose from "mongoose";
 import { studenModel } from "./models/student.model.js";
 import { courseModel } from "./models/course.model.js";
@@ -1603,7 +1601,7 @@ async function entorno(){
     console.log(JSON.stringify(student, null, "\t"))
 };
 
-entorno(); */
+entorno();
 
 /* //Ejemplo 37: Aggregation
 // El equipo de ventas corrobora que hay bajas en el número de peticiones de pizzas medianas y necesita confirmar el monto general que ha habido en las órdenes del tamaño “mediano” (ésto debido a que fue el tamaño protagónico de su última campaña de marketing).
@@ -1678,94 +1676,94 @@ async function environment(){
     // const result = await studentsModel.insertMany(studentsData); console.log(result); //Insertamos el JSON de estudiantes en la base de datos de mongodb
 
     // 1. Obtener a los estudiantes agrupados por calificación del mejor al peor
-    // const result = await studentsModel.aggregate([
-    //     {
-    //         $group: { // Agrupar por nombre y notas
-    //             _id: "$grade", 
-    //             students: {$push: "$first_name"} 
-    //         } 
-    //     },
-    //     {
-    //         $sort: { _id: -1 } // Ordenar del mejor al peor
-    //     } 
-    // ]);
-    // console.log("1. ", result);
+    const result = await studentsModel.aggregate([
+        {
+            $group: { // Agrupar por nombre y notas
+                _id: "$grade", 
+                students: {$push: "$first_name"} 
+            } 
+        },
+        {
+            $sort: { _id: -1 } // Ordenar del mejor al peor
+        } 
+    ]);
+    console.log("1. ", result);
     
     // 2. Obtener a los estudiantes agrupados por grupo.
-    // const result = await studentsModel.aggregate([
-    //     { 
-    //         $group: { _id: "$group", students: { $push: "$first_name" } } // Agrupados por grupo
-    //     }
-    // ]);
-    // console.log("2. ",result);
+    const result2 = await studentsModel.aggregate([
+        { 
+            $group: { _id: "$group", students: { $push: "$first_name" } } // Agrupados por grupo
+        }
+    ]);
+    console.log("2. ",result2);
 
     
     // 3. Obtener el promedio de los estudiantes del grupo 1B
-    // const result = await studentsModel.aggregate([
-    //     { 
-    //         $match: { group: "1B" }
-    //     },
-    //     {
-    //         $group: { _id: "$group", total: { $sum: "$grade" }, totalStudents: { $sum: 1 } } //$sum: "$grade" sirve para sumar la cantudad de calificaciones existentes, mientras que totalStudents: { $sum: 1 } servira para contar pero la cantidad de estudiantes y asi sacar el promedio. Se inicializa en 1 porque ira iterando de 1 en uno cada que se cuente un estudiante al momento de sumar una calificacion.
-    //     },
-    //     { 
-    //         $project: { _id: 1, promedio: { $divide: ["$total", "$totalStudents"] } } //Se utiliza _id: 1 para que al documento se le genere un nuevo id. Se utiliza  _id: 0 para que genere un nuevo id pero que no cree un campo
-    //     } 
-    // ]);
-    // console.log("3. ",result);
+    const result3 = await studentsModel.aggregate([
+        { 
+            $match: { group: "1B" }
+        },
+        {
+            $group: { _id: "$group", total: { $sum: "$grade" }, totalStudents: { $sum: 1 } } //$sum: "$grade" sirve para sumar la cantudad de calificaciones existentes, mientras que totalStudents: { $sum: 1 } servira para contar pero la cantidad de estudiantes y asi sacar el promedio. Se inicializa en 1 porque ira iterando de 1 en uno cada que se cuente un estudiante al momento de sumar una calificacion.
+        },
+        { 
+            $project: { _id: 1, promedio: { $divide: ["$total", "$totalStudents"] } } //Se utiliza _id: 1 para que al documento se le genere un nuevo id. Se utiliza  _id: 0 para que genere un nuevo id pero que no cree un campo
+        } 
+    ]);
+    console.log("3. ",result3);
     
     // 4. Obtener el promedio de los estudiantes del grupo 1A
-    // const result = await studentsModel.aggregate([
-    //     { 
-    //         $match: { group: "1A" }
-    //     },
-    //     {
-    //         $group: { _id: "$group", total: { $sum: "$grade" }, totalStudents: { $sum: 1 } } // Agrupamos por grupo y notas (total) y cantidad de alumnos
-    //     },
-    //     {
-    //         $project: { _id: 1, promedio: { $divide: ["$total", "$totalStudents"] } }// Creamos un documento con el promedio
-    //     }
-    // ]);
-    // console.log("4. ",result);
+    const result4 = await studentsModel.aggregate([
+        { 
+            $match: { group: "1A" }
+        },
+        {
+            $group: { _id: "$group", total: { $sum: "$grade" }, totalStudents: { $sum: 1 } } // Agrupamos por grupo y notas (total) y cantidad de alumnos
+        },
+        {
+            $project: { _id: 1, promedio: { $divide: ["$total", "$totalStudents"] } }// Creamos un documento con el promedio
+        }
+    ]);
+    console.log("4. ",result4);
     
     // 5. Obtener el promedio general de los estudiantes.
-    // const result = await studentsModel.aggregate([
-    //     { 
-    //         $group: { _id: "Total", total: { $sum: "$grade" }, totalStudents: { $sum: 1 } } 
-    //     },
-    //     { 
-    //         $project: { _id: 1, promedio: { $divide: ["$total", "$totalStudents"] } } 
-    //     }
-    // ])
-    // console.log("5. ",result);
+    const result5 = await studentsModel.aggregate([
+        { 
+            $group: { _id: "Total", total: { $sum: "$grade" }, totalStudents: { $sum: 1 } } 
+        },
+        { 
+            $project: { _id: 1, promedio: { $divide: ["$total", "$totalStudents"] } } 
+        }
+    ])
+    console.log("5. ",result5);
     
     // 6. Obtener el promedio de calificación de los hombres
-    // const result = await studentsModel.aggregate([
-    //     { 
-    //         $match: { gender: "Male" }
-    //     },
-    //     { 
-    //         $group: { _id: "$gender", total: { $sum: "$grade" }, totalStudents: { $sum: 1 } } 
-    //     },
-    //     { 
-    //         $project: { _id: 1, promedio: { $divide: ["$total", "$totalStudents"] } }
-    //     }
-    // ])
-    // console.log("6. ",result);
+    const result6 = await studentsModel.aggregate([
+        { 
+            $match: { gender: "Male" }
+        },
+        { 
+            $group: { _id: "$gender", total: { $sum: "$grade" }, totalStudents: { $sum: 1 } } 
+        },
+        { 
+            $project: { _id: 1, promedio: { $divide: ["$total", "$totalStudents"] } }
+        }
+    ])
+    console.log("6. ",result6);
     
     // 7. Obtener el promedio de calificación de las mujeres.
-    // const result = await studentsModel.aggregate([
-    //     { 
-    //         $match: { gender: "Female" }
-    //     },
-    //     {
-    //         $group: { _id: "$gender", total: { $sum: "$grade" }, totalStudents: { $sum: 1 } }
-    //     },
-    //     {
-    //         $project: { _id: 1, promedio: { $divide: ["$total", "$totalStudents"] } }
-    //     },
-    // ]);
-    // console.log(result);
+    const result7 = await studentsModel.aggregate([
+        { 
+            $match: { gender: "Female" }
+        },
+        {
+            $group: { _id: "$gender", total: { $sum: "$grade" }, totalStudents: { $sum: 1 } }
+        },
+        {
+            $project: { _id: 1, promedio: { $divide: ["$total", "$totalStudents"] } }
+        },
+    ]);
+    console.log(result7);
 }
 
 environment(); */

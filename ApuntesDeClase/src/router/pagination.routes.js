@@ -17,7 +17,7 @@ router.get("/students", async function(req, res){
         },
         {
             page: page || 1,
-            limit: limit || 10,
+            limit: limit || 5,
         });
 
     console.log(students)    
