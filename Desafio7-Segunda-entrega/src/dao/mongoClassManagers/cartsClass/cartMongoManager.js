@@ -25,7 +25,6 @@ class MongoCartManager {
         try {
             const getCartByIdMongo = await Cart.findOne({_id: id});
             return getCartByIdMongo;
-
         }
         catch (error) {
             return error;
@@ -50,8 +49,6 @@ class MongoCartManager {
             return error;
         }
     }
-
-
     
     async deleteCartProductsId(id, arrayProducts) {
         try {
@@ -95,9 +92,7 @@ class MongoCartManager {
         try {
             const cart = await Cart.findById(idCart);
             cart.products=products
-
             const response = Cart.findByIdAndUpdate(idCart , cart)
-            //return "cart products updated";
             return response
         }
         catch (error) {

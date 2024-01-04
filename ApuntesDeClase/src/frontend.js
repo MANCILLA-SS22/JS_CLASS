@@ -2547,42 +2547,39 @@ objetos.forEach((objeto) => {
 console.log(productos);
 console.log(totalVendidos); */
 
-//Ejemplo 37: Desestructurando un array de objetos
-//Metodo 1
-// const data = [
-//     {
-//         "id": 101,
-//         "title": {
-//             "rendered": "CTC20180018"
-//         },
-//         "acf": {
-//             "fielda": "valuea",
-//             "fieldb": "valueb",
-//             "fieldc": "valuec"
-//         }
-//     },
-//     {
-//         "id": 102,
-//         "title": {
-//             "rendered": "D2021063365"
-//         },
-//         "acf": {
-//             "fielda": "valuea",
-//             "fieldb": "valueb",
-//             "fieldc": "valuec"
-//         }
-//     }
-// ]
+/* //Ejemplo 37: Desestructurando un array de objetos
+const data = [
+    {
+        "id": 101,
+        "title": {
+            "rendered": "CTC20180018"
+        },
+        "acf": {
+            "fielda": "valuea",
+            "fieldb": "valueb",
+            "fieldc": "valuec"
+        }
+    },
+    {
+        "id": 102,
+        "title": {
+            "rendered": "D2021063365"
+        },
+        "acf": {
+            "fielda": "valuea",
+            "fieldb": "valueb",
+            "fieldc": "valuec"
+        }
+    }
+]
 
-// const result = data.map(({id,title,acf}) => ({
-//     id: id,
-//     title: title.rendered,
-//     ...acf
-// }));
+const result = data.map(({id,title,acf}) => ({
+    id: id,
+    title: title.rendered,
+    ...acf
+}));
 
-// console.log(result);
-
-//Metodo 2
+console.log(result); */
 
 /* //Ejemplo 38: Write a JavaScript program to convert an array of objects to a single object keyed by id (with map and filter)
 const users = [
@@ -2794,13 +2791,40 @@ console.log(res2); */
 // dashes(); */
 
 /* //Ejemplo 48: Write a JavaScript program to sort the items of an array.
-let arr1 = [ -3, 8, 7, 6, 5, -4, 3, 2, 1 ];
-let arr2 = arr1.slice();
+//Metodo 1
+const arr1=[-3,8,7,6,5,-4,3,2,1];
+const arr2=[];
+let min=arr1[0];
+let pos;
+let max=arr1[0];
 
-arr2.sort(function(a, b){
-    return a - b; //Orden ascendente
-    // return b - a; //Orden descendente
-});
+for (i=0; i<arr1.length; i++){
+    if (max<arr1[i]) max=arr1[i];
+}
+
+for (let i=0; i<arr1.length; i++){
+    for (let j=i; j<arr1.length; j++){
+        if (arr1[j]!="x"){
+            if (min>arr1[j]){
+                min=arr1[j];
+                pos=j;
+            }
+        }
+    }
+    arr2[i]=min;
+    arr1[pos]="x";
+    min=max;
+}
+console.log(arr2);
+
+//Metodo 2
+// let arr1 = [ -3, 8, 7, 6, 5, -4, 3, 2, 1 ];
+// let arr2 = arr1.slice();
+
+// arr2.sort(function(a, b){
+//     return a - b; //Orden ascendente
+//     // return b - a; //Orden descendente
+// });
 
 
 console.log(arr2); */

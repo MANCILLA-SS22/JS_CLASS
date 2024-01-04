@@ -1,0 +1,225 @@
+https://www.udemy.com/course/react-the-complete-guide-incl-redux/learn/lecture/25599684?start=15#questions
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
+https://www.w3schools.com/jsref/met_win_setinterval.asp
+https://www.geeksforgeeks.org/how-to-create-a-simple-counter-using-reactjs/
+https://devdocs.io
+https://learn.microsoft.com/en-us/cpp/cpp/?view=msvc-170
+https://cplusplus.com/doc/tutorial/
+https://www.programiz.com/cpp-programming/examples/pyramid-pattern
+https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/
+https://www.tutorialspoint.com/java/number_round.htm?key=decimalformat
+https://docs.python.org/3/library/index.html
+https://javascript.info/callbacks
+https://www.freecodecamp.org/news/hooked-on-hooks-how-to-use-reacts-usereducer-2fe8f486b963/
+https://legacy.reactjs.org/docs/hooks-overview.html
+https://react.dev/reference/react/forwardRef
+https://nodejs.org/api/url.html#urlfileurltopathurl
+https://expressjs.com/en/4x/api.html#res.render
+https://www.npmjs.com/package/multer 
+https://socket.io/docs/v4/server-api/
+https://nextjs.org/docs
+https://docs.nestjs.com
+https://redux-toolkit.js.org/usage/usage-with-typescript#createslice
+https://www.mongodb.com/docs/manual/reference/method/db.collection.updateOne/
+https://cloud.mongodb.com/v2/655f1475ba7fe502fcda39da#/clusters
+https://mongoosejs.com/docs/api/model.html#Model.updateOne()
+https://github.com/aravindnc/mongoose-paginate-v2?tab=readme-ov-file
+
+
+- Its kind of interesting how animal like we are
+- my sister still tells my dad how messed up that was of him to do. 
+
+
+Documentaciones: 
+https://developer.mozilla.org/en-US/docs/Web/API/Event/target 
+https://devdocs.io/html/ 
+https://www.w3schools.com/html/html_formatting.asp 
+https://www.geeksforgeeks.org/stdfind_if-stdfind_if_not-in-c/?ref=gcse 
+https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/rand?view=msvc-170 
+https://cplusplus.com/reference/ 
+https://www.programiz.com/cpp-programming/library-function 
+https://www.learncpp.com/cpp-tutorial/syntax-and-semantic-errors/ 
+https://cppguide.readthedocs.io/en/latest/ 
+https://www.programiz.com/csharp-programming/comments 
+https://www.tutorialspoint.com/csharp/index.htm 
+https://docs.oracle.com/javase/tutorial/java/TOC.html     https://dev.java 
+https://docs.oracle.com/javase/tutorial/  https://docs.oracle.com/javase/specs/    https://docs.oracle.com/en/java/javase/20/ 
+https://www.tutorialspoint.com/java/java_arrays.htm       
+https://www.programiz.com/java-programming 
+https://www.javatpoint.com/java-for-loop 
+https://docs.python.org/3/library/index.html     https://docs.python.org/3/reference/ 
+https://docs.spyder-ide.org/current/index.html
+https://docs.jupyter.org/en/latest/use/using.html
+https://flask.palletsprojects.com/en/3.0.x/
+https://docs.djangoproject.com/en/5.0/
+https://javascript.info  https://lenguajejs.com 
+https://go.dev/blog/godoc 
+https://doc.rust-lang.org/rust-by-example/meta/doc.html 
+https://dev.mysql.com/doc/refman/8.0/en/dynindex-statement.html 
+https://www.postgresql.org/docs/current/ 
+https://docs.oracle.com/database/121/SQLRF/toc.htm 
+https://docs.github.com/en/get-started/getting-started-with-git/associating-text-editors-with-git 
+https://legacy.reactjs.org  https://react.dev  https://create-react-app.dev  https://react-bootstrap.github.io   
+https://jquery.com/download/ 
+https://angular.io/start 
+https://vuejs.org/guide/introduction.html#what-is-vue 
+https://guides.rubyonrails.org/getting_started.html  
+https://spring.io       https://docs.spring.io/spring-framework/docs/current/reference/html/     
+https://nodejs.org/en/about/ 
+https://react-redux.js.org  https://redux-toolkit.js.org  https://redux-saga.js.org 
+https://nextjs.org/docs/getting-started 
+https://expressjs.com/en/guide/routing.html 
+https://www.npmjs.com/package/multer
+https://www.npmjs.com/package/dotenv
+https://www.npmjs.com/package/morgan
+https://www.npmjs.com/package/json-server
+https://www.npmjs.com/package/core-js 
+https://socket.io/docs/v4/tutorial/introduction 
+https://www.mongodb.com/docs/manual/tutorial/getting-started/ 
+https://cloud.mongodb.com/v2/655f1475ba7fe502fcda39da#/clusters
+https://mongoosejs.com/docs/api/model.html#Model.updateOne()
+https://github.com/aravindnc/mongoose-paginate-v2?tab=readme-ov-file
+https://docs.nestjs.com 
+https://docs.flutter.dev       https://dart.dev/guides 
+https://axios-http.com/docs/intro 
+https://sweetalert2.github.io/#examples 
+https://nextui.org  
+https://docs.docker.com/storage/volumes/#volumes
+
+
+Librerias: 
+https://cdnjs.com                   (para agregar librerías de fontawsome y otros) 
+https://www.npmjs.com   
+https://www.sitepoint.com/beginners-guide-node-package-manager/ 
+https://getbootstrap.com/docs/5.3/utilities/spacing/#margin-and-padding 
+https://mui.com/material-ui/getting-started/overview/ 
+https://bulma.io/documentation/ 
+https://materializecss.com 
+https://get.foundation 
+https://getuikit.com/docs/introduction 
+https://tailwindcss.com/docs/installation 
+https://sass-lang.com/documentation/style-rules#nesting 
+https://www.npmjs.com/package/react-spinners?activeTab=readme 
+https://tobiasahlin.com/spinkit/ 
+https://momentjs.com 
+https://dashboard.emailjs.com/admin 
+https://apvarun.github.io/toastify-js/# 
+https://swiperjs.com/get-started#use-swiper-from-cdn 
+https://moment.github.io/luxon/#/formatting?id=presets 
+https://moment.github.io/luxon/api-docs/index.html#interval 
+https://animate.style 
+https://leafletjs.com/reference.html 
+https://lodash.com 
+https://parceljs.org 
+https://babeljs.io 
+https://www.npmjs.com/package/regenerator-runtime 
+
+Api’s: 
+https://github.com/public-apis/public-apis 
+https://jsonplaceholder.typicode.com 
+https://http.cat 
+https://academia-lab.com/enciclopedia/transferencia-de-estado-representacional-rest/ 
+https://www.freecodecamp.org/espanol/news/tutorial-de-fetch-api-en-javascript-con-ejemplos-de-js-fetch-post-y-header/ 
+https://pokeapi.co/docs/v2 
+https://mockapi.io 
+https://rapidapi.com/hub 
+https://www.weatherapi.com 
+https://fakestoreapi.com 
+https://cloud.google.com/docs/authentication/api-keys 
+https://swapi.dev 
+https://kinsta.com/es/blog/microservicios-vs-api/ 
+https://dev.to/ruppysuppy/7-free-public-apis-you-will-love-as-a-developer-166p 
+https://blog.hubspot.es/website/que-es-api-rest 
+https://www.postman.com 
+https://www.npmjs.com/package/react-query 
+https://swr.vercel.app 
+https://firebaseopensource.com/projects/rakannimer/react-firebase/ 
+https://firebase.google.com/docs/firestore/manage-data/add-data 
+
+ 
+React: 
+https://vitejs.dev 
+https://react.useanimations.com 
+https://react-icons.github.io/react-icons/ 
+https://github.com/ults-io/vscode-react-javascript-snippets/blob/HEAD/docs/Snippets.md 
+https://chakra-ui.com 
+https://usehooks.com 
+https://reactrouter.com/en/main   https://www.npmjs.com/package/react-router-dom 
+https://formik.org/   https://react-hook-form.com    https://www.npmjs.com/package/yup 
+https://www.apollographql.com/docs/react/ 
+https://pandao.github.io/editor.md/en.html     https://readme.so 
+
+GitHub: 
+https://github.com     
+https://training.github.com/downloads/github-git-cheat-sheet/ 
+https://git-scm.com/docs 
+https://dzone.com/articles/top-20-git-commands-with-examples 
+https://www.atlassian.com/git/glossary  
+https://docs.github.com/es/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax 
+
+Descargar fuentes y simbolos: 
+https://fonts.google.com 
+https://fontawesome.com  
+https://fontawesome.com/v5/docs/web/use-with/wordpress/install-manually 
+https://developers.google.com/fonts 
+https://www.cssfontstack.com 
+
+Descargar iconos: 
+https://fonts.google.com/icons 
+https://developers.google.com/fonts 
+https://fontawesome.com/icons 
+https://boxicons.com/?query=menu 
+https://www.svgrepo.com/svg/473620/github 
+https://icons.getbootstrap.com/ 
+https://www.flaticon.com/ 
+https://iconmonstr.com/ 
+https://www.cssfontstack.com 
+https://icons8.com/icons/set/favicon  
+https://icons8.com/icon/set/logos/small 
+https://iconscout.com/unicons/getting-started/line 
+https://app.moqups.com// 
+ 
+Descargar imágenes e ilustraciones, y almacenar en la nube: 
+https://www.pexels.com/es-es/ 
+https://unsplash.com/ 
+https://undraw.co/illustrations 
+https://www.manypixels.co/gallery 
+https://www.pinterest.com.mx 
+https://giphy.com 
+https://pixabay.com/es/ 
+https://console.cloudinary.com/console/c-4023da8b6dcc56f76f0f9fd2aef6e2/media_library/search?q=&sortField=displayName&sortDirection=asc 
+
+Inspiración: 
+https://dribbble.com/shots/popular/web-design 
+https://www.behance.net/galleries/ui-ux/ui-ux 
+https://webflow.com/blog/website-ideas 
+https://www.frontendmentor.io/challenges/space-tourism-multipage-website-gRWj1URZ3 
+ 
+Colores, gradientes y sombras:  
+https://www.w3schools.com/css/css_colors.asp 
+https://color.adobe.com/es/create/color-wheel https://coolors.co/palettes/trending  
+https://htmlcolorcodes.com  
+https://mycolor.space/  
+https://www.w3schools.com/colors/colors_picker.asp  
+https://cssgradient.io/ 
+https://www.toptal.com/developers/css3maker/css3-rgba 
+https://www.colorzilla.com/gradient-editor/  
+https://mycolor.space/gradient?ori=circle&hex=%235B8DD7&hex2=%2398D809&sub=1 https://www.joshwcomeau.com/gradient-generator/ 
+https://imagecolorpicker.com/color-code/2596be 
+https://uigradients.com/#Poncho https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Images/Using_CSS_gradients  
+https://www.w3schools.com/cssref/css3_pr_box-shadow.php  
+https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Backgrounds_and_Borders/Box-shadow_generator https://box-shadow.dev  
+https://html-css-js.com/css/generator/box-shadow/  
+https://cssgenerator.org/box-shadow-css-generator.html 
+ 
+
+Otros: 
+https://aws.amazon.com/amplify/?trk=7af50e68-4664-481e-80a3-736a0d23dd2a&sc_channel=sm 
+https://web.dev 
+https://appdividend.com 
+https://codepen.io/giana/pen/BZaGyP 
+https://www.codementor.io/projects 
+https://purecss.io 
+https://www.frontendmentor.io/challenges 
+https://app.daily.dev 
+https://getemoji.com 

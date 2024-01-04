@@ -13,7 +13,7 @@ router.get("/students", async function(req, res){
     // const order = "asc" - 1
     const students = await studentModel.paginate(
         {
-            // group: "1A" // Criterio de busqueda
+            group: "1A" // Criterio de busqueda
         },
         {
             page: page || 1,

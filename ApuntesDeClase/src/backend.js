@@ -1,4 +1,4 @@
-//         $$$$$$$$$$$$$$$ Node, express, files $$$$$$$$$$$$$$$
+//         $$$$$$$$$$$$$$$ Backend $$$$$$$$$$$$$$$
 
 
 /* //Ejemplo 0: Uso del file system (fs) node.js
@@ -45,7 +45,8 @@ fs.writeFile("./texto_callback.txt", "Escribiendo en un callback", function(erro
 }); */
 
 /* //Ejemplo 2: Ejercicio practico con fs.
-const fs = require("fs");
+// const fs = require("fs");
+import fs from "fs"
 const fecha = new Date().toLocaleString();
 
 fs.writeFile("./texto_callback.txt", fecha, function(error){
@@ -59,7 +60,8 @@ fs.writeFile("./texto_callback.txt", fecha, function(error){
 }); */
 
 /* //Ejemplo 3: Uso del file system (fs) con callbacks Y promesas
-const fs = require("fs");
+// const fs = require("fs");
+import fs from "fs"
 
 async function operaciones(fileName) {
     try {
@@ -580,7 +582,7 @@ if (!fechaPropia.isValid()){
 } */
 
 /* //Ejemplo 11: Nodemon ~ Solucion a error en consola: https://www.alexmedina.net/habilitar-la-ejecucion-de-scripts-para-powershell/ ~
-const http = require("http"); //console.log(http);
+import http from "http" //console.log(http);
 const server = http.createServer((request, response) => {
     console.log(request.url);
     if(request.method === "GET" && request.url === "/")  response.end("Mi primer servidor con node js"); //Con .end enviamos una respuesta
@@ -1494,26 +1496,25 @@ app.use("/api/users", usersRoutes); // Routes
 app.use("/api/posts", postRouter); // Routes
 app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
 
-/* //Ejemplo 35: Indexacion
+/* //Ejemplo 35: Indexacion (Primera parte)
+import mongoose from "mongoose";
+import { userModel } from "./models/user.model.js";
 
-//Primera parte
-// import mongoose from "mongoose";
-// import { userModel } from "./models/user.model.js";
+const url = "mongodb+srv://xxeltiradorxx:coder1234@clase16.jurxrdo.mongodb.net/CoderPrueba?retryWrites=true&w=majority";
 
-// const url = "mongodb+srv://xxeltiradorxx:coder1234@clase16.jurxrdo.mongodb.net/CoderPrueba?retryWrites=true&w=majority";
+async function entorno(){
+    await mongoose.connect(url);
 
-// async function entorno(){
-//     await mongoose.connect(url);
+    // const result1 = await userModel.find({ first_name: "Celia" }).explain("executionStats"); 
+    // console.log("Compound indexes", result1); 
 
-//     // const result1 = await userModel.find({ first_name: "Celia" }).explain("executionStats");  console.log(result1); 
-//     const result2 = await userModel.find({ $text: {$search: "@unesco"} }); console.log(result2); //Text Indexes   
-// }
-// entorno();
+    // const result2 = await userModel.find({ $text: {$search: "@unesco"} });
+    const result2 = await userModel.find();
+    console.log(result2);  
+}
+entorno(); */
 
-
-
-
-//Segunda parte
+/* //Ejemplo 35.1: Indexacion (Segunda parte)
 import mongoose from "mongoose";
 import { userModel } from "./models/user.model.js";
 import { courseModel } from "./models/course.model.js";
@@ -1523,52 +1524,35 @@ const url = "mongodb+srv://xxeltiradorxx:coder1234@clase16.jurxrdo.mongodb.net/C
 async function entorno(){
     await mongoose.connect(url);                  // const user = await userModel.find({ first_name: "Fulano "})
     
-    //Parte 1: Utilizando metodos de busqueda y actualizacion en los indices
-    // await courseModel.create({ //Paso 1.- Creamos un nuevo curso y luego comentamos este linea de codigo.
+    //Creamos un nuevo curso y luego comentamos este linea de codigo.
+    // await courseModel.create({
     //     title: "Programación Backend",
     //     description: "Curso de Backend",
     //     difficulty: "Intermediate",
     //     professor: "Arturo",
     //     topics: ["Backend", "JavaScript", "Docker"],
     // });
-    // const course = await courseModel.findById("6583e95a1e2bd3d3faac5566"); //Descomentamos esta linea y la siguiente para luego encontrar el curso segun si id. Importante recordar que aqui recivimos un objeto con los parametros establecidos
+
+    //Parte 1: Utilizando metodos de busqueda y actualizacion en los indices
+    // const course = await courseModel.findById("6590fdc6e0579d17b1e37a02"); //Descomentamos esta linea y la siguiente para luego encontrar el curso segun si id. Importante recordar que aqui recivimos un objeto con los parametros establecidos
     // course.students.push("6582cc50da03636ef84f3beb"); //Una vez obtenido el objeto segun su id, ahora debemos agregar, al arreglo "students" que inicialmente esta vacio, el id 6582cc50da03636ef84f3beb. Pero hasta aqui, solo lo hemos agregado al objeto y NO a la base de datos.
     // const result = await courseModel.findByIdAndUpdate( {_id: course._id}, course ); //Finalmente, actualizamos la informacion en la base de datos. 
-    // console.log("Result ", result); 
-    // console.log("Course ", course);
+    // console.log("Result ", result); console.log("Course ", course);
 
     //Parte 2: Incorporacion de population
-    // await courseModel.create({ //Paso 1.- Creamos un nuevo curso y luego comentamos este linea de codigo.
-    //     title: "Programación Backend",
-    //     description: "Curso de Backend",
-    //     difficulty: "Intermediate",
-    //     professor: "Arturo",
-    //     topics: ["Backend", "JavaScript", "Docker"],
-    // });
-    // const course = await courseModel.findById("6583f152c9735ca1fd2ba348");
-    // course.students.push("6582cc50da03636ef84f3beb");
-    // const result = await courseModel.findByIdAndUpdate( {_id: course._id}, course );
-    // const coursePopulate = await courseModel.findById("6583f152c9735ca1fd2ba348").populate("students");
-    // console.log("Course ", coursePopulate); 
+    // const course = await courseModel.findById("6590fdc6e0579d17b1e37a02");
+    // console.log(JSON.stringify(course, null, 2)); 
+    const coursePopulate1 = await courseModel.findById("6590fdc6e0579d17b1e37a02").populate("students");
+    console.log(JSON.stringify(coursePopulate1, null, 2));
 
     //Parte 3: Utilizando middlewares
-    // await courseModel.create({ //Paso 1.- Creamos un nuevo curso y luego comentamos este linea de codigo.
-    //     title: "Programación Backend",
-    //     description: "Curso de Backend",
-    //     difficulty: "Intermediate",
-    //     professor: "Arturo",
-    //     topics: ["Backend", "JavaScript", "Docker"],
-    // });
-    // const course = await courseModel.findById("6583f763e93721d1e492fcf4");
-    // course.students.push("6582cc50da03636ef84f3bce");
-    // const result = await courseModel.findByIdAndUpdate( {_id: course._id}, course );
-    // const coursePopulate = await courseModel.find(); //Con este linea recuperamos toda la informacion perteneciente "students", perteneciente a la base de datos (ver el archivo course.model.js).
-    // console.log(JSON.stringify(coursePopulate, null, 2));
+    const coursePopulate2 = await courseModel.find(); //Con este linea recuperamos toda la informacion perteneciente "students", perteneciente a la base de datos (ver el archivo course.model.js).
+    console.log(JSON.stringify(coursePopulate2, null, 2));
 };
 
 entorno(); */
 
-//Ejemplo 36: Indexacion (Ejercicio propuesto por coderHouse)
+/* //Ejemplo 36: Indexacion (Ejercicio propuesto por coderHouse)
 import mongoose from "mongoose";
 import { studenModel } from "./models/student.model.js";
 import { courseModel } from "./models/course.model.js";
@@ -1601,7 +1585,7 @@ async function entorno(){
     console.log(JSON.stringify(student, null, "\t"))
 };
 
-entorno();
+entorno(); */
 
 /* //Ejemplo 37: Aggregation
 // El equipo de ventas corrobora que hay bajas en el número de peticiones de pizzas medianas y necesita confirmar el monto general que ha habido en las órdenes del tamaño “mediano” (ésto debido a que fue el tamaño protagónico de su última campaña de marketing).
@@ -1678,10 +1662,7 @@ async function environment(){
     // 1. Obtener a los estudiantes agrupados por calificación del mejor al peor
     const result = await studentsModel.aggregate([
         {
-            $group: { // Agrupar por nombre y notas
-                _id: "$grade", 
-                students: {$push: "$first_name"} 
-            } 
+            $group: { _id: "$grade", students: {$push: "$first_name"} } // Agrupar por nombre y notas
         },
         {
             $sort: { _id: -1 } // Ordenar del mejor al peor
@@ -1796,6 +1777,53 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", viewRouter);
 app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
+
+/* //Ejemplo 40: Cookies, Session & Storage
+import express from "express";
+import {__dirname} from "./utils.js"
+import handlebars from "express-handlebars";
+import Handlebars from "handlebars";
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
+import viewRouter from "./router/cookies.routes.js";
+import session from "express-session"
+
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.engine("hbs", handlebars.engine({ // Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
+        extname: "hbs", //index.hbs
+        defaultLayout: "main", //Plantilla principal
+        handlebars: allowInsecurePrototypeAccess(Handlebars)
+    })
+);
+app.set("views", `${__dirname}/view`);
+app.set("view engine", "hbs");
+app.use(express.static(`${__dirname}/public`));
+app.use(session ({
+    secret: "coder1234",
+    resave: true,
+    saveUninitialized: true
+}));
+app.use("/", viewRouter);
+app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
+
+
+
+
+
+
+
+
+
+
+
+//         $$$$$$$$$$$$$$$ Backend (udemy) $$$$$$$$$$$$$$$
+
+
+
+
+
 
 
 

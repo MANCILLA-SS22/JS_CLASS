@@ -72,13 +72,6 @@ router.delete('/:cid/products/:pid', async (req, res) => {
     } 
 });
 
-router.delete('/:id', async (req, res) => {
-    const cartId = req.params.id;
-    const getById = await cartsMongo.deleteById(cartId);
-    //console.log(cartId);
-    res.status(200).json({ mesagge: getById });
-});
-
 router.put('/:cid/products/:pid', async (req, res) => {
     const { quantity } = req.body;
     const cartId = req.params.cid;
@@ -96,6 +89,13 @@ router.put('/:cid/products/:pid', async (req, res) => {
          const updateCartProducts = await cartsMongo.updateCartProductsId(cartId, productId, false, quantity);
          res.status(200).json({ mesagge: "cart products updated" });
         }
+});
+
+router.delete('/:id', async (req, res) => {
+    const cartId = req.params.id;
+    const getById = await cartsMongo.deleteById(cartId);
+    //console.log(cartId);
+    res.status(200).json({ mesagge: getById });
 });
 
 router.put('/:cid', async (req, res) => {

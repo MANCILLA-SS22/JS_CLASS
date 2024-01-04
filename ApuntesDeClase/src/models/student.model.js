@@ -7,9 +7,7 @@ const studentSchema = new Schema({
     gender: String,
     courses:{
         type:[
-            {
-                course:{type: Schema.Types.ObjectId, ref: "courses"}
-            }
+            {course:{type: Schema.Types.ObjectId, ref: "courses"}}
         ],
         default: [],
     }
