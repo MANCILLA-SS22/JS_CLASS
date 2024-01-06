@@ -25,7 +25,7 @@ https://cloud.mongodb.com/v2/655f1475ba7fe502fcda39da#/clusters
 https://mongoosejs.com/docs/api/model.html#Model.updateOne()
 https://github.com/aravindnc/mongoose-paginate-v2?tab=readme-ov-file
 
-
+"start:dev": "SET NODE_ENV=development&&nodemon ApuntesDeClase/src/server.js",
 - Its kind of interesting how animal like we are
 - my sister still tells my dad how messed up that was of him to do. 
 

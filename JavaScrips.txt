@@ -1553,6 +1553,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   En el modelo tradicional se crea una solicitud HTTP que va al servidor. El servidor procesa la solicitud y carga la página HTML sin que el usuario interactúe con la aplicación web. En el caso de AJAX, JS permite que el usuario interactúe 
   con la aplicación web y modifique la página en segundo plano y solo sus partes necesarias. “En segundo plano” significa que mientras espera que se reciban los datos, el usuario puede hacer otras cosas en la página y optimizar este tiempo.
  
+- Middleware:  
+ 
 - Promesas (promise): Es un objeto de Javascript que representa un evento a futuro y permite representar y seguir el ciclo de vida de una tarea/operación (función). Es una acción asincrónica que se puede completar en algún momento y 
   producir un valor, y notificar cuando esto suceda. Una promesa cuenta con tres estados posibles: pending, fulfilled y rejected. Las promesas pueden ser resueltas o rechazadas.
   Podemos crear promesas a través de su constructor new Promise. Su sintaxis es algo compleja, ya que recibe una función por parámetro que a su vez recibe por parámetro las funciones de resolve y reject

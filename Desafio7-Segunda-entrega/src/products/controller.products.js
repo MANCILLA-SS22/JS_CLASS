@@ -70,6 +70,7 @@ router.get('/', async (req, res) => {
         console.log(products)
         let nextLink;
         let prevLink;
+        
         if (products.hasPrevPage == false) {
             prevLink = null;
         }
