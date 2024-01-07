@@ -1956,7 +1956,17 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
    es repetido.
 ✓ db.collection.deleteMany({key:val}) : Elimina todos los documentos que cumplan con el criterio, se usa cuando sabemos que más de un valor va a contar con ese valor y necesitamos hacer una limpieza general.  
 
+- Mongoose (indexing): Es un recurso utilizado en MongoDB para poder hacer consultas mucho más rápidas. Éste nos permitirá tener una referencia previa al momento de buscar un documento, con el fin de evitar recorrer toda la colección, 
+  documento por documento, hasta encontrar dicho valor. El índice se asocia a un atributo del documento y permite que las búsquedas se hagan desde puntos específicos, evitando el recorrido completo de la colección.
+  
+  > Tipos de indices: Prever un buen plan de indexación evitará problemas de lentitud en las consultas y se considera una práctica necesaria a nivel enterprise, al momento de configurar los schemas de nuestros distintos modelos.
+     ✓ compound: Se utiliza cuando requerimos utilizar más de una indexación y queremos definir el orden con el cual se realiza el ordenamiento (ordenando con 1 para ascendente y -1 para descendente, igual que un sort: {campo: 1 , campo: -1}
+     ✓ multikey: Se utiliza cuando requerimos hacer una indexación de valores que se encuentran de manera interna en un array.
+     ✓ text: Se utiliza para poder basarse en búsquedas de palabras “específicas” con el fin de poder tomar referencia de un texto a partir de dichas palabras.
+     ✓ geospatial: Se utiliza para almacenar data geoespacial de dos coordenadas, utiliza una esfera 2d para poder trabajar los datos. 
 
+  > population: Una population implica obtener un documento referenciado dentro de otro documento, con el fin de obtener ambos en una sola búsqueda. Consiste en almacenar el id de un documento, como propiedad de otro documento. A esto se le     
+    conoce como “referencia”. Populate hace referencia a “poblar” de un id a un documento completo. (referencia a la población humana)
 
 - Mongoose (aggregation)         https://stackoverflow.com/questions/24714166/full-text-search-with-weight-in-mongoose
     1. $match --> Filters the document stream to allow only matching documents to pass unmodified into the next pipeline stage. $match uses standard MongoDB queries. For each input document, outputs either one document (a match) or zero 

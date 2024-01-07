@@ -1505,12 +1505,14 @@ const url = "mongodb+srv://xxeltiradorxx:coder1234@clase16.jurxrdo.mongodb.net/C
 async function entorno(){
     await mongoose.connect(url);
 
-    // const result1 = await userModel.find({ first_name: "Celia" }).explain("executionStats"); 
-    // console.log("Compound indexes", result1); 
+    const result1 = await userModel.find({ first_name: "Celia" }).explain("executionStats"); 
+    console.log("Compound indexes", result1); 
 
-    // const result2 = await userModel.find({ $text: {$search: "@unesco"} });
-    const result2 = await userModel.find();
+    const result2 = await userModel.find({ $text: {$search: "@unesco"} });
     console.log(result2);  
+
+    const result3 = await userModel.find();
+    console.log(result3);  
 }
 entorno(); */
 
@@ -1534,20 +1536,20 @@ async function entorno(){
     // });
 
     //Parte 1: Utilizando metodos de busqueda y actualizacion en los indices
-    // const course = await courseModel.findById("6590fdc6e0579d17b1e37a02"); //Descomentamos esta linea y la siguiente para luego encontrar el curso segun si id. Importante recordar que aqui recivimos un objeto con los parametros establecidos
+    // const course = await courseModel.findById("659a64eed08fb8d59ebce94e"); //Descomentamos esta linea y la siguiente para luego encontrar el curso segun si id. Importante recordar que aqui recivimos un objeto con los parametros establecidos
     // course.students.push("6582cc50da03636ef84f3beb"); //Una vez obtenido el objeto segun su id, ahora debemos agregar, al arreglo "students" que inicialmente esta vacio, el id 6582cc50da03636ef84f3beb. Pero hasta aqui, solo lo hemos agregado al objeto y NO a la base de datos.
     // const result = await courseModel.findByIdAndUpdate( {_id: course._id}, course ); //Finalmente, actualizamos la informacion en la base de datos. 
     // console.log("Result ", result); console.log("Course ", course);
 
     //Parte 2: Incorporacion de population
-    // const course = await courseModel.findById("6590fdc6e0579d17b1e37a02");
+    // const course = await courseModel.findById("659a64eed08fb8d59ebce94e");
     // console.log(JSON.stringify(course, null, 2)); 
-    const coursePopulate1 = await courseModel.findById("6590fdc6e0579d17b1e37a02").populate("students");
-    console.log(JSON.stringify(coursePopulate1, null, 2));
+    // const coursePopulate1 = await courseModel.findById("659a64eed08fb8d59ebce94e").populate("students");
+    // console.log(JSON.stringify(coursePopulate1, null, 2));
 
     //Parte 3: Utilizando middlewares
-    const coursePopulate2 = await courseModel.find(); //Con este linea recuperamos toda la informacion perteneciente "students", perteneciente a la base de datos (ver el archivo course.model.js).
-    console.log(JSON.stringify(coursePopulate2, null, 2));
+    // const coursePopulate2 = await courseModel.find(); //Con este linea recuperamos toda la informacion perteneciente "students", perteneciente a la base de datos (ver el archivo course.model.js).
+    // console.log(JSON.stringify(coursePopulate2, null, 2));
 };
 
 entorno(); */
@@ -1562,6 +1564,7 @@ const url = "mongodb+srv://xxeltiradorxx:coder1234@clase16.jurxrdo.mongodb.net/C
 async function entorno(){
     await mongoose.connect(url);      
     
+    // Paso 1: Crear los 2 colecciones, uno para "students" y el otro para "courses".
     // await studenModel.create({
     //     first_name: "Hilda",
     //     last_name: "Carina",
@@ -1577,12 +1580,16 @@ async function entorno(){
     //     professor: "German"
     // });
 
-    let [student] = await studenModel.find({_id: "6583fe3291f88c0dd48df5a2"});
-    // let [student] = await studenModel.find({_id: "6583fe3291f88c0dd48df5a2"}).populate("courses.course");
-    // let [student] = await studenModel.find({_id: "6583fe3291f88c0dd48df5a2"}); //Esta linea es en caso de usar middlewares como en student.model.js
-    student.courses.push({course: "6583fe3291f88c0dd48df5a4"});
-    let result = await studenModel.updateOne({_id: "6583fe3291f88c0dd48df5a2"}, student);
-    console.log(JSON.stringify(student, null, "\t"))
+    // Paso 2: Encontrar el estudiante por medio del id, despues se le agrega un curso a "student" SOLO en el arreglo, y finalmente actualizamos la BD con el curso agregado a "student"
+    // let [student] = await studenModel.find({_id: "659a5e5ea881e3ba3dea5a55"});
+    // student.courses.push({course: "659a5e5fa881e3ba3dea5a57"});
+    // let result = await studenModel.updateOne({_id: "659a5e5ea881e3ba3dea5a55"}, student);
+    // console.log(JSON.stringify(student, null, "\t"));
+
+    //Uso del population
+    let [student] = await studenModel.find({_id: "659a5e5ea881e3ba3dea5a55"}).populate("courses.course");
+    // let [student] = await studenModel.find({_id: "659a5e5ea881e3ba3dea5a55"}); //Esta linea es en caso de usar middlewares (ver student.model.js)
+    console.log(JSON.stringify(student, null, "\t"));
 };
 
 entorno(); */
@@ -1836,7 +1843,6 @@ if(process.env.NODE_ENV === "development"){ //process.env.NODE_ENV === "developm
     // console.log("1")
     app.use(morgan("dev"));
 }
-
 app.use(express.json());
 app.use(express.static(`${__dirname}/public`));
 app.use(function(req, res, next){

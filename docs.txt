@@ -29,6 +29,7 @@ https://github.com/aravindnc/mongoose-paginate-v2?tab=readme-ov-file
 - Its kind of interesting how animal like we are
 - my sister still tells my dad how messed up that was of him to do. 
 
+npm i eslint prettier eslint-config-prettier eslint-plugin-prettier eslint-config-airbnb eslint-plugin-node eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react --save-dev
 
 Documentaciones: 
 https://developer.mozilla.org/en-US/docs/Web/API/Event/target 

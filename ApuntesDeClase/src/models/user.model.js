@@ -1,4 +1,4 @@
-//Ejemplo 35: indexacion
+/* //Ejemplo 35: indexacion
 
 //Primera parte
 import { Schema, model } from "mongoose";
@@ -17,7 +17,7 @@ const userSchema = new Schema({
 // userSchema.index({ first_name: "text", email: "text" }); //Text Indexes (text): Se utiliza para poder basarse en búsquedas de palabras “específicas” con el fin de poder tomar referencia de un texto a partir de dichas palabras
 
 const userModel = model("users", userSchema);
-export { userModel };
+export { userModel }; */
 
 
 
