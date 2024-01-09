@@ -11,7 +11,7 @@ const router = Router();
 // });
 
 // router.get("/setcookie", function(req, res){
-//     res.cookie("cooderCookie", "Esta es una cookie sin firma!!", {maxAge: 30000}).send("Cookie asignada con exito")
+//     res.cookie("CooderCookie", "Esta es una cookie sin firma!!", {maxAge: 30000}).send("Cookie asignada con exito")
 // });
 
 // router.get("/getcookie", function(req, res){
@@ -54,7 +54,9 @@ router.get("/session", function(req, res){
 
 router.get("/logout", function(req, res){
     req.session.destroy(function(error){
-        if(error) res.json({error: "Error logout", msg: "Error al cerrar la sesion"})
+        if(error){
+            res.json({error: "Error logout", msg: "Error al cerrar la sesion"});
+        }
         res.send("Sesion cerrada correctamente");
     })
 });
@@ -82,6 +84,5 @@ function auth(req, res, next){
         return res.status(403).send("Usuario no esta autorizado!");
     }
 }
-
 
 export default router;

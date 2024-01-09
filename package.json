@@ -4,6 +4,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@socket.io/admin-ui": "^0.5.1",
     "bootstrap": "^5.3.1",
+    "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "core-js": "^3.32.1",
     "dotenv": "^16.3.1",
@@ -23,6 +24,7 @@
     "parcel": "^2.9.3",
     "redux": "^4.2.1",
     "regenerator-runtime": "^0.14.0",
+    "session-file-store": "^1.5.0",
     "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2"
   },
@@ -34,7 +36,7 @@
     "@parcel/transformer-sass": "^2.9.3"
   },
   "scripts": {
-    "start:dev": "SET NODE_ENV=development&&nodemon ApuntesDeClase/src/server.js",
+    "start": "SET NODE_ENV=development&& nodemon ApuntesDeClase/src/backend.js",
     "start:prod": "SET NODE_ENV=production&&nodemon ApuntesDeClase/src/server.js"
   },
   "repository": {

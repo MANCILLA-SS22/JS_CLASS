@@ -1787,14 +1787,13 @@ app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
 
 /* //Ejemplo 40: Cookies, Session & Storage
 import express from "express";
-import {__dirname} from "./utils.js"
 import handlebars from "express-handlebars";
 import Handlebars from "handlebars";
-import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
-import viewRouter from "./router/cookies.routes.js";
 import session from "express-session"
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 
 const app = express();
+// const filestore = Filestore(session);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -1808,17 +1807,62 @@ app.set("views", `${__dirname}/view`);
 app.set("view engine", "hbs");
 app.use(express.static(`${__dirname}/public`));
 app.use(session ({
+    // store: new filestore({path: "./sessions", ttl: 15, retries: 0}),
     secret: "coder1234",
-    resave: true,
-    saveUninitialized: true
+    resave: false, //Lo guarda en memoria. Esto permite mantener la sesion activa en caso de que la sesion se mantenga inactiva. Si se deja en false, la sesion morira en caso de que exista cierto tiempo de inactividad.
+    saveUninitialized: true // Lo guarda apenas se crea la sesion. Permite guardar cualquier sesion aun cuando el objeto de sesion no tenga nada por contener. Si se deja en false, la sesion no se guardara si el objeto de sesion esta vacio al final de la consulta.
 }));
 app.use("/", viewRouter);
+
 app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
 
+/* //Ejemplo 42: Inyectar cookies en frontend: Crear una única vista de frontend en nuestro servidor express, la cual contará con dos campos input y dos botones 
+// ✓ El primer campo input deberá ser el nombre del cliente. 
+// ✓ El segundo campo input deberá contener el correo electrónico 
+// ✓ El botón getCookie debe enviar una petición de tipo GET para recibir la cookie, solo mostrar por consola la cookie. 
+// ✓ El botón submit, deberá enviar una petición POST, la cual deberá crear una cookie con el formato {user:correoDelInput} 
+// ✓ La cookie debe tener un tiempo de vida de 10 segundos. Corroborar que la cookie se borre después del tiempo indicado. */
 
+/* //Ejemplo 43: Sesiones de usuario en el server: Realizar un programa de backend que establezca sesiones de usuarios en el servidor.
+// ● Cuando un cliente visita el sitio por primera vez en la ruta 'root', se presentará el mensaje de “Te damos la bienvenida”.
+// ● Con los siguientes request de ese mismo usuario, deberá aparecer el número de visitas efectuadas. El cliente podrá ingresar por query params el nombre, en cuyo caso se añadirá a los mensajes devuelto.
+// ● Por ejemplo: “Bienvenido Juan” o “Juan visitaste la página 3 veces”. Ese nombre, solo se almacenará la primera vez que el cliente visite el sitio. */
 
+/* //Ejemplo 44: Cookies, Session & Storage II
+import express from "express";
+import handlebars from "express-handlebars";
+import Handlebars from "handlebars";
+import session from "express-session"
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
+// import Filestore from "session-file-store"
+// import mongoose from "mongoose"
+// import MongoStore from "connect-mongo";
+import {__dirname} from "./utils.js"
+import viewRouter from "./router/cookies.routes.js";
 
+const app = express();
+// const filestore = Filestore(session);
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.engine("hbs", handlebars.engine({ // Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
+        extname: "hbs", //index.hbs
+        defaultLayout: "main", //Plantilla principal
+        handlebars: allowInsecurePrototypeAccess(Handlebars)
+    })
+);
+app.set("views", `${__dirname}/view`);
+app.set("view engine", "hbs");
+app.use(express.static(`${__dirname}/public`));
+app.use(session ({
+    // store: new filestore({path: "./sessions", ttl: 15, retries: 0}),
+    secret: "coder1234",
+    resave: false, //Lo guarda en memoria. Esto permite mantener la sesion activa en caso de que la sesion se mantenga inactiva. Si se deja en false, la sesion morira en caso de que exista cierto tiempo de inactividad.
+    saveUninitialized: true // Lo guarda apenas se crea la sesion. Permite guardar cualquier sesion aun cuando el objeto de sesion no tenga nada por contener. Si se deja en false, la sesion no se guardara si el objeto de sesion esta vacio al final de la consulta.
+}));
+app.use("/", viewRouter);
+
+app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
 
 
 
@@ -1827,37 +1871,38 @@ app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
 
 //         $$$$$$$$$$$$$$$ Backend (udemy) $$$$$$$$$$$$$$$
 
-import express from "express";
-import morgan from "morgan";
-import tourRouter from "./router/tourUdemy.routes.js";
-import userRouter from "./router/userUdemy.routes.js";
-import {__dirname} from "./utils.js";
+// import express from "express";
+// import morgan from "morgan";
+// import tourRouter from "./router/tourUdemy.routes.js";
+// import userRouter from "./router/userUdemy.routes.js";
+// import {__dirname} from "./utils.js";
 
-const app = express();
+// const app = express();
 
-//Now you might be wondering why we actually have access to this environment variable here when we didn't really define them in this file but in server.js. And the answer to that is that the reading of the 
-//variables from the file which happens here to the node process only needs to happen once. It's then in the process and the process is of course the same no matter in what file we are. So we're always in 
-//the same process and the environment variables are on the process. And so the process that is running, so where our application is running is always the same and so this is available to us in every single 
-//file in the project.
-if(process.env.NODE_ENV === "development"){ //process.env.NODE_ENV === "development" or app.get('env') are the same. //In express, app.get('env') returns 'development' if NODE_ENV is not defined in "config.env". So you don't need the line to test its existence and set default.
-    // console.log("1")
-    app.use(morgan("dev"));
-}
-app.use(express.json());
-app.use(express.static(`${__dirname}/public`));
-app.use(function(req, res, next){
-    console.log("Hello world!");
-    next();
-});
-app.use(function(req, res, next){
-    req.requstTime = new Date().toISOString(); //We can define any property on the "req" object.
-    next();
-});
-app.use("/api/v1/tours", tourRouter);
-app.use("/api/v1/users", userRouter);
+// //Now you might be wondering why we actually have access to this environment variable here when we didn't really define them in this file but in server.js. And the answer to that is that the reading of the 
+// //variables from the file which happens here to the node process only needs to happen once. It's then in the process and the process is of course the same no matter in what file we are. So we're always in 
+// //the same process and the environment variables are on the process. And so the process that is running, so where our application is running is always the same and so this is available to us in every single 
+// //file in the project.
+// if(process.env.NODE_ENV === "development"){ //process.env.NODE_ENV === "development" or app.get('env') are the same. //In express, app.get('env') returns 'development' if NODE_ENV is not defined in "config.env". So you don't need the line to test its existence and set default.
+//     // console.log("1")
+//     app.use(morgan("dev"));
+// }
+
+// app.use(express.json());
+// app.use(express.static(`${__dirname}/public`));
+// app.use(function(req, res, next){
+//     console.log("Hello world!");
+//     next();
+// });
+// app.use(function(req, res, next){
+//     req.requstTime = new Date().toISOString(); //We can define any property on the "req" object.
+//     next();
+// });
+// app.use("/api/v1/tours", tourRouter);
+// app.use("/api/v1/users", userRouter);
 
 
-export default app;
+// export default app;
 
 
 

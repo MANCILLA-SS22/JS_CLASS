@@ -80,6 +80,8 @@ https://www.mongodb.com/docs/manual/tutorial/getting-started/
 https://cloud.mongodb.com/v2/655f1475ba7fe502fcda39da#/clusters
 https://mongoosejs.com/docs/api/model.html#Model.updateOne()
 https://github.com/aravindnc/mongoose-paginate-v2?tab=readme-ov-file
+https://github.com/jdesboeufs/connect-mongo
+https://expressjs.com/en/resources/middleware/cookie-parser.html   https://expressjs.com/en/resources/middleware/cookie-session.html
 https://docs.nestjs.com 
 https://docs.flutter.dev       https://dart.dev/guides 
 https://axios-http.com/docs/intro 

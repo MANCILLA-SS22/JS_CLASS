@@ -1638,6 +1638,92 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
       marcos de trabajo distintos, aunque existen algunos ideales para los full stack developers como ReactJS.
     > Marco de gestión de contenido: De nuevo, un tipo de frameworks relacionados con el diseño web. Aun así, en este caso se trata de interfaces diseñadas para personalizar un CMS. En consecuencia, existen una gran cantidad de CMFs, ideales 
       para diferentes lenguajes e incluso para diferentes tareas dentro de un lenguajes. 
+      
+- Cookies (definicion): Cookies (often known as internet cookies) are text files with small pieces of data — like a username and password — that are used to identify your computer as you use a network. Specific cookies are used to identify 
+  specific users and improve their web browsing experience. Data stored in a cookie is created by the server upon your connection. This data is labeled with an ID unique to you and your computer. When the cookie is exchanged between your
+  computer and the network server, the server reads the ID and knows what information to specifically serve you.
+  Due to international laws, such as the EU’s General Data Protection Regulation (GDPR), and certain state laws, like the California Consumer Privacy Act (CCPA), many websites are now required to ask for permission to use certain cookies
+  with your browser and provide you with information on how their cookies will be used if you accept.
+  
+  Type of cookies: 
+  1. Magic cookies Magic cookies were originally used by Unix programmers to authenticate and track users in a system. Magic cookies are data tokens that allow servers and web browsers to communicate.
+     HTTP cookies are a type of magic cookie used by websites to store information. The data stored in magic cookies are encrypted and, under normal circumstances, only the server that created the cookie can read the data.
+  2. HTTP Cookies:  HTTP cookies, or internet cookies, are built specifically for web browsers to track, personalize and save information about each user’s session. A “session” is the word used to define the amount of time you spend on a 
+     site. Cookies are created to identify you when you visit a new website. The web server — which stores the website’s data — sends a short stream of identifying information to your web browser in the form of cookies. This identifying 
+     data (known sometimes as “browser cookies”) is processed and read by “name-value” pairs. These pairs tell the cookies where to be sent and what data to recall. So, where are the cookies are stored? It’s simple: your web browser will 
+     store them locally to remember the “name-value pair” that identifies you. When you return to the website in the future, your web browser returns that cookie data to the website’s server, triggering the recall of your data from your 
+     previous sessions. To put it simply, cookies are a bit like getting a ticket for a coat check:
+     ~ You hand over your “coat” to the cloak desk. You connect/visit a website and a pocket of data is linked to you on the website’s server. This data can be your personal account, your shopping cart or even just what pages you’ve visited.
+     ~ You get a “ticket” to identify you as the “coat” owner. The cookie (containing the data) is then given to you and stored in your web browser. It has a unique ID especially for you.
+     ~ If you leave and return, you can get the “coat” with your “ticket”. When you revisit the website, your browser gives the website the cookie back. The website then reads the unique ID in the cookie to assemble your activity data,
+       bringing you back to where you were when you first visited, as if you never left.
+  3. First-party cookies: First-party cookies are from websites you directly visit in your browser and are used to improve your online user experience. They often store information relevant to the website such as what you’ve viewed in the 
+    past or your settings preferences. As long as you are visiting authentic and reputable websites, first-party cookies are usually harmless and make it easier to browse your favorite websites.
+  4. Third-party cookies: Third-party cookies are probably the most controversial type of cookie in terms of data privacy. They usually track your behavior for advertising purposes and aren't a direct part of the websites you visit. Instead, 
+     they’re usually embedded in ads, videos, or web banners. Even a Facebook "like" button uses third-party cookies.
+  5. Zombie cookies: Also known as supercookies, zombie cookies are a type of third-party cookie. However, they aren't stored in the same place as regular cookies. So even if a person deletes cookies, zombie cookies will rise from the dead 
+     and reinstall themselves. They have gained a reputation for being notoriously difficult to remove.
+  6. Session cookies:Session cookies work by storing information while you're browsing a website. This means it won't have to reauthenticate you for every web page you visit. Once you exit, your browser deletes all session cookies.
+     Session cookies enable you to add an item to your shopping cart, browse multiple other pages, and then still keep track of your item in your cart. These are one of the most common types of cookies. 
+  7. Persistent cookiesL: Persistent cookies are used to track and collect information about you. This particular cookie enables websites to remember if you're logged in and under what account. It's also used to build a profile on your 
+     search history, so websites can recommend products, services, or content relevant to you. Most of these cookies usually have an expiration date. Persistent cookies are also a common type of cookie.
+  8. Essential cookies: You're probably familiar with the banner or pop-up asking you for your cookie preferences for a website. Essential cookies are frequently an option to run only cookies necessary to run the website or for services you 
+     have requested (such as remembering your login credentials). This means you remove third-party cookies from your website experience.
+  9. Performance cookies: As the name suggests, performance cookies track your online movements and that data is used to improve the website. They measure analytics like how many times you visited a page, how much time you spent on a page, 
+     or when you left the website. This is often a first-party cookie, but many websites use a third party to track these analytics.
+  10. Functionality cookies: Functionality cookies allow you to use the fundamental features of a website. This could be anything from your language preference to displaying local news stories. They typically enhance a website's performance 
+      and functionality. Some site features may not be available without functional cookies.    
+  11. Advertising cookies: Third-party persistent cookies are often used for advertising purposes. Advertising cookies (also called targeting cookies) build a profile on you based on your interests, search history, and items you view. They 
+      then share that information with other websites, so they can advertise relevant products and services to you.
+    For example, maybe you searched for gym shoes recently. Don't be too surprised later when you see an ad on social media for gym shoes or relevant items such as socks.
+
+      
+   > What Are Cookies Used For: Websites use HTTP cookies to streamline your web experiences. Without cookies, you’d have to login every time you leave a site or rebuild your shopping cart if you accidentally closed the page. Making cookies 
+     is an important part of the modern internet experience. To be more concise, cookies are intended to be used for:
+      1. Session management: For example, cookies let websites recognize users and recall their individual login information and preferences, such as sports news versus politics.
+      2. Personalization: Customized advertising is the main way cookies are used to personalize your sessions. You may view certain items or parts of a site, and cookies use this data to help build targeted ads that you might enjoy. They’re 
+         also used for language preferences as well.
+      3. Tracking: Shopping sites use cookies to track items users previously viewed, allowing the sites to suggest other goods they might like and keep items in shopping carts while they continue shopping on another part of the website. \
+         They will also track and monitor performance analytics, like how many times you visited a page or how much time you spent on a page.
+         
+      While this is mostly for your benefit, web developers get a lot out of this set-up as well. Cookies are stored on your device locally to free up storage space on a website’s servers. In turn, websites can personalize content, whilst 
+      saving money on server maintenance and storage costs.
+      
+   > What are the different types of HTTP Cookies: With a few variations (which we’ll discuss later), cookies in the cyber world essentially come in two types: session cookies and persistent cookies.
+     Session cookies are used only while navigating a website. They are stored in random access memory and are never written on to the hard drive. When the session ends, session cookies are automatically deleted. They also help the "back"
+     button work on your browser.
+     Persistent cookies, on the other hand, remain on a computer indefinitely, although many include an expiration date and are automatically removed when that date is reached. Persistent cookies are used for two primary purposes:
+      ~ Authentication. These cookies track whether a user is logged in and under what name. They also streamline login information, so users don't have to remember site passwords.
+      ~ Tracking. These cookies track multiple visits to the same site over time. Some online merchants, for example, use cookies to track visits from particular users, including the pages and products viewed. The information they gain 
+        allows them to suggest other items that might interest visitors. Gradually, a profile is built based on a user's browsing history on that site.   
+
+
+
+
+- Cookies: Cuando desarrollamos un sitio web, tenemos que contemplar que la forma de interactuar de un cliente suele ser diferente, entonces es importante tener algún recurso para saber información sobre ciertos detalles de información y 
+  comportamiento de un cliente, para que el servidor pueda usar eso a su favor. Para seguir un rastro de los clientes de nuestro sitio web y poder obtener un poco más de información de contacto y/o de comportamiento sobre los clientes que 
+  nos visitan, se utilizan las cookies.
+  Una cookie es un pequeñísimo archivo de texto donde podremos almacenar información dentro del navegador, de manera que pueda viajar entre las peticiones y sirva como un ligero contenedor de información necesaria para poder procesar ciertas 
+  peticiones. Las cookies viven en el navegador, por lo que son fácilmente accesibles por múltiples elementos externos. Por ningún motivo guardamos información sensible en una cookie. Nunca guardamos información de métodos de pago, 
+  contraseñas, ni cualquier dato que pudiera comprometer la seguridad del cliente. Algunos de los datos que se suelen guardar en una cookie son:
+    ✓ Nombres de usuario
+    ✓ IDs de sesiones (que abarcaremos más adelante)
+    ✓ Preferencias de navegación para tu página. 
+  
+  > Rastros que suele dejar un usuario al navegar en la web:
+    ~ El cliente hace login --> La cookie almacena el id de la sesión
+    ~ El cliente pone el fondo de la página en modo “obscuro” --> La cookie almacena: ✓ Id de sesión ✓ preferencias de configuración en página 
+    ~ El cliente busca --> productos específicos --> La cookie almacena: ✓ Id de sesión ✓ preferencias de configuración en página ✓ Búsquedas recientes
+    
+  > Caracteristicas: 
+     ✓ A las cookies se les puede configurar un tiempo de vida. Una vez finalizado el mismo, la cookie se elimina del navegador.
+     ✓ Al almacenarse del lado del cliente, el espacio con el que se cuenta es limitado, por lo que se recomienda elegir de forma adecuada lo que se vaya a guardar como cookie.
+     ✓ Podemos asignarles claves secretas para poder aumentar la seguridad
+     ✓ Viven en el navegador, así que no guardamos datos sensibles
+  
+  > Firmar una cookie: Como las cookies son almacenadas en el navegador, pueden llegar a ser alteradas mucho más fácilmente que si ésta viviera en el servidor. Se necesita agregar un factor de seguridad para que la cookie se “invalide” en 
+    caso de que haya sido modificada. No podemos evitar que alguien externo altere la cookie, pero sí podemos indicar que, en caso de que la cookie ya no sea exactamente idéntica a la generada, entonces la pase como cookie inválida.
+    
   
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
@@ -1743,7 +1829,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   > Path absoluto: El path que se proporciona a la función express.static es relativo al directorio desde donde inicia el proceso node. Por eso si ejecutamos la aplicación Express desde cualquier otro directorio, es más seguro utilizar el 
     path absoluto del directorio al que desea dar servicio:   app.use('/static', express.static(__dirname + '/public'))
     
-- middleware: Funciones que se colocan en medio de la ruta y el callback (req, res) que se ejecutarán antes de comenzar a procesar la petición.
+- middleware: Operación intermedia que ocurre entre la petición a la base de datos y la entrega del documento o los documentos correspondientes. 
+  Funciones que se colocan en medio de la ruta y el callback (req, res) que se ejecutarán antes de comenzar a procesar la petición.
   Cada vez que utilizamos un app.use estamos utilizando un middleware. Éstas son operaciones que se ejecutan de manera intermedia entre la petición del cliente, y el servicio de nuestro servidor.
   Como lo indica el nombre: “middleware” hace referencia a un intermediario, siempre se ejecuta antes de llegar al endpoint que corresponde. los middlewares se ejecutan EN ORDEN, eso quiere decir que, si algún middleware depende de que se 
   haya realizado otra operación ejecutada por un middleware previo, los coloquemos en cascada según prioridad. Podemos utilizar un middleware para:
@@ -1760,9 +1847,12 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   ✓ Middleware de manejo de errores
   ✓ Middleware incorporado
   ✓ Middleware de terceros
+  
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
+                                                       
+                                                                                                                   Multer  
 
-- Middleware de carga de archivos: 
-  MULTER Middleware desarrollado para poder realizar carga de archivos dentro de las peticiones, con el fin de que el cliente pueda manejar archivos como imágenes, vídeos o documentos; dentro de una petición.
+- Middleware de carga de archivos: MULTER Middleware desarrollado para poder realizar carga de archivos dentro de las peticiones, con el fin de que el cliente pueda manejar archivos como imágenes, vídeos o documentos; dentro de una petición.
   En ocasiones el cliente necesitará subir una imagen, un vídeo o un archivo, según sea nuestra aplicación, ello nos lleva a configurar nuestro servidor para soportar estos archivos y poder almacenarlos en donde nosotros le indiquemos. Al
   ser de terceros, necesitaremos instalarlo para poder utilizarlo. 
     1) MULTER es una dependencia de terceros, de manera que, al igual que express, necesitaremos instalarlo dentro de nuestro package.json
@@ -1779,10 +1869,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
    no como JSON.
    
    
-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
-                                                       
-                                                                                                                   Multer
-
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
                                                                                                                    Redux
@@ -1855,6 +1941,11 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
                                                                                                                    MONGODB
+                                                                                                                   
+- Usar mongodb en la terminal: 
+  1) correr .\mongod.exe  en powershell
+  2) Abrir otra ventana de powershell y copiar el siguiente link --> cd 'C:\Program Files\MongoDB\Server\7.0\bin'
+  3) Despues ejecutar --> .\mongos.exe                                                                                                            
 
 - Base de datos: Una base de datos no es más que una recopilación organizada de datos. Dichos datos deben compartir algún contexto y son almacenados con poder convertirse posteriormente en información útil para utilizarse dentro de algún
   sistema. La base de datos sólo se encargará de almacenar dichos datos.
@@ -1956,7 +2047,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
    es repetido.
 ✓ db.collection.deleteMany({key:val}) : Elimina todos los documentos que cumplan con el criterio, se usa cuando sabemos que más de un valor va a contar con ese valor y necesitamos hacer una limpieza general.  
 
-- Mongoose (indexing): Es un recurso utilizado en MongoDB para poder hacer consultas mucho más rápidas. Éste nos permitirá tener una referencia previa al momento de buscar un documento, con el fin de evitar recorrer toda la colección, 
+- Mongoose (indexing): Técnica utilizada para colocarse en una propiedad de un documento, permite realizar búsquedas más rápidas cuando se involucra a dicha propiedad
+  Es un recurso utilizado en MongoDB para poder hacer consultas mucho más rápidas. Éste nos permitirá tener una referencia previa al momento de buscar un documento, con el fin de evitar recorrer toda la colección, 
   documento por documento, hasta encontrar dicho valor. El índice se asocia a un atributo del documento y permite que las búsquedas se hagan desde puntos específicos, evitando el recorrido completo de la colección.
   
   > Tipos de indices: Prever un buen plan de indexación evitará problemas de lentitud en las consultas y se considera una práctica necesaria a nivel enterprise, al momento de configurar los schemas de nuestros distintos modelos.
@@ -1965,40 +2057,94 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      ✓ text: Se utiliza para poder basarse en búsquedas de palabras “específicas” con el fin de poder tomar referencia de un texto a partir de dichas palabras.
      ✓ geospatial: Se utiliza para almacenar data geoespacial de dos coordenadas, utiliza una esfera 2d para poder trabajar los datos. 
 
-  > population: Una population implica obtener un documento referenciado dentro de otro documento, con el fin de obtener ambos en una sola búsqueda. Consiste en almacenar el id de un documento, como propiedad de otro documento. A esto se le     
-    conoce como “referencia”. Populate hace referencia a “poblar” de un id a un documento completo. (referencia a la población humana)
+  > population: Operación que permite transformar la referencia de un documento en su documento correspondiente en la colección indicada.
+    Una population implica obtener un documento referenciado dentro de otro documento, con el fin de obtener ambos en una sola búsqueda. Consiste en almacenar el id de un documento, como propiedad de otro documento. A esto se le     
+    conoce como “referencia”. Populate hace referencia a “poblar” de un id a un documento completo. (referencia a la población humana).
+    Algunas cosas a considerar antes de comenzar con su uso:
+      ✓ populate es un método propio de mongoose, por lo que tenemos que instalarlo.
+      ✓ Hay que tener siempre claro el nombre de la propiedad dentro del objeto, así también como la referencia de la colección, para poder hacer un populate efectivo.
+      ✓ Recuerda no guardar directamente el valor a referenciar en el _id, sino asignarle otro nombre (se profundizará en el ejemplo)
 
-- Mongoose (aggregation)         https://stackoverflow.com/questions/24714166/full-text-search-with-weight-in-mongoose
-    1. $match --> Filters the document stream to allow only matching documents to pass unmodified into the next pipeline stage. $match uses standard MongoDB queries. For each input document, outputs either one document (a match) or zero 
-       documents (no match).
-    2. $group --> Groups input documents by a specified identifier expression and applies the accumulator expression(s), if specified, to each group. Consumes all input documents and outputs one document per each distinct group. The output 
+  > Configurando una population por default: Para poder “poblar” el resultado de la operación find() del estudiante y obtener los cursos, fue necesario llamar a “populate” después de la operación. Sin embargo, tener que colocar el populate 
+    puede resultar molesto si utilizamos constantemente el modelo de estudiante. Mongoose tiene la posibilidad de definir “middlewares” para sus documentos y modelos con el fin de automatizar operaciones que consideremos recurrentes. 
+
+    En esta ocasión utilizaremos un middleware conocido como “pre”. ¿Qué hacer antes de devolver la data?
+    Middleware utilizado para realizar una operación “antes” de devolver el resultado de la operación principal. Se ejecutará antes de finalizar el procesado y entrega de la operación. Éste es compatible con la operación find que 
+    acostumbramos utilizar, y se entenderá como: ¿Qué deseo que se haga con este documento antes de devolver el resultado de la búsqueda? En nuestro caso particular, lo que buscamos es realizar una population antes de recibir el documento. 
+    
+
+- Mongoose (aggregation): Consiste en la realización de múltiples operaciones, eneralmente sobre múltiples documentos. ueden utilizarse para:              https://stackoverflow.com/questions/24714166/full-text-search-with-weight-in-mongoose
+    ✓ Agrupar documentos con base en un criterio específico.
+    ✓ Realizar alguna operación sobre dichos documentos, con el fin de obtener un solo resultado.
+    ✓ Analizar cambios de información con el paso del tiempo.
+
+  > Funcionamiento: Los aggregation pipelines consistirán en un conjunto de pasos (stages), donde cada paso corresponderá a una operación a realizar. Podemos definir tantas stages como necesitemos con el fin de llegar a los resultados 
+    esperados. Los documentos resultantes de la stage que finalice, se utilizan como “input” de la siguiente stage, y así sucesivamente hasta llegar al final. 
+    Un ejemplo de un pipeline de aggregation puede ser: 
+    1. Primero filtra los documentos que tengan un valor x mayor a 20 2. Luego ordénalos de mayor a menor 3. Luego en un nuevo campo devuelve el valor máximo 4. Luego en un nuevo campo devuelve el valor mínimo 5. Luego en un nuevo campo 
+       devuelve la suma total de todos los documentos
+
+  > Principales stages disponibles en un aggregation pipeline
+    ✓ $count : Cuenta el número de documentos disponibles que se encuentren en la stage actual.
+    ✓ $group: Permite agrupar los documentos disponibles en nuevos grupos según un criterio especificado. cada grupo cuenta con un _id nuevo, además de los valores acumulados \
+    ✓ $limit: Limita el número de documentos que saldrán de dicha stage.
+    ✓ $lookup: Permite realizar un “left join” (combinación de campos), de una colección de la misma base de datos a los documentos de la stage actual.
+    ✓ $set / $addFields : Agregan una nueva propiedad a los documentos que se encuentren en dicha stage.
+    ✓ $skip: Devuelve sólo los documentos que se encuentren después del offset indicado.
+    ✓ $sort: Ordena los documentos en la stage actual.
+    ✓ $match -->  Devuelve sólo los documentos que cumplan con un criterio de búsqueda, podemos colocar filtros comunes aquí. Filters the document stream to allow only matching documents to pass unmodified into the next pipeline stage. 
+      It uses standard MongoDB queries. For each input document, outputs either one document (a match) or zero documents (no match).
+    ✓ $group --> Groups input documents by a specified identifier expression and applies the accumulator expression(s), if specified, to each group. Consumes all input documents and outputs one document per each distinct group. The output 
        documents only contain the identifier field and, if specified, accumulated fields.
-    3. $sum --> Returns a sum of numerical values. Ignores non-numeric values.
-    4. $first --> Returns the result of an expression for the first document in a group of documents. Only meaningful when documents are in a defined order.
-    6. $sort ---> Reorders the document stream by a specified sort key. Only the order changes; the documents remain unmodified. For each input document, outputs one document.
-    7. $push --> returns an array of all values that result from applying an expression to documents.
-    8. $$ROOT --> significa los resultados del stage anterior
-    10.$project --> Reshapes each document in the stream, such as by adding new fields or removing existing fields. For each input document, outputs one document. Takes a document that can specify the inclusion of fields, the suppression of 
+    ✓ $sum --> Returns a sum of numerical values. Ignores non-numeric values.
+    ✓ $first --> Returns the result of an expression for the first document in a group of documents. Only meaningful when documents are in a defined order.
+    ✓ $sort ---> Reorders the document stream by a specified sort key. Only the order changes; the documents remain unmodified. For each input document, outputs one document.
+    ✓ $push --> returns an array of all values that result from applying an expression to documents.
+    ✓ $$ROOT --> significa los resultados del stage anterior
+    ✓ $project --> Reshapes each document in the stream, such as by adding new fields or removing existing fields. For each input document, outputs one document. Takes a document that can specify the inclusion of fields, the suppression of 
        the _id field, the addition of new fields, and the resetting of the values of existing fields. Alternatively, you may specify the exclusion of fields.
-    9. $merge --> Writes the resulting documents of the aggregation pipeline to a collection. The stage can incorporate (insert new documents, merge documents, replace documents, keep existing documents, fail the operation, process documents 
-       with a custom update pipeline) the results into an output collection. IT MUST BE USED BY USING A $project BEFORE.    
+    ✓ $merge --> Escribe los resultados del pipeline en una colección. Debe ser la última stage del pipeline para poder funcionar.
+       Writes the resulting documents of the aggregation pipeline to a collection. The stage can incorporate (insert new documents, merge documents, replace documents, keep existing documents, fail the operation, process documents with a 
+       custom update pipeline) the results into an output collection. IT MUST BE USED BY USING A $project BEFORE.    
     
     
-- Mongoose (Paginate)       https://stackoverflow.com/questions/5539955/how-to-paginate-with-mongoose-in-node-js
-  ✓ docs: Los documentos devueltos en la página
-  ✓ totalDocs: Los documentos totales de la consulta realizada.
-  ✓ limit: Límite de resultados por página.
-  ✓ page: Página actual en la que nos encontramos
-  ✓ totalPages: Páginas totales que pueden ser solicitadas en la búsqueda.
-  ✓ hasNextPage: Indica si es posible avanzar a una página siguiente.
-  ✓ nextPage: Página siguiente en la búsqueda
-  ✓ hasPrevPage: Indica si es posible retroceder a una página anterior.
-  ✓ prevPage: Página anterior en la búsqueda.
-  ✓ pagingCounter: Número de documento en relación con la página actual
-    
-    
-    
-    
+- Mongoose (Paginate): Pagination is the process of separating print or digital content into discrete pages. For print documents and some online content, pagination also refers to the automated process of adding consecutive numbers to 
+  identify the sequential order of pages.                                  https://stackoverflow.com/questions/5539955/how-to-paginate-with-mongoose-in-node-js
   
+  > mongoose-paginate-v2 is a pagination library having a page wrapper. The main usage of the plugin is you can alter the return value keys directly in the query itself so that you don't need any extra code for transformation.                                    
+
+  > Model.paginate([filter], [options], [callback])
+    ✓ docs: Los documentos devueltos en la página
+    ✓ totalDocs: Los documentos totales de la consulta realizada.
+    ✓ limit: Límite de resultados por página.
+    ✓ page: Página actual en la que nos encontramos
+    ✓ totalPages: Páginas totales que pueden ser solicitadas en la búsqueda.
+    ✓ hasNextPage: Indica si es posible avanzar a una página siguiente.
+    ✓ nextPage: Página siguiente en la búsqueda
+    ✓ hasPrevPage: Indica si es posible retroceder a una página anterior.
+    ✓ prevPage: Página anterior en la búsqueda.
+    ✓ pagingCounter: Número de documento en relación con la página actual      
+    
+    
+    
+- Cookies, Session & Storage:
+        
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
