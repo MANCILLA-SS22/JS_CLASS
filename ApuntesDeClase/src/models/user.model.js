@@ -19,11 +19,8 @@ const userSchema = new Schema({
 const userModel = model("users", userSchema);
 export { userModel }; */
 
-
-
-
-//After 4
-/* import {Schema, model} from "mongoose"
+/* //Ejemplo 34: After 4
+import {Schema, model} from "mongoose"
 
 const userSchema = new Schema({
     first_name: String,
@@ -35,3 +32,21 @@ const userSchema = new Schema({
 const userModel = model("users", userSchema);
 export { userModel };
  */
+
+//Ejemplo 44: Primer login por formulario
+import { Schema, model } from "mongoose";
+
+const userSchema = new Schema({
+    first_name: String,
+    last_name: String,
+    email: {
+        type: String,
+        unique: true
+    },
+    age: Number,
+    password: String
+});
+
+
+const userModel = model("users", userSchema);
+export { userModel };

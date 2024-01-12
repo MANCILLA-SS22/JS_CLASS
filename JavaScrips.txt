@@ -1695,35 +1695,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
      Persistent cookies, on the other hand, remain on a computer indefinitely, although many include an expiration date and are automatically removed when that date is reached. Persistent cookies are used for two primary purposes:
       ~ Authentication. These cookies track whether a user is logged in and under what name. They also streamline login information, so users don't have to remember site passwords.
       ~ Tracking. These cookies track multiple visits to the same site over time. Some online merchants, for example, use cookies to track visits from particular users, including the pages and products viewed. The information they gain 
-        allows them to suggest other items that might interest visitors. Gradually, a profile is built based on a user's browsing history on that site.   
-
-
-
-
-- Cookies: Cuando desarrollamos un sitio web, tenemos que contemplar que la forma de interactuar de un cliente suele ser diferente, entonces es importante tener algún recurso para saber información sobre ciertos detalles de información y 
-  comportamiento de un cliente, para que el servidor pueda usar eso a su favor. Para seguir un rastro de los clientes de nuestro sitio web y poder obtener un poco más de información de contacto y/o de comportamiento sobre los clientes que 
-  nos visitan, se utilizan las cookies.
-  Una cookie es un pequeñísimo archivo de texto donde podremos almacenar información dentro del navegador, de manera que pueda viajar entre las peticiones y sirva como un ligero contenedor de información necesaria para poder procesar ciertas 
-  peticiones. Las cookies viven en el navegador, por lo que son fácilmente accesibles por múltiples elementos externos. Por ningún motivo guardamos información sensible en una cookie. Nunca guardamos información de métodos de pago, 
-  contraseñas, ni cualquier dato que pudiera comprometer la seguridad del cliente. Algunos de los datos que se suelen guardar en una cookie son:
-    ✓ Nombres de usuario
-    ✓ IDs de sesiones (que abarcaremos más adelante)
-    ✓ Preferencias de navegación para tu página. 
-  
-  > Rastros que suele dejar un usuario al navegar en la web:
-    ~ El cliente hace login --> La cookie almacena el id de la sesión
-    ~ El cliente pone el fondo de la página en modo “obscuro” --> La cookie almacena: ✓ Id de sesión ✓ preferencias de configuración en página 
-    ~ El cliente busca --> productos específicos --> La cookie almacena: ✓ Id de sesión ✓ preferencias de configuración en página ✓ Búsquedas recientes
-    
-  > Caracteristicas: 
-     ✓ A las cookies se les puede configurar un tiempo de vida. Una vez finalizado el mismo, la cookie se elimina del navegador.
-     ✓ Al almacenarse del lado del cliente, el espacio con el que se cuenta es limitado, por lo que se recomienda elegir de forma adecuada lo que se vaya a guardar como cookie.
-     ✓ Podemos asignarles claves secretas para poder aumentar la seguridad
-     ✓ Viven en el navegador, así que no guardamos datos sensibles
-  
-  > Firmar una cookie: Como las cookies son almacenadas en el navegador, pueden llegar a ser alteradas mucho más fácilmente que si ésta viviera en el servidor. Se necesita agregar un factor de seguridad para que la cookie se “invalide” en 
-    caso de que haya sido modificada. No podemos evitar que alguien externo altere la cookie, pero sí podemos indicar que, en caso de que la cookie ya no sea exactamente idéntica a la generada, entonces la pase como cookie inválida.
-    
+        allows them to suggest other items that might interest visitors. Gradually, a profile is built based on a user's browsing history on that site.      
   
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
@@ -2127,12 +2099,37 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     
     
     
-- Cookies, Session & Storage:
-        
+- Cookies: Cuando desarrollamos un sitio web, tenemos que contemplar que la forma de interactuar de un cliente suele ser diferente, entonces es importante tener algún recurso para saber información sobre ciertos detalles de información y 
+  comportamiento de un cliente, para que el servidor pueda usar eso a su favor. Para seguir un rastro de los clientes de nuestro sitio web y poder obtener un poco más de información de contacto y/o de comportamiento sobre los clientes que 
+  nos visitan, se utilizan las cookies.
+  Una cookie es un pequeñísimo archivo de texto donde podremos almacenar información dentro del navegador, de manera que pueda viajar entre las peticiones y sirva como un ligero contenedor de información necesaria para poder procesar ciertas 
+  peticiones. Las cookies viven en el navegador, por lo que son fácilmente accesibles por múltiples elementos externos. Por ningún motivo guardamos información sensible en una cookie. Nunca guardamos información de métodos de pago, 
+  contraseñas, ni cualquier dato que pudiera comprometer la seguridad del cliente. Algunos de los datos que se suelen guardar en una cookie son:
+    ✓ Nombres de usuario
+    ✓ IDs de sesiones (que abarcaremos más adelante)
+    ✓ Preferencias de navegación para tu página. 
   
+  > Rastros que suele dejar un usuario al navegar en la web:
+    ~ El cliente hace login --> La cookie almacena el id de la sesión
+    ~ El cliente pone el fondo de la página en modo “obscuro” --> La cookie almacena: ✓ Id de sesión ✓ preferencias de configuración en página 
+    ~ El cliente busca --> productos específicos --> La cookie almacena: ✓ Id de sesión ✓ preferencias de configuración en página ✓ Búsquedas recientes
     
+  > Caracteristicas: 
+     ✓ A las cookies se les puede configurar un tiempo de vida. Una vez finalizado el mismo, la cookie se elimina del navegador.
+     ✓ Al almacenarse del lado del cliente, el espacio con el que se cuenta es limitado, por lo que se recomienda elegir de forma adecuada lo que se vaya a guardar como cookie.
+     ✓ Podemos asignarles claves secretas para poder aumentar la seguridad
+     ✓ Viven en el navegador, así que no guardamos datos sensibles
+  
+  > Firmar una cookie: Como las cookies son almacenadas en el navegador, pueden llegar a ser alteradas mucho más fácilmente que si ésta viviera en el servidor. Se necesita agregar un factor de seguridad para que la cookie se “invalide” en 
+    caso de que haya sido modificada. No podemos evitar que alguien externo altere la cookie, pero sí podemos indicar que, en caso de que la cookie ya no sea exactamente idéntica a la generada, entonces la pase como cookie inválida.
+
+  > Session: Una sesión es un vínculo que se genera cuando el cliente conecta con un servidor, este vínculo se representa por una sessionId, la cual se guarda en el navegador como identificador de la sesión. 
+  > Storage: Lugar donde se almacenan las sesiones del lado del servidor. Es donde se consultan y comparan las sessionId.
+  > MemoryStorage : Almacenamiento por defecto de sesiones por express-session. Si el servidor cae, las sesiones caen.
+  > FileStorage: Almacenamiento alternativo que permite guardar las sesiones en archivos en una carpeta indicada. Cuando el servidor cae, aún puede consultar las sesiones de los archivos después.
+  > MongoStorage: Almacenamiento alternativo de sesión que permite guardar las sesiones en una base de datos. Es más accesible ya que tiene un sistema de autogestión que permite limpiar las sesiones expiradas.    
     
-    
+- Autenticación:     
     
     
     

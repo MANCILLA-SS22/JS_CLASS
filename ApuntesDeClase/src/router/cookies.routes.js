@@ -3,25 +3,6 @@ import coockieParser from "cookie-parser";
 
 const router = Router();
 
-//Sin firma
-// router.use(coockieParser());
-
-// router.get("/", function(req, res){
-//     res.render("cookiesIndex", {})
-// });
-
-// router.get("/setcookie", function(req, res){
-//     res.cookie("CooderCookie", "Esta es una cookie sin firma!!", {maxAge: 30000}).send("Cookie asignada con exito")
-// });
-
-// router.get("/getcookie", function(req, res){
-//     res.send(req.cookies);
-// });
-
-// router.get("/deletecookie", function(req, res){
-//     res.clearCookie("cooderCookie").send("Cookie borrada!!");
-// });
-
 //Con firma
 router.use(coockieParser("coder1234"));
 
@@ -86,3 +67,25 @@ function auth(req, res, next){
 }
 
 export default router;
+
+
+
+
+/* //Sin firma
+router.use(coockieParser());
+
+router.get("/", function(req, res){
+    res.render("cookiesIndex", {})
+});
+
+router.get("/setcookie", function(req, res){
+    res.cookie("CooderCookie", "Esta es una cookie sin firma!!", {maxAge: 30000}).send("Cookie asignada con exito")
+});
+
+router.get("/getcookie", function(req, res){
+    res.send(req.cookies);
+});
+
+router.get("/deletecookie", function(req, res){
+    res.clearCookie("cooderCookie").send("Cookie borrada!!");
+}); */

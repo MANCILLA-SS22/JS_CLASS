@@ -1786,59 +1786,29 @@ app.use("/", viewRouter);
 app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
 
 /* //Ejemplo 40: Cookies, Session & Storage
-import express from "express";
-import handlebars from "express-handlebars";
-import Handlebars from "handlebars";
-import session from "express-session"
-import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
+// Utilización de cookies: set, get, clear y firmar una cookie. (Con cookieParser)
+// ✓ Setear una cookie
+// ✓ Obtener una cookie
+// ✓ Eliminar una cookie
+// ✓ Firma de una cookie
 
-const app = express();
-// const filestore = Filestore(session);
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.engine("hbs", handlebars.engine({ // Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
-        extname: "hbs", //index.hbs
-        defaultLayout: "main", //Plantilla principal
-        handlebars: allowInsecurePrototypeAccess(Handlebars)
-    })
-);
-app.set("views", `${__dirname}/view`);
-app.set("view engine", "hbs");
-app.use(express.static(`${__dirname}/public`));
-app.use(session ({
-    // store: new filestore({path: "./sessions", ttl: 15, retries: 0}),
-    secret: "coder1234",
-    resave: false, //Lo guarda en memoria. Esto permite mantener la sesion activa en caso de que la sesion se mantenga inactiva. Si se deja en false, la sesion morira en caso de que exista cierto tiempo de inactividad.
-    saveUninitialized: true // Lo guarda apenas se crea la sesion. Permite guardar cualquier sesion aun cuando el objeto de sesion no tenga nada por contener. Si se deja en false, la sesion no se guardara si el objeto de sesion esta vacio al final de la consulta.
-}));
-app.use("/", viewRouter);
-
-app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
-
-/* //Ejemplo 42: Inyectar cookies en frontend: Crear una única vista de frontend en nuestro servidor express, la cual contará con dos campos input y dos botones 
+// Inyectar cookies en frontend: Crear una única vista de frontend en nuestro servidor express, la cual contará con dos campos input y dos botones 
 // ✓ El primer campo input deberá ser el nombre del cliente. 
 // ✓ El segundo campo input deberá contener el correo electrónico 
 // ✓ El botón getCookie debe enviar una petición de tipo GET para recibir la cookie, solo mostrar por consola la cookie. 
 // ✓ El botón submit, deberá enviar una petición POST, la cual deberá crear una cookie con el formato {user:correoDelInput} 
-// ✓ La cookie debe tener un tiempo de vida de 10 segundos. Corroborar que la cookie se borre después del tiempo indicado. */
+// ✓ La cookie debe tener un tiempo de vida de 10 segundos. Corroborar que la cookie se borre después del tiempo indicado. 
 
-/* //Ejemplo 43: Sesiones de usuario en el server: Realizar un programa de backend que establezca sesiones de usuarios en el servidor.
-// ● Cuando un cliente visita el sitio por primera vez en la ruta 'root', se presentará el mensaje de “Te damos la bienvenida”.
-// ● Con los siguientes request de ese mismo usuario, deberá aparecer el número de visitas efectuadas. El cliente podrá ingresar por query params el nombre, en cuyo caso se añadirá a los mensajes devuelto.
-// ● Por ejemplo: “Bienvenido Juan” o “Juan visitaste la página 3 veces”. Ese nombre, solo se almacenará la primera vez que el cliente visite el sitio. */
+// Sesiones de usuario en el server: Realizar un programa de backend que establezca sesiones de usuarios en el servidor.
+// ✓ Cuando un cliente visita el sitio por primera vez en la ruta 'root', se presentará el mensaje de “Te damos la bienvenida”.
+// ✓ Con los siguientes request de ese mismo usuario, deberá aparecer el número de visitas efectuadas. El cliente podrá ingresar por query params el nombre, en cuyo caso se añadirá a los mensajes devuelto.
+// ✓ Por ejemplo: “Bienvenido Juan” o “Juan visitaste la página 3 veces”. Ese nombre, solo se almacenará la primera vez que el cliente visite el sitio. 
 
-/* //Ejemplo 44: Cookies, Session & Storage II
 import express from "express";
 import handlebars from "express-handlebars";
 import Handlebars from "handlebars";
 import session from "express-session"
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
-// import Filestore from "session-file-store"
-// import mongoose from "mongoose"
-// import MongoStore from "connect-mongo";
-import {__dirname} from "./utils.js"
-import viewRouter from "./router/cookies.routes.js";
 
 const app = express();
 // const filestore = Filestore(session);
@@ -1863,6 +1833,153 @@ app.use(session ({
 app.use("/", viewRouter);
 
 app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
+
+/* //Ejemplo 41: Login por formulario, autenticacion-autorizacion
+
+// Primer login por formulario
+// ✓ Se deberá contar con una estructura de router para sessions en /api/sessions/ el cual contará con métodos para registrar a un usuario y para su respectivo login
+// ✓ Se deberá contar además con un router de vistas en la ruta base / para llevar al formulario de login, de registro y de perfil.
+// ✓ El formulario de registro insertará en la base de datos el usuario. El cual deberá contar con: first_name, last_name, email, age, password
+// ✓ Se debe contar con el formulario de login el cual corroborará que el usuario exista en la base, y además genere un objeto user en req.session, indicando que puede utilizar la página.
+// ✓ Agregar validaciones a las rutas de vistas para que, si aún no estoy logueado, no pueda entrar a ver mi perfil, y si ya estoy logueado, no pueda volver a loguearme o registrarme.
+// ✓ En la vista de perfil, se deben arrojar los datos no sensibles del usuario que se haya logueado.
+
+// Reajustando autorización (Continuacion del Primer login por formulario)
+// ✓ Cambiar la validación de rutas por middlewares de rutas públicas o privadas.
+//     ○ Las rutas públicas deben regresar siempre a la pantalla de login en caso de que no se reconozca una session activa.
+//     ○ Las rutas privadas deben regresar siempre a la pantalla de profile en caso de que haya una sesión activa en session.
+// ✓ Realizar un botón “logout” en la vista de perfil, que permita destruir la sesión y redireccionar a la vista de login
+
+// Restauración de contraseña (Autorizacion y Autenticacion)
+// ✓ Un link desde la vista de login que diga “Restaurar contraseña”, el cual llevará a una nueva vista.
+// ✓ Esta nueva vista de restauración solicitará dos campos: el correo electrónico y la nueva contraseña a cambiar.
+// ✓ NO REQUERIREMOS VERIFICACIÓN DE CORREO, esto lo haremos más adelante, solo indicaremos el correo y se deberá sustituir el password.
+// ✓ El nuevo password deberá estar Hasheado también.
+// ✓ Reintentar el login y corroborar que el usuario se pueda loguear correctamente.
+
+
+import express from "express";
+import handlebars from "express-handlebars";
+import Handlebars from "handlebars";
+import session from "express-session";
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
+import mongoose from "mongoose";
+import MongoStore from "connect-mongo";
+
+import {__dirname} from "./utils.js"
+import viewRouter from "./router/cookies.routes.js";
+import usersViewRouter from "./router/users.views.routes.js"
+import sessionsRouter from "./router/sessions.routes.js"
+
+const app = express();
+const MONGO_URL = "mongodb+srv://german_SS22:coder1234@ClusterAfter4.hobtu25.mongodb.net/login?retryWrites=true&w=majority";
+
+async function connectMongo(){
+    try {
+        console.log("DB connected")
+        await mongoose.connect(MONGO_URL)
+    } catch (error) {
+        console.log(err);
+        process.exit();
+    }
+}
+connectMongo();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(`${__dirname}/public`));
+app.set("views", `${__dirname}/view`);
+app.engine("hbs", handlebars.engine({ // Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
+        extname: "hbs", //index.hbs
+        defaultLayout: "main", //Plantilla principal
+        handlebars: allowInsecurePrototypeAccess(Handlebars)
+    })
+);
+app.set("view engine", "hbs");
+app.use(session ({
+    store: MongoStore.create({
+        mongoUrl: MONGO_URL, 
+        mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
+        ttl: 10*60,
+    }),
+    secret: "coder1234",
+    resave: false, //Lo guarda en memoria. Esto permite mantener la sesion activa en caso de que la sesion se mantenga inactiva. Si se deja en false, la sesion morira en caso de que exista cierto tiempo de inactividad.
+    saveUninitialized: true // Lo guarda apenas se crea la sesion. Permite guardar cualquier sesion aun cuando el objeto de sesion no tenga nada por contener. Si se deja en false, la sesion no se guardara si el objeto de sesion esta vacio al final de la consulta.
+}));
+app.use("/", viewRouter);
+app.use('/users', usersViewRouter);
+app.use("/api/sessions", sessionsRouter);
+
+app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
+
+// Ejemplo 42: Uso de passport 
+import express from "express";
+import handlebars from "express-handlebars";
+import Handlebars from "handlebars";
+import session from "express-session";
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
+import mongoose from "mongoose";
+import MongoStore from "connect-mongo";
+import passport from "passport";
+
+import { initialPassport } from "./config/passport.config.js";
+import {__dirname} from "./utils.js"
+import viewRouter from "./router/cookies.routes.js";
+import usersViewRouter from "./router/users.views.routes.js"
+import sessionsRouter from "./router/sessions.routes.js"
+
+const app = express();
+const MONGO_URL = "mongodb+srv://german_SS22:coder1234@ClusterAfter4.hobtu25.mongodb.net/login?retryWrites=true&w=majority";
+
+async function connectMongo(){
+    try {
+        console.log("DB connected")
+        await mongoose.connect(MONGO_URL)
+    } catch (error) {
+        console.log(err);
+        process.exit();
+    }
+}
+connectMongo();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(`${__dirname}/public`));
+app.set("views", `${__dirname}/view`);
+app.engine("hbs", handlebars.engine({ // Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
+        extname: "hbs", //index.hbs
+        defaultLayout: "main", //Plantilla principal
+        handlebars: allowInsecurePrototypeAccess(Handlebars)
+    })
+);
+app.set("view engine", "hbs");
+app.use(session ({
+    store: MongoStore.create({
+        mongoUrl: MONGO_URL, 
+        mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
+        ttl: 10*60,
+    }),
+    secret: "coder1234",
+    resave: false, //Lo guarda en memoria. Esto permite mantener la sesion activa en caso de que la sesion se mantenga inactiva. Si se deja en false, la sesion morira en caso de que exista cierto tiempo de inactividad.
+    saveUninitialized: true // Lo guarda apenas se crea la sesion. Permite guardar cualquier sesion aun cuando el objeto de sesion no tenga nada por contener. Si se deja en false, la sesion no se guardara si el objeto de sesion esta vacio al final de la consulta.
+}));
+
+initialPassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use("/", viewRouter);
+app.use('/users', usersViewRouter);
+app.use("/api/sessions", sessionsRouter);
+
+app.listen(5500, () => console.log(`Server listening on port ${5500}`));
+
+
+
+
+
+
+
 
 
 
