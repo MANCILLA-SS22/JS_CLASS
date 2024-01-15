@@ -28,6 +28,7 @@
     "redux": "^4.2.1",
     "regenerator-runtime": "^0.14.0",
     "session-file-store": "^1.5.0",
+    "slugify": "^1.6.6",
     "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2"
   },
@@ -39,7 +40,7 @@
     "@parcel/transformer-sass": "^2.9.3"
   },
   "scripts": {
-    "start": "SET NODE_ENV=development&& nodemon ApuntesDeClase/src/backend.js",
+    "start": "SET NODE_ENV=development&&nodemon ApuntesDeClase/src/server.js",
     "start:prod": "SET NODE_ENV=production&&nodemon ApuntesDeClase/src/server.js"
   },
   "repository": {

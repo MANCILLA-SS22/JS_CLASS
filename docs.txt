@@ -1,37 +1,4 @@
-https://www.udemy.com/course/react-the-complete-guide-incl-redux/learn/lecture/25599684?start=15#questions
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
-https://www.w3schools.com/jsref/met_win_setinterval.asp
-https://www.geeksforgeeks.org/how-to-create-a-simple-counter-using-reactjs/
-https://devdocs.io
-https://learn.microsoft.com/en-us/cpp/cpp/?view=msvc-170
-https://cplusplus.com/doc/tutorial/
-https://www.programiz.com/cpp-programming/examples/pyramid-pattern
-https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/
-https://www.tutorialspoint.com/java/number_round.htm?key=decimalformat
-https://docs.python.org/3/library/index.html
-https://javascript.info/callbacks
-https://www.freecodecamp.org/news/hooked-on-hooks-how-to-use-reacts-usereducer-2fe8f486b963/
-https://legacy.reactjs.org/docs/hooks-overview.html
-https://react.dev/reference/react/forwardRef
-https://nodejs.org/api/url.html#urlfileurltopathurl
-https://expressjs.com/en/4x/api.html#res.render
-https://www.npmjs.com/package/multer 
-https://socket.io/docs/v4/server-api/
-https://nextjs.org/docs
-https://docs.nestjs.com
-https://redux-toolkit.js.org/usage/usage-with-typescript#createslice
-https://www.mongodb.com/docs/manual/reference/method/db.collection.updateOne/
-https://cloud.mongodb.com/v2/655f1475ba7fe502fcda39da#/clusters
-https://mongoosejs.com/docs/api/model.html#Model.updateOne()
-https://github.com/aravindnc/mongoose-paginate-v2?tab=readme-ov-file
-https://bcrypt-generator.com/
-https://www.passportjs.org/packages/
-https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt/17238#17238
-
 "start:dev": "SET NODE_ENV=development&&nodemon ApuntesDeClase/src/server.js",
-- Its kind of interesting how animal like we are
-- my sister still tells my dad how messed up that was of him to do. 
-
 npm i eslint prettier eslint-config-prettier eslint-plugin-prettier eslint-config-airbnb eslint-plugin-node eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react --save-dev
 
 Documentaciones: 
@@ -66,18 +33,26 @@ https://docs.github.com/en/get-started/getting-started-with-git/associating-text
 https://legacy.reactjs.org  https://react.dev  https://create-react-app.dev  https://react-bootstrap.github.io   
 https://jquery.com/download/ 
 https://angular.io/start 
+https://docs.flutter.dev       
+https://dart.dev/guides 
 https://vuejs.org/guide/introduction.html#what-is-vue 
 https://guides.rubyonrails.org/getting_started.html  
 https://spring.io       https://docs.spring.io/spring-framework/docs/current/reference/html/     
-https://nodejs.org/en/about/ 
 https://react-redux.js.org  https://redux-toolkit.js.org  https://redux-saga.js.org 
 https://nextjs.org/docs/getting-started 
+
+https://nodejs.org/en/about/ 
+https://docs.nestjs.com 
+https://nextui.org  
+https://axios-http.com/docs/intro 
 https://expressjs.com/en/guide/routing.html 
+https://docs.docker.com/storage/volumes/#volumes
 https://www.npmjs.com/package/multer
 https://www.npmjs.com/package/dotenv
 https://www.npmjs.com/package/morgan
 https://www.npmjs.com/package/json-server
 https://www.npmjs.com/package/core-js 
+https://github.com/simov/slugify
 https://socket.io/docs/v4/tutorial/introduction 
 https://www.mongodb.com/docs/manual/tutorial/getting-started/ 
 https://cloud.mongodb.com/v2/655f1475ba7fe502fcda39da#/clusters
@@ -85,17 +60,15 @@ https://mongoosejs.com/docs/api/model.html#Model.updateOne()
 https://github.com/aravindnc/mongoose-paginate-v2?tab=readme-ov-file
 https://github.com/jdesboeufs/connect-mongo
 https://expressjs.com/en/resources/middleware/cookie-parser.html   https://expressjs.com/en/resources/middleware/cookie-session.html
-https://docs.nestjs.com 
-https://docs.flutter.dev       https://dart.dev/guides 
-https://axios-http.com/docs/intro 
-https://sweetalert2.github.io/#examples 
-https://nextui.org  
-https://docs.docker.com/storage/volumes/#volumes
+https://bcrypt-generator.com/
+https://www.passportjs.org/packages/
+https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt/17238#17238
 
 
 Librerias: 
 https://cdnjs.com                   (para agregar librerías de fontawsome y otros) 
 https://www.npmjs.com   
+https://sweetalert2.github.io/#examples 
 https://www.sitepoint.com/beginners-guide-node-package-manager/ 
 https://getbootstrap.com/docs/5.3/utilities/spacing/#margin-and-padding 
 https://mui.com/material-ui/getting-started/overview/ 
@@ -229,3 +202,9 @@ https://purecss.io
 https://www.frontendmentor.io/challenges 
 https://app.daily.dev 
 https://getemoji.com 
+
+
+
+- Its kind of interesting how animal like we are
+- my sister still tells my dad how messed up that was of him to do. 
+- I was thinking of having my picture taken in annoyance

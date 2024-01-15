@@ -50,11 +50,7 @@ export default router; */
 
 // Ejemplo 42: Uso de passport 
 import { Router } from "express";
-import {userModel} from "../models/user.model.js";
-import { createHash, validateHash } from "../utils.js";
 import passport from "passport";
-
-
 
 const router = Router();
 
@@ -63,8 +59,6 @@ router.post('/register', passport.authenticate("register", {failureRedirect: "ap
 });
 
 router.post('/login', passport.authenticate("login", {failureRedirect: "api/session/fail-login"}), async function(req, res){
-    const { email, password } = req.body;
-    
     console.log("User found to login:");    
     const user = req.user;
     req.session.user = { //creamos session con el atributo user
