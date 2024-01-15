@@ -1,12 +1,16 @@
 import { Schema, model } from "mongoose";
 import slugify from "slugify"; //you can slugify a string by converting it to a URL-friendly format where any special characters and spaces are replaced with hyphens or underscores.
+import validator from "validator";
 
 const tourSchema = new Schema({
     name: {
         type: String,
         required: [true, "A tour must have a name"],
         unique: true,
-        trim: true
+        trim: true,
+        maxlength: [40, "A tour name must have less or equal than 40 characters"],
+        minlength: [10, "A tour name must have more or equal than 10 characters"],
+        // validator: [validator.isAlpha, "Tour name muist only contains characters"]
     },
     slug: String,
     duration: {
@@ -19,11 +23,17 @@ const tourSchema = new Schema({
     },
     difficulty: {
         type: String,
-        required: [true, "A tour must hava diffculty"]
+        required: [true, "A tour must hava diffculty"],
+        enum: {
+            values: ["easy", "mdium", "difficult"],
+            messages: "Difficulty is either easy, mediom or difficult"
+        }
     },
     ratingsAverage: {
         type: Number,
-        default: 4.5
+        default: 4.5,
+        min: [1, "Rating must be above 1.0"],
+        max: [5, "Rating must be above 5.0"]
     },
     ratingsQuantity: {
         type: Number,
@@ -34,7 +44,13 @@ const tourSchema = new Schema({
         required: [true, "A tour must have a price"]
     },
     priceDiscount: {
-        type: Number
+        type: Number,
+        validate: {
+            validator: function(val){
+                return val < this.price; //this  only points to current doc on NEW document creation
+            },
+            message: "Discount price ({VALUE}) should be below regular price" // {VALUE} stands for the value coming from the function. In this case, "val",
+        }
     },
     summary: {
         type: String,
@@ -106,7 +122,7 @@ tourSchema.pre("aggregate", function(next){
     this.pipeline().unshift({ 
         $match: {secretTour: {$ne: true }}
     });
-    
+
     console.log(this.pipeline());
     next();
 })

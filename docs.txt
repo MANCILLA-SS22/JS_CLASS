@@ -53,6 +53,7 @@ https://www.npmjs.com/package/morgan
 https://www.npmjs.com/package/json-server
 https://www.npmjs.com/package/core-js 
 https://github.com/simov/slugify
+https://github.com/validatorjs/validator.js
 https://socket.io/docs/v4/tutorial/introduction 
 https://www.mongodb.com/docs/manual/tutorial/getting-started/ 
 https://cloud.mongodb.com/v2/655f1475ba7fe502fcda39da#/clusters
