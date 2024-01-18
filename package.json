@@ -14,6 +14,7 @@
     "express-session": "^1.17.3",
     "fractional": "^1.0.0",
     "handlebars": "^4.7.8",
+    "jsonwebtoken": "^9.0.2",
     "leaflet": "^1.9.4",
     "lodash-es": "^4.17.21",
     "moment": "^2.29.4",
@@ -24,6 +25,8 @@
     "multer": "^1.4.5-lts.1",
     "parcel": "^2.9.3",
     "passport": "^0.7.0",
+    "passport-github": "^1.1.0",
+    "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "redux": "^4.2.1",
     "regenerator-runtime": "^0.14.0",
@@ -41,7 +44,7 @@
     "@parcel/transformer-sass": "^2.9.3"
   },
   "scripts": {
-    "start": "SET NODE_ENV=development&&nodemon ApuntesDeClase/src/server.js",
+    "start": "SET NODE_ENV=development&&nodemon ApuntesDeClase/src/backend.js",
     "start:prod": "SET NODE_ENV=production&&nodemon ApuntesDeClase/src/server.js"
   },
   "repository": {

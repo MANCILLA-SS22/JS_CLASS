@@ -44,7 +44,13 @@ const userSchema = new Schema({
         unique: true
     },
     age: Number,
-    password: String
+    password: String,
+    loggedBy: String,
+    role: {
+        type: String,
+        default: 'user',
+        enum: ['user', 'admin'],
+    }
 });
 
 

@@ -60,10 +60,13 @@ https://cloud.mongodb.com/v2/655f1475ba7fe502fcda39da#/clusters
 https://mongoosejs.com/docs/api/model.html#Model.updateOne()
 https://github.com/aravindnc/mongoose-paginate-v2?tab=readme-ov-file
 https://github.com/jdesboeufs/connect-mongo
-https://expressjs.com/en/resources/middleware/cookie-parser.html   https://expressjs.com/en/resources/middleware/cookie-session.html
+https://expressjs.com/en/resources/middleware/cookie-parser.html   
+https://expressjs.com/en/resources/middleware/cookie-session.html
 https://bcrypt-generator.com/
 https://www.passportjs.org/packages/
 https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt/17238#17238
+https://jwt.io    https://auth0.com/docs/secure/tokens/json-web-tokens
+https://oauth.net/2/
 
 
 Librerias: 

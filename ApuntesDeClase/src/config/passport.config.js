@@ -1,17 +1,48 @@
 import passport from "passport";
 import passportLocal from "passport-local";
+import GitHubStrategy from "passport-github";
 import {userModel} from "../models/user.model.js";
 import { createHash, validateHash } from "../utils.js";
 
 const localStrategy = passportLocal.Strategy; //Declaramos estrategia
 
 function initialPassport(){ 
-    //Inicializando la estrategia local, username sera para nosotros email. Done será nuestro callback
+    // Inicializando la estrategia local, username sera para nosotros email. Done será nuestro callback
     // Este sera un middleware (por eso usamos el use). Se necesitaran dos "passport", uno para register y otro para login.
     // passReqToCallback: para convertirlo en un callback de request, para asi poder iteracturar con la data que viene del cliente
     // usernameField: renombramos el username
     passport.use("register", new localStrategy( {passReqToCallback: true, usernameField: 'email'}, register ));
     passport.use("login", new localStrategy( {passReqToCallback: true, usernameField: 'email'}, login ));
+    passport.use("github", new GitHubStrategy( {clientID: "Iv1.313adccf44c7ef2b",clientSecret: "cc4ac6e34a54bbfa47a5153e261d3ffc4bfa8e7c",callbackUrl: "http://localhost:5500/api/sessions/githubcallback"}, github ));
+    
+    async function github(accessToken, refreshToken, profile, done){
+        console.log("Profile obtenido del usuario de Github", profile);
+
+        try {
+            const user = await userModel.findOne({email: profile._json.email});
+            console.log("Usuario encontrado para login: ", user);
+            console.log(user);
+            if(!user){
+                console.warn("User doesn't exists with username: " + profile._json.email);
+                let newUser = {
+                    first_name: profile._json.name,
+                    last_name: '',
+                    age: 28,
+                    email: profile._json.email,
+                    password: '',
+                    loggedBy: "GitHub"//1:30:00
+                }
+                
+                const result = await userModel.create(newUser);
+                return done(null, result)
+            }else{
+                return done(null, user); // Si entramos por aca significa que el user ya existe en la DB
+            }
+
+        } catch (error) {
+            return done(error);
+        } 
+    };
 
     async function register(req, username, password, done){
         const { first_name, last_name, email, age } = req.body;
@@ -71,7 +102,6 @@ function initialPassport(){
             console.error("Error deserializando el usuario: " + error);
         }
     });
-
 }
 
 export {initialPassport};

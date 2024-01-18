@@ -1835,7 +1835,6 @@ app.use("/", viewRouter);
 app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
 
 /* //Ejemplo 41: Login por formulario, autenticacion-autorizacion
-
 // Primer login por formulario
 // ✓ Se deberá contar con una estructura de router para sessions en /api/sessions/ el cual contará con métodos para registrar a un usuario y para su respectivo login
 // ✓ Se deberá contar además con un router de vistas en la ruta base / para llevar al formulario de login, de registro y de perfil.
@@ -1861,8 +1860,9 @@ app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
 import express from "express";
 import handlebars from "express-handlebars";
 import Handlebars from "handlebars";
-import session from "express-session";
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
+
+import session from "express-session";
 import mongoose from "mongoose";
 import MongoStore from "connect-mongo";
 
@@ -1907,12 +1907,19 @@ app.use(session ({
     saveUninitialized: true // Lo guarda apenas se crea la sesion. Permite guardar cualquier sesion aun cuando el objeto de sesion no tenga nada por contener. Si se deja en false, la sesion no se guardara si el objeto de sesion esta vacio al final de la consulta.
 }));
 app.use("/", viewRouter);
+
 app.use('/users', usersViewRouter);
 app.use("/api/sessions", sessionsRouter);
 
 app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
 
-/* // Ejemplo 42: Uso de passport 
+/* //Ejemplo 42: Uso de passport y jwt 
+// Inicio de sesión con jwt --> A partir del servidor de express que estamos construyendo:
+// ✓ Configurar la creación del token para que ésta solo tenga duración de 1 minuto.
+// ✓ Crear tres vistas, vista base, vista de registro y vista de login. (puedes hacerlo sin motor de plantillas).
+// ✓ Al cargar la página principal (‘/’), si existe una sesión iniciada, se mostrarán los datos del usuario en cuestión (obtenidos mediante una consulta con el token debidamente adjunto en el encabezado de la petición de datos). Caso contrario, se deberá cargar automáticamente la pantalla de login.
+// ✓ Corroborar el envío del token al front para su futuro almacenamiento
+
 import express from "express";
 import handlebars from "express-handlebars";
 import Handlebars from "handlebars";
@@ -1921,11 +1928,14 @@ import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access
 import mongoose from "mongoose";
 import MongoStore from "connect-mongo";
 import passport from "passport";
-
 import { initialPassport } from "./config/passport.config.js";
 import {__dirname} from "./utils.js"
-import usersViewRouter from "./router/users.views.routes.js"
-import sessionsRouter from "./router/sessions.routes.js"
+import viewRouter from "./router/cookies.routes.js";
+import usersViewRouter from "./router/users.views.routes.js";
+import sessionsRouter from "./router/sessions.routes.js";
+import githubLoginViewRouter from "./router/github-login.views.routes.js"
+
+
 
 const app = express();
 const MONGO_URL = "mongodb+srv://german_SS22:coder1234@ClusterAfter4.hobtu25.mongodb.net/login?retryWrites=true&w=majority";
@@ -1941,17 +1951,6 @@ async function connectMongo(){
 }
 connectMongo();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(`${__dirname}/public`));
-app.set("views", `${__dirname}/view`);
-app.engine("hbs", handlebars.engine({ // Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
-        extname: "hbs", //index.hbs
-        defaultLayout: "main", //Plantilla principal
-        handlebars: allowInsecurePrototypeAccess(Handlebars)
-    })
-);
-app.set("view engine", "hbs");
 app.use(session ({
     store: MongoStore.create({
         mongoUrl: MONGO_URL, 
@@ -1963,18 +1962,82 @@ app.use(session ({
     saveUninitialized: true // Lo guarda apenas se crea la sesion. Permite guardar cualquier sesion aun cuando el objeto de sesion no tenga nada por contener. Si se deja en false, la sesion no se guardara si el objeto de sesion esta vacio al final de la consulta.
 }));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(`${__dirname}/public`));
+app.set("views", `${__dirname}/view`);
+app.engine("hbs", handlebars.engine({ // Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
+        extname: "hbs", //index.hbs
+        defaultLayout: "main", //Plantilla principal
+        handlebars: allowInsecurePrototypeAccess(Handlebars)
+    })
+);
+app.set("view engine", "hbs");
+
 initialPassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use("/", viewRouter);
 app.use('/users', usersViewRouter);
 app.use("/api/sessions", sessionsRouter);
+app.use("/github", githubLoginViewRouter)
 
 app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
 
+//Ejemplo 43: Uso de passport avanzado
+import express from "express";
+import mongoose from "mongoose";
+import handlebars from "express-handlebars";
+import Handlebars from "handlebars";
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 
+import cookieParser from 'cookie-parser';
+import passport from "passport";
 
+import {__dirname} from "./utils.js"
 
+import viewRouter from "./router/viewsJWT.routes.js";
+import usersViewRouter from "./router/users.viewsJWT.routes.js";
+import jwtRouter from "./router/jwt.routes.js";
+import usersRouter from './router/userJWT.routes.js';
+import { initialPassport } from "./config/passportJWT.config.js";
+
+const app = express();
+
+async function connectMongo(){
+    try {
+        console.log("DB connected")
+        await mongoose.connect("mongodb+srv://german_SS22:coder1234@ClusterAfter4.hobtu25.mongodb.net/login?retryWrites=true&w=majority");
+    } catch (error) {
+        console.log(err);
+        process.exit();
+    }
+}
+connectMongo();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(`${__dirname}/public`));
+app.use(cookieParser("CoderS3cr3tC0d3"));
+app.set("views", `${__dirname}/view`);
+app.engine("hbs", handlebars.engine({ // Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
+        extname: "hbs", //index.hbs
+        defaultLayout: "main", //Plantilla principal
+        handlebars: allowInsecurePrototypeAccess(Handlebars)
+    })
+);
+app.set("view engine", "hbs");
+
+initialPassport();
+app.use(passport.initialize());
+
+app.use("/", viewRouter);
+app.use('/users', usersViewRouter);
+app.use("/api/jwt", jwtRouter);
+app.use('/api/users', usersRouter);
+
+app.listen(5500, () => console.log(`Server listening on port ${5500}`));
 
 
 
@@ -1986,7 +2049,7 @@ app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
 
 //         $$$$$$$$$$$$$$$ Backend (udemy) $$$$$$$$$$$$$$$
 
-import express from "express";
+/* import express from "express";
 import morgan from "morgan";
 import tourRouter from "./router/tourUdemy.routes.js";
 import userRouter from "./router/userUdemy.routes.js";
@@ -2019,7 +2082,7 @@ app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 
 
-export default app;
+export default app; */
 
 
 

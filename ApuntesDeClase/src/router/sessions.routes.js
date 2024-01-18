@@ -1,5 +1,4 @@
 /* //Ejemplo 41: Login por formulario, autenticacion-autorizacion
-
 import { Router } from "express";
 import {userModel} from "../models/user.model.js";
 import { createHash, validateHash } from "../utils.js";
@@ -8,7 +7,7 @@ const router = Router();
 
 router.post('/register', async function(req, res){
     const { first_name, last_name, email, age, password } = req.body;
-    // console.log("Registrando usuario:", req.body);
+    console.log("Registrando usuario:", req.body);
 
     const exist  = await userModel.findOne({email});
     if(exist) return res.status(400).send({status: "error", msg: "Usuario existente!"});
@@ -39,12 +38,8 @@ router.post('/login', async function(req, res){
         age: user.age
     }
 
-    res.send({ 
-        status: "success", 
-        payload: req.session.user, 
-        message: "¡Primer logueo realizado! :)" 
-    });
-})
+    res.send({  status: "success",  payload: req.session.user,  message: "¡Primer logueo realizado! :)"  });
+});
 
 export default router; */
 
@@ -52,8 +47,30 @@ export default router; */
 import { Router } from "express";
 import passport from "passport";
 
+import { generateJWToken } from "../utils.js";
+
 const router = Router();
 
+/*=============================================
+=                   Passport Github           =
+=============================================*/
+
+router.get('/github', passport.authenticate("github", { scope: ['user:email'] }), async function(req, res){});
+
+router.get("/githubcallback", passport.authenticate('github', { failureRedirect: '/github/error' }), async function(req, res){
+    const user = req.user;
+    req.session.user = {
+        name: `${user.first_name} ${user.last_name}`,
+        email: user.email,
+        age: user.age
+    };
+    req.session.admin = true;
+    res.redirect("/users")
+})
+
+/*= ============================================
+=                   Passport Local            =
+=============================================*/
 router.post('/register', passport.authenticate("register", {failureRedirect: "api/session/fail-register"}), async function(req, res){
     res.status(201).send({ status: "success", message: "Usuario creado con extito." });
 });
@@ -61,13 +78,18 @@ router.post('/register', passport.authenticate("register", {failureRedirect: "ap
 router.post('/login', passport.authenticate("login", {failureRedirect: "api/session/fail-login"}), async function(req, res){
     console.log("User found to login:");    
     const user = req.user;
-    req.session.user = { //creamos session con el atributo user
-        name: `${user.first_name} ${user.last_name}`,
-        email: user.email,
-        age: user.age
-    }
 
-    res.send({ status: "success", payload: req.session.user, message: "¡Primer logueo realizado! :)" });
+    // creamos session con el atributo user con "session" (Metodo 1)
+    // req.session.user = { 
+    //     name: `${user.first_name} ${user.last_name}`,
+    //     email: user.email,
+    //     age: user.age
+    // }
+    // res.send({ status: "success", payload: req.session.user, message: "¡Primer logueo realizado! :)" });
+
+    //creamos session con el atributo user con "jwt" (Metodo 2)
+    const access_token = generateJWToken(user);  console.log(access_token);
+    res.send({ access_token: access_token });    
 });
 
 router.get("/fail-register", (req, res) => {

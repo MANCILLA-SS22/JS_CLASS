@@ -2134,8 +2134,32 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   > FileStorage: Almacenamiento alternativo que permite guardar las sesiones en archivos en una carpeta indicada. Cuando el servidor cae, aún puede consultar las sesiones de los archivos después.
   > MongoStorage: Almacenamiento alternativo de sesión que permite guardar las sesiones en una base de datos. Es más accesible ya que tiene un sistema de autogestión que permite limpiar las sesiones expiradas.    
     
-- Autenticación:     
+- Autorizacion: Es el proceso por el cual el servidor decide si, a pesar de las credenciales que tienes, tienes permitido acceder a un recurso o no. Es decir, que autorizar no hace referencia a que el servidor no sepa quién eres.  
+
+- Autenticación: Para que un cliente pueda autenticarse, debe existir un registro previo almacenado en algún lado. El cliente envía un identificador (como un email) y el servidor lo buscará en su base de datos para saber si sí existe 
+  previamente. En caso de que sí, podrá responder con sus credenciales completas (no sensibles). En caso de que un cliente intente autenticarse antes de haber generado un registro, el servidor no lo encontrará en la base y no habrá 
+  credenciales por devolverle.
     
+- Passport: Generador de estrategias de autenticación y autorización, para mantener un código limpio, estructurado y altamente configurable. Se puede utilizar y configurar múltiples estrategias de autenticación y autorización con passport  
+    ✓ Passport local siempre requerirá dos cosas: username y password. Si passport no encuentra alguno de estos dos elementos, devolverá un error y no permitirá proceder con la estrategia
+    ✓ Podemos cambiar el campo “username” para que tome el campo que nosotros queramos tomar como identificador, en este caso a nosotros no nos interesa nuestro username, realmente nos interesa el correo electrónico, así que podemos alterarlo
+      con {usernameField: ‘valor’}
+    ✓ Passport utiliza un callback “done”, el cual se resuelve de la siguiente manera:
+      ○ El primer parámetro de done es el error, si pasamos done(null) indicamos que no hay error.
+      ○ El segundo parámetro debe ser el usuario generado, por lo tanto, para devolver un usuario, hacemos done(null, user).
+      ○ Si pasamos done(null, false) indicamos que no hay error, pero el usuario no estará disponible.
+    ✓ Cada estrategia que queramos configurar en passport es un middleware por sí solo, así que utilizaremos el elemento passport.use() para configurar diferentes middlewares/estrategias
+
+  > Serializar y deserializar: //Estas funciones permiten a Passport.js manejar la información del usuario durante el proceso de autenticación, serializando y deserializando los usuarios para almacenar y recuperar información de la sesión. 
+    Son esenciales cuando se implementa la autenticación de usuarios en una aplicación Node.js utilizando Passport.js
+    ✓ Para restaurar el estado de autenticación a través de solicitudes HTTP, Passport necesita serializar usuarios y deserializarlos fuera de la sesión. Esto se hace de modo que cada solicitud subsiguiente no contenga las credenciales del 
+      usuario anterior.
+    ✓ Se suele implementar proporcionando el ID de usuario al serializar y consultando el registro de usuario por ID de la base de datos al deserializar. 
+    ✓ Los métodos que proporciona Passport para esto son serializeUser y deserializeUser.
+    ✓ El código ejemplo de ambos métodos se muestra a continuación.
+    ✓ Se puede ver que el método serializeUser utiliza el ID del usuario y el deserializeUser utiliza el objeto de usuario, como lo mencionamos antes.
+ 
+
     
     
     
