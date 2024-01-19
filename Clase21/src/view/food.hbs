@@ -1,0 +1,16 @@
+<div>
+  {{#if isAdmin }}
+    Bienvenido admin
+    {{#each food }}
+      <div>
+        {{!-- Inicialmente le pasamos un array a este archivo. Entonces, para acceder a su contenido (objetos), utilizamos el "this", el cual
+              hace referenencia a todo lo que hay dentro de ese array. En este caso, en cada vuelta, el "this" es un objeto diferente --}}
+        <p> {{this.name}} </p>
+        <p> {{this.price}}</p>
+      </div>
+    {{/each}}
+
+  {{else}}
+    <p>No tenés acceso</p>
+  {{/if}}
+</div>

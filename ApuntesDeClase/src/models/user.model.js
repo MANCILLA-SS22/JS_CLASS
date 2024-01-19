@@ -46,11 +46,11 @@ const userSchema = new Schema({
     age: Number,
     password: String,
     loggedBy: String,
-    role: {
+    /* role: {
         type: String,
         default: 'user',
         enum: ['user', 'admin'],
-    }
+    } */
 });
 
 

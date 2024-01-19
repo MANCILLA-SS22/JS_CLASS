@@ -2158,8 +2158,15 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     ✓ Los métodos que proporciona Passport para esto son serializeUser y deserializeUser.
     ✓ El código ejemplo de ambos métodos se muestra a continuación.
     ✓ Se puede ver que el método serializeUser utiliza el ID del usuario y el deserializeUser utiliza el objeto de usuario, como lo mencionamos antes.
- 
-
+    
+  > JsonWebToken (JWT): Es una implementación sin estado para poder mantener el ciclo de vida de la sesión de un usuario, sin el almacenamiento que este implica. Funciona de una manera diferente en session:
+      ✓ El servidor generará un token con la información del usuario y la enviará al navegador.
+      ✓ El navegador (front) almacenará dicho token y procederá a enviarlo en cada request por medio de los headers.
+      ✓ El servidor recibe las peticiones, busca el token de jwt en los headers. Si lo encuentra, podrá proceder, si no, entonces requerirá autenticación nuevamente.
+    
+    JWT delega responsabilidad a cada cliente Para aligerar el peso de la operación, el servidor puede otorgar el token de acceso al cliente y éste almacenarlo dentro del navegador en una cookie . Así, el cliente tiene la responsabilidad de 
+    enviar sus credenciales con los datos de la sesión a manera de stateless. El servidor solo necesita descifrar el token para poder acceder a las credenciales del usuario . Esto le permite al servidor ser más ágil.
+   
     
     
     
