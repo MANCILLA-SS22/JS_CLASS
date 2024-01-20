@@ -34,7 +34,7 @@ router.post("/login", async function(req, res){
 
 
         // 2do con Cookies
-        // res.cookie('jwtCookieToken', access_token, { maxAge: 60000, httpOnly: true } ) //httpOnly: true No se expone la cookie --- httpOnly: false Si se expone la cookie
+        // res.cookie('jwtCookieToken', access_token, { maxAge: 60000, httpOnly: true } ) //httpOnly: true No se expone la cookie --- httpOnly: false Si se expone la cookie (al usar console.log)
         // res.send({ message: "Login success!!" })  
 
     } catch (error) {

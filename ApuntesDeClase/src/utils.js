@@ -33,7 +33,7 @@ function authToken(req, res, next){ //El JWT token se guarda en los headers de a
     jwt.verify(token, PRIVATE_KEY, function(error, credentials){ //Validar token
         if (error) return res.status(403).send({ error: "Token invalid, Unauthorized!" }); //Token OK
         req.user = credentials.user;
-        console.log(req.user);
+        console.log("req.user", req.user);
         next();
     })
 };

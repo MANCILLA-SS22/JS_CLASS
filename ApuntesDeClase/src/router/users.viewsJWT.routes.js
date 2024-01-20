@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { authToken, passportCall, authorization } from '../utils.js';
 import passport from 'passport';
-import { userModel } from '../models/user.model.js';
+// import { userModel } from '../models/user.model.js';
 
 const router = Router();
 
@@ -19,32 +19,41 @@ router.get("/error", function(req, res){
 });
 
 
-//Comentar todos los metodos excepto 1 
-router.get("/", function(req, res){ //Metodo 1: Usando Authorization Bearer Token
+// (COMENTAR TODOS LOS METODOS MENOS EL QUE SE VA A UTILIZAR)
+
+/* Metodo 0: Usando Authorization Bearer Token
+router.get("/", function(req, res){
     res.render('profile', {user: req.user});
 });
-
 router.get("/:userId", authToken, async function(req, res){
-    const userId = req.params.userId;
-    console.log("URL id", userId)
+    const userId = req.params.userId;  console.log("URL id", userId);
     try {
-        const user = await userModel.findById(userId);    console.log("User id", user)
+        const user = await userModel.findById(userId);    
+        console.log("User", user);
         if (!user) res.status(202).json({message: "User not found with ID: " + userId});
         res.json(user);
     } catch (error) {
         console.error("Error consultando el usuario con ID: " + userId);
     }
+}); */
+
+//Metodo 1: Usando Authorization Bearer Token (USAR POSTMAN O NO FUNCIONARA)
+router.get("/", authToken, function(req, res){
+    res.render('profile', {user: req.user});
 });
 
-// router.get("/", passport.authenticate('jwt', { session: false }), function(req, res){ //Metodo 2: Usando JWT por Cookie
+// // Metodo 2: Usando JWT por Cookie
+// router.get("/", passport.authenticate('jwt', { session: false }), function(req, res){ 
 //     res.render('profile', {user: req.user});
 // });
 
-// router.get("/", passportCall('jwt'), function(req, res){ //Metodo 3: Usando passport-JWT por Cookie mediante customCall
+// //Metodo 3: Usando passport-JWT por Cookie mediante customCall
+// router.get("/", passportCall('jwt'), function(req, res){ 
 //     res.render('profile', {user: req.user});
 // });
 
-// router.get("/", authorization('admin'), function(req, res){ //Metodo 4
+// //Metodo 4
+// router.get("/", authorization('admin'), function(req, res){ 
 //     res.render('profile', {user: req.user});
 // });
 

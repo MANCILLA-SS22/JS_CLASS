@@ -7,11 +7,10 @@ const router = Router();
 router.use(cookieParser("CoderS3cr3tC0d3"));
 
 router.get('/',(req,res)=>{
-    res.render('index',{});
+    res.render('cookiesIndex',{});
 });
 
-//Login
-router.get("/logout", (req, res) => {
+router.get("/logout", function(req, res){
     req.session.destroy(error => {
         if (error){
             res.json({error: "error logout", mensaje: "Error al cerrar la sesion"});
@@ -29,7 +28,7 @@ function auth(req, res, next){
     }
 }
 
-router.get('/private', auth, (req, res) =>{
+router.get('/private', auth, function(req, res){
     res.send("Si estas viendo esto es porque pasaste la autorización a este recurso!");
 });
 

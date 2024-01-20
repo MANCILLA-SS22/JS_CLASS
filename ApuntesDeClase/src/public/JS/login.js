@@ -36,17 +36,18 @@ form.addEventListener('submit', function(e){
     }).then(function(result){
         if (result.status === 200){
             result.json().then(function(json){
+
                 // 1er:localStorage - analizamos que nos llega al cliente
                 console.log("json", json);
-                localStorage.setItem('authToken', json.jwt);
-                localStorage.setItem('id', json.id);
+                const data = { authToken: json.jwt, id: json.id }
+                localStorage.setItem('data', JSON.stringify(data));
                 window.location.replace(`/users`);
                         
 
                 // 2do:cookie
                 // console.log("Cookies generadas: ", document.cookie);
                 // alert("Login realizado con exito!");
-                // window.location.replace('/users');                
+                // window.location.replace('/users');
             })
         }
     });
