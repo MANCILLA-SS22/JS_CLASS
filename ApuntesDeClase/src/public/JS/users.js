@@ -1,6 +1,7 @@
 function llamarApi() {
     console.log("Llamando api users!!!");
-    fetch('/api/users/65a9017b3936a1c059a35360', {
+    const id = localStorage.getItem('id');
+    fetch(`/users/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

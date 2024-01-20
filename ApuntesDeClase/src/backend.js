@@ -1913,7 +1913,7 @@ app.use("/api/sessions", sessionsRouter);
 
 app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
 
-//Ejemplo 42: Uso de passport y jwt 
+/* //Ejemplo 42: Uso de passport y jwt 
 // Inicio de sesión con jwt --> A partir del servidor de express que estamos construyendo:
 // ✓ Configurar la creación del token para que ésta solo tenga duración de 1 minuto.
 // ✓ Crear tres vistas, vista base, vista de registro y vista de login. (puedes hacerlo sin motor de plantillas).
@@ -1929,15 +1929,17 @@ import mongoose from "mongoose";
 import MongoStore from "connect-mongo";
 import passport from "passport";
 import { initialPassport } from "./config/passport.config.js";
+import morgan from "morgan"
 
 import {__dirname} from "./utils.js"
 import viewRouter from "./router/cookies.routes.js";
 import usersViewRouter from "./router/users.views.routes.js";
-import sessionsRouter from "./router/sessions.routes.js"
-import githubLoginViewRouter from "./router/github-login.views.routes.js"
+import sessionsRouter from "./router/sessions.routes.js";
+import githubLoginViewRouter from "./router/github-login.views.routes.js";
+
 
 const app = express();
-const MONGO_URL = "mongodb+srv://xxeltiradorxx:coder1234@clase16.jurxrdo.mongodb.net/login?retryWrites=true&w=majority";
+const MONGO_URL = "mongodb+srv://xxeltiradorxx:coder1234@cluster0.hkcpkdd.mongodb.net/login?retryWrites=true&w=majority";
 
 async function connectMongo(){
     try {
@@ -1950,6 +1952,7 @@ async function connectMongo(){
 }
 connectMongo();
 
+app.use(morgan('dev'));
 app.use(session ({
     store: MongoStore.create({
         mongoUrl: MONGO_URL, 
@@ -1980,11 +1983,12 @@ app.use(passport.session());
 app.use("/", viewRouter);
 app.use('/users', usersViewRouter);
 app.use("/api/sessions", sessionsRouter);
-app.use("/github", githubLoginViewRouter)
+app.use("/github", githubLoginViewRouter);
 
-app.listen(5500, () => console.log(`Server listening on port ${5500}`));
 
-/* //Ejemplo 43: Uso de passport avanzado
+app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
+
+//Ejemplo 43: Uso de passport avanzado
 import express from "express";
 import mongoose from "mongoose";
 import handlebars from "express-handlebars";
@@ -1998,7 +2002,6 @@ import {__dirname} from "./utils.js"
 import viewRouter from "./router/viewsJWT.routes.js";
 import usersViewRouter from "./router/users.viewsJWT.routes.js";
 import jwtRouter from "./router/jwt.routes.js";
-import usersRouter from './router/userJWT.routes.js';
 import { initialPassport } from "./config/passportJWT.config.js";
 
 const app = express();
@@ -2006,7 +2009,7 @@ const app = express();
 async function connectMongo(){
     try {
         console.log("DB connected")
-        await mongoose.connect("mongodb+srv://german_SS22:coder1234@ClusterAfter4.hobtu25.mongodb.net/login?retryWrites=true&w=majority");
+        await mongoose.connect("mongodb+srv://xxeltiradorxx:coder1234@cluster0.hkcpkdd.mongodb.net/login?retryWrites=true&w=majority");
     } catch (error) {
         console.log(err);
         process.exit();
@@ -2033,9 +2036,8 @@ app.use(passport.initialize());
 app.use("/", viewRouter);
 app.use('/users', usersViewRouter);
 app.use("/api/jwt", jwtRouter);
-app.use('/api/users', usersRouter);
 
-app.listen(5500, () => console.log(`Server listening on port ${5500}`)); */
+app.listen(5500, () => console.log(`Server listening on port ${5500}`));
 
 
 

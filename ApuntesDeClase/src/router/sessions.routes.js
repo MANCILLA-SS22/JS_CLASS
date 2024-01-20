@@ -64,15 +64,23 @@ async function githubcallback(req, res){
         email: user.email,
         age: user.age
     };
-    req.session.admin = true;
-    res.redirect("/users")
+    req.session.admin = true;  
+    res.redirect("/users");
 }
 
 /*= ============================================
 =                   Passport Local            =
 =============================================*/
 router.post('/register', passport.authenticate("register", {failureRedirect: "api/session/fail-register"}), register);
-router.post('/login', passport.authenticate("login", {failureRedirect: "api/session/fail-login"}), async function(req, res){
+router.post('/login', passport.authenticate("login", {failureRedirect: "api/session/fail-login"}), login);
+router.get("/fail-register", failRegister);
+router.get("/fail-login", failLogin);
+
+async function register(req, res){
+    res.status(201).send({ status: "success", message: "Usuario creado con extito." });
+}
+
+async function login(req, res){
     console.log("User found to login:");    
     const user = req.user;
 
@@ -88,15 +96,7 @@ router.post('/login', passport.authenticate("login", {failureRedirect: "api/sess
     const access_token = generateJWToken(user);  
     console.log("access_token", access_token);
     res.send({ access_token: access_token });    
-});
-router.get("/fail-register", failRegister);
-router.get("/fail-login", failLogin);
-
-async function register(req, res){
-    res.status(201).send({ status: "success", message: "Usuario creado con extito." });
 }
-
-
 
 function failRegister(req, res){
     res.status(401).send({ error: "Failed to process register!" });

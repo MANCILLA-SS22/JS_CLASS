@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { authToken, passportCall, authorization } from '../utils.js';
 import passport from 'passport';
+import { userModel } from '../models/user.model.js';
 
 const router = Router();
 
@@ -19,8 +20,20 @@ router.get("/error", function(req, res){
 
 
 //Comentar todos los metodos excepto 1 
-router.get("/", authToken, function(req, res){ //Metodo 1: Usando Authorization Bearer Token
+router.get("/", function(req, res){ //Metodo 1: Usando Authorization Bearer Token
     res.render('profile', {user: req.user});
+});
+
+router.get("/:userId", authToken, async function(req, res){
+    const userId = req.params.userId;
+    console.log("URL id", userId)
+    try {
+        const user = await userModel.findById(userId);    console.log("User id", user)
+        if (!user) res.status(202).json({message: "User not found with ID: " + userId});
+        res.json(user);
+    } catch (error) {
+        console.error("Error consultando el usuario con ID: " + userId);
+    }
 });
 
 // router.get("/", passport.authenticate('jwt', { session: false }), function(req, res){ //Metodo 2: Usando JWT por Cookie

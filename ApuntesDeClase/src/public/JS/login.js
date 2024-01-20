@@ -1,4 +1,4 @@
-//Ejercicio 42: Uso de passport
+/* //Ejercicio 42: Uso de passport
 const form = document.getElementById('loginForm');
 form.addEventListener('submit', function(e){
     e.preventDefault();
@@ -12,11 +12,14 @@ form.addEventListener('submit', function(e){
             'Content-Type': 'application/json',
         }
     }).then(function(result){
-        if (result.status === 200) window.location.replace('/users');
+        console.log("res: ", result)
+        if (result.status === 200){
+            // window.location.replace('/users');
+        }
     });
-});
+}); */
 
-/* //Ejercicio 43: Uso de passport y jwt
+//Ejercicio 43: Uso de passport y jwt
 const form = document.getElementById('loginForm');
 
 form.addEventListener('submit', function(e){
@@ -28,14 +31,16 @@ form.addEventListener('submit', function(e){
         method: 'POST',
         body: JSON.stringify(obj),
         headers: { 
-            'Content-Type': 'application/json' 
+            'Content-Type': 'application/json',
         }
     }).then(function(result){
         if (result.status === 200){
             result.json().then(function(json){
                 // 1er:localStorage - analizamos que nos llega al cliente
-                console.log(json);
+                console.log("json", json);
                 localStorage.setItem('authToken', json.jwt);
+                localStorage.setItem('id', json.id);
+                window.location.replace(`/users`);
                         
 
                 // 2do:cookie
@@ -45,4 +50,4 @@ form.addEventListener('submit', function(e){
             })
         }
     });
-}); */
+});

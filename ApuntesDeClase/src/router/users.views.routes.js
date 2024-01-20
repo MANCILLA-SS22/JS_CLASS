@@ -22,7 +22,7 @@ router.get("/error", function(req, res){
 //     res.render('profile', {user: req.session.user});
 // });
 
-router.get("/", authToken, function(req, res){ //Metodo 2
+router.get("/", authToken, function(req, res){ //Metodo 2 (UTILIZAR POSTMAN PARA INICIAR SESION Y QUE EL authToken NO ARROGE UNDEFINED)
     res.render('profile', {user: req.user});
 });
 

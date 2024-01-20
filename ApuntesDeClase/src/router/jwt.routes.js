@@ -8,7 +8,7 @@ router.post("/login", async function(req, res){
     const {email, password} = req.body;
     try {
         const user = await userModel.findOne({ email });
-        // console.log("Usuario encontrado para login: ", user);
+        console.log("Usuario encontrado para login: ", user);
 
         if (!user) {
             console.warn("User doesn't exists with username: " + email);
@@ -30,7 +30,7 @@ router.post("/login", async function(req, res){
         const access_token = generateJWToken(tokenUser);  console.log(access_token);
 
         // 1ro con LocalStorage
-        res.send({ message: "Login successful!", jwt: access_token });
+        res.send({ message: "Login successful!", jwt: access_token, id: user._id.toString() });
 
 
         // 2do con Cookies
