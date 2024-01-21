@@ -45,7 +45,7 @@
     "@parcel/transformer-sass": "^2.9.3"
   },
   "scripts": {
-    "start": "SET NODE_ENV=development&&nodemon ApuntesDeClase/src/backend.js",
+    "start": "SET NODE_ENV=development&&nodemon ApuntesDeClase/Ejercicio-/backend.js",
     "start:prod": "SET NODE_ENV=production&&nodemon ApuntesDeClase/src/server.js"
   },
   "repository": {
