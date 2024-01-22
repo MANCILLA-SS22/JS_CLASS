@@ -10,10 +10,10 @@ form.addEventListener('submit', function(e){
         headers: { 
             'Content-Type': 'application/json',
         }
-    }).then(function(result){
-        console.log("res: ", result)
-        if (result.status === 200){
-            window.location.replace('/users');
-        }
+    })
+    .then(event => event.json())
+    .then(function(result){
+        console.log("res: ", result);
+        // window.location.replace(`/users`);
     });
 });

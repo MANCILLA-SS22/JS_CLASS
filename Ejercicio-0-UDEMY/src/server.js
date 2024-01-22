@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config({path: "ApuntesDeClase/src/config.env"}); //doent allow us to read our variables from the file (config.env) and save them into node JS environment variables
+dotenv.config({path: "Ejercicio-0-UDEMY/src/config.env"}); //doent allow us to read our variables from the file (config.env) and save them into node JS environment variables
 
 import app from "./backend.js";
 import mongoose from "mongoose"
