@@ -13,7 +13,7 @@ form.addEventListener('submit', function(e){
     })
     .then(event => event.json())
     .then(function(result){
-        console.log("res: ", result);
+        console.log("Front: ", result);
         // window.location.replace(`/users`);
     });
 });

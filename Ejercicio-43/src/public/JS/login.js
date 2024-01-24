@@ -14,7 +14,6 @@ form.addEventListener('submit', function(e){
     }).then(function(result){
         if (result.status === 200){
             result.json().then(function(json){
-
                 // 1er:localStorage - analizamos que nos llega al cliente
                 // console.log("json", json);
                 // const data = { authToken: json.jwt, id: json.id }
@@ -25,7 +24,7 @@ form.addEventListener('submit', function(e){
                 // 2do:cookie
                 console.log("Cookies generadas: ", document.cookie);
                 alert("Login realizado con exito!");
-                window.location.replace('/users');
+                // window.location.replace('/users');
             })
         }
     });

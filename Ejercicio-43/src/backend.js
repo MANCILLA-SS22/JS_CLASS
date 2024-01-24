@@ -1,4 +1,7 @@
 //Ejemplo 43: Uso de passport avanzado
+// Colocar una vista en public (No utilizar motores de plantillas), dicha vista contará con dos campos: correo y contraseña, deberá además mandar a llamar un servicio de login que devuelva el token por medio de una cookie como lo visto en el ejemplo
+// ✓ No colocar el httpOnly. Intenta el proceso de login y setea la cookie en el navegador. Después, hacer un console.log simple en el archivo js con el comando document.cookie, corroborar que se muestre en la consola del navegador la cookie asociada a tu token. ¡Peligroso!
+// ✓ Limpiar esta cookie y colocar el httpOnly en la configuración, repite el proceso del primer punto y corrobora si la cookie aparece en la consola.
 import express from "express";
 import mongoose from "mongoose";
 import handlebars from "express-handlebars";
@@ -30,16 +33,16 @@ connectMongo();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
-app.use(cookieParser("CoderS3cr3tC0d3"));
-app.set("views", `${__dirname}/view`);
+app.set("views", `${__dirname}/views`);
 app.engine("hbs", handlebars.engine({ // Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
-        extname: "hbs", //index.hbs
-        defaultLayout: "main", //Plantilla principal
-        handlebars: allowInsecurePrototypeAccess(Handlebars)
-    })
+    extname: "hbs", //index.hbs
+    defaultLayout: "main", //Plantilla principal
+    handlebars: allowInsecurePrototypeAccess(Handlebars)
+})
 );
 app.set("view engine", "hbs");
 
+app.use(cookieParser("CoderS3cr3tC0d3")); //colocamos la inicialización de nuestro passport, la inicialización de passport y cookieParser también para que el servidor pueda reconocer correctamente las cookies. 
 initialPassport();
 app.use(passport.initialize());
 

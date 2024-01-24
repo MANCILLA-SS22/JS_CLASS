@@ -11,6 +11,7 @@ router.get("/githubcallback", passport.authenticate('github', { failureRedirect:
 //Passport Local
 router.post('/register', passport.authenticate("register", {failureRedirect: "api/session/fail-register"}), register);
 router.post('/login', passport.authenticate("login", {failureRedirect: "api/session/fail-login"}), login);
+
 router.get("/fail-register", failRegister);
 router.get("/fail-login", failLogin);
 
@@ -27,7 +28,8 @@ async function login(req, res){
     //     name: `${user.first_name} ${user.last_name}`,
     //     email: user.email,
     //     age: user.age
-    // }
+    // };
+    // console.log("req.session", req.session);
     // res.send({ status: "success", payload: req.session.user, message: "¡Primer logueo realizado! :)" });
 
     // creamos session con el atributo user con "jwt" (Metodo 2)
@@ -37,7 +39,7 @@ async function login(req, res){
 }
 
 async function githubcallback(req, res){ 
-    const user = req.user;
+    const user = req.user; console.log("req.user", req.user);
     req.session.user = {
         name: `${user.first_name} ${user.last_name}`,
         email: user.email,

@@ -26,17 +26,17 @@ import Handlebars from "handlebars";
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 
 import morgan from "morgan";
-import session from "express-session";
 import mongoose from "mongoose";
 import MongoStore from "connect-mongo";
+import session from "express-session";
 
 import {__dirname} from "./utils.js"
-import viewRouter from "./router/cookies.routes.js";
+// import viewRouter from "./router/cookies.routes.js";
 import usersViewRouter from "./router/users.views.routes.js"
 import sessionsRouter from "./router/sessions.routes.js"
 
 const app = express();
-const MONGO_URL = "mongodb+srv://xxeltiradorxx:coder1234@cluster0.hkcpkdd.mongodb.net/?retryWrites=true&w=majority";
+const MONGO_URL = "mongodb+srv://xxeltiradorxx:coder1234@cluster0.hkcpkdd.mongodb.net/login?retryWrites=true&w=majority";
 
 async function connectMongo(){
     try {
@@ -50,7 +50,7 @@ async function connectMongo(){
 connectMongo();
 
 app.use(morgan('dev'));
-app.use(session ({
+app.use(session ({ //Al usar esto, creamos una sesion en la base de datos. Si queremos agregarle atributos a esta sesion, debemos usar req.session 
     store: MongoStore.create({
         mongoUrl: MONGO_URL, 
         mongoOptions: {useNewUrlParser: true, useUnifiedTopology: true},
@@ -63,7 +63,7 @@ app.use(session ({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
-app.set("views", `${__dirname}/view`);
+app.set("views", `${__dirname}/views`);
 app.engine("hbs", handlebars.engine({ // Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
         extname: "hbs", //index.hbs
         defaultLayout: "main", //Plantilla principal
@@ -72,7 +72,7 @@ app.engine("hbs", handlebars.engine({ // Inicializamos el motor con app.engine, 
 );
 app.set("view engine", "hbs");
 
-app.use("/", viewRouter);
+// app.use("/", viewRouter);
 app.use('/users', usersViewRouter);
 app.use("/api/sessions", sessionsRouter);
 

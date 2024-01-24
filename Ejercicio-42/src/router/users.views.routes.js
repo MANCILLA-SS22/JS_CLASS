@@ -19,13 +19,13 @@ router.get("/error", function(req, res){
 
 //Comentar o descomentar uno de los dos metodos nada mas 
 
-router.get("/", function(req, res){ //Metodo 1 (UTILIZAR EL NAVEGADOR)
-    res.render('profile', {user: req.session.user});
+// router.get("/", function(req, res){ //Metodo 1 (UTILIZAR EL NAVEGADOR)
+    // res.render('profile', {user: req.session.user});
     // user: req.user // Trtabajando con JWT
-});
-
-// router.get("/", authToken, function(req, res){ //Metodo 2 (UTILIZAR POSTMAN PARA INICIAR SESION Y QUE EL authToken NO ARROGE UNDEFINED)
-//     res.render('profile', {user: req.user});
 // });
+
+router.get("/", authToken, function(req, res){ //Metodo 2 (UTILIZAR POSTMAN PARA INICIAR SESION Y QUE EL authToken NO ARROGE UNDEFINED)
+    res.render('profile', {user: req.user});
+});
 
 export default router;

@@ -31,6 +31,8 @@ router.post('/login', async function(req, res){
     if(!validateHash(user, password)) return res.status(401).send({ status: 'error', error: "Incorrect credentials" });
     if (!user) return res.status(401).send({ status: 'error', error: "Incorrect credentials" })
 
+    console.log(req.session)
+
     req.session.user = { //creamos session con el atributo user
         name: `${user.first_name} ${user.last_name}`,
         email: user.email,

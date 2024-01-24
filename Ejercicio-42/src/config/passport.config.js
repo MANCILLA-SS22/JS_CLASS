@@ -1,7 +1,7 @@
 import passport from "passport";
 import passportLocal from "passport-local";
 import GitHubStrategy from "passport-github"
-import {userModel} from "../models/user.model.js";
+import {userModel} from "../models/users.model.js";
 import { createHash, validateHash } from "../utils.js";
 
 const localStrategy = passportLocal.Strategy; //Declaramos estrategia
@@ -22,12 +22,12 @@ function initialPassport(){
 }
 
 async function github(accessToken, refreshToken, profile, done){
-    console.log("Profile obtenido del usuario de Github", profile);
+    // console.log("Profile obtenido del usuario de Github", profile);
 
     try {
-        const user = await userModel.findOne({email: profile._json.email});
-        console.log("Usuario encontrado para login: ", user);
-        if(!user){ //Al no existir el usuario, lo agregamos a la base de datos
+        const exist = await userModel.findOne({email: profile._json.email});
+        console.log("Usuario encontrado para login: ", exist);
+        if(!exist){ //Al no existir el usuario, lo agregamos a la base de datos
             console.warn("User doesn't exists with username: " + profile._json.email);
             let newUser = {
                 first_name: profile._json.name,
@@ -41,7 +41,7 @@ async function github(accessToken, refreshToken, profile, done){
             const result = await userModel.create(newUser);
             return done(null, result);
         }else{
-            return done(null, user); // Si entramos por aca significa que el user ya existe en la DB
+            return done(null, exist); // Si entramos por aca significa que el user ya existe en la DB
         }
 
     } catch (error) {
@@ -77,7 +77,7 @@ async function register(req, username, password, done){
 async function login(req, username, password, done){
     try {
         const user = await userModel.findOne({ email: username });
-        console.log("Usuario encontrado para login:", user);
+        // console.log("Usuario encontrado para login:", exist);
 
         if (!user) {
             console.warn("User doesn't exists with username: " + username);
@@ -87,7 +87,7 @@ async function login(req, username, password, done){
             console.warn("Invalid credentials for user: " + username);
             return done(null, false);
         }
-        return done(null, user);
+        return done(null, user); //si utilizamos "user" u otro nombre, el usuario encontrado siempre se mandara como un objeto con el nombre "user". Por eso se utiliza req.user en session.routes para obtener la info de ese usuario
     } catch (error) {
         return done(error);
     } 

@@ -13,9 +13,9 @@ function createHash(password){ //Generamos el hash.
 }
 
 function validateHash(user, password){ //Validamos el hash. 
+    console.log(`Datos a validar: user: ${user}, password: ${password}`);
     return bcrypt.compareSync(password, user.password); //compareSync toma primero la clave sin hashear y lo compara con la clave hasheada en la base de datos. Devolvera true o false dependiendo si la clave coincide o no
 }
-
 
 //JSON Web Tokens JWT --> Generate token JWT usando jwt.sign: Primer argumento: objeto a cifrar dentro del JWT Segundo argumento: La llave privada a firmar el token. Tercer argumento: Tiempo de expiración del token.
 function generateJWToken(user){ //Generamos el token
@@ -31,26 +31,22 @@ function authToken(req, res, next){ //El JWT token se guarda en los headers de a
     const token = authHeader.split(' ')[1]; //Se hace el split para retirar la palabra Bearer.
 
     jwt.verify(token, PRIVATE_KEY, function(error, credentials){ //Validar token
-        if (error) return res.status(403).send({ error: "Token invalid, Unauthorized!" }); //Token OK
+        if (error) return res.status(403).send({ error: "Token invalid, Unauthorized!" });
         req.user = credentials.user;
         console.log("req.user", req.user);
         next();
     })
 };
 
-
 //LocalStorage_Cookies_PassportJWT
 async function passportCall(strategy){ // para manejo de errores
-    return async (req, res, next) => {
-        console.log("Entrando a llamar strategy: ");
-        console.log(strategy);
-        passport.authenticate(strategy, function (err, user, info) {
+    return async function(req, res, next){
+        console.log("Entrando a llamar strategy: ", strategy);
+        passport.authenticate(strategy, function (err, user, info){
             if (err) return next(err);
-            if (!user) {
-                return res.status(401).send({ error: info.messages ? info.messages : info.toString() });
-            }
-            console.log("Usuario obtenido del strategy: ");
-            console.log(user);
+            if (!user) return res.status(401).send({ error: info.messages ? info.messages : info.toString() });
+
+            console.log("Usuario obtenido del strategy: ", user);
             req.user = user;
             next();
         })(req, res, next);
@@ -58,7 +54,7 @@ async function passportCall(strategy){ // para manejo de errores
 };
 
 async function authorization(role){ // para manejo de Auth
-    return async (req, res, next) => {
+    return async function (req, res, next){
         if (!req.user) return res.status(401).send("Unauthorized: User not found in JWT")
 
         if (req.user.role !== role) {

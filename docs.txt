@@ -52,21 +52,27 @@ https://www.npmjs.com/package/dotenv
 https://www.npmjs.com/package/morgan
 https://www.npmjs.com/package/json-server
 https://www.npmjs.com/package/core-js 
-https://github.com/simov/slugify
-https://github.com/validatorjs/validator.js
 https://socket.io/docs/v4/tutorial/introduction 
 https://www.mongodb.com/docs/manual/tutorial/getting-started/ 
 https://cloud.mongodb.com/v2/655f1475ba7fe502fcda39da#/clusters
 https://mongoosejs.com/docs/api/model.html#Model.updateOne()
+https://expressjs.com/en/resources/middleware/cookie-parser.html   https://expressjs.com/en/resources/middleware/cookie-session.html
+https://www.passportjs.org/packages/
+https://github.com/simov/slugify
+https://github.com/validatorjs/validator.js
 https://github.com/aravindnc/mongoose-paginate-v2?tab=readme-ov-file
 https://github.com/jdesboeufs/connect-mongo
-https://expressjs.com/en/resources/middleware/cookie-parser.html   
-https://expressjs.com/en/resources/middleware/cookie-session.html
+https://github.com/kelektiv/node.bcrypt.js
+https://github.com/auth0/node-jsonwebtoken
+https://github.com/jaredhanson/passport-local
+https://github.com/cfsghost/passport-github
+https://github.com/mikenicholson/passport-jwt
+
 https://bcrypt-generator.com/
-https://www.passportjs.org/packages/
 https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt/17238#17238
 https://jwt.io    https://auth0.com/docs/secure/tokens/json-web-tokens
 https://oauth.net/2/
+
 
 
 Librerias: 

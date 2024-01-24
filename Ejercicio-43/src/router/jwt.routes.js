@@ -1,24 +1,21 @@
 import { Router } from 'express';
 import {userModel} from "../models/user.model.js";
 import { validateHash, generateJWToken } from '../utils.js';
+import passport from 'passport';
 
 const router = Router();
 
-router.post("/login", async function(req, res){
+router.post("/login", login);
+router.post("/register", passport.authenticate("register", {session: false}), register);
+
+async function login(req, res){
     const {email, password} = req.body;
     try {
         const user = await userModel.findOne({ email });
         console.log("Usuario encontrado para login: ", user);
 
-        if (!user) {
-            console.warn("User doesn't exists with username: " + email);
-            return res.status(204).send({ error: "Not found", message: "Usuario no encontrado con username: " + email });
-        }        
-
-        if (!validateHash(user, password)) {
-            console.warn("Invalid credentials for user: " + email);
-            return res.status(401).send({ status: "error", error: "El usuario y la contraseña no coinciden!" });
-        }
+        if (!user)                         return res.status(204).send({ error: "Not found", message: "User doesn't exists with username: " + email });
+        if (!validateHash(user, password)) return res.status(401).send({ status: "error", error: "Invalid credentials for user: "+ email});
 
         const tokenUser = {
             name: `${user.first_name} ${user.last_name}`,
@@ -34,13 +31,18 @@ router.post("/login", async function(req, res){
 
 
         // 2do con Cookies
-        res.cookie('jwtCookieToken', access_token, { maxAge: 60000, httpOnly: true } ) //httpOnly: true No se expone la cookie --- httpOnly: false Si se expone la cookie (al usar console.log)
-        res.send({ message: "Login success!!" })  
+        res.cookie('jwtCookieToken', access_token, { maxAge: 60000, httpOnly: true } ) //Aqui se almacena la cookie
+        res.send({ message: "Login success!!" });
 
     } catch (error) {
         console.error(error);
         return res.status(500).send({ status: "error", error: "Error interno de la applicacion." });
     }
-});
+}
+
+async function register(req, res){
+    console.log("Registrando usuario")
+    res.status(201).send({status: "success", message: "Usuario creado con exito"});
+}
 
 export default router;
