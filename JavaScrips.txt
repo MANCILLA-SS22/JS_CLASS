@@ -254,6 +254,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
       esencial para escribir código efectivo en JavaScript.       https://www.freecodecamp.org/espanol/news/la-guia-completa-sobre-this-en-javascript/   https://www.programiz.com/javascript/this
 
   > super: The super keyword is used to call the constructor of its parent class to access the parent's properties and methods, to access properties on an object literal or class's [[Prototype]], or invoke a superclass's constructor.
+    When we extend a parent class, we call "super" in order to call the parent constructor.
 
   > extends: The extends keyword is used to create a child class of another class (parent). The child class inherits all the methods from another class. Inheritance is useful for code reusability: reuse properties and methods of an existing 
     class when you create a new class. 
@@ -2102,6 +2103,10 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     ✓ prevPage: Página anterior en la búsqueda.
     ✓ pagingCounter: Número de documento en relación con la página actual      
     
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
+
+                                                                                                                   Cookies, auth, JWT
     
     
 - Cookies: Cuando desarrollamos un sitio web, tenemos que contemplar que la forma de interactuar de un cliente suele ser diferente, entonces es importante tener algún recurso para saber información sobre ciertos detalles de información y 
@@ -2187,9 +2192,50 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
    strong secret key in production
 
 
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
+                                                                                                                   Conceptos clave
    
     
+- this: Se refiere al elemento actual en el que se está escribiendo el código. Cuando se emplea un función constructora para crear un objeto (con la palabra clave new), this está enlazado al nuevo objeto instanciado. This es muy útil para 
+      asegurar que se emplean las propiedades del objeto actual. El puntero this es una variable predefinida para todas las funciones u operadores miembro de una clase. Este puntero contiene la dirección del objeto concreto de la clase al 
+      que se está aplicando la función o el operador miembro. Se puede decir que *this es un alias del objeto correspondiente. Conviene tener en cuenta que cuando una función miembro se aplica a un objeto de su clase (su argumento 
+      implícito), accede directamente a las variables miembro (sin utilizar el operador punto o flecha), pero no tiene forma de referirse al objeto como tal, pues no le ha sido pasado explícitamente como argumento. Ojo, que hace referencia 
+      al objeto instanciado y no a la clase.
+      
+      this en JavaScript es una palabra clave muy utilizada dentro de funciones y clases, pues tiene un valor flexible. This hace referencia al objeto en cuestión. Es decir, si estamos creando cualquier función, la palabra clave this se 
+      usará para representar o llamar al objeto que dicha función está modificando. ES5 introdujo el método bind() para establecer el valor de la función this independientemente de como es llamada.
+      this es una referencia que se crea cuando una función es invocada, no declarada. El valor de esa referencia depende al 100% del lugar en la que esa invocación se realice, llamado call-site. Ese lugar de llamada es la invocación en sí a 
+      la función. Es decir, el momento justo en que es llamada (no declarada, no referenciada) esa función. El valor de this puede cambiar dependiendo del contexto en el que se invoca una función o método. Hay cuatro contextos principales en 
+      los que se puede utilizar this en JavaScript:
+        + En una función global: En una función que se ejecuta en el contexto global, this hace referencia al objeto window, que es el objeto global en JavaScript.
+      
+        + En una función dentro de un objeto: Cuando se invoca una función dentro de un objeto, this hace referencia al objeto que contiene la función.
+       
+        + El método call() o apply(): Son métodos que permiten invocar una función con un objeto diferente de this. Esto significa que se puede cambiar el contexto de this mediante la llamada a una de estas do funciones.
+          ~ call ();  Permite que una función/método que pertenece a un objeto, ser asignada y llamada para un objeto diferente. Provee un nuevo valor de this a la función/método. Podemos escribir un método ona vez y heredarlo a otro objeto, 
+                      sin tener que reescribir el método en el nuevo objeto. No recive una lista de argumentos despues del this.
+                      You can write a method that can be used on different objects. It takes arguments separately. It can be used to invoke (call) a method with an owner object as an argument (parameter). 
+                      With call(), an object can use a method belonging to another object. 
+          ~ apply (); Con apply , puede escribirse un método una vez y heredarlo a otro objeto, sin necesidad de reescribir el método para adecuarlo al nuevo objeto. apply es muy similar a call() , excepto por el tipo de argumentos que 
+                      soporta. Puede utilizarse un arreglo de parámetros en lugar de un conjunto de pares nombre-valor. You can write a method that can be used on different objects. It takes arguments as an array.
+          ~ bind (); El método bind() crea una nueva función, que cuando es llamada, asigna a su operador this el valor entregado, con una secuencia de argumentos dados precediendo a cualquiera entregados cuando la función es llamada. El 
+                     valor de this es ignorado cuando la función es llamada con el operador new.
+                     Allows us to manually set "this" for any function call. With the bind() method, an object can borrow a method from another object. Bind doesn't immediately call the function. Instead, it returns a new function where the 
+                     "this" is bound. So it's set to whatever value we pass into bind. Sometimes the bind() method has to be used to prevent losing this.
+        
+        + Con el operador new: Cuando se invoca una función con el operador new, this hace referencia al objeto que se está creando.
+        
+      In JavaScript, the this keyword refers to an object. Which object depends on how this is being invoked (used or called). The this keyword refers to different objects depending on how it is used:
+         ~ In an object method, this refers to the object.
+         ~ Alone, this refers to the global object.
+         ~ In a function, this refers to the global object.
+         ~ In a function, in strict mode, this is undefined.
+         ~ In an event, this refers to the element that received the event.
+         ~ Methods like call(), apply(), and bind() can refer this to any object.  
+      
+      En resumen, this se utiliza para hacer referencia al objeto en el contexto actual, y su valor puede cambiar dependiendo del contexto en el que se invoca una función o método. Conocer cómo funciona this en diferentes contextos es 
+      esencial para escribir código efectivo en JavaScript.       https://www.freecodecamp.org/espanol/news/la-guia-completa-sobre-this-en-javascript/   https://www.programiz.com/javascript/this
     
     
     

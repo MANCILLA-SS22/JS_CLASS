@@ -1,6 +1,136 @@
 import {__dirname} from "../utils.js";
 import { TourModel } from "../models/tours.model.js";
 import { APIFeatures } from "../utils/apiFeatures.js";
+import AppError from "../utils/appError.js";
+// import catchFunc from "../utils/catchAsync.js";
+
+
+function catchFunc(fn){
+    return function(req, res, next){ //This is the funcion that express we'll gonna call. It's here where req, res, next are recognized by express and not in the function bellow
+        fn(req, res, next).catch(next);
+    }
+}
+
+//This is a middleware belonging to the /top-5-cheap route in tourUdemyroutes.js
+async function aliasTopTours(req, res, next){ // http://localhost:5500/api/v1/tours/top-5-cheap
+    //We prefill the quuery string for the user so that the user doesn't have to do it on his own.
+    req.query.limit = "5";
+    req.query.sort = "-ratingsAverage,price";
+    req.query.fields = "name,price,ratingsAverage,summary,difficulty";
+    next();
+};
+
+///These functions are part of the CRUD in mongodb.
+const getAllTours = catchFunc(async function(req, res, next){  //http://localhost:5500/api/v1/tours
+    const features = new APIFeatures(TourModel.find(), req.query).filter().sort().limitFields().paginate(); //TourModel.find() stands for a mongoose query object. 
+    const tours = await features.query; // We have use features.query because we need to get access to mongoose query in the constructor method. That's to say, the result of the mongoose methods such as sort, find, select and skip are stored in "this.query".
+    res.status(200).json({ status: "success", results: tours.length, data: {tours} });
+});
+
+const getTour = catchFunc(async function(req, res, next){
+    const tour = await TourModel.findById(req.params.id);
+
+    if(!tour) return next(new AppError("No tour found with that ID", 404));
+
+    res.status(200).json({ status: "success",  data: {tour} });
+});
+
+const postTour = catchFunc(async function(req, res, next){
+    const newTour = await TourModel.create(req.body);
+    res.status(201).json({ status: "success", data: {tour: newTour} });
+});
+
+const updateTour = catchFunc(async function(req, res, next){    
+    // new --> if true, return the modified document rather than the original
+    // runValidators --> if true, runs update validators on this command. Update validators validate the update operation against the model's schema
+    const tour = await TourModel.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
+
+    if(!tour) return next(new AppError("No tour found with that ID", 404));
+
+    res.status(200).json({ data: tour });
+});
+
+const deleteTour = catchFunc(async function(req, res, next){
+    const tour = await TourModel.findByIdAndDelete(req.params.id);
+
+    if(!tour) return next(new AppError("No tour found with that ID", 404));
+
+    res.status(204).json({ status: "success", data: null });
+});
+
+//The follwing functions belong to aggregation
+const getTourStats = catchFunc(async function(req, res, next){
+    const stats = await TourModel.aggregate([ //Thjis will return an aggregate object
+        {
+            $match: { ratingsAverage: {$gte: 4.5} }
+        },
+        {
+            $group: {
+                _id: { $toUpper: "$difficulty" },
+                numTours: { $sum: 1}, //This is a counter
+                numRatings: { $sum: "$ratingsQuantity" },
+                avgRating: { $avg: "$ratingsAverage" },
+                avgPrice: { $avg: "$price" },
+                minPrice: { $min: "$price" },
+                maxPrice: { $max: "$price" },
+            }
+        },
+        {
+            $sort: { avgPrice: 1 }
+        },
+        // {
+        //     $match: { _id: { $ne: "EASY" }} //This prove that we can use multiple "$match".
+        // }
+    ]);
+    res.status(200).json({ data: stats });
+});
+
+const getMonthlyPlan = catchFunc(async function(req, res, next){ //http://localhost:5500/api/v1/tours/monthly-plan/2021
+    const year = req.params.year * 1;
+    const plan = await TourModel.aggregate([
+        {
+            $unwind: "$startDates" // --> Deconstructs an array field from the input documents to output a document for each element. Each output document is the input document with the value of the array field replaced by the element.
+        },
+        {
+            $match: {
+                startDates: { 
+                    $gte: new Date(`${year}-01-01`), 
+                    $lte: new Date(`${year}-12-31`)
+                },
+            }
+        },
+        {
+            $group: {
+                _id: { $month: "$startDates" },
+                numTourStart: { $sum: 1 },
+                tours: { $push: "$name" }
+            }
+        },
+        {
+            $addFields: { month: "$_id" }
+        },
+        {
+            $project: { _id: 0 }
+        },
+        {
+            $sort: { numTourStart: -1 }
+        },
+        {
+            $limit: 12
+        }
+    ]);
+
+    res.status(200).json({ data: plan });
+});
+
+export {getAllTours, getTour, postTour, updateTour, deleteTour, aliasTopTours, getTourStats, getMonthlyPlan}
+
+
+
+/* Without using error handler
+import {__dirname} from "../utils.js";
+import { TourModel } from "../models/tours.model.js";
+import { APIFeatures } from "../utils/apiFeatures.js";
 
 //This is a middleware belonging to the /top-5-cheap route in tourUdemyroutes.js
 async function aliasTopTours(req, res, next){ // http://localhost:5500/api/v1/tours/top-5-cheap
@@ -134,12 +264,7 @@ async function getMonthlyPlan(req, res){ //http://localhost:5500/api/v1/tours/mo
     }
 }
 
-export {getAllTours, getTour, postTour, updateTour, deleteTour, aliasTopTours, getTourStats, getMonthlyPlan}
-
-
-
-
-
+export {getAllTours, getTour, postTour, updateTour, deleteTour, aliasTopTours, getTourStats, getMonthlyPlan} */
 
 /* //Normal method
 import {__dirname} from "../utils.js";

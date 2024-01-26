@@ -2,7 +2,9 @@ import express from "express";
 import morgan from "morgan";
 import tourRouter from "./router/tourUdemy.routes.js";
 import userRouter from "./router/userUdemy.routes.js";
-import {__dirname} from "./utils.js"; // --> C:\Users\xxelt\OneDrive\Documentos\PROYECTOS_PERSONALES\JavaScript\ApuntesDeClase\src
+import {__dirname} from "./utils.js"; // --> C:\Users\xxelt\OneDrive\Documentos\PROYECTOS_PERSONALES\JavaScript\ApuntesDeClase\
+import AppError from "./utils/appError.js";
+import globalErrorHandler from "./controllers/errorController.js";
 
 const app = express();
 
@@ -19,10 +21,6 @@ app.use(express.json());
 app.use(express.static(`${__dirname}/public`));
 
 app.use(function(req, res, next){
-    console.log("Hello world!");
-    next();
-});
-app.use(function(req, res, next){
     req.requstTime = new Date().toISOString(); //We can define any property on the "req" object.
     next();
 });
@@ -30,5 +28,12 @@ app.use(function(req, res, next){
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 
+//This and the following app.use stand for middlewares of the error handling process, and are executed only when the routes in line 28 or 29 don't exist.
+app.use("*", function(req, res, next){  
+    // console.log("Res", new AppError(`Can't find ${req.originalUrl} on this server!`, 404))  
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404)); //next() will always be passed in with an error whenever there is a varible inside the ().
+});
+
+app.use(globalErrorHandler);
 
 export default app;

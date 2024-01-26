@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+//https://stackoverflow.com/questions/31309759/what-is-secret-key-for-jwt-based-authentication-and-how-to-generate-it
 const PRIVATE_KEY = "CoderhouseBackendCourseSecretKeyJWT"; //Esta sirve para utilizarse al momento de hacer el cifrado del token
 
 // Bcrypt

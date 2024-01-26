@@ -9,6 +9,7 @@ router.post("/login", login);
 router.post("/register", passport.authenticate("register", {session: false}), register);
 
 async function login(req, res){
+    console.log(req)
     const {email, password} = req.body;
     try {
         const user = await userModel.findOne({ email });

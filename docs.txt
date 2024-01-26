@@ -63,8 +63,8 @@ https://github.com/validatorjs/validator.js
 https://github.com/aravindnc/mongoose-paginate-v2?tab=readme-ov-file
 https://github.com/jdesboeufs/connect-mongo
 https://github.com/kelektiv/node.bcrypt.js
-https://github.com/auth0/node-jsonwebtoken
 https://github.com/jaredhanson/passport-local
+https://github.com/auth0/node-jsonwebtoken
 https://github.com/cfsghost/passport-github
 https://github.com/mikenicholson/passport-jwt
 

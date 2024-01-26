@@ -1,79 +1,42 @@
-import passport from 'passport';
-import passportLocal from "passport-local"
-import jwtStrategy from 'passport-jwt';
-import {userModel} from '../models/user.model.js';
-import { PRIVATE_KEY, createHash } from '../utils.js';
+import passport from "passport";
+//Para usar JWT como estrategia.
+import jwtStrategy from 'passport-jwt'
 
-const localStrategy = passportLocal.Strategy;
-const JwtStrategy = jwtStrategy.Strategy;
-const ExtractJWT = jwtStrategy.ExtractJwt;
 
-function initialPassport(){ //Estrategia de obtener Token JWT por Cookie
-    passport.use('jwt', new JwtStrategy({ jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]), secretOrKey: PRIVATE_KEY }, jwt ));
-    passport.use('register', new localStrategy({ passReqToCallback: true, usernameField: 'email' }, register ));
-    passport.serializeUser(serialize); //Estas funciones permiten a Passport.js manejar la información del usuario durante el proceso de autenticación, serializando y deserializando los usuarios para almacenar y recuperar información de la sesión. Son esenciales cuando se implementa la autenticación de usuarios en una aplicación Node.js utilizando Passport.js
-    passport.deserializeUser(deserialize)
+const initializePassport = () => {
+    //TODO generar las reglas para extraer el token y las autorizaciones necesarias.
+    
+    //Funciones de Serializacion y Desserializacion
+    passport.serializeUser((user, done) => {
+        done(null, user._id);
+    });
+
+    passport.deserializeUser(async (id, done) => {
+        try {
+            let user = await userModel.findById(id);
+            done(null, user);
+        } catch (error) {
+            console.error("Error deserializando el usuario: " + error);
+        }
+    });
 };
 
-async function jwt(jwt_payload, done){
-    console.log("Entrando a passport Strategy con JWT.");
-    try {
-        console.log("JWT obtenido del Payload: ", jwt_payload);
-        return done(null, jwt_payload.user);
-    } catch (error) {
-        return done(error)
-    }
-}
-
-async function register(req, username, password, done){
-    const { first_name, last_name, email, age } = req.body;
-    try {
-        const exist = await userModel.findOne({ email });
-        
-        if (exist) {
-            console.log("El user ya existe!!");
-            done(null, false)
-        }
-
-        const user = {
-            first_name,
-            last_name,
-            email,
-            age,
-            password: createHash(password),
-            loggedBy: 'form'
-        };
-
-        const result = await userModel.create(user);
-        console.log(result);
-        return done(null, result);
-
-    } catch (error) {
-        return done(error)
-    }
-}
-
-function cookieExtractor(req){
-    let token = null;  console.log("Entrando a Cookie Extractor");
-    if (req && req.cookies) {//Validamos que exista el request y las cookies.
-        console.log("Cookies presentes: ", req.cookie);
-        token = req.cookies['jwtCookieToken'];
-        console.log("Token obtenido desde Cookie: ", token);
+/**
+ * Metodo utilitario en caso de necesitar extraer cookies con Passport
+ * @param {*} req el request object de algun router.
+ * @returns El token extraido de una Cookie
+ */
+const cookieExtractor = req => {
+    let token = null;
+    console.log("Entrando a Cookie Extractor");
+    if (req && req.cookies) { //Validamos que exista el request y las cookies.
+        console.log("Cookies presentes: ");
+        console.log(req.cookies);
+        token = req.cookies['jwtCookieToken']; //-> Tener presente este nombre es el de la Cookie.
+        console.log("Token obtenido desde Cookie:");
+        console.log(token);
     }
     return token;
 };
 
-function serialize(user, done){
-        done(null, user._id);
-    }
-
-async function deserialize(id, done){
-    try {
-        let user = await userModel.findById(id);
-        done(null, user);
-    } catch (error) {
-        console.error("Error deserializando el usuario: " + error);
-    }
-};
-
-export {initialPassport};
+export default initializePassport;
