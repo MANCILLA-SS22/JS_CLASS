@@ -1,15 +1,22 @@
-import AppError from "../utils/appError.js";
+import {AppError} from "../utils/appError.js";
 
-function errorFunction(err, req, res, next){ //Express recognizes an error handling middleware by working with 4 parameters
-    console.log(err); //err.stack shows where the error is happening. The "err" parameter receives the error handling coming from the next() funcion in the middleware app.use("*")
+//If any of the funcions 
+function globalErrorHandler(err, req, res, next){ //Express recognizes an error handling middleware by working with 4 parameters
     err.statusCode = err.statusCode || 500;
     err.status = err.status || "error";
+    // console.log("Error -->" ,err); //err.stack shows where the error is happening. The "err" parameter receives the error handling coming from, let's say, catchFunc() function. 
 
     if(process.env.NODE_ENV === "development"){
         sendErrorDev(err, res);
         
     }else if(process.env.NODE_ENV === "production"){
-        let error = {...err};
+        // let error = {...err};                         // Option 1
+        // let error = { ...err, name: err.name };       // Option 2
+        // let error = JSON.parse(JSON.stringify(err));  // Option 3
+        // let error = Object.assign({}, err);               // Option 4
+        let error = Object.create(err);                  // Option 5
+        console.log("Object error: ", error);
+
         if(error.name === "CastError") error = handleCastErrorDb(error);
         if(error.code === 11000) error = handleDuplicateFieldsDB(error);
         if(error.name === "ValidationError") error = handleValidationErrorDB(error);
@@ -19,15 +26,15 @@ function errorFunction(err, req, res, next){ //Express recognizes an error handl
 }
 
 function sendErrorDev(err, res){
-    res.status(err.statusCode).json({status: err.status, message: err.message, stack: err.stack, err:err});
+    return res.status(err.statusCode).json({status: err.status, error: err, message: err.message, stack: err.stack});
 }
 
 function sendErrorProd(err, res){
     if(err.isOperational){
-        return res.status(err.statusCode).json({status: err.status, message: err.message});
+        res.status(err.statusCode).json({status: err.status, message: err.message});
     }else{
         console.error("Error 💣", err)
-        return res.status("error").json({message: "Something went very wrong!"})
+        res.status(500).json({status: 'error', message: "Something went very wrong!"})
     }
 }
 
@@ -37,7 +44,8 @@ function handleCastErrorDb(err){
 }
 
 function handleDuplicateFieldsDB(err){
-    const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
+    const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0]; // "errmsg" is equal to "message". To prove this, look at the JSON message in postman
+    // const value = err.keyValue.name;                    // This is equal to the line above.
     const message = `Duplicate field value: ${value}. Please use another value!`;
     return new AppError(message, 400);
 }
@@ -47,5 +55,4 @@ function handleValidationErrorDB(err){
     const message = `Invalid input data. ${errors.join(". ")}`;
     return new AppError(message, 400)
 }
-
-export default errorFunction;
+export {globalErrorHandler}

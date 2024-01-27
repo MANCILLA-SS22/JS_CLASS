@@ -3,8 +3,8 @@ import morgan from "morgan";
 import tourRouter from "./router/tourUdemy.routes.js";
 import userRouter from "./router/userUdemy.routes.js";
 import {__dirname} from "./utils.js"; // --> C:\Users\xxelt\OneDrive\Documentos\PROYECTOS_PERSONALES\JavaScript\ApuntesDeClase\
-import AppError from "./utils/appError.js";
-import globalErrorHandler from "./controllers/errorController.js";
+import {AppError} from "./utils/appError.js";
+import {globalErrorHandler} from "./controllers/errorController.js";
 
 const app = express();
 
@@ -28,10 +28,10 @@ app.use(function(req, res, next){
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 
-//This and the following app.use stand for middlewares of the error handling process, and are executed only when the routes in line 28 or 29 don't exist.
+//This middleware stands for the error handdling process. It'll be executed ONLY if the route in the line 28 are typed wronlgy. For example: /api/tours, /api/v1/tourss, etc.
+//If the route in the line 28 is typed rigthly (/api/v1/tours) and the enpoint wrongly (for example, router.route("/:id")), then app.use("*") won't be executed but the app.use(globalErrorHandler);
 app.use("*", function(req, res, next){  
-    // console.log("Res", new AppError(`Can't find ${req.originalUrl} on this server!`, 404))  
-    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404)); //next() will always be passed in with an error whenever there is a varible inside the ().
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
 app.use(globalErrorHandler);

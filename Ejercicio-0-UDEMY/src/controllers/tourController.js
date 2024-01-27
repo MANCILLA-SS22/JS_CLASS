@@ -1,13 +1,13 @@
 import {__dirname} from "../utils.js";
 import { TourModel } from "../models/tours.model.js";
 import { APIFeatures } from "../utils/apiFeatures.js";
-import AppError from "../utils/appError.js";
+import {AppError} from "../utils/appError.js";
 // import catchFunc from "../utils/catchAsync.js";
 
 
 function catchFunc(fn){
     return function(req, res, next){ //This is the funcion that express we'll gonna call. It's here where req, res, next are recognized by express and not in the function bellow
-        fn(req, res, next).catch(next);
+        return fn(req, res, next).catch(next);
     }
 }
 
@@ -30,7 +30,10 @@ const getAllTours = catchFunc(async function(req, res, next){  //http://localhos
 const getTour = catchFunc(async function(req, res, next){
     const tour = await TourModel.findById(req.params.id);
 
-    if(!tour) return next(new AppError("No tour found with that ID", 404));
+    //(1) There are some id's that are valid and not exist. For example: "65a3c8eb57c6431e857c1931m", where the last 2 digits are modified. So, it's a valid id but it doesn't exist in the database.
+    //(2) On the other hand, there are id's that doesn't exist and are not valid. For example, "btgrtred" or "65a3c8eb57c6431e857c1931mwscvefer", where the second one have even more digits than it should.\
+    // if the "tour" is equal to the (1) option, then the "if" statment will be executed. Otherwise, it won't be executed but the "globalErrorHandler" does.
+    if (!tour) return next(new AppError('No tour found with that ID', 404));
 
     res.status(200).json({ status: "success",  data: {tour} });
 });

@@ -1773,6 +1773,9 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     Al final, no hay una mejor que otra, sirven para casos diferentes e incluso podemos utilizar ambas en la misma consulta. 
     
   > req.body:  
+  
+  > next(): Esta funcion representa un parametro en adicional a req y res (req, res, next) y se usa en middlewares, generalmente cuando se manejan errores. Si el middleware no presentan ningun inconveniente, la funcion next() no tendra 
+    ningun parametro, es decir, no hay error que enviar. Pero en caso de haberlo, entonces se debera mandar ese error dentro de los parentesis.
         
 - Router en Express: Un router en express nos permitirá separar los endpoints “comunes” en entidades separadas que fungirán como “mini aplicaciones”, las cuales tomarán peticiones que concuerden con dicho endpoint y así redireccionarse a 
   esta mini aplicación. De esta manera, nuestro código resultará más organizado, y las diferentes entidades tendrán aislado el comportamiento interno, como configuraciones, middlewares, etc.

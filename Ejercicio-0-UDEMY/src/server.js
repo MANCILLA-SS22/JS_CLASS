@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config({path: "Ejercicio-0-UDEMY/src/config.env"}); //doent allow us to read our variables from the file (config.env) and save them into node JS environment variables
+import app from "./backend.js";
 
 process.on("uncaughtException", function(err){
     console.log("UNHANDLED EXCEPTION! 😈 Shutting down...")
@@ -7,7 +8,6 @@ process.on("uncaughtException", function(err){
     process.exit(1);
 });
 
-import app from "./backend.js";
 import mongoose from "mongoose"
 
 // console.log(process.env); //process.env now has the keys and values you defined in your .env file

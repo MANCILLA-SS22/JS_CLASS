@@ -1705,7 +1705,7 @@ console.log(rivian.speedUS); */
 //         $$$$$$$$$$$$$$$ Arrays $$$$$$$$$$$$$$$
 
 
-/* //Ejemplo 0: map behind the scenes & callbacks
+//Ejemplo 0: map behind the scenes & callbacks
 function mapCustom(array, callback) {
     let nuevoArray = [];
 
@@ -1754,7 +1754,7 @@ function calcular(numero1, numero2, callback) {
 console.log(calcular(2, 3, sumar));
 console.log(calcular(2, 3, restar));
 console.log(calcular(2, 3, multiplicar));
-console.log(calcular(2, 3, dividir)); */
+console.log(calcular(2, 3, dividir));
 
 /* //Ejemplo 1: Declaracion y manejo de un array con numeros que vamos a operar entre ellos
 
