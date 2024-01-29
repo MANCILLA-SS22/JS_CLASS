@@ -5,7 +5,7 @@ form.addEventListener('submit', function(e){
     const obj = {}; //Creamos un objeto ADICIONAL donde se guardara la informacion que esta dentro del formulario para despues poderla enviar.
     const data = new FormData(form);
     data.forEach((value, key) => obj[key] = value)
-    fetch('/api/sessions/register', {
+    fetch('/api/jwt/register', {
         method: 'POST',
         body: JSON.stringify(obj),
         headers: { 'Content-Type': 'application/json' }

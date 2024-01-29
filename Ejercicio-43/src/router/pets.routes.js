@@ -26,14 +26,11 @@ router.post("/", async function(req, res){
     }
 });
 
-//El operador "+" sirve para limitar el numero de coincidencias. Por ejemplo, en la url, si el primer parametro no coincide, entonces se seguira buscando en los demas parametros si existe alguna coincidencia. Por otro lado, si no se utiliza, 
-//entonces cuando el primer parametro no cumpla ninguna coincidencia, automaticamente se descartara el resto y se ira a router.get("*", function(req, res){}
 router.get("/:word([a-zA-Z%C3%A1%C3%A9%20]+)", async function(req, res){
     try {
-        console.log("Mascoita despues de la busqueda!!");
+        console.log("Mascota despues de la busqueda: ", req.pet);
         // const pets = await petsService.findByName(req.params.word); //Sin regex (Cuando utilizamos regex, esta linea no es necesaria porque el router.param ya se encarga de hacer esa busqueda)
-        console.log(req.pet); //Con regex
-        const pets = req.pet
+        const pets = req.pet; //Con regex
         if (!pets) {
             res.status(202).send({ message: "No pets found" });
             throw new Error('No pets found');
@@ -44,11 +41,9 @@ router.get("/:word([a-zA-Z%C3%A1%C3%A9%20]+)", async function(req, res){
     }
 });
 
-// ESTE PUT Funciona con el Middleware router.params
 router.put("/:word([a-zA-Z%C3%A1%C3%A9%20]+)", async function(req, res){
     try {
-        const result = await petsService.update({ _id: req.pet._id }, { isAdopted: false });
-        console.log(result);
+        const result = await petsService.update({ _id: req.pet._id }, { isAdopted: false });  console.log("result", result);
         if (!result) {
             res.status(500).send({ message: "The pet could not be update" });
             throw new Error('The pet could not be update');
@@ -60,8 +55,9 @@ router.put("/:word([a-zA-Z%C3%A1%C3%A9%20]+)", async function(req, res){
     }
 });
 
-//router.param funciona como un middleware específicamente para el parámetro matcheado. Se manda a llamar cada vez que se ingresa un parametro por URL(después de los middlewares principales) y tiene como función principal el generalizar las operaciones hechas 
-//con dicho parámetro. En este caso, sirve cuando se utilizan distintas rutas pero con el mismo endpoint. En este caso, la palabra "word", que tambien contendra el re-gex asignado. Y basicamente lo que hara router.param es capturar ese endpoint en de cada ruta.
+//router.param funciona como un middleware específicamente para el parámetro matcheado. Se manda a llamar cada vez que se ingresa un parametro por URL(después de los middlewares principales) y tiene como 
+//función principal el generalizar las operaciones hechas con dicho parámetro. En este caso, sirve cuando se utilizan distintas rutas pero con el mismo endpoint. En este caso, la palabra "word", que 
+//tambien contendra el re-gex asignado. Y basicamente lo que hara router.param es capturar ese endpoint en de cada ruta.
 router.param("word", async function(req, res, next, name){ //"name" hace referencia a lo que viene desde el enpoint, en este caso "word".
     console.log("Buscando nombre de mascota, valor: " + name);
     try {
@@ -93,7 +89,10 @@ export default router;
 
 Cuantificadores:
 
-+: Para limitar el número de coincidencias en una expresión regular, puedes utilizar cuantificadores específicos en lugar de "+" que indiquen un rango específico de repeticiones. Algunos cuantificadores comunes son:
++: El operador "+" sirve para limitar el numero de coincidencias. Por ejemplo, en la url, si el primer parametro no coincide, entonces se seguira buscando en los demas parametros si existe alguna coincidencia. 
+    Por otro lado, si no se utiliza, entonces cuando el primer parametro no cumpla ninguna coincidencia, automaticamente se descartara el resto y se ira a router.get("*", function(req, res){}
+    
+    Para limitar el número de coincidencias en una expresión regular, puedes utilizar cuantificadores específicos en lugar de "+" que indiquen un rango específico de repeticiones. Algunos cuantificadores comunes son:
 
 *: Significa "cero o más veces". Puedes usarlo si deseas permitir ninguna aparición o varias apariciones del elemento.
 

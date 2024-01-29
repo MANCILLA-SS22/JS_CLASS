@@ -21,7 +21,7 @@ function validateHash(user, password){ //Validamos el hash.
 
 //JSON Web Tokens JWT --> Generate token JWT usando jwt.sign: Primer argumento: objeto a cifrar dentro del JWT Segundo argumento: La llave privada a firmar el token. Tercer argumento: Tiempo de expiración del token.
 function generateJWToken(user){ //Generamos el token
-    return jwt.sign({ user }, PRIVATE_KEY, { expiresIn: '24h' })
+    return jwt.sign({ user }, PRIVATE_KEY, { expiresIn: '60s' })
 };
 
 function authToken(req, res, next){ //El JWT token se guarda en los headers de autorización.

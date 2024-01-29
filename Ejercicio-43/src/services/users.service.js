@@ -1,6 +1,6 @@
-import userModel from './models/user.model.js';
+import {userModel} from "../models/user.model.js";
 
-export default class UserService {
+class UserService {
     constructor(){
         console.log("Calling users model using a service.");
     };  
@@ -22,3 +22,5 @@ export default class UserService {
         return result;
     }
 };
+
+export {UserService};

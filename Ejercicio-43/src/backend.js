@@ -41,7 +41,7 @@ import viewRouter from "./router/views.routes.js";
 import usersViewRouter from "./router/users.views.routes.js";
 import jwtRouter from "./router/jwt.routes.js";
 import petsRouter from "./router/pets.routes.js";
-import UsersExtendRouter from "./router/custom/users.extend.routes.js";
+import UsersExtendRouter from "./custom/users.extend.routes.js";
 
 const app = express();
 const usersExtendRouter = new UsersExtendRouter();
@@ -77,7 +77,7 @@ app.use("/", viewRouter);
 app.use('/users', usersViewRouter);
 app.use("/api/jwt", jwtRouter);
 app.use("/api/pets", petsRouter);
-app.use("/api/extend/users", usersExtendRouter.getRouter());
+app.use("/api/extend/users", usersExtendRouter.getRouter()); //Al llamar a la clase, debemos tambien especificar que se utlizara, en este caso, el getRouter() el cual contiene la ruta especificada
 
 app.listen(5500, () => console.log(`Server listening on port ${5500}`));
 

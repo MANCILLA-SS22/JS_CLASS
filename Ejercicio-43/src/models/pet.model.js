@@ -8,4 +8,4 @@ const schema = new Schema({
 
 const petsModel = model('pets' ,schema);
 
-export default petsModel;
+export {petsModel};
