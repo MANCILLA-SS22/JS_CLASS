@@ -4,14 +4,24 @@ form.addEventListener('submit', function(e){
     e.preventDefault();
     const obj = {}; //Creamos un objeto ADICIONAL donde se guardara la informacion que esta dentro del formulario para despues poderla enviar.
     const data = new FormData(form);
-    data.forEach((value, key) => obj[key] = value)
-    fetch('/api/jwt/register', {
+    data.forEach((value, key) => obj[key] = value);
+    console.log("Objeto formado: ", obj);
+    // fetch('/api/jwt/register', {
+    fetch('/api/extend/users/register',{
         method: 'POST',
         body: JSON.stringify(obj),
         headers: { 'Content-Type': 'application/json' }
     }).then(function(result){
-        if (result.status === 200) window.location.replace('/users/login');
-    });
+        if (result.status === 200){
+            result.json();
+            alert("Usuario creado con exito!");            
+            window.location.replace('/users/login');
+        }else{
+            alert("No se pudo crear el usuario!");
+        }
+    }).then(function(json){
+        console.log(json);
+    })
 });
 
 

@@ -7,26 +7,26 @@ class UsersExtendRouter extends CustomRouter { //Se exteinde la clase. Es decir,
     init() { //Dentro del init() ralizamos la inicializacion de nuestras rutas, esto seria el equivalente de decir "router.get()"
         const userService = new UserService();  //EJEMPLO de como se conecta con el CustomRouter --> this.verboHTTP(path, policies, ...callbacks)
 
-        /* function authToken(req, res, next){
-            console.log("Hello!!");
+        function authToken(req, res, next){
+            console.log("Hello");
             next();
-        }; */
+        };
 
-        this.get('/', ["PUBLIC"], function(req, res){ // this.get() proviene del custom.routes.js
-            console.log("TEST");
+        this.get('/', ["PUBLIC"], authToken, function(req, res){ // this.get() proviene del custom.routes.js
+            console.log("World!!");
             res.send("Hola coders!!");
         });
 
         this.get('/currentUser', ["USER", "USER_PREMIUM"], function(req, res){ // this.get() proviene del custom.routes.js
-            res.sendSuccess(req.user);
+            res.sendSuccess(req.user)
         });
 
         this.get('/premiumUser', ["USER_PREMIUM"], function(req, res){ // this.get() proviene del custom.routes.js
-            res.sendSuccess(req.user);
+            res.sendSuccess(req.user)
         });
 
         this.get('/adminUser', ["ADMIN"], function(req, res){ // this.get() proviene del custom.routes.js
-            res.sendSuccess(req.user);
+            res.sendSuccess(req.user)
         });
 
         this.post('/login', ["PUBLIC"], async function(req, res){
@@ -51,8 +51,9 @@ class UsersExtendRouter extends CustomRouter { //Se exteinde la clase. Es decir,
                     age: user.age,
                     role: user.role
                 };
-                const access_token = generateJWToken(tokenUser);
-                console.log(access_token);
+                const access_token = generateJWToken(tokenUser); console.log("access_token", access_token);
+
+                res.cookie('jwtCookieToken', access_token, { maxAge: 60000, httpOnly: true } ) //Aqui se almacena la cookie
                 res.send({ message: "Login successful!", access_token: access_token, id: user._id });
 
             } catch (error) {
