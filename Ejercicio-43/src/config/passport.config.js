@@ -2,7 +2,7 @@ import passport from 'passport';
 import passportLocal from "passport-local"
 import jwtStrategy from 'passport-jwt';
 import {userModel} from '../models/user.model.js';
-import { PRIVATE_KEY, createHash } from '../utils.js';
+import { PRIVATE_KEY, createHash, validateHash } from '../utils.js';
 
 const localStrategy = passportLocal.Strategy;
 const JwtStrategy = jwtStrategy.Strategy;
@@ -10,10 +10,25 @@ const ExtractJWT = jwtStrategy.ExtractJwt;
 
 function initialPassport(){ //Estrategia de obtener Token JWT por Cookie
     passport.use('jwt', new JwtStrategy({ jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]), secretOrKey: PRIVATE_KEY }, jwt ));
+    passport.use('login', new localStrategy({ passReqToCallback: true, usernameField: 'email' }, login ));
     passport.use('register', new localStrategy({ passReqToCallback: true, usernameField: 'email' }, register ));
     passport.serializeUser(serialize); //Estas funciones permiten a Passport.js manejar la información del usuario durante el proceso de autenticación, serializando y deserializando los usuarios para almacenar y recuperar información de la sesión. Son esenciales cuando se implementa la autenticación de usuarios en una aplicación Node.js utilizando Passport.js
     passport.deserializeUser(deserialize);
 };
+
+async function login(req, username, password, done){
+    try {
+        const user = await userModel.findOne({ email: username });
+        // console.log("Usuario encontrado para login:", user);
+
+        if (!user) return done(null, false);
+        if (!validateHash(user, password)) return done(null, false)
+
+        return done(null, user);
+    } catch (error) {
+        return done(error);
+    } 
+}; 
 
 async function register(req, username, password, done){
     const { first_name, last_name, email, age } = req.body;

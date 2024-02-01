@@ -1705,7 +1705,7 @@ console.log(rivian.speedUS); */
 //         $$$$$$$$$$$$$$$ Arrays $$$$$$$$$$$$$$$
 
 
-//Ejemplo 0: map behind the scenes & callbacks
+/* //Ejemplo 0: map behind the scenes & callbacks
 function mapCustom(array, callback) {
     let nuevoArray = [];
 
@@ -1724,24 +1724,6 @@ const nuevoArr = mapCustom(numeros, function(valor){
 
 console.log(nuevoArr);
 
-
-  // Extra
-  Array.prototype.mapCustom = function (callback) {
-    let nuevoArray = [];
-  
-    for (let i = 0; i < this.length; i++) {
-      let nuevoValor = callback(this[i]);
-      nuevoArray.push(nuevoValor);
-    }
-  
-    return nuevoArray;
-  };
-  
-  numeros.mapCustom((valor) => {
-    console.log(valor);
-    return valor * 2;
-  });
-
 const sumar = (numero1, numero2) => numero1 + numero2;
 const restar = (numero1, numero2) => numero1 - numero2;
 const multiplicar = (numero1, numero2) => numero1 * numero2;
@@ -1754,7 +1736,7 @@ function calcular(numero1, numero2, callback) {
 console.log(calcular(2, 3, sumar));
 console.log(calcular(2, 3, restar));
 console.log(calcular(2, 3, multiplicar));
-console.log(calcular(2, 3, dividir));
+console.log(calcular(2, 3, dividir)); */
 
 /* //Ejemplo 1: Declaracion y manejo de un array con numeros que vamos a operar entre ellos
 

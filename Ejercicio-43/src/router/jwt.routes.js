@@ -1,22 +1,18 @@
 import { Router } from 'express';
-import {userModel} from "../models/user.model.js";
-import { validateHash, generateJWToken } from '../utils.js';
+import { generateJWToken } from '../utils.js';
 import passport from 'passport';
 
 const router = Router();
 
-router.post("/login", login);
+router.post('/login', passport.authenticate("login", {session:false}), login);
 router.post("/register", passport.authenticate("register", {session: false}), register);
 
 async function login(req, res){
-    console.log(req)
-    const {email, password} = req.body;
     try {
-        const user = await userModel.findOne({ email });
-        console.log("Usuario encontrado para login: ", user);
+        if(!req.user) return res.status(400).json({message: "Invalid credentials"});
 
-        if (!user)                         return res.status(204).send({ error: "Not found", message: "User doesn't exists with username: " + email });
-        if (!validateHash(user, password)) return res.status(401).send({ status: "error", error: "Invalid credentials for user: "+ email});
+        console.log("User found to login:", req.user);    
+        const user = req.user;
 
         const tokenUser = {
             name: `${user.first_name} ${user.last_name}`,
@@ -30,10 +26,9 @@ async function login(req, res){
         // 1ro con LocalStorage
         // res.send({ message: "Login successful!", jwt: access_token, id: user._id.toString() });
 
-
         // 2do con Cookies
         res.cookie('jwtCookieToken', access_token, { maxAge: 60000, httpOnly: true } ) //Aqui se almacena la cookie
-        res.send({ message: "Login success!!" });
+        res.send({ message: "Login success!!", access_token: access_token });
 
     } catch (error) {
         console.error(error);

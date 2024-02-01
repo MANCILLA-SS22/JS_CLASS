@@ -5,6 +5,7 @@
     "@socket.io/admin-ui": "^0.5.1",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.1",
+    "commander": "^11.1.0",
     "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "core-js": "^3.32.1",
@@ -45,7 +46,8 @@
     "@parcel/transformer-sass": "^2.9.3"
   },
   "scripts": {
-    "start:dev": "SET NODE_ENV=development&&nodemon Ejercicio-43/src/backend.js",
+    "start": "node Ejercicio-45/src/backend.js",
+    "start:dev": "SET NODE_ENV=development&&nodemon Ejercicio-44/src/backend.js",
     "start:prod": "SET NODE_ENV=production&&nodemon Ejercicio-0-UDEMY/src/server.js",
     "debug": "node --inspect backend.js"
   },

@@ -2193,6 +2193,47 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     
   > Secret key: The secret key is combined with the header and the payload to create a unique hash. You are only able to verify this hash if you have the secret key. Secret key used for signing and verifying JWTs. It must be replaced with a 
    strong secret key in production
+   
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
+
+                                                                                                                   Process y entornos
+                                                                                                                   
+- Definicion de process: Cada vez que corremos un proceso en nodejs, éste genera un objeto llamado process, el cual contiene información referente a todo lo implicado con el proceso, cosas como:
+    ✓ Uso de memoria 
+    ✓ Id del proceso en el sistema operativo 
+    ✓ En qué sistema operativo o plataforma está corriendo
+    ✓ En qué entorno está corriendo. 
+    ✓ Qué argumentos tiene el entorno.
+
+ > Algunos elementos importantes de process
+    ✓ process.cwd() : Directorio actual del proceso.
+    ✓ process.pid : id del proceso en el sistema
+    ✓ process.MemoryUsage() :
+    ✓ process.env : Accede al objeto del entorno actual
+    ✓ process.argv : Muestra los argumentos pasados por CLI (Los argumentos permiten iniciar la ejecución de un programa a partir de ciertos elementos iniciales)
+    ✓ process.version : Muestra la versión del proceso (node en este caso)
+    ✓ process.on() : Permite setear un listener de evento. Permitirá poner a nuestro proceso principal a la escucha de algún evento para poder ejecutar alguna acción en caso de que algo ocurra.
+      ~ process.on('exit'); // Para ejecutar un código justo antes de la finalización del proceso.
+      ~ process.on('uncaughtException'); //  Para atrapar alguna excepción que no haya sido considerada en algún catch
+      ~ process.on('message'); // para poder comunicarse con otro proceso
+
+    ✓ process.exit() : Permite salir del proceso. Cuando ejecutamos una salida con process.exit() como argumento, podemos enviar un código que sirve como identificador para el desarrollador sobre la razón de la salida
+      Hay que conocer los códigos de salida para aber cómo utilizarlos. También podemos rear nuestros propios códigos. Algunos de los códigos importantes son:
+        0 : proceso finalizado normalmente. 
+        1 : proceso finalizado por excepción fatal 
+        5 : Error fatal del motor V8. 
+        9 : Para argumentos inválidos al momento de la ejecución.
+     
+ > arguments (commander): Commander es una de las librerías más utilizadas a la fecha para el manejo de argumentos. Permite realizar funciones como:
+    ✓ Convertir flags directamente en booleanos
+    ✓ Limitar sólo las flags configuradas (cualquier otra impide el procesamiento del programa)
+    ✓ Colocar argumentos predeterminados
+   
+- Sobre los entornos: Seguramente, a estas alturas del desarrollo entenderás que un código no puede simplemente hacerse y llegar al cliente. Para que un código esté listo para llegar al cliente, es necesario que pase por diferentes fases.
+  Sin embargo, para que estas fases se encuentren aisladas de las otras fases (no queremos que la fase de desarrollo tenga datos de producción, o que haya datos de producción en staging), necesitaremos crear entornos específicos para estas 
+  fases. Nuestras variables cambiarán según el entorno.
+  El primer uso radica en que una variable cambie según el entorno donde se esté corriendo, esto permite que pueda apuntar a una base de datos prueba o a una base de datos productiva con sólo cambiar el apuntador de dónde se está corriendo.
+  Otro factor importante es el factor seguridad. Con las variables de entorno podemos ocultar la información sensible de nuestro código, como credenciales, claves de acceso, tokens, secrets, etc.
 
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        

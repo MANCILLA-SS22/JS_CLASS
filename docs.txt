@@ -41,12 +41,15 @@ https://spring.io       https://docs.spring.io/spring-framework/docs/current/ref
 https://react-redux.js.org  https://redux-toolkit.js.org  https://redux-saga.js.org 
 https://nextjs.org/docs/getting-started 
 
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values
+https://www.w3schools.com/jsref/jsref_class_super.asp#gsc.tab=0&gsc.q=unhandledRejection
+https://www.geeksforgeeks.org/javascript-array-findindex-method/
 https://nodejs.org/en/about/ 
-https://docs.nestjs.com 
+https://expressjs.com/en/guide/routing.html
 https://nextui.org  
-https://axios-http.com/docs/intro 
-https://expressjs.com/en/guide/routing.html 
+https://docs.nestjs.com 
 https://docs.docker.com/storage/volumes/#volumes
+https://axios-http.com/docs/intro  
 https://www.npmjs.com/package/multer
 https://www.npmjs.com/package/dotenv
 https://www.npmjs.com/package/morgan
@@ -68,6 +71,7 @@ https://github.com/jaredhanson/passport-local
 https://github.com/auth0/node-jsonwebtoken
 https://github.com/cfsghost/passport-github
 https://github.com/mikenicholson/passport-jwt
+https://github.com/tj/commander.js
 
 https://bcrypt-generator.com/
 https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt/17238#17238
