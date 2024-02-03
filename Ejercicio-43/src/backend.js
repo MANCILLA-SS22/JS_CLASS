@@ -1,4 +1,4 @@
-//Ejemplo 43: Uso de passport avanzado
+//Ejemplo 43: Uso de passport avanzado con cookies y localstorage (sin sessions)
 // Colocar una vista en public (No utilizar motores de plantillas), dicha vista contará con dos campos: correo y contraseña, deberá además mandar a llamar un servicio de login que devuelva el token por medio de una cookie como lo visto en el ejemplo
 // ✓ No colocar el httpOnly. Intenta el proceso de login y setea la cookie en el navegador. Después, hacer un console.log simple en el archivo js con el comando document.cookie, corroborar que se muestre en la consola del navegador la cookie asociada a tu token. ¡Peligroso!
 // ✓ Limpiar esta cookie y colocar el httpOnly en la configuración, repite el proceso del primer punto y corrobora si la cookie aparece en la consola.
@@ -74,11 +74,13 @@ app.use(cookieParser("CoderS3cr3tC0d3")); //colocamos la inicialización de nues
 initialPassport();
 app.use(passport.initialize());
 
-app.use("/", viewRouter);
+app.use("/", viewRouter); //Renderiza una vista con un mensaje solamente
+
 app.use('/users', usersViewRouter);
 app.use("/api/jwt", jwtRouter);
 app.use("/api/pets", petsRouter);
 app.use('/api/users', userRouter);
+
 app.use("/api/extend/users", usersExtendRouter.getRouter());
 
 app.listen(5500, () => console.log(`Server listening on port ${5500}`));

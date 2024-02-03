@@ -11,7 +11,6 @@ router.get("/githubcallback", passport.authenticate('github', { failureRedirect:
 //Passport Local
 router.post('/register', passport.authenticate("register", {failureRedirect: "api/session/fail-register"}), register);
 router.post('/login', passport.authenticate("login", {failureRedirect: "api/session/fail-login"}), login);
-
 router.get("/fail-register", failRegister);
 router.get("/fail-login", failLogin);
 
@@ -24,18 +23,18 @@ async function login(req, res){
     const user = req.user;
 
     // creamos session con el atributo user con "session" (Metodo 1)
-    req.session.user = { 
-        name: `${user.first_name} ${user.last_name}`,
-        email: user.email,
-        age: user.age
-    };
-    console.log("req.session", req.session);
-    res.send({ status: "success", payload: req.session.user, message: "¡Primer logueo realizado! :)" });
+    // req.session.user = { 
+    //     name: `${user.first_name} ${user.last_name}`,
+    //     email: user.email,
+    //     age: user.age
+    // };
+    // console.log("req.session", req.session);
+    // res.send({ status: "success", payload: req.session.user, message: "¡Primer logueo realizado! :)" });
 
-    // creamos session con el atributo user con "jwt" (Metodo 2)
-    // const access_token = generateJWToken(user);  
-    // console.log("access_token", access_token);
-    // res.send({ access_token: access_token });    
+    // Usando JWT usando Postman - no se usan session (Metodo 2)
+    const access_token = generateJWToken(user);  
+    console.log("access_token", access_token);
+    res.send({ access_token: access_token });    
 }
 
 async function githubcallback(req, res){ 

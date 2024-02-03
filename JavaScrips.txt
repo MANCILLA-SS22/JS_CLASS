@@ -1554,8 +1554,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   En el modelo tradicional se crea una solicitud HTTP que va al servidor. El servidor procesa la solicitud y carga la página HTML sin que el usuario interactúe con la aplicación web. En el caso de AJAX, JS permite que el usuario interactúe 
   con la aplicación web y modifique la página en segundo plano y solo sus partes necesarias. “En segundo plano” significa que mientras espera que se reciban los datos, el usuario puede hacer otras cosas en la página y optimizar este tiempo.
  
-- Middleware:  
- 
 - Promesas (promise): Es un objeto de Javascript que representa un evento a futuro y permite representar y seguir el ciclo de vida de una tarea/operación (función). Es una acción asincrónica que se puede completar en algún momento y 
   producir un valor, y notificar cuando esto suceda. Una promesa cuenta con tres estados posibles: pending, fulfilled y rejected. Las promesas pueden ser resueltas o rechazadas.
   Podemos crear promesas a través de su constructor new Promise. Su sintaxis es algo compleja, ya que recibe una función por parámetro que a su vez recibe por parámetro las funciones de resolve y reject
@@ -1611,35 +1609,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   ~ 404: Se utiliza cuando el recurso no se ha encontrado, ya sea algún dato solicitado o incluso el endpoint mismo.
   ~ 500: Se utiliza cuando algo ocurrió en el servidor, no necesariamente un error del cliente, sino un error o “detalle” que no haya considerado el servidor al tratar con algún caso
     
-- Microservicio: Los microservicios son un enfoque arquitectónico y organizativo para el desarrollo de software donde el software está compuesto por pequeños servicios independientes que se comunican a través de API bien definidas. Los 
-  propietarios de estos servicios son equipos pequeños independientes. Las arquitecturas de microservicios hacen que las aplicaciones sean más fáciles de escalar y más rápidas de desarrollar. Esto permite la innovación y acelera el tiempo de 
-  comercialización de las nuevas características.
-  Los microservicios son tanto un estilo de arquitectura como un modo de programar software. Con los microservicios, las aplicaciones se dividen en sus elementos más pequeños e independientes entre sí. A diferencia del enfoque tradicional y 
-  monolítico de las aplicaciones, en el que todo se compila en una sola pieza, los microservicios son elementos independientes que funcionan en conjunto para llevar a cabo las mismas tareas. Cada uno de esos elementos o procesos es un 
-  microservicio. Este enfoque de desarrollo de software valora el nivel de detalle, la sencillez y la capacidad para compartir un proceso similar en varias aplicaciones. Es un elemento fundamental de la optimización del desarrollo de ap
-  licaciones hacia un modelo nativo de la nube.
-  Sin embargo, el mayor interrogante es cuáles son las ventajas de utilizar una infraestructura de microservicios. En pocas palabras, el objetivo es distribuir software de calidad con mayor rapidez. Si bien esto se puede lograr con los 
-  microservicios, se deben considerar otras cuestiones. Dividir las aplicaciones en microservicios no es suficiente; es necesario administrarlos, coordinarlos y gestionar los datos que crean y modifican.
-
-- Libreria: Las librerías de programación son conjuntos de archivos de código que se utilizan para desarrollar software. Su objetivo es facilitar la programación, al proporcionar funcionalidades comunes, que ya han sido resueltas previamente 
-  por otros programadores. Como curiosidad, el término proviene de una mala traducción de la palabra inglesa library, que en realidad significa biblioteca. Las librerías (o bibliotecas) son un componente esencial para que los desarrolladores 
-  puedan programar de forma sencilla, evitando la duplicidad de código y minimizando errores. También permiten una mayor agilidad, al reducir el tiempo de desarrollo, así como los costes. A diferencia de un framework, una librería no aporta 
-  la estructura sobre cómo realizar el desarrollo, sino que proporciona funcionalidades comunes, que ya han sido resueltas previamente por otros programadores y evitan la duplicidad de código. Además reducen el tiempo de desarrollo y 
-  aumentan la calidad del mismo.
-   > Librerías estáticas: Estas se graban en un programa como ejecutables. Sirven exclusivamente para esto; después, podemos borrarlas sin problemas, ya que el programa seguirá funcionando con la función necesaria.  
-   > Librerías dinámicas: Son distintas a las estáticas en tanto en cuanto no se copian en el programa al compilarlas. Las subrutinas son cargadas en tiempo de ejecución, en vez de enlazarse en tiempo de compilación.  
-
-- Framework: un framework es un marco de trabajo que tiene como objetivo facilitar la solución de problemas que pueden surgir al programar. Los frameworks aceleran el proceso de programar facilitando tareas como la organización del código o 
-  el trabajo en equipo dentro de un proyecto, por ejemplo. En otras palabras, el objetivo de un framework en programación es facilitar la tarea de los programadores.
-  También hay que destacar que muchos de estos frameworks no sólo facilitan la organización del trabajo, sino que también ofrecen recursos desarrollados por otros programadores. Estos recursos pueden ser informes o códigos que pueden usarse 
-  para solucionar los problemas más habituales que se dan al llevar a cabo determinadas tareas.
-    > Frameworks para software development: Los frameworks para aplicaciones generales se utilizan para mejorar la estructura de una aplicación. Su objetivo es proporcionar una estructura base para los desarrolladores de software con la que 
-      puedan organizar sus proyectos. Eso sí, siempre dentro de un sistema operativo determinado. 
-    > Frameworks para desarrollo web: Al estar relacionados con el diseño web, es evidente que existen diferentes frameworks para los diferentes lenguajes de programación que se utilizan. Un desarrollador backend y uno de frontend usarán 
-      marcos de trabajo distintos, aunque existen algunos ideales para los full stack developers como ReactJS.
-    > Marco de gestión de contenido: De nuevo, un tipo de frameworks relacionados con el diseño web. Aun así, en este caso se trata de interfaces diseñadas para personalizar un CMS. En consecuencia, existen una gran cantidad de CMFs, ideales 
-      para diferentes lenguajes e incluso para diferentes tareas dentro de un lenguajes. 
-      
 - Cookies (definicion): Cookies (often known as internet cookies) are text files with small pieces of data — like a username and password — that are used to identify your computer as you use a network. Specific cookies are used to identify 
   specific users and improve their web browsing experience. Data stored in a cookie is created by the server upon your connection. This data is labeled with an ID unique to you and your computer. When the cookie is exchanged between your
   computer and the network server, the server reads the ID and knows what information to specifically serve you.
@@ -2167,8 +2136,10 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     ✓ El código ejemplo de ambos métodos se muestra a continuación.
     ✓ Se puede ver que el método serializeUser utiliza el ID del usuario y el deserializeUser utiliza el objeto de usuario, como lo mencionamos antes.
     
-- JsonWebToken (JWT): Es mecanismo para poder propagar entre dos partes, y de forma segura, la identidad de un determinado usuario, además con una serie de claims o privilegios. Estos privilegios están codificados en objetos de tipo JSON, 
-    que se incrustan dentro de del payload o cuerpo de un mensaje que va firmado digitalmente. Un token tres partes:
+- JsonWebToken (JWT): Es un estándar que soluciona el problema de consultas y escalabilidad que presenta session. Este se basa en encriptar la información del usuario en un token que se guardará del lado del cliente, y el cliente lo enviará 
+    al servidor en cada consulta, para poder desencriptar y obtener la información de usuario interna.
+    Es mecanismo para poder propagar entre dos partes, y de forma segura, la identidad de un determinado usuario, además con una serie de claims o privilegios. Estos privilegios están codificados en objetos de tipo JSON, que se incrustan 
+    dentro de del payload o cuerpo de un mensaje que va firmado digitalmente. Un token tres partes:
     ~ Header: encabezado dónde se indica, al menos, el algoritmo y el tipo de token, que en el caso del ejemplo anterior era el algoritmo HS256 y un token JWT.
     ~ Payload: donde aparecen los datos de usuario y privilegios, así como toda la información que queramos añadir, todos los datos que creamos convenientes. (tanto el Header como el Payload son texto plano que se codificara, pero No se 
       encriptara)
@@ -2196,9 +2167,15 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
    
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
-                                                                                                                   Process y entornos
+                                                                                                                   Process & Child Process
                                                                                                                    
-- Definicion de process: Cada vez que corremos un proceso en nodejs, éste genera un objeto llamado process, el cual contiene información referente a todo lo implicado con el proceso, cosas como:
+- Sobre los entornos: Seguramente, a estas alturas del desarrollo entenderás que un código no puede simplemente hacerse y llegar al cliente. Para que un código esté listo para llegar al cliente, es necesario que pase por diferentes fases.
+  Sin embargo, para que estas fases se encuentren aisladas de las otras fases (no queremos que la fase de desarrollo tenga datos de producción, o que haya datos de producción en staging), necesitaremos crear entornos específicos para estas 
+  fases. Nuestras variables cambiarán según el entorno.
+  El primer uso radica en que una variable cambie según el entorno donde se esté corriendo, esto permite que pueda apuntar a una base de datos prueba o a una base de datos productiva con sólo cambiar el apuntador de dónde se está corriendo.
+  Otro factor importante es el factor seguridad. Con las variables de entorno podemos ocultar la información sensible de nuestro código, como credenciales, claves de acceso, tokens, secrets, etc.                                                                                                                   
+                                                                                                                   
+- process: Cada vez que corremos un proceso en nodejs, éste genera un objeto llamado process, el cual contiene información referente a todo lo implicado con el proceso, cosas como:
     ✓ Uso de memoria 
     ✓ Id del proceso en el sistema operativo 
     ✓ En qué sistema operativo o plataforma está corriendo
@@ -2212,7 +2189,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     ✓ process.env : Accede al objeto del entorno actual
     ✓ process.argv : Muestra los argumentos pasados por CLI (Los argumentos permiten iniciar la ejecución de un programa a partir de ciertos elementos iniciales)
     ✓ process.version : Muestra la versión del proceso (node en este caso)
-    ✓ process.on() : Permite setear un listener de evento. Permitirá poner a nuestro proceso principal a la escucha de algún evento para poder ejecutar alguna acción en caso de que algo ocurra.
+    ✓ process.on() : Permite setear un listener de evento. Permitirá poner a nuestro proceso principal a la escucha de algún evento para poder ejecutar alguna acción en caso de que algo ocurra. (Listeners)
       ~ process.on('exit'); // Para ejecutar un código justo antes de la finalización del proceso.
       ~ process.on('uncaughtException'); //  Para atrapar alguna excepción que no haya sido considerada en algún catch
       ~ process.on('message'); // para poder comunicarse con otro proceso
@@ -2227,14 +2204,56 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
  > arguments (commander): Commander es una de las librerías más utilizadas a la fecha para el manejo de argumentos. Permite realizar funciones como:
     ✓ Convertir flags directamente en booleanos
     ✓ Limitar sólo las flags configuradas (cualquier otra impide el procesamiento del programa)
-    ✓ Colocar argumentos predeterminados
-   
-- Sobre los entornos: Seguramente, a estas alturas del desarrollo entenderás que un código no puede simplemente hacerse y llegar al cliente. Para que un código esté listo para llegar al cliente, es necesario que pase por diferentes fases.
-  Sin embargo, para que estas fases se encuentren aisladas de las otras fases (no queremos que la fase de desarrollo tenga datos de producción, o que haya datos de producción en staging), necesitaremos crear entornos específicos para estas 
-  fases. Nuestras variables cambiarán según el entorno.
-  El primer uso radica en que una variable cambie según el entorno donde se esté corriendo, esto permite que pueda apuntar a una base de datos prueba o a una base de datos productiva con sólo cambiar el apuntador de dónde se está corriendo.
-  Otro factor importante es el factor seguridad. Con las variables de entorno podemos ocultar la información sensible de nuestro código, como credenciales, claves de acceso, tokens, secrets, etc.
+    ✓ Colocar argumentos predeterminados.
+      
+- Child process: Existen casos en los que un proceso de node necesitará crear otro proceso para poder resolver una función de gran complejidad. Algunas operaciones requieren mucho procesamiento, como:
+    ✓ Lectura de archivos enormes
+    ✓ Consultas a bases muy complejas 
+  Por lo que, para no bloquear las tareas actuales de, un servidor, por ejemplo, ocupamos separar esa tarea en otro subproceso.
+  Existen diferentes formas para que un proceso de node pueda ejecutar otro proceso, hay cuatro operadores que pueden ser utilizados y manipulados de diferentes formas 
+  
+    > fork(): 
+    > spawn():
+    > exec():
+    > execFile():
+    
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
+                                                                                                                   Arquitectura de capas
+
+- Definicion de aquitectura de capas: Es un patrón de diseño donde los módulos contemplados dentro de nuestro aplicativo son separados por “capas”. El nombre “capa” hace referencia a cada rol que debe cumplirse dentro de todo el aplicativo.                                                                                                                   
+
+  > Responsabilidades: Cuando trabajamos con capas, entendemos que cada archivo debe cumplir una función específica, permitiendo así que, si llegase a ocurrir algún “error” o si llegase a requerirse modificación en algún punto, tengamos más 
+    claro dónde debemos atacar esos cambios.
+  > Capas base: En un sistema que trabaje con este modelo, es necesario contar con tres capas base:
+     ✓ Capa de Modelo o Persistencia: Esta capa tiene por principal objetivo la conexión directa con el modelo de persistencia a trabajar, es decir, debe saber conectar con la persistencia en memoria, en archivos o en bases de datos. Todo 
+       dependendiendo de cómo haya sido programada la capa. La capa de persistencia no debería realizar validaciones ni operaciones más allá del CRUD que corresponde a una capa de persistencia. Para modelos más complejos como Persistencias 
+       en bases de datos, también es posible configurar operaciones transaccionales y Agregaciones en este mismo punto. 
+     ✓ Capa de Vista o Renderización: La capa de renderizado o Vista, como indica su nombre, sólo tiene la función de tomar datos para poder ser renderizados. Esta capa es una de las más subjetivas en la arquitectura, pues si bien TODOS los 
+       modelos requieren renderizar contenido, se hace de maneras muy diferentes. Renderizado, según sea el enfoque del equipo, también puede acceder a Persistencia sin necesidad de pasar por negocio, siempre y cuando ésta tenga como fin 
+       único el de mostrar la información correspondiente. En ocasiones, también se suele contemplar la capa de renderizado fuera de la arquitectura interna y usar algún aplicativo externo (como enviar la info a React para que él la 
+       renderice, que es lo más habitual).
+     ✓ Capa de Controlador o Negocio: Esta capa tiene por principal objetivo la conexión directa con el modelo de persistencia a trabajar, es decir, debe saber conectar con la persistencia en memoria, en archivos o en bases de datos. Todo 
+       dependendiendo de cómo haya sido programada la capa. La capa de persistencia no debería realizar validaciones ni operaciones más allá del CRUD que corresponde a una capa de persistencia. Para modelos más complejos como Persistencias 
+       en bases de datos, también es posible configurar operaciones transaccionales y Agregaciones en este mismo punto. 
+    Sin estas tres capas, el modelo se volvería inconsistente y la comunicación entre los módulos sería débil y generaría muchos problemas.
+  > Capa de routing:  La capa de routing contendrá todos los archivos de tipo “router” que, como estamos ya acostumbrados, es una capa basada en redireccionamientos hacia puntos específicos de nuestra API. Actualmente, con el uso de motores 
+    de plantillas, nuestra capa de routing está estrechamente conectada con la capa derenderización (al utilizar un views router). Sin esta capa, todas nuestras rutas de todas nuestras entidades se encontrarían en un mismo archivo, 
+    complicando la lectura del código posteriormente.
+  > Capa de servicio: La capa de servicios es una capa intermedia entre el controlador y la persistencia, en esencia, un servicio tiene la capacidad de servir como “tunel” de conexión, para que el controlador pueda acceder de manera más 
+    homologada a la persistencia. Contar con una capa de servicio impide que los accesos a persistencia se hagan descontroladamente, con argumentos erróneos, etc. Además, son el punto clave para aplicar un patrón repository. No confundir una 
+    capa de servicio con la capa de negocio, solo es un punto intermedio de conexión.
+
+- Analisis del flujo y capas del proyecto: En ella se deben seguir los pasos adecuados para una mejor actitectura. Los cuales son:
+  > Inicio: capa de vista, presentación o renderizado: Como es de esperarse, todo comienza desde el cliente, cuando este carga una página, aprieta un botón o desea buscar un dato, está haciendo una petición al servidor. Para ello, desde esta 
+    capa se hace un “consumo”, el cual hará una operación de solicitud para obtener los datos.
+  > Primer contacto (capa de ruteo): La petición tuvo que realizarse a partir de un endpoint, el cual entra a la capa de ruteo y designa cuál de todas las rutas corresponden a la acción que desea realizar el cliente.
+  > Segundo contacto (capa de controlador): Cada ruta está relacionada con algún método o función de un controlador, así, cuando el router reconoce adónde está apuntando el cliente, sabe llevarlo a la función adecuada.
+  > Tercer contacto (Capa de Servicio): Para poder obtener, un grupo de usuarios, la función perteneciente a estos usuarios requerirá acceder a un punto intermedio entre el controlador y entre la capa de persistencia para obtener la info.
+  > Cuarto contacto (Capa de Persistencia): El punto intermedio mencionado arriba sabe que debe acceder a usuarios, el detalle es ¿de qué persistencia? ¿Memoria, archivos, base de datos? El servicio sabrá a qué persistencia conectar y 
+    obtendrá los datos
+  > Regreso (vuelta de datos y envío al cliente): Una vez obtenidos los datos a partir de la persistencia, el controlador termina de procesarlos y puede finalmente enviarlos al cliente para terminar el procesamiento de esa petición.
+    
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 

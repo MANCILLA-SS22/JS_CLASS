@@ -1,3 +1,5 @@
+//Ejemplo 44: Uso de process, variables de entorno (dotenv) y child process
+
 // Utilizando argumentos con dotenv
 // ✓ Realizar un servidor basado en node js con express, El cual reciba por flag de cli el comando --mode <modo> y sea procesado por commander.
 // ✓ Acorde con este argumento, hacer una lectura a los diferentes entornos, y ejecutar dotenv en el path correspondiente a cada modo (--mode development debería conectar con .env.development).
@@ -8,6 +10,11 @@
 // ✓ Si se pasa un argumento no numérico, entonces deberá mostrar por consola un error indicando “Invalid parameters” seguido de una lista con los tipos de dato (para [1,2,”a”,true], el error mostrará [number,number,string,boolean]
 // ✓ Escapar del proceso con un código -4. Utilizando un listener, obtener el código de escape del error y mostrar un mensaje “Proceso finalizado por argumentación inválida en una función”
 
+// Cálculo bloqueante con contador
+// ✓ Realizar un servidor en express que contenga una ruta raíz '/' donde se represente la cantidad de visitas totales a este endpoint
+// ✓ Se implementará otra ruta '/calculo-bloq', que permita realizar una suma incremental de los números del 0 al 100000 con el siguiente algoritmo.
+// ✓ Comprobar que al alcanzar esta ruta en una pestaña del navegador, el proceso queda en espera del resultado. Constatar que durante dicha espera, la ruta de visitas no responde hasta terminar este proceso.
+// ✓ Luego crear la ruta '/calculo-nobloq' que hará dicho cálculo forkeando el algoritmo en un child_process, comprobando ahora que el request a esta ruta no bloquee la ruta de visitas.
 
 import express from "express";
 import mongoose from "mongoose";
@@ -21,6 +28,7 @@ import program from './process.js';
 
 const app = express();
 
+console.log("config: ", config)
 // console.log(process);
 // console.log(process.argv); // npm run start
 // console.log(process.argv.slice(2)); // --> ["hello", "world"]

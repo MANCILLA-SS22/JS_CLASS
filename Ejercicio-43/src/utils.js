@@ -1,7 +1,9 @@
-import { fileURLToPath } from "url";
-import { dirname } from "path";
+import passport from 'passport';
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
+
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -41,27 +43,31 @@ function authToken(req, res, next){ //El JWT token se guarda en los headers de a
 };
 
 //LocalStorage_Cookies_PassportJWT
-async function passportCall(strategy){ // para manejo de errores
+function passportCall(strategy){ // para manejo de errores
+
     return async function(req, res, next){
         console.log("Entrando a llamar strategy: ", strategy);
-        passport.authenticate(strategy, function (err, user, info){
-            if (err) return next(err);
-            if (!user) return res.status(401).send({ error: info.messages ? info.messages : info.toString() });
+
+        passport.authenticate(strategy, authJWT)(req, res, next); //Colocamos (req, res, next) para que se incoque la funcion a si misma sin necesidad de llamarla desde otro medio.
+
+        function authJWT(err, user, info){ //La funcion interna en passport.authenticate(), por defecto tiene tres parametros que representan el error, el usuario y la informacion.
+            console.log("err", err)
+            console.log("user", user)
+            console.log("info", info)
+            if (err) return next(err); // will generate a 500 error
+            if (!user) return res.status(401).send({ error: info.messages ? info.messages : info.toString() }); // Generate a JSON response reflecting authentication status
 
             console.log("Usuario obtenido del strategy: ", user);
             req.user = user;
             next();
-        })(req, res, next);
+        }        
     }
 };
 
-async function authorization(role){ // para manejo de Auth
+function authorization(role){ // para manejo de Auth
     return async function (req, res, next){
         if (!req.user) return res.status(401).send("Unauthorized: User not found in JWT")
-
-        if (req.user.role !== role) {
-            return res.status(403).send("Forbidden: El usuario no tiene permisos con este rol.");
-        }
+        if (req.user.role !== role) return res.status(403).send("Forbidden: El usuario no tiene permisos con este rol.");
         next()
     }
 };

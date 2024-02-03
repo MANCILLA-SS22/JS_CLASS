@@ -37,29 +37,19 @@ router.get("/error", function(req, res){
 //     }
 // });
 
-//Metodo 1: Con local storage
-// router.get("/", function(req, res){  
-//     res.render('profile', {user: req.user});
-// });
-
-//Metodo 2: Usando Authorization Bearer Token (USAR POSTMAN O NO FUNCIONARA)
+//Metodo 1: Usando Authorization Bearer Token (USAR POSTMAN O NO FUNCIONARA)
 // router.get("/", authToken, function(req, res){
 //     res.render('profile', {user: req.user});
 // });
 
-//Metodo 3: Usando JWT por Cookie
-router.get("/", passport.authenticate('jwt', { session: false }), function(req, res){  //Colocamos session:false debido a que no ocupamos express-session para estos procesos.
+//Metodo 2: Usando JWT por Cookie
+// router.get("/", passport.authenticate('jwt', { session: false }), function(req, res){  //Colocamos session:false debido a que no necesitamos express-session para estos procesos.
+//     res.render('profile', {user: req.user});
+// });
+
+//Metodo 3: Usando passport-JWT por Cookie mediante customCall, y middleware de autorización
+router.get("/", passportCall('jwt'), authorization('admin'), function(req, res){ 
     res.render('profile', {user: req.user});
 });
-
-//Metodo 4: Usando passport-JWT por Cookie mediante customCall
-// router.get("/", passportCall('jwt'), function(req, res){ 
-//     res.render('profile', {user: req.user});
-// });
-
-//Metodo 5
-// router.get("/", authorization('admin'), function(req, res){ 
-//     res.render('profile', {user: req.user});
-// });
 
 export default router;

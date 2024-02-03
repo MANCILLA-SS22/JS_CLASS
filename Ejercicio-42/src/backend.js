@@ -1,4 +1,4 @@
-//Ejemplo 42: Uso de passport y jwt 
+//Ejemplo 42: Uso de passport y jwt (con sessions)
 // Inicio de sesión con jwt --> A partir del servidor de express que estamos construyendo:
 // ✓ Configurar la creación del token para que ésta solo tenga duración de 1 minuto.
 // ✓ Crear tres vistas, vista base, vista de registro y vista de login. (puedes hacerlo sin motor de plantillas).
