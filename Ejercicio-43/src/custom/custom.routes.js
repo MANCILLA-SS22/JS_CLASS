@@ -67,11 +67,21 @@ class CustomRouter { //Esta es la clase padre, y CustomRouter es la clase que he
         return function(req, res, next){
 
             //Agregamos estas propiedades a cada uno de los 5 objetos, los cuales inicialmente no existen
-            res.sendSuccess = function(payload){res.status(200).send({status: "Success", payload})}
-            res.sendInternalServerError = function(error){res.status(500).send({status: "Error", error})}
-            res.sendClientError = function(error){res.status(400).send({status: "Client error ", error})}
-            res.sendAuthorizedError = function(error){res.status(403).send({status: "User not authenticated or missing token", error})}
-            res.sendForbiddenError = function(error){res.status(403).send({status: "Invalid token or used with no access, unauthorized, please check your roles!", error})}
+            res.sendSuccess = function(payload){
+                res.status(200).send({status: "Success", payload})
+            }
+            res.sendInternalServerError = function(error){
+                res.status(500).send({status: "Error", error})
+            }
+            res.sendClientError = function(error){
+                res.status(400).send({status: "Client error ", error})
+            }
+            res.sendAuthorizedError = function(error){
+                res.status(403).send({status: "User not authenticated or missing token", error})
+            }
+            res.sendForbiddenError = function(error){
+                res.status(403).send({status: "Invalid token or used with no access, unauthorized, please check your roles!", error})
+            }
             next();
         }
     };
@@ -94,7 +104,7 @@ class CustomRouter { //Esta es la clase padre, y CustomRouter es la clase que he
 
 export default CustomRouter;
 
-//Explicacion del get(path, ...callbacks)
+//Explicacion del get(path, policies, ...callbacks)
 //(1) --> El path representa el "path" proveniente de los routers, mientras que el "...callback" se coloca con el spread operator porque representa tanto la funcion asincrona en los routers, como los 
 //        middlewares (si es que los tiene), y llegan en formato array.
 //(2) --> Esto es equivalente al --> app.use("/", router); que se trabaja de manera convencional, pero ahora con clases y objetos

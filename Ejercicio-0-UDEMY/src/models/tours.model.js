@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose";
 import slugify from "slugify"; //you can slugify a string by converting it to a URL-friendly format where any special characters and spaces are replaced with hyphens or underscores.
-import validator from "validator";
 
 const tourSchema = new Schema({
     name: {
@@ -81,13 +80,13 @@ const tourSchema = new Schema({
     toObject:{virtuals: true}
 });
 
-//virtual properties are fields whtat we define on our schema but that will NOT be persisted (they'll not be saved into the database in order to save us some space there). virtual() --> Creates a virtual type with the given name
+//VIRTUAL PROPERTIES: They are fields whtat we define on our schema but that will NOT be persisted (they'll not be saved into the database in order to save us some space there). virtual() --> Creates a virtual type with the given name
 tourSchema.virtual("durationWeeks").get(function(){ //durationWeeks is the property we're gonna look for without saving it into the database. We need to use a regular function because we need to use the "this" keyword so we can point to the current document
     return this.duration / 7;
 });
 
 
-// Document middlewares in mongoose. "pre" middlewares functions are gonna run before .save() and .creat() command. "post" middlewares functions are executed after all the "pre" middleware functions have complited. "this" is gonna point to the currently processed document
+//DOCUMENT MIDDLEWARES: "pre" middlewares functions are gonna run before .save() and .create() command. "post" middlewares functions are executed after all the "pre" middleware functions have complited. "this" is gonna point to the currently processed document
 tourSchema.pre("save", function(next){
     console.log(this);
     this.slug = slugify(this.name, {lower: true});
@@ -104,7 +103,7 @@ tourSchema.post("save", function(doc, next){
     next();
 });
 
-// Query middlewares in mongoose. They allow us to run functions before or after a certain query is executed. Here, the "this" keyword will now point at the current query and NOT at the current document because we're not processing any document.
+// QUERY MIDDLEWARES: They allow us to run functions before or after a certain query is executed. Here, the "this" keyword will now point at the current query and NOT at the current document because we're not processing any document.
 tourSchema.pre(/^find/, function(next){ // /^find/ means: everything that started with something. In this case, it's read as anything that started with "find", such as "find", "findOne", "findByIdAndUpdate", etc.
     this.find({secretTour: {$ne: true}}); //When we use getAllTourse, before executing "const tours = await features.query;", we run this current middleware. it's important to note that our pre-find middleware is executed because it is "find", just like we used in TourModel.find()
     this.start = Date.now(); //We set a new object
@@ -117,7 +116,7 @@ tourSchema.post(/^find/, function(docs, next){
     next();
 });
 
-//Aggregation middleware. Here, "this" will point to the current aggregation object
+//AGREGATION MIDDLEWARES: Here, "this" will point to the current aggregation object
 tourSchema.pre("aggregate", function(next){
     this.pipeline().unshift({ 
         $match: {secretTour: {$ne: true }}

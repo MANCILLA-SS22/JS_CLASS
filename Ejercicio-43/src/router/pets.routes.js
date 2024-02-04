@@ -81,12 +81,7 @@ router.get("*", function(req, res){// Dado que estamos trabajando a nivel router
 
 export default router;
 
-
-
-/**
-*
-* 
-
+/*
 Cuantificadores:
 
 +: El operador "+" sirve para limitar el numero de coincidencias. Por ejemplo, en la url, si el primer parametro no coincide, entonces se seguira buscando en los demas parametros si existe alguna coincidencia. 

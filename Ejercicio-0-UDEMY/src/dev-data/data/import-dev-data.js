@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import fs from "fs";
 import { __dirname } from "../../utils.js"; // --> C:\Users\xxelt\OneDrive\Documentos\PROYECTOS_PERSONALES\JavaScript\ApuntesDeClase\src
 import { TourModel } from "../../models/tours.model.js";
-console.log(__dirname)
 
 dotenv.config({path: `${__dirname}/config.env`}); //doent allow us to read our variables from the file (config.env) and save them into node JS environment variables
 // console.log(process.env); //process.env now has the keys and values you defined in your .env file

@@ -2,14 +2,7 @@ import {__dirname} from "../utils.js";
 import { TourModel } from "../models/tours.model.js";
 import { APIFeatures } from "../utils/apiFeatures.js";
 import {AppError} from "../utils/appError.js";
-// import catchFunc from "../utils/catchAsync.js";
-
-
-function catchFunc(fn){
-    return function(req, res, next){ //This is the funcion that express we'll gonna call. It's here where req, res, next are recognized by express and not in the function bellow
-        return fn(req, res, next).catch(next);
-    }
-}
+import catchFunc from "../utils/catchAsync.js";
 
 //This is a middleware belonging to the /top-5-cheap route in tourUdemyroutes.js
 async function aliasTopTours(req, res, next){ // http://localhost:5500/api/v1/tours/top-5-cheap

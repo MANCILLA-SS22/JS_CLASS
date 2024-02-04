@@ -13,7 +13,7 @@ function globalErrorHandler(err, req, res, next){ //Express recognizes an error 
         // let error = {...err};                         // Option 1
         // let error = { ...err, name: err.name };       // Option 2
         // let error = JSON.parse(JSON.stringify(err));  // Option 3
-        // let error = Object.assign({}, err);               // Option 4
+        // let error = Object.assign({}, err);           // Option 4
         let error = Object.create(err);                  // Option 5
         console.log("Object error: ", error);
 
@@ -23,36 +23,38 @@ function globalErrorHandler(err, req, res, next){ //Express recognizes an error 
 
         sendErrorProd(error, res);
     }
-}
 
-function sendErrorDev(err, res){
-    return res.status(err.statusCode).json({status: err.status, error: err, message: err.message, stack: err.stack});
-}
 
-function sendErrorProd(err, res){
-    if(err.isOperational){
-        res.status(err.statusCode).json({status: err.status, message: err.message});
-    }else{
-        console.error("Error 💣", err)
-        res.status(500).json({status: 'error', message: "Something went very wrong!"})
+    function sendErrorDev(err, res){
+        return res.status(err.statusCode).json({status: err.status, error: err, message: err.message, stack: err.stack});
     }
+    
+    function sendErrorProd(err, res){
+        if(err.isOperational){
+            res.status(err.statusCode).json({status: err.status, message: err.message});
+        }else{
+            console.error("Error 💣", err)
+            res.status(500).json({status: 'error', message: "Something went very wrong!"})
+        }
+    }
+    
+    function handleCastErrorDb(err){
+        const message = `Invalid ${err.path}: ${err.value}`;
+        return new AppError(message, 400);
+    }
+    
+    function handleDuplicateFieldsDB(err){
+        const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0]; // "errmsg" is equal to "message". To prove this, look at the JSON message in postman
+        // const value = err.keyValue.name;                    // This is equal to the line above.
+        const message = `Duplicate field value: ${value}. Please use another value!`;
+        return new AppError(message, 400);
+    }
+    
+    function handleValidationErrorDB(err){
+        const errors = Object.values(err.errors).map(event => event.message);
+        const message = `Invalid input data. ${errors.join(". ")}`;
+        return new AppError(message, 400)
+    }    
 }
 
-function handleCastErrorDb(err){
-    const message = `Invalid ${err.path}: ${err.value}`;
-    return new AppError(message, 400);
-}
-
-function handleDuplicateFieldsDB(err){
-    const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0]; // "errmsg" is equal to "message". To prove this, look at the JSON message in postman
-    // const value = err.keyValue.name;                    // This is equal to the line above.
-    const message = `Duplicate field value: ${value}. Please use another value!`;
-    return new AppError(message, 400);
-}
-
-function handleValidationErrorDB(err){
-    const errors = Object.values(err.errors).map(event => event.message);
-    const message = `Invalid input data. ${errors.join(". ")}`;
-    return new AppError(message, 400)
-}
 export {globalErrorHandler}

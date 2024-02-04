@@ -7,12 +7,12 @@ class UsersExtendRouter extends CustomRouter { //Se exteinde la clase. Es decir,
     init() { //Dentro del init() ralizamos la inicializacion de nuestras rutas, esto seria el equivalente de decir "router.get()"
         const userService = new UserService();  //EJEMPLO de como se conecta con el CustomRouter --> this.verboHTTP(path, policies, ...callbacks)
 
-        function authToken(req, res, next){
-            console.log("Hello");
-            next();
-        };
+        // function authToken(req, res, next){ //Middleware de prubea
+        //     console.log("Hello");
+        //     next();
+        // };
 
-        this.get('/', ["PUBLIC"], authToken, function(req, res){ // this.get() proviene del custom.routes.js
+        this.get('/', ["PUBLIC"], function(req, res){ // this.get() proviene del custom.routes.js
             console.log("World!!");
             res.send("Hola coders!!");
         });
@@ -80,6 +80,14 @@ class UsersExtendRouter extends CustomRouter { //Se exteinde la clase. Es decir,
 
             const result = await userService.save(user);
             res.status(201).send({ status: "success", message: "Usuario creado con extito con ID: " + result.id });
+        });
+
+        this.put('/put', ["ADMIN"], async function(req, res){
+
+        });
+
+        this.delete("/delete", ["ADMIN"], async function(req, res){
+
         });
 
     }

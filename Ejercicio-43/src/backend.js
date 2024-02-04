@@ -79,7 +79,6 @@ app.use("/", viewRouter); //Renderiza una vista con un mensaje solamente
 app.use('/users', usersViewRouter);
 app.use("/api/jwt", jwtRouter);
 app.use("/api/pets", petsRouter);
-app.use('/api/users', userRouter);
 
 app.use("/api/extend/users", usersExtendRouter.getRouter());
 
