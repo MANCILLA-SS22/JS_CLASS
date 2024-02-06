@@ -4,4 +4,4 @@ function catchFunc(fn){
     }
 }
 
-export default catchFunc;
+export {catchFunc};

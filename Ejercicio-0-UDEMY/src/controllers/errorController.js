@@ -20,6 +20,8 @@ function globalErrorHandler(err, req, res, next){ //Express recognizes an error 
         if(error.name === "CastError") error = handleCastErrorDb(error);
         if(error.code === 11000) error = handleDuplicateFieldsDB(error);
         if(error.name === "ValidationError") error = handleValidationErrorDB(error);
+        if(error.name === "JsonWebTokenError") error = handleError();
+        if(error.name === "TokenExpiredError: jwt expired") error = handleJWTexpired();
 
         sendErrorProd(error, res);
     }
@@ -30,6 +32,7 @@ function globalErrorHandler(err, req, res, next){ //Express recognizes an error 
     }
     
     function sendErrorProd(err, res){
+        console.log(err)
         if(err.isOperational){
             res.status(err.statusCode).json({status: err.status, message: err.message});
         }else{
@@ -55,6 +58,15 @@ function globalErrorHandler(err, req, res, next){ //Express recognizes an error 
         const message = `Invalid input data. ${errors.join(". ")}`;
         return new AppError(message, 400)
     }    
+
+    function handleError(){
+        new AppError("Invalid token. Please login again!", 401);
+    }
+
+    function handleJWTexpired(){
+        new AppError("Your token has expired. Please log in again!", 401)
+    }
+
 }
 
 export {globalErrorHandler}

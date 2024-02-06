@@ -69,10 +69,13 @@ https://github.com/kelektiv/node.bcrypt.js
 https://github.com/auth0/node-jsonwebtoken
 https://github.com/jaredhanson/passport-local
 https://github.com/cfsghost/passport-github
+https://github.com/express-rate-limit/express-rate-limit
+https://github.com/Psifi-Solutions/csrf-csrf
 https://github.com/mikenicholson/passport-jwt
 https://github.com/tj/commander.js
 https://nodejs.org/api/process.html#process
 https://nodejs.org/api/child_process.html
+https://nodemailer.com
 
 https://bcrypt-generator.com/
 https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt/17238#17238

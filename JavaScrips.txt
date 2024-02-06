@@ -58,7 +58,7 @@ Existen tres casos para poner el archivo script, los cuales son:
 
    > Diferencia entre "==" y "===": El operador de estricta igualdad ( === ) revisa si dos operandos son iguales y produce un resultado Booleano. A diferencia del operador de igualdad regular (==), el operador de estricta igualdad siempre
      considera que los operandos de distinto tipo de valor son diferentes y nunca similares.
-     (==): Se utiliza para comparar variables o valores.	 Los dobles iguales no comprueban el tipo de dato variable/valor mientras se hace la comparación. Usa este operador cuando no estés seguro sobre el tipo de datos de la 
+     (==): Se utiliza para comparar variables o valores. Los dobles iguales no comprueban el tipo de dato variable/valor mientras se hace la comparación. Usa este operador cuando no estés seguro sobre el tipo de datos de la 
      variable/valor. ‘1’ == 1 Esto devolverá true porque los valores dobles iguales no verifican el tipo de datos. 0 == falseDevolverá true porque convierte el 0 en falso y luego lo compara. 7 == “7” // true	
      (===): También se utiliza para comparar variables/valores. Triple igual comprueba el tipo de datos de una variable durante la comparación. Usa este operador cuando estés seguro del tipo de datos de la variable/valor y desees una 
             comparación estricta. ‘1’ === 1Esto devolverá false porque los triples iguales también comparan el tipo de datos. Simplemente el 1 es de tipo string y no es un número. 0 === false Devolverá false porque son diferentes tipos de 
