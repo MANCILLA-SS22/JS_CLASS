@@ -11,6 +11,7 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: [true, "Please provide your email!"],
+        // match: [new RegExp(/^[a-zA-Z\s]+$/), '{VALUE} is not valid. Please use only letters' ], //We can use this line instead of using the xss-clean library in backend.js
         unique: true,
         lowercase: true,
         validate: [validator.isEmail, "Please provide a valid Email!"]

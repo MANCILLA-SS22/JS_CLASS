@@ -76,6 +76,12 @@ https://github.com/tj/commander.js
 https://nodejs.org/api/process.html#process
 https://nodejs.org/api/child_process.html
 https://nodemailer.com
+https://github.com/helmetjs/helmet
+https://github.com/fiznool/express-mongo-sanitize
+https://github.com/leizongmin/js-xss
+https://github.com/YahooArchive/xss-filters
+https://github.com/AhmedAdelFahim/express-xss-sanitizer
+https://github.com/analog-nico/hpp
 
 https://bcrypt-generator.com/
 https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt/17238#17238

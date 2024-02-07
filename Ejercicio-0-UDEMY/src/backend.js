@@ -1,5 +1,10 @@
 import express from "express";
 import morgan from "morgan";
+import rateLimit from "express-rate-limit";
+import helmet from "helmet";
+import mongoSanitiza from "express-mongo-sanitize"
+import xss from "xss-clean";
+import hpp from "hpp"
 import tourRouter from "./router/tourUdemy.routes.js";
 import userRouter from "./router/userUdemy.routes.js";
 import {__dirname} from "./utils.js"; // --> C:\Users\xxelt\OneDrive\Documentos\PROYECTOS_PERSONALES\JavaScript\ApuntesDeClase\
@@ -8,32 +13,38 @@ import {globalErrorHandler} from "./controllers/errorController.js";
 
 const app = express();
 
-//Now you might be wondering why we actually have access to this environment variable here when we didn't really define them in this file but in server.js. And the answer to that is that the reading of the 
-//variables from the file which happens here to the node process only needs to happen once. It's then in the process and the process is of course the same no matter in what file we are. So we're always in 
-//the same process and the environment variables are on the process. And so the process that is running, so where our application is running is always the same and so this is available to us in every single 
-//file in the project.
 if(process.env.NODE_ENV === "development"){ //process.env.NODE_ENV === "development" or app.get('env') are the same. //In express, app.get('env') returns 'development' if NODE_ENV is not defined in "config.env". So you don't need the line to test its existence and set default.
     // console.log("1")
     app.use(morgan("dev"));
 }
 
-app.use(express.json());
-app.use(express.static(`${__dirname}/public`));
-
-app.use(function(req, res, next){
-    req.requstTime = new Date().toISOString(); //We can define any property on the "req" object.
-    next();
+const limiter = rateLimit({
+    limit: 100,
+    windowMs: 3600*1000, //This would allow 100 request from the same IP in one hour.
+    message: "Too many request from this IP, please ty again in an hour!"
 });
 
+function requestTime(req, res, next){
+    req.requstTime = new Date().toISOString(); //We can define any property on the "req" object. 
+    next();
+}
+
+function all(req, res, next){  
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+}
+
+//GLOBAL MIDDLEWARES
+app.use(helmet())
+app.use("/api", limiter); //We want to limit access to our API route. So, we write "api" as a path because we want to affect the next routes that start with "api". In this case "/api/v1/tours" and "/api/v1/users"
+app.use(express.static(`${__dirname}/public`)); //Serving static files
+app.use(express.json({limit: "10kb"})); //Body parser, reading data from body into req.body
+app.use(mongoSanitiza()); //Data sanitization against NoSQL query injection
+app.use(xss()); //Data sanitization against XSS
+app.use(hpp()); //Prevent parameter pollution (use '{{URL}}api/v1/tours?sort=duration&sort=price' in postman. This will take only the last parameter. In this case, sort=price)
+app.use(requestTime); //Test middleware
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
-
-//This middleware stands for the error handdling process. It'll be executed ONLY if the route in the line 28 are typed wronlgy. For example: /api/tours, /api/v1/tourss, etc.
-//If the route in the line 28 is typed rigthly (/api/v1/tours) and the enpoint wrongly (for example, router.route("/:id")), then app.use("*") won't be executed but the app.use(globalErrorHandler);
-app.use("*", function(req, res, next){  
-    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-});
-
+app.use("*", all); //This middleware stands for the error handdling process. It'll be executed ONLY if the route in the line 28 are typed wronlgy. For example: /api/tours, /api/v1/tourss, etc. If the route in the line 28 is typed rigthly (/api/v1/tours) and the enpoint wrongly (for example, router.route("/:id")), then app.use("*") won't be executed but the app.use(globalErrorHandler);
 app.use(globalErrorHandler);
 
 export default app;
