@@ -8269,5 +8269,3 @@ console.log("lastPost", lastPost);
 
 const lastPost2 = await getLastPost();
 console.log("lastPost2", lastPost2); */
-
-

@@ -23,7 +23,7 @@ https://docs.jupyter.org/en/latest/use/using.html
 https://flask.palletsprojects.com/en/3.0.x/
 https://docs.djangoproject.com/en/5.0/
 https://javascript.info  https://lenguajejs.com 
-https://go.dev/blog/godoc 
+https://go.dev/learn/
 https://doc.rust-lang.org/rust-by-example/meta/doc.html 
 https://dev.mysql.com/doc/refman/8.0/en/dynindex-statement.html 
 https://www.postgresql.org/docs/current/ 
@@ -32,6 +32,7 @@ https://docs.github.com/en/get-started/getting-started-with-git/associating-text
 https://legacy.reactjs.org  https://react.dev  https://create-react-app.dev  https://react-bootstrap.github.io   
 https://jquery.com/download/ 
 https://angular.io/start 
+https://www.php.net/manual/en/
 https://docs.flutter.dev       
 https://dart.dev/guides 
 https://vuejs.org/guide/introduction.html#what-is-vue 
@@ -44,24 +45,28 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 https://www.w3schools.com/jsref/jsref_class_super.asp#gsc.tab=0&gsc.q=unhandledRejection
 https://www.geeksforgeeks.org/javascript-array-findindex-method/
 https://nodejs.org/en/about/ 
-https://expressjs.com/en/guide/routing.html
 https://nextui.org  
 https://docs.nestjs.com 
 https://docs.docker.com/storage/volumes/#volumes
 https://axios-http.com/docs/intro  
-https://www.npmjs.com/package/multer
-https://www.npmjs.com/package/dotenv
-https://www.npmjs.com/package/morgan
-https://www.npmjs.com/package/json-server
-https://www.npmjs.com/package/core-js 
 https://socket.io/docs/v4/tutorial/introduction 
 https://www.mongodb.com/docs/manual/tutorial/getting-started/ 
 https://cloud.mongodb.com/v2/655f1475ba7fe502fcda39da#/clusters
 https://mongoosejs.com/docs/api/model.html#Model.updateOne()
-https://expressjs.com/en/resources/middleware/cookie-parser.html   https://expressjs.com/en/resources/middleware/cookie-session.html
+https://expressjs.com/en/guide/routing.html
+https://expressjs.com/en/resources/middleware.html
+https://expressjs.com/en/resources/middleware/cookie-parser.html
+https://expressjs.com/en/resources/middleware/cors.html
 https://www.passportjs.org/packages/
+https://nodejs.org/api/process.html#process
+https://nodejs.org/api/child_process.html
+https://nodemailer.com
+https://github.com/typicode/json-server
+https://github.com/expressjs/multer
+https://github.com/motdotla/dotenv
+https://github.com/expressjs/morgan
+https://github.com/zloirock/core-js
 https://github.com/simov/slugify
-https://github.com/expressjs/cors
 https://github.com/validatorjs/validator.js
 https://github.com/aravindnc/mongoose-paginate-v2?tab=readme-ov-file
 https://github.com/jdesboeufs/connect-mongo
@@ -73,9 +78,6 @@ https://github.com/express-rate-limit/express-rate-limit
 https://github.com/Psifi-Solutions/csrf-csrf
 https://github.com/mikenicholson/passport-jwt
 https://github.com/tj/commander.js
-https://nodejs.org/api/process.html#process
-https://nodejs.org/api/child_process.html
-https://nodemailer.com
 https://github.com/helmetjs/helmet
 https://github.com/fiznool/express-mongo-sanitize
 https://github.com/leizongmin/js-xss

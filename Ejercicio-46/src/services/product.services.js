@@ -5,17 +5,17 @@ async function obtenerDatos(){
     return await recuperarDatos();
 }
 
-async function guardarDato(){
+async function crearDato (){
 
     getDatosControllers.id = Math.random();
     await guardarDato(dato);
     return dato;
 }
 
-async function deleteById(){
+async function deleteServices(){
 
 
     return await deleteById(id);
 }
 
-export {};
+export {obtenerDatos, crearDato, deleteServices};
