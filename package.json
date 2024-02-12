@@ -53,7 +53,7 @@
     "@parcel/transformer-sass": "^2.9.3"
   },
   "scripts": {
-    "start": "nodemon Ejercicio-46/src/backend.js",
+    "start": "nodemon Ejercicio-45/src/backend.js",
     "start:dev": "SET NODE_ENV=development&&nodemon Ejercicio-0-UDEMY/src/server.js",
     "start:prod": "SET NODE_ENV=production&&nodemon Ejercicio-0-UDEMY/src/server.js",
     "debug": "node --inspect backend.js"

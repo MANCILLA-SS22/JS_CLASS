@@ -41,7 +41,7 @@ import viewRouter from "./router/views.routes.js";
 import usersViewRouter from "./router/users.views.routes.js";
 import jwtRouter from "./router/jwt.routes.js";
 import petsRouter from "./router/pets.routes.js";
-import userRouter from "./router/users.routes.js"
+// import userRouter from "./router/users.routes.js";
 import UsersExtendRouter from "./custom/users.extend.routes.js";
 
 const app = express();

@@ -3,7 +3,7 @@ import { fork } from 'child_process';
 
 const router = Router();
 
-//Al no utilizar Child process, cuando se quiera cargcar los siguientes dos endpoints en diferentes pestanas, por ejemplo ejecutando la de "/suma" primero y despues la de "/", el resultado sera que la que 
+//Al no utilizar Child process, cuando se quiera cargar los siguientes dos endpoints en diferentes pestanas, por ejemplo ejecutando la de "/suma" primero y despues la de "/", el resultado sera que la que 
 //tiene "/" no cargara hasta que "/suma" haya terminado su proceso, ya que esta realiza una operacion que va desde 0 hasta un numero muy grande. Pero cuando ahora se utiliza child process, especificamente 
 //con "fork", ese inconveniente podra ser eliminado. Ahora bien, cada proceso sera independiente del uno con el otro.
 

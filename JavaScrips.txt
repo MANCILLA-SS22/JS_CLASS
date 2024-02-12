@@ -1651,8 +1651,90 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   
   - Application logic vs Business logic: 
   
-  
-  
+- software architecture patterns: If you design software architectures, chances are that you come across the same goals and problems over and over again. Architectural patterns make it easier to solve these issues by providing repeatable 
+  designs that address common situations.
+ 
+   1) The circuit breaker pattern minimizes the effects of a hazard by rerouting traffic to another service. While it helps make systems more fault tolerant to prevent accidents, it also requires sophisticated testing and using an 
+      infrastructure-management technology like service mesh.
+   2) The client-server pattern is a peer-to-peer architecture that is comprised of a client, which requests a service, and a server, which provides the the service. Examples include banking, file sharing, email, and the World Wide Web. One 
+      advantage of this pattern is that data and network peripherals are centrally managed, however, the server is expensive.
+   3) The command query responsibility segregation (CQRS) pattern handles the situation where database queries happen more often than the data changes. It separates read and write activities to provide greater stability, scalability, and 
+      performance, but it requires more database technologies and therefore may increase costs.
+   4) The controller-responder pattern divides the architecture into two components: The controller handles the data and distributes workloads, and the responder replicates data from the controller and generates results. One advantage is 
+      that you can read data from the responder without affecting the data in the controller, but if the controller fails, you may lose data and need to restart the application.
+   5) The event sourcing pattern is good for applications that use real-time data. It sends a continuous stream of messages to a database, web server, log, or another target. It's very flexible but demands a highly efficient and reliable 
+      network infrastructure to minimize latency.
+   6) The layered pattern is good for e-commerce, desktop, and other applications that include groups of subtasks that execute in a specific order. The layered pattern makes it easy to write applications quickly, but a disadvantage is that 
+      it can be hard to split up the layers later.
+   7) The microservices pattern combines design patterns to create multiple services that work interdependently to create a larger application. Because each application is small, it's easier to update them when needed, but the complexity 
+      means you need greater architectural expertise to make everything work correctly.
+   8) The model-view-controller (MVC) pattern divides an application into three components. The model contains the application's data and main functionality; the view displays data and interacts with the user; and the controller handles user 
+      input and acts as the mediator between the model and the view. This pattern enables the application to generate various views, but its layers of abstraction increase complexity.
+   9) The pub-sub pattern sends (publishes) relevant messages to places that have subscribed to a topic. It's easy to configure but more challenging to test because interactions between the publisher and the subscriber are asynchoronous.
+   10) The saga pattern is used for transactions with multiple steps, such as travel reservation services. A "saga" includes the various steps that must happen for the transaction to complete. This pattern enables transactions (ideally with 
+       five or fewer steps) to happen in loosely coupled, message-driven environments, but it requires a lot of programming and can be complex to manage.
+   11) The sharding pattern segments data in a database to speed commands or queries. It ensures storage is consumed equally across instances but demands a skilled and experienced database administrator to manage sharding effectively.
+   12) The static content hosting pattern is used to optimize webpage loading time. It stores static content (information that doesn't change often, like an author's bio or an MP3 file) separately from dynamic content (like stock prices). 
+       It's very efficient for delivering content and media that doesn't change often, but downsides include data consistency and higher storage costs.
+   13) The strangler pattern is used when you're making incremental changes to a system. It places the old system behind an intermediary to support incremental transformation, which reduces risk compared to making larger changes. However, 
+       you need to pay close attention to routing and network management and make sure you have a rollback plan in place in case things go wrong.
+   14) The throttling (or rate-limiting) pattern controls how fast data flows into a target. It's often used to prevent failure during a distributed denial of service attack or to manage cloud infrastructure costs. To use this pattern 
+       successfully, you need good redundancy mechanisms in place, and it's often used alongside the circuit breaker pattern to maintain service performance.
+
+- Los principios SOLID: The SOLID principles of software architecture consist of a collection of guidelines that can help programmers build better software. These principles help developers build loosely coupled, cohesive systems that have 
+  high cohesion and low coupling.
+    > The Single Responsibility Principle (S): Per the Single Responsibility Principle, every class should not have more than one responsibility, (i.e., it should have one and only one purpose). If you have multiple responsibilities, the 
+      functionality of the class should be split into multiple classes, with each of them handling a specific responsibility. Types with many responsibilities tend to be coupled with one another. This coupling can lead to fragile designs and 
+      such classes become difficult to manage and maintain over time. If you adhere to this principle, here are the benefits of the Single Responsibility Principle:
+       + Simplicity: The code is easier to understand since the functionality is not spread across multiple classes. This will help you keep your simple, manageable and clean.
+       + Maintainability: This reduces the complexity and increases the maintainability of your code since each class has a single responsibility only.
+       + Reusability: Since there are no dependencies between different parts of the system, you can reuse components across the application without worrying about breaking anything else.
+
+    > The Open Closed Principle (O): According to the Open Closed Principle, classes should be open for extension, (i.e., they can be extended but closed for modification and they should not be modifiable). When classes are open for 
+      extension but closed for modification, developers can extend the functionality of a class without having to modify the existing code in that class. In other words, programmers should make sure their code can handle new requirements 
+      without compromising on the existing functionality. Bertrand Meyer is credited with introducing this principle in his book entitled “Object-Oriented Software Construction.” According to Meyer, “a software entity should be open for 
+      extension but closed for modification.”
+      The idea behind this principle is that it allows developers to extend software functionality while preserving the existing functionality. In practical terms, this means that new functionality should be added by extending the code of an 
+      existing class rather than by modifying the code of that class. When code is extended rather than modified, there is less risk of introducing bugs. It can also make it easier to understand code since the structure of classes is not 
+      changed when new functionality is added. Extending classes is not always possible or desirable, however. In some cases, creating a new class with the required functionality may be better, rather than extending an existing class.
+      Here are the benefits of the Open Closed Principle at a glance:
+       + You can add new features without changing existing code
+       + Your application will be more flexible because it can evolve over time
+       + It reduces the time and effort required to add new features to an application
+       + It increases the maintainability of the source code
+
+     > Liskov Substitution Principle (L): The Liskov Substitution Principle, or LSP, is a design principle that states that replaceable and interchangeable types should behave similarly. The principle, which Barbara Liskov introduced in her 
+       1988 paper, “Data Abstraction and Hierarchy,” states that, if you have a type T and a subtype S of T, then objects of type S should be substitutable for objects of type T.
+       It follows that if B is a subtype of A, then objects of type B can be used as substitutes for objects of type A. In other words, if you have a class A and a class B, with B being a subclass of A, then you can replace any instance of B 
+       with an instance of A.
+       It states that a child class should be able to be used in place of a parent class without any errors. This principle is essential for ensuring that software components are interchangeable and can be easily replaced without affecting 
+       the rest of the code.
+     
+     > The Interface Segregation Principle (I): The Interface Segregation Principle is a design principle that says you should “write client-specific interfaces, and make sure clients don’t depend on methods of other interfaces.” This means 
+       that, if you want to use an alternative implementation, you can do so without having to change any client code. In other words, an interface should be designed so that clients only have to know about the methods they need to use. This 
+       principle is fundamental in object-oriented programming (OOP), where interfaces are used to define the contracts between objects. Adhering to the Interface Segregation Principle can make a developer’s code more flexible and 
+       maintainable. This helps to prevent tight coupling between objects, which makes them easier to reuse and maintain. Here are the benefits of the Interface Segregation Principle at a glance:
+        + Reduces coupling between components because they don’t share the same interface
+        + Encourages loose coupling between components, which makes them easier to change, maintain and testable
+        + Allows components to be replaced with alternative implementations
+      
+      > Dependency Inversion Principle (D): Per the Dependency Inversion Principle, high-level modules in an application should not rely on their low-level modules. Instead, both should rely on abstractions. While details should depend on 
+        abstractions, the reverse is not implied. The Dependency Inversion Principle recommends abstractions over concretions. Here are several benefits to the Dependency Inversion Principle:
+         + It makes code more flexible, reusable, modular, and easier to change
+         + It makes code more testable since high-level modules can be mocked or stubbed out when testing low-level modules
+         + It can make code more flexible since new low-level modules can be easily plugged in without having to make changes to high-level modules.
+       One way to achieve dependency inversion is through the use of abstractions. Abstractions can be created using interfaces or abstract base classes. By depending on abstraction instead of a concrete implementation, high-level modules 
+       can be easily changed to use different implementations without making any changes.
+       Developers can also achieve dependency inversion by leveraging inversion of control containers. These containers manage the creation and lifetime of objects and provide a mechanism for resolving dependencies. Using an inversion of 
+       control container allows high-level modules to be easily tested without worrying about dependencies. However, dependency inversion is not always easy to implement.
+
+  These principles can help you build resilient, maintainable, and extendable applications. Some of the benefits of adhering to the solid principles of software architecture include:
+   ~ More robust systems: By following solid principles, developers can create systems that are more resistant to change and less likely to break when modifications are made.
+   ~ Better Reusability: By adhering to these principles, you can build reusable components.
+   ~ Easier maintenance: Solid principle-based systems are typically easier to maintain and understand, making them less time-consuming and expensive to keep up-to-date.
+   ~ Better scalability: Another advantage of using solid principles is that systems designed this way are often more scalable, meaning they can be extended over time if needed.
+
+
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
                                                                                                                    Express
@@ -2192,7 +2274,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     ✓ Consultas a bases muy complejas 
   Por lo que, para no bloquear las tareas actuales de, un servidor, por ejemplo, ocupamos separar esa tarea en otro subproceso.
   Existen diferentes formas para que un proceso de node pueda ejecutar otro proceso, hay cuatro operadores que pueden ser utilizados y manipulados de diferentes formas 
-  
+  https://www.freecodecamp.org/news/node-js-child-processes-everything-you-need-to-know-e69498fe970a/
     > fork(): 
     > spawn():
     > exec():
@@ -2258,60 +2340,29 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 > Patrón Singleton: Es un patrón utilizado para tener una instancia global a nivel aplicación. En ocasiones, se requiere que la aplicación tenga una única instancia de dicha clase (Por ejemplo, al abrir una conexión en base de datos). El 
   patrón singleton corrobora si ya existe una instancia de esta clase. En caso de que sí, devolverá la instancia, caso contrario creará la instancia.
 
-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
-                                                                                                                   Conceptos clave
-   
-    
-- this: Se refiere al elemento actual en el que se está escribiendo el código. Cuando se emplea un función constructora para crear un objeto (con la palabra clave new), this está enlazado al nuevo objeto instanciado. This es muy útil para 
-      asegurar que se emplean las propiedades del objeto actual. El puntero this es una variable predefinida para todas las funciones u operadores miembro de una clase. Este puntero contiene la dirección del objeto concreto de la clase al 
-      que se está aplicando la función o el operador miembro. Se puede decir que *this es un alias del objeto correspondiente. Conviene tener en cuenta que cuando una función miembro se aplica a un objeto de su clase (su argumento 
-      implícito), accede directamente a las variables miembro (sin utilizar el operador punto o flecha), pero no tiene forma de referirse al objeto como tal, pues no le ha sido pasado explícitamente como argumento. Ojo, que hace referencia 
-      al objeto instanciado y no a la clase.
-      
-      this en JavaScript es una palabra clave muy utilizada dentro de funciones y clases, pues tiene un valor flexible. This hace referencia al objeto en cuestión. Es decir, si estamos creando cualquier función, la palabra clave this se 
-      usará para representar o llamar al objeto que dicha función está modificando. ES5 introdujo el método bind() para establecer el valor de la función this independientemente de como es llamada.
-      this es una referencia que se crea cuando una función es invocada, no declarada. El valor de esa referencia depende al 100% del lugar en la que esa invocación se realice, llamado call-site. Ese lugar de llamada es la invocación en sí a 
-      la función. Es decir, el momento justo en que es llamada (no declarada, no referenciada) esa función. El valor de this puede cambiar dependiendo del contexto en el que se invoca una función o método. Hay cuatro contextos principales en 
-      los que se puede utilizar this en JavaScript:
-        + En una función global: En una función que se ejecuta en el contexto global, this hace referencia al objeto window, que es el objeto global en JavaScript.
-      
-        + En una función dentro de un objeto: Cuando se invoca una función dentro de un objeto, this hace referencia al objeto que contiene la función.
-       
-        + El método call() o apply(): Son métodos que permiten invocar una función con un objeto diferente de this. Esto significa que se puede cambiar el contexto de this mediante la llamada a una de estas do funciones.
-          ~ call ();  Permite que una función/método que pertenece a un objeto, ser asignada y llamada para un objeto diferente. Provee un nuevo valor de this a la función/método. Podemos escribir un método ona vez y heredarlo a otro objeto, 
-                      sin tener que reescribir el método en el nuevo objeto. No recive una lista de argumentos despues del this.
-                      You can write a method that can be used on different objects. It takes arguments separately. It can be used to invoke (call) a method with an owner object as an argument (parameter). 
-                      With call(), an object can use a method belonging to another object. 
-          ~ apply (); Con apply , puede escribirse un método una vez y heredarlo a otro objeto, sin necesidad de reescribir el método para adecuarlo al nuevo objeto. apply es muy similar a call() , excepto por el tipo de argumentos que 
-                      soporta. Puede utilizarse un arreglo de parámetros en lugar de un conjunto de pares nombre-valor. You can write a method that can be used on different objects. It takes arguments as an array.
-          ~ bind (); El método bind() crea una nueva función, que cuando es llamada, asigna a su operador this el valor entregado, con una secuencia de argumentos dados precediendo a cualquiera entregados cuando la función es llamada. El 
-                     valor de this es ignorado cuando la función es llamada con el operador new.
-                     Allows us to manually set "this" for any function call. With the bind() method, an object can borrow a method from another object. Bind doesn't immediately call the function. Instead, it returns a new function where the 
-                     "this" is bound. So it's set to whatever value we pass into bind. Sometimes the bind() method has to be used to prevent losing this.
-        
-        + Con el operador new: Cuando se invoca una función con el operador new, this hace referencia al objeto que se está creando.
-        
-      In JavaScript, the this keyword refers to an object. Which object depends on how this is being invoked (used or called). The this keyword refers to different objects depending on how it is used:
-         ~ In an object method, this refers to the object.
-         ~ Alone, this refers to the global object.
-         ~ In a function, this refers to the global object.
-         ~ In a function, in strict mode, this is undefined.
-         ~ In an event, this refers to the element that received the event.
-         ~ Methods like call(), apply(), and bind() can refer this to any object.  
-      
-      En resumen, this se utiliza para hacer referencia al objeto en el contexto actual, y su valor puede cambiar dependiendo del contexto en el que se invoca una función o método. Conocer cómo funciona this en diferentes contextos es 
-      esencial para escribir código efectivo en JavaScript.       https://www.freecodecamp.org/espanol/news/la-guia-completa-sobre-this-en-javascript/   https://www.programiz.com/javascript/this
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+                                                                                                                   Arquitectura del servidor: Persistencia
+                                                                                                                   
+- Memoria: La información persiste sólo durante el ciclo de vida del programa, si se reinicia, la información desaparece.
+- Archivos: La información se guarda en un fichero que permite persistir la información, aun cuando el programa se reinicie o apague.
+- Base de datos: Permite que no solo se pueda almacenar información, sino también facilita la aplicación de un CRUD de manera rápida y segura. Es la persistencia por excelencia.
+
+- El patrón DAO (persistencia aislada): consiste en separar la lógica de acceso a la fuente de datos en un archivo. Éste contará con métodos homologados de manera que, si en algún momento necesitamos cambiar el acceso a los datos, el DAO de 
+  la nueva fuente de datos tenga exactamente el mismo nombre de métodos que el anterior, evitando así que haya conflictos al acceder a la información. Así, podemos tener un MemoryDAO, un fileDAO, un databaseDAO según sea el caso, e
+  intercambiarlos sin problema.
+
+- DAO: Se encargará de conectar con nuestra fuente de datos según la hayamos programado, habrá DAOs programados para hacer CRUD en memoria, DAOs para hacer CRUD en archivos, etc. Así, en la lógica de negocio sólo se necesita importar el DAO 
+  a trabajar y utilizarlo. Si en algún momento necesitamos cambiar de persistencia, bastará con cambiar el DAO
+
+- Patrón Factory: La idea del patrón Factory, es basarse en una variable de entorno o configuración por argumentos, la cual tomará para decidir qué tipo de persistencia manejar. Esta “Fábrica” se encargará de devolver sólo el DAO que 
+  necesitemos acorde con lo solicitado en el entorno o los argumentos. 
+
+- Data Transfer Object: DTOs or Data Transfer Objects are objects that carry data between processes in order to reduce the number of methods calls. The pattern’s main purpose is to reduce roundtrips to the server by batching up multiple 
+  parameters in a single call. This reduces the network overhead in such remote operations. Another benefit is the encapsulation of the serialization’s logic (the mechanism that translates the object structure and data to a specific format 
+  that can be stored and transferred). It provides a single point of change in the serialization nuances. It also decouples the domain models from the presentation layer, allowing both to change independently.
+
+
+
+
+
+                                                                                                                   

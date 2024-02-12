@@ -1,4 +1,7 @@
-//Ejemplo 45: Uso de process, variables de entorno (dotenv) y child process
+// Ejemplo 45: Uso de process, variables de entorno (dotenv) y child process. 
+// Arquitectura de capas, servidor, diseno y persistencia. 
+// Patron Singleton (para una sola instancia en una clase)
+// Comunicación entre Frontend y Backend. Uso de "factory", "service" y DAO.
 
 // Utilizando argumentos con dotenv
 // ✓ Realizar un servidor basado en node js con express, El cual reciba por flag de cli el comando --mode <modo> y sea procesado por commander.
@@ -16,57 +19,65 @@
 // ✓ Comprobar que al alcanzar esta ruta en una pestaña del navegador, el proceso queda en espera del resultado. Constatar que durante dicha espera, la ruta de visitas no responde hasta terminar este proceso.
 // ✓ Luego crear la ruta '/calculo-nobloq' que hará dicho cálculo forkeando el algoritmo en un child_process, comprobando ahora que el request a esta ruta no bloquee la ruta de visitas.
 
+
 import express from "express";
-import mongoose from "mongoose";
-import handlebars from "express-handlebars";
-
-import {__dirname} from "./utils.js"
-import {config} from './config/config.js';
-import viewsRouter from './routes/views.router.js';
-
+import {__dirname} from './utils.js';
+import config from './config/config.js';
+import MongoSingleton from './config/mongodb-singleton.js';
 import program from './process.js';
+import cors from 'cors';
+
+import viewsRouter from "./routes/views.routes.js"
+import routerProduct from './routes/product.routes.js';
+import studentRouter from './routes/students.routes.js'
+import coursesRouter from './routes/courses.routes.js'
 
 const app = express();
 
-console.log("config: ", config)
+// console.log("config: ", config)
 // console.log(process);
 // console.log(process.argv); // npm run start
 // console.log(process.argv.slice(2)); // --> ["hello", "world"]
-const SERVER_PORT = config.port;
-const URL = config.urlMongo;
 
-async function connectMongo(){
-    try {
-        console.log("DB connected")
-        await mongoose.connect(URL);
-    } catch (error) {
-        console.log("error");
-        process.exit();
-    }
+const corsOptions = { // Configura el middleware cors con opciones personalizadas
+    origin: 'http://localhost:5500', // Permitir solo solicitudes desde un cliente específico
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Configura los métodos HTTP permitidos    
+    allowedHeaders: 'Content-Type,Authorization', // Configura las cabeceras permitidas
+    credentials: true, // Configura si se permiten cookies en las solicitudes
+};
+
+function test(req, res){
+    res.send({ message: "success", payload: "Success!!" });
 }
-connectMongo();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
-app.set("views", `${__dirname}/views`);
-app.engine("hbs", handlebars.engine({ // Inicializamos el motor con app.engine, para indicar que motor usaremos. En este caso, handlebars.engine
-        extname: "hbs", //index.hbs
-        defaultLayout: "main", //Plantilla principal
-    })
-);
-app.set("view engine", "hbs");
-
+app.use(cors(corsOptions)); //Si utilizamos unicamente cors(), quiere decir que cualquiera podra acceder al servidor. Pero al mandarle un objeto cors(corsOptions), este contiene la info de quien o quienes pueden acceder.
 
 app.use("/", viewsRouter);
+app.get('/test', test);
+app.use("/api", routerProduct);
+app.use("/api/students", studentRouter);
+app.use("/api/courses", coursesRouter);
 
+
+const SERVER_PORT = config.port;
 app.listen(SERVER_PORT, function(){
-    console.log(`Server listening on port ${SERVER_PORT}`)
-
-    // 2do - Listeners
+    console.log("Server listening on port " + SERVER_PORT);
+    
+    // ****** Uso de listeners ******
     // process.exit(5);
-
-    // Esta exception no fue capturada, o controlada.
-    // Exception no capturada: TypeError: console is not a function
-    // console();
+    // res; // Exception no capturada: TypeError: console is not a function    
 });
+
+// Esta configuracion solo se usa SI estoy usando SERVICE.
+// async function mongoInstance(){
+//     try {
+//         await MongoSingleton.getInstance();
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+// mongoInstance();
+// mongoInstance();

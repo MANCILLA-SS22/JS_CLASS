@@ -1701,6 +1701,194 @@ console.log(rivian);
 rivian.accelerate().accelerate().accelerate().brake().chargeBattery(50).accelerate();
 console.log(rivian.speedUS); */
 
+/* //Ejemplo 24: Uso de set y get en las clases y como utilizarlas (protected variables)
+class CoffeeMachine {
+    _waterAmount = 0;
+
+    set waterAmount(value) {
+        if (value < 0) value = 0;
+        this._waterAmount = value;
+    }
+
+    get waterAmount() {
+        return this._waterAmount;
+    }
+
+    constructor(power) {
+        console.log("power: ", power)
+        this._power = power;
+    }
+}
+
+// create the coffee machine
+let coffeeMachine = new CoffeeMachine(100);
+const res1 = coffeeMachine.waterAmount; //If we call  the methid without seting equal to the variable, then we'll use the "get" method in the class
+console.log("Get", res1);
+
+// add water
+const res2 = coffeeMachine.waterAmount = -10; //If we set equal to the variable, then we'll use the "set" method in the class
+console.log("Set: ", res2); */
+
+/* //Ejemplo 25: Uso get en las clases (protected variables & Read-only)
+class CoffeeMachine {
+  // ...
+
+  constructor(power) {
+    this._power = power;
+  }
+
+  get power() {
+    return this._power;
+  }
+
+}
+
+// create the coffee machine
+let coffeeMachine = new CoffeeMachine(100);
+
+alert(`Power is: ${coffeeMachine.power}W`); // Power is: 100W
+
+coffeeMachine.power = 25; // Error (no setter) */
+
+/* //Ejemplo 26: private variables
+class CoffeeMachine {
+  #waterLimit = 200;
+
+  #fixWaterAmount(value) {
+    if (value < 0) return 0;
+    if (value > this.#waterLimit) return this.#waterLimit;
+  }
+
+  setWaterAmount(value) {
+    this.#waterLimit = this.#fixWaterAmount(value);
+  }
+
+}
+
+let coffeeMachine = new CoffeeMachine();
+
+// can't access privates from outside of the class
+coffeeMachine.#fixWaterAmount(123); // Error
+coffeeMachine.#waterLimit = 1000; // Error */
+
+/* //Ejemplo 27: Public Class Members
+class Person {
+  constructor(firstName, lastName) {
+    this.firstName = firstName; // public field
+    this.lastName = lastName; // public field
+  }
+
+  // public getter
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+
+  // public setter
+  set fullName(value) {
+    const parts = value.split(" ");
+    this.firstName = parts[0];
+    this.lastName = parts[1];
+  }
+
+  // public method
+  introduceYourselfTo(other) {
+    const name = other.firstName ?? other;
+    console.log(`Hello ${name}! My name is ${this.fullName}.`);
+  }
+
+  // public static getter
+  static get typeName() {
+    return "Person";
+  }
+
+  // public static method
+  static fromJSON(json) {
+    return new Person(json.firstName, json.lastName);
+  }
+}
+
+const john = new Person("John", "Doe");
+const jane = Person.fromJSON({ firstName: "Jane", lastName: "Doe" });
+
+john.introduceYourselfTo(jane); */
+
+/* //Ejemplo 28: Private Class Members
+class Person {
+  #firstName; // private field
+  #lastName; // private field
+
+  constructor(firstName, lastName) {
+    this.#firstName = firstName;
+    this.#lastName = lastName;
+  }
+
+  get firstName() { return this.#firstName; }
+  get lastName() { return this.#lastName; }
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+
+  introduceYourselfTo(other) {
+    const name = other.firstName ?? other;
+    console.log(`Hello ${name}! My name is ${this.fullName}.`);
+  }
+
+  static fromJSON(json) {
+    return new Person(json.firstName, json.lastName);
+  }
+}
+
+const john = new Person("John", "Doe");
+const jane = Person.fromJSON({ firstName: "Jane", lastName: "Doe" });
+
+john.introduceYourselfTo(jane); */
+
+/* //Ejemplo 29: Private Constructors
+class SomeSingletonService {
+  static #key = {};
+  static instance = new SomeSingletonService(this.#key);
+ 
+  constructor(key) {
+    if (key !== SomeSingletonService.#key) {
+      throw new TypeError("SomeSingletonService is not constructable.");
+    }
+  }
+}
+ */
+
+/* //Ejemplo 30: Protected Class Members
+// superclass
+function Question(key) {
+  return class {
+    #answer = 42;
+
+    answer(shareKey) {
+      if (shareKey === key) {
+        return this.#answer;
+      }
+
+      throw new TypeError("Access Denied");
+    }
+  }
+}
+
+const key = {};
+
+// subclass
+class DeepThought extends Question(key) {
+  get #answer() { 
+    return this.answer(key);
+  }
+
+  tellMeTheAnswer() {
+    console.log(this.#answer);
+  }
+}
+
+const dm = new DeepThought();
+dm.tellMeTheAnswer(); */
+
+
 
 //         $$$$$$$$$$$$$$$ Arrays $$$$$$$$$$$$$$$
 
@@ -8269,3 +8457,4 @@ console.log("lastPost", lastPost);
 
 const lastPost2 = await getLastPost();
 console.log("lastPost2", lastPost2); */
+

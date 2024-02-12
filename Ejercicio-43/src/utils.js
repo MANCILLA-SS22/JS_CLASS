@@ -17,7 +17,7 @@ function createHash(password){ //Generamos el hash.
 }
 
 function validateHash(user, password){ //Validamos el hash. 
-    console.log(`Datos a validar: user: ${user}, password: ${password}`);
+    // console.log(`Datos a validar: user: ${user}, password: ${password}`);
     return bcrypt.compareSync(password, user.password); //compareSync toma primero la clave sin hashear y lo compara con la clave hasheada en la base de datos. Devolvera true o false dependiendo si la clave coincide o no
 }
 
@@ -60,7 +60,7 @@ function passportCall(strategy){ // para manejo de errores
             console.log("Usuario obtenido del strategy: ", user);
             req.user = user;
             next();
-        }        
+        }
     }
 };
 

@@ -6,8 +6,8 @@ form.addEventListener('submit', function(e){
     const data = new FormData(form);
     data.forEach((value, key) => obj[key] = value);
     console.log("Objeto formado: ", obj);
-    // fetch('/api/jwt/register', {
-    fetch('/api/extend/users/register',{
+    fetch('/api/jwt/register', {
+    // fetch('/api/extend/users/register',{
         method: 'POST',
         body: JSON.stringify(obj),
         headers: { 'Content-Type': 'application/json' }
