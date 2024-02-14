@@ -74,7 +74,7 @@ userSchema.methods.correctPassword = async function(candidatePassword, userPassw
 
 userSchema.methods.changedPasswordAfter = async function(JWTTimesstamp){
     if(this.passwordChangedAt){
-        const changedChangedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10); // "10" stants for the "n" base of the number
+        const changedChangedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10); // "10" stands for the "n" base of the number
         console.log(changedChangedTimestamp, JWTTimesstamp);
         
         return JWTTimesstamp < changedChangedTimestamp; //"changed" means that the day or the time at which the token was issued is less than the changed timestamp
@@ -102,5 +102,5 @@ export { UserModel };
 // 3) cross site forgery (csurf)
 // 4) what is OAuth
 // 5) implementing google OAuth
-// 6) .git attack measures
+// 6) git attack measures
 // 7) implement two-factor authentication

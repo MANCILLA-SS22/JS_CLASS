@@ -18,7 +18,7 @@ async function server (DB){
 }
 server(DB);
 
-const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`), "utf-8");
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours.json`), "utf-8");
 
 async function importData(){
     try {

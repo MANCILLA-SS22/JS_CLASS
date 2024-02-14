@@ -14,17 +14,16 @@ async function aliasTopTours(req, res, next){ // http://localhost:5500/api/v1/to
 };
 
 ///These functions are part of the CRUD in mongodb.
-const getAllTours = catchFunc(async function(req, res, next){  //http://localhost:5500/api/v1/tours
+const getAllTours = catchFunc(async function(req, res, next){ //http://localhost:5500/api/v1/tours
     const features = new APIFeatures(TourModel.find(), req.query).filter().sort().limitFields().paginate(); //TourModel.find() stands for a mongoose query object. 
     const tours = await features.query; // We have use features.query because we need to get access to mongoose query in the constructor method. That's to say, the result of the mongoose methods such as sort, find, select and skip are stored in "this.query".
     res.status(200).json({ status: "success", results: tours.length, data: {tours} });
 });
 
 const getTour = catchFunc(async function(req, res, next){
-    const tour = await TourModel.findById(req.params.id);
-
+    const tour = await TourModel.findById(req.params.id).populate("reviews");
     //(1) There are some id's that are valid and not exist. For example: "65a3c8eb57c6431e857c1931m", where the last 2 digits are modified. So, it's a valid id but it doesn't exist in the database.
-    //(2) On the other hand, there are id's that doesn't exist and are not valid. For example, "btgrtred" or "65a3c8eb57c6431e857c1931mwscvefer", where the second one have even more digits than it should.\
+    //(2) On the other hand, there are id's that doesn't exist and are not valid. For example, "btgrtred" or "65a3c8eb57c6431e857c1931mwscvefer", where the second one have even more digits than it should.
     // if the "tour" is equal to the (1) option, then the "if" statment will be executed. Otherwise, it won't be executed but the "globalErrorHandler" does.
     if (!tour) return next(new AppError('No tour found with that ID', 404));
 

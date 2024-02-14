@@ -1,6 +1,7 @@
 import express from "express";
 import {getAllTours, getTour, postTour, updateTour, deleteTour, aliasTopTours, getTourStats, getMonthlyPlan} from "../controllers/tourController.js";
 import { protect, restrictTo } from "../controllers/authController.js";
+import reviewController from "../controllers/reviewController.js";
 
 const router = express.Router();
 
@@ -11,4 +12,5 @@ router.route("/monthly-plan/:year").get(getMonthlyPlan);
 router.route("/").get(protect, getAllTours).post(postTour); // checkBody is a middleware
 router.route("/:id").get(getTour).patch(updateTour).delete(protect, restrictTo("admin", "lead-guide"), deleteTour);
 
-export default router;
+
+export default router; //3:05

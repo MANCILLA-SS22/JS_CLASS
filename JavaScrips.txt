@@ -2362,7 +2362,143 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   that can be stored and transferred). It provides a single point of change in the serialization nuances. It also decouples the domain models from the presentation layer, allowing both to change independently.
 
 
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 
 
+                                                                                                                   Data Modeling
+                                                                                                                   
+- Data Modeling: Data modeling refers to the organization of data within a database and the links between related entities. Data in MongoDB has a flexible schema model, which means: 
+    + Documents within a single collection are not required to have the same set of fields. 
+    + A field's data type can differ between documents within a collection. 
+  Generally, documents in a collection share a similar structure. To ensure consistency in your data model, you can create schema validation rules.
+  
+  > Use Cases: The flexible data model lets you organize your data to match your application's needs. MD is a document database, meaning you can embed related data in object and array fields. A flexible schema is useful according to:
+     + Your company tracks which department each employee works in. You can embed department information inside of the employee collection to return relevant information in a single query.
+     + Your e-commerce application shows the five most recent reviews when displaying a product. You can store the recent reviews in the same collection as the product data, and store older reviews in a separate collection because the older 
+       reviews are not accessed as frequently.
+     + Your clothing store needs to create a single-page application for a product catalog. Different products have different attributes, and therefore use different document fields. You can store all of the products in the same collection.
+  
+  > Link Related Data: When you design your data model in MongoDB, consider the structure of your documents and the ways your application uses data from related entities. To link related data, you can either: 
+    + Embed related data within a single document.
+    + Store related data in a separate collection and access it with a  reference.
+
+- Denormalization: Denormalization is used to combine multiple table data into one so that it can be queried quickly. It is a process of storing the join of higher normal form relations in the form of base relation that is in a lower normal 
+  form. The primary goal of denormalization is to achieve the faster execution of the queries.
+  In the process of denormalization, the data is integrated into the same database. Denormalization is mainly used where joins are expensive and queries are executed on the table very frequently. However, there is a drawback of 
+  denormalization, that is, a small wastage of memory.
+
+- Normalization: Normalization is used to remove redundant data from the database and to store non-redundant and consistent data into it. It is a process of converting an unnormalized table into a normalized table. Database normalization is 
+  an important process because a poorly designed database table is inconsistent and may create issues while performing operations like insertion, deletion, updating, etc. 
+  The process of Normalization involves resolution of database anomalies, elimination of data redundancy, data dependency, isolation of data, and data consistency. Normalization in databases provides a formal framework to analyze the 
+  relations based on the key attributes and their functional dependencies. It reduces the requirements of restructuring of tables.
+    > Child referencing: The Child References pattern stores each tree node in a document; in addition to the tree node, document stores in an array the id(s) of the node's children. Each node contains a reference array to its children
+    > Parent referencing: The Parent References pattern stores each tree node in a document; in addition to the tree node, the document stores the ID of the node's parent. Each node contains a reference to its parent.
+
+- Embedded Documents: Embedded documents store related data in a single document structure. A document can contain arrays and sub-documents with related data. These denormalized data models allow applications to retrieve related data in a 
+  single database operation. For many use cases in MongoDB, the denormalized data model is optimal.
+  Embedded documents are stored as children inside a parent document. This means they are all stored under one collection, and whenever you retrieve the parent document, you also retrieve all its embedded documents
+  For example, if you had a user document, it may contain a list of embedded documents detailing that user’s addresses. In JSON format, it may look something like this:
+    
+        {
+          "_id": 1,
+          "name": "Ashley Peacock",
+          "addresses": [
+            {
+              "address_line_1": "10 Downing Street",
+              "address_line_2": "Westminster",
+              "city": "London",
+              "postal_code": "SW1A 2AA"
+            },
+            {
+              "address_line_1": "221B Baker Street",
+              "address_line_2": "Marylebone",
+              "city": "London",
+              "postal_code": "NW1 6XE"
+            }
+          ]
+        }
+     By storing our addresses as embedded documents, we’re only persisting a single document.
+        
+- References: References store relationships between data by including links, called references, from one document to another. For example, a customerId field in an orders collection indicates a reference to a document in a customers 
+  collection. Applications can resolve these references to access the related data. Broadly, these are normalized data models.
+  Unlike embedded documents, referenced documents are stored in a separate collection to their parent document. Therefore, it’s possible to retrieve the parent document without retrieving any of its referenced documents.
+
+        // Stored in the user collection
+        {
+          "_id": 1,
+          "name": "Ashley Peacock",
+          "addresses": [
+            1000,
+            1001
+          ]
+        }
+        // Stored in the address collection
+        {
+          "_id": 1000,
+          "address_line_1": "10 Downing Street",
+          "address_line_2": "Westminster",
+          "city": "London",
+          "postal_code": "SW1A 2AA"
+        }
+        // Stored in the address collection
+        {
+          "_id": 1001,
+          "address_line_1": "221B Baker Street",
+          "address_line_2": "Marylebone",
+          "city": "London",
+          "postal_code": "NW1 6XE"
+        }
+        
+  In storing our addresses using references, we’re storing 3 separate documents. If we want to retrieve a user’s addresses along with the user, we must effectively run 2 queries: the first to retrieve the user, the second to retrieve 
+  their addresses. This is because MongoDB, unlike SQL, has no performant concept of a join. It does provide a lookup operation, but it’s not typically performant enough to use in a real time production environment — both in terms of 
+  speed and resources. Instead, we should look to better design our schemas to suit MongoDB, which is what we’ll cover next. 
+  It’s worth noting we can choose how we model the relationship when using references. We can decide, as we have above, to store a list of references on the parent document. If the list of references is likely to become large, it’s 
+  usually better to store the ID of the parent document (user in this case) in any related documents (in the address in this case). Otherwise, each time we add a new address, we have to update the user document to add the new reference.
+     
+- How To Choose Between Embedded Or Referenced Documents: Generally speaking, we should look to use embedded documents when both the parent document and its related documents are either read or written at the same time. Furthermore, we 
+  should prioritise based on whether the collection is read or write heavy. For example, consider the following document:
+        {
+          "_id": 1,
+          "name": "Ashley Peacock",
+          "account_balance": 150
+          "stocks": [
+            {
+              "code": "AMZN",
+              "amount": "3",
+              "value": "1478.22"
+            }
+          ],
+          "orders": [
+            {
+              "order_id": 1,
+              "order_value": 102.5,
+              "order_items": [...]
+            }
+          ]
+        }
+        
+  We have two embedded documents: stocks and orders. Should they be embedded, though? To answer that question, we need a little more context — here’s what the fictional stock trading application looks like in terms of how we interact with 
+  our user collection: 
+     + Once logged in, the user ID is stored in the web session.
+     + Stocks contain the stocks the user currently owns. They are shown on almost every page of the website, and must be retrieved from the database each time a page is rendered for compliance and accuracy reasons. Stocks are updated 
+       infrequently when compared to how often they are read.
+     + The account balance is also shown on every page.
+     + Orders are only shown on the orders page, and only updated when an order is placed.
+     
+  In this case, I would store the stocks as embedded documents because whenever we render a page we need both the account balance and the list of stocks. If we stored them separately, we’d have to execute two separate queries — one to get 
+  the user, another to get their stocks. Considering this data is shown on every page, we’d be doubling the number of queries per page load if we referenced them.
+  Moving on to the orders, I would store these as referenced documents, as they are only used on specific pages. Furthermore, we can query for orders, and add new orders, simply by using the user ID stored in the web session — without 
+  querying the user collection at all.
+  A user could have 100’s of orders. If we stored them as embedded documents, the amount of data returned for the user query would grow significantly over time. Additionally, it would return a large amount of data that isn’t used on the 
+  majority of the website. To add a new order, we would need to read the entire user document, append the new order, and then re-write the entire document.
+  Using referenced documents however, we can simply insert a new document into the orders collection, tied to the user ID, and we don’t have to read the user collection at all (or any other orders!).
+
+
+
+
+
+
+
+                                                                                                                   
 
                                                                                                                    

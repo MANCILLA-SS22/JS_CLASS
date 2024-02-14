@@ -7,6 +7,7 @@ import xss from "xss-clean";
 import hpp from "hpp"
 import tourRouter from "./router/tourUdemy.routes.js";
 import userRouter from "./router/userUdemy.routes.js";
+import reviewRouter from "./router/reviewUdemy.routes.js"
 import {__dirname} from "./utils.js"; // --> C:\Users\xxelt\OneDrive\Documentos\PROYECTOS_PERSONALES\JavaScript\ApuntesDeClase\
 import {AppError} from "./utils/appError.js";
 import {globalErrorHandler} from "./controllers/errorController.js";
@@ -44,6 +45,7 @@ app.use(hpp()); //Prevent parameter pollution (use '{{URL}}api/v1/tours?sort=dur
 app.use(requestTime); //Test middleware
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/reviews", reviewRouter);
 app.use("*", all); //This middleware stands for the error handdling process. It'll be executed ONLY if the route in the line 28 are typed wronlgy. For example: /api/tours, /api/v1/tourss, etc. If the route in the line 28 is typed rigthly (/api/v1/tours) and the enpoint wrongly (for example, router.route("/:id")), then app.use("*") won't be executed but the app.use(globalErrorHandler);
 app.use(globalErrorHandler);
 

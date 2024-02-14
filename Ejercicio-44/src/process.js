@@ -19,6 +19,7 @@ program.parse(); //Parsea los comandos y valida si son correctos.
 // console.log("Remaining arguments: ", program.args);
 
 
+// ****** Uso de listeners ******
 //Listener (primer metodo)
 // process.on("exit", function(code){ //Termina el proceso cuando hay un error
 //     console.log("Este codigo se ejecuta antes de salir del proceso.");

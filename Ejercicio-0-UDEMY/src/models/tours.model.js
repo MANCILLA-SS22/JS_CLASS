@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import slugify from "slugify"; //you can slugify a string by converting it to a URL-friendly format where any special characters and spaces are replaced with hyphens or underscores.
+// import { UserModel } from "./userModel.js";
 
 const tourSchema = new Schema({
     name: {
@@ -22,9 +23,9 @@ const tourSchema = new Schema({
     },
     difficulty: {
         type: String,
-        required: [true, "A tour must hava diffculty"],
+        required: [true, "A tour must hava diffcult"],
         enum: {
-            values: ["easy", "mdium", "difficult"],
+            values: ["easy", "medium", "difficulty"],
             messages: "Difficulty is either easy, mediom or difficult"
         }
     },
@@ -74,17 +75,46 @@ const tourSchema = new Schema({
     secretTour: {
         type: Boolean,
         default: false
-    }
-}, {
+    },
+
+    startLocation: {
+        //GeoJSON
+        type: { type: String, default: "Point", enum: ["Point"] },
+        coordinates: [Number],
+        address: String,
+        description: String,
+    },
+    locations: [
+        {
+            type: { type: String, default: "Point", enum: ["Point"] },
+            coordinates: [Number],
+            address: String,
+            description: String,
+            day: Number
+        }
+    ],
+    guides:[
+        {
+            type: Schema.ObjectId, //We expect a type of each of the elements in the guides array to be a MongoDB id. 
+            ref: "Users" //This "Users" comes from "const UserModel = model("Users", userSchema);" in userModel.js
+        }
+    ]
+    // guides: Array//This is used for embeding
+},{
     toJSON:{virtuals: true}, // To use the virtual properties, we need to explicitly define in our schema that we want the virtual properties in our output
     toObject:{virtuals: true}
 });
 
-//VIRTUAL PROPERTIES: They are fields whtat we define on our schema but that will NOT be persisted (they'll not be saved into the database in order to save us some space there). virtual() --> Creates a virtual type with the given name
+//VIRTUAL PROPERTIES: They are fields that we define on our schema but that will NOT be persisted (they'll not be saved into the database in order to save us some space there). virtual() --> Creates a virtual type with the given name
 tourSchema.virtual("durationWeeks").get(function(){ //durationWeeks is the property we're gonna look for without saving it into the database. We need to use a regular function because we need to use the "this" keyword so we can point to the current document
     return this.duration / 7;
 });
 
+tourSchema.virtual("reviews", {
+    ref: "Review",
+    foreignField: "tour", //This is the name coming from the other model (reviewModel). 
+    localField: "_id"
+});
 
 //DOCUMENT MIDDLEWARES: "pre" middlewares functions are gonna run before .save() and .create() command. "post" middlewares functions are executed after all the "pre" middleware functions have complited. "this" is gonna point to the currently processed document
 tourSchema.pre("save", function(next){
@@ -92,6 +122,17 @@ tourSchema.pre("save", function(next){
     this.slug = slugify(this.name, {lower: true});
     next();
 });
+
+//EMBEDDED DOCUMENTS
+// tourSchema.pre("save", async function(next){
+//     const guidesPromises = this.guides.map(function(id){
+//         return UserModel.findById(id);
+//     });
+
+//     this.guides = await Promise.all(guidesPromises);// We need to do this because the result in guidesPromises returns an arraw full of promises and it'll be just run by using "Promise.all"
+
+//     next();
+// });
 
 tourSchema.pre("save", function(next){
     console.log("Will save document..."); 
@@ -103,8 +144,17 @@ tourSchema.post("save", function(doc, next){
     next();
 });
 
-// QUERY MIDDLEWARES: They allow us to run functions before or after a certain query is executed. Here, the "this" keyword will now point at the current query and NOT at the current document because we're not processing any document.
+//QUERY MIDDLEWARES: They allow us to run functions before or after a certain query is executed. Here, the "this" keyword will now point at the current query and NOT at the current document because we're not processing any document.
 tourSchema.pre(/^find/, function(next){ // /^find/ means: everything that started with something. In this case, it's read as anything that started with "find", such as "find", "findOne", "findByIdAndUpdate", etc.
+    this.populate({ //We use "this" because, in query middleware, "this" always points to the current query. So now, all of the queries will then automatically populate the guides field with the reference user.
+        path: "guides",
+        select: "-__v -passwordChangedAt" //Usamos un objeto para seleccionar la informacion que NO queremos mostrar. En este caso, "__v" y "passwordChangedAt"
+    }); //We want to populate so to fill up the fields called guides in our model, since the "guides" field only contains the reference. So, with popullate, we're gonna fill it up with the actial data. (ONLY IN THE QUERY AND NOT IN THE ACTUAL DATABASE)
+
+    next();
+});
+
+tourSchema.pre(/^find/, function(next){ 
     this.find({secretTour: {$ne: true}}); //When we use getAllTourse, before executing "const tours = await features.query;", we run this current middleware. it's important to note that our pre-find middleware is executed because it is "find", just like we used in TourModel.find()
     this.start = Date.now(); //We set a new object
     next();
@@ -124,7 +174,7 @@ tourSchema.pre("aggregate", function(next){
 
     console.log(this.pipeline());
     next();
-})
+});
 
 const TourModel = model("Tours", tourSchema);
 export { TourModel };
