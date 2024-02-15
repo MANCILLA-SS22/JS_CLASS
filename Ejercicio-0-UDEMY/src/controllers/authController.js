@@ -90,7 +90,7 @@ const protect = catchFunc(async function(req, res, next){
     // In this case, since req.user is assigned the value of "decoded", the "decoded" object will be available to any subsequent middleware functions or route handlers that need to access information about the authenticated user.
     // This is a common pattern in middleware-based web frameworks, where information is passed between middleware functions using the req (request) and res (response) objects. By attaching data to the req object, that data can be accessed and used by other parts of the application that handle the request.
     // In summary, the assignment req.user = decoded is necessary to make the authenticated user object available to subsequent middleware functions or route handlers that need to access it.
-    req.user = currentUser;
+    req.user = currentUser; console.log("req.user --> ", req.user)
     next();
     
 /*  //Method 2: async-await   

@@ -1,8 +1,98 @@
 import {__dirname} from "../utils.js";
 import { TourModel } from "../models/tours.model.js";
+import {catchFunc} from "../utils/catchAsync.js";
+import { createOne, deleteOne, getAll, getOne, updateOne } from "./handlerFactory.js";
+
+//This is a middleware belonging to the /top-5-cheap route in tourUdemyroutes.js
+async function aliasTopTours(req, res, next){ // http://localhost:5500/api/v1/tours/top-5-cheap
+    //We prefill the quuery string for the user so that the user doesn't have to do it on his own.
+    req.query.limit = "5";
+    req.query.sort = "-ratingsAverage,price";
+    req.query.fields = "name,price,ratingsAverage,summary,difficulty";
+    next();
+};
+
+///These functions are part of the CRUD in mongodb.
+const getAllTours = getAll(TourModel);
+const getTour = getOne(TourModel, {path: "reviews"});
+const postTour = createOne(TourModel);
+const updateTour = updateOne(TourModel);
+const deleteTour = deleteOne(TourModel);
+
+//The follwing functions belong to aggregation
+const getTourStats = catchFunc(async function(req, res, next){
+    const stats = await TourModel.aggregate([ //Thjis will return an aggregate object
+        {
+            $match: { ratingsAverage: {$gte: 4.5} }
+        },
+        {
+            $group: {
+                _id: { $toUpper: "$difficulty" },
+                numTours: { $sum: 1}, //This is a counter
+                numRatings: { $sum: "$ratingsQuantity" },
+                avgRating: { $avg: "$ratingsAverage" },
+                avgPrice: { $avg: "$price" },
+                minPrice: { $min: "$price" },
+                maxPrice: { $max: "$price" },
+            }
+        },
+        {
+            $sort: { avgPrice: 1 }
+        },
+        // {
+        //     $match: { _id: { $ne: "EASY" }} //This prove that we can use multiple "$match".
+        // }
+    ]);
+    res.status(200).json({ data: stats });
+});
+
+const getMonthlyPlan = catchFunc(async function(req, res, next){ //http://localhost:5500/api/v1/tours/monthly-plan/2021
+    const year = req.params.year * 1;
+    const plan = await TourModel.aggregate([
+        {
+            $unwind: "$startDates" // --> Deconstructs an array field from the input documents to output a document for each element. Each output document is the input document with the value of the array field replaced by the element.
+        },
+        {
+            $match: {
+                startDates: { 
+                    $gte: new Date(`${year}-01-01`), 
+                    $lte: new Date(`${year}-12-31`)
+                },
+            }
+        },
+        {
+            $group: {
+                _id: { $month: "$startDates" },
+                numTourStart: { $sum: 1 },
+                tours: { $push: "$name" }
+            }
+        },
+        {
+            $addFields: { month: "$_id" }
+        },
+        {
+            $project: { _id: 0 }
+        },
+        {
+            $sort: { numTourStart: -1 }
+        },
+        {
+            $limit: 12
+        }
+    ]);
+
+    res.status(200).json({ data: plan });
+});
+
+export {getAllTours, getTour, postTour, updateTour, deleteTour, aliasTopTours, getTourStats, getMonthlyPlan}
+
+/* //Using handleFactory and error handler
+import {__dirname} from "../utils.js";
+import { TourModel } from "../models/tours.model.js";
 import { APIFeatures } from "../utils/apiFeatures.js";
 import {AppError} from "../utils/appError.js";
 import {catchFunc} from "../utils/catchAsync.js";
+import { deleteOne } from "./handlerFactory.js";
 
 //This is a middleware belonging to the /top-5-cheap route in tourUdemyroutes.js
 async function aliasTopTours(req, res, next){ // http://localhost:5500/api/v1/tours/top-5-cheap
@@ -118,9 +208,7 @@ const getMonthlyPlan = catchFunc(async function(req, res, next){ //http://localh
     res.status(200).json({ data: plan });
 });
 
-export {getAllTours, getTour, postTour, updateTour, deleteTour, aliasTopTours, getTourStats, getMonthlyPlan}
-
-
+export {getAllTours, getTour, postTour, updateTour, deleteTour, aliasTopTours, getTourStats, getMonthlyPlan} */
 
 /* Without using error handler
 import {__dirname} from "../utils.js";

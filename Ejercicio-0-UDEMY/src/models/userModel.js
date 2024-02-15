@@ -46,7 +46,7 @@ const userSchema = new Schema({
 });
 
 //DOCUMENT MIDDLEWARES: "pre" middlewares functions are gonna run before .save() and .create() command. "post" middlewares functions are executed after all the "pre" middleware functions have complited. "this" is gonna point to the currently processed document
-//The middleware function that we're gonna specify, so the encryption is then gonna be happen between the moment that we recive that data and the moment where it's actually persisted to the database. That's where the pre-save middleware runs. Between getting the data and saving it to the database.
+// The middleware function that we're gonna specify, so the encryption is then gonna be happen between the moment that we recive that data and the moment where it's actually persisted to the database. That's where the pre-save middleware runs. Between getting the data and saving it to the database.
 userSchema.pre("save", async function(next){
     if(!this.isModified("password")) return next();
     this.password = await bcrypt.hash(this.password, 12);
@@ -57,6 +57,7 @@ userSchema.pre("save", async function(next){
 userSchema.pre("save", function(next){
     if(!this.isModified("password") || this.isNew) return next();
     this.passwordChangedAt = Date.now() - 1000;
+    next();
 });
 
 userSchema.pre("/^find/", function(next){

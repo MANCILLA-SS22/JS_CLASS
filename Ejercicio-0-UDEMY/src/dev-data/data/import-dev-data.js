@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import fs from "fs";
 import { __dirname } from "../../utils.js"; // --> C:\Users\xxelt\OneDrive\Documentos\PROYECTOS_PERSONALES\JavaScript\ApuntesDeClase\src
 import { TourModel } from "../../models/tours.model.js";
+import { ReviewModel } from "../../models/reviewModel.js";
+import { UserModel } from "../../models/userModel.js";
 
 dotenv.config({path: `${__dirname}/config.env`}); //doent allow us to read our variables from the file (config.env) and save them into node JS environment variables
 // console.log(process.env); //process.env now has the keys and values you defined in your .env file
@@ -19,10 +21,15 @@ async function server (DB){
 server(DB);
 
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours.json`), "utf-8");
+const users = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/users.json`), "utf-8");
+const reviews = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/reviews.json`), "utf-8");
 
 async function importData(){
     try {
         await TourModel.create(tours);
+        await UserModel.create(users, { validateBeforeSave: false });
+        await ReviewModel.create(reviews);
+
         console.log("Data successfully loaded!");
     } catch (error) {
         console.log(error);
@@ -33,6 +40,8 @@ async function importData(){
 async function deleteData(){
     try {
         await TourModel.deleteMany();
+        await ReviewModel.deleteMany();
+        await UserModel.deleteMany();
         console.log("Data successfully deleted!");
     } catch (error) {
         console.log(error);

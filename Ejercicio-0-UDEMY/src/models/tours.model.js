@@ -105,6 +105,10 @@ const tourSchema = new Schema({
     toObject:{virtuals: true}
 });
 
+//INDEX PROPERTIE: This will help the database engine to scan through the needed documents and not all of them.
+tourSchema.index({ price: 1, ratingsAverage: -1 });
+tourSchema.index({ slug: 1 });
+
 //VIRTUAL PROPERTIES: They are fields that we define on our schema but that will NOT be persisted (they'll not be saved into the database in order to save us some space there). virtual() --> Creates a virtual type with the given name
 tourSchema.virtual("durationWeeks").get(function(){ //durationWeeks is the property we're gonna look for without saving it into the database. We need to use a regular function because we need to use the "this" keyword so we can point to the current document
     return this.duration / 7;

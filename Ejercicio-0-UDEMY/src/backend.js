@@ -5,9 +5,9 @@ import helmet from "helmet";
 import mongoSanitiza from "express-mongo-sanitize"
 import xss from "xss-clean";
 import hpp from "hpp"
-import tourRouter from "./router/tourUdemy.routes.js";
-import userRouter from "./router/userUdemy.routes.js";
-import reviewRouter from "./router/reviewUdemy.routes.js"
+import tourRouter from "./router/tour.routes.js";
+import userRouter from "./router/user.routes.js";
+import reviewRouter from "./router/review.routes.js"
 import {__dirname} from "./utils.js"; // --> C:\Users\xxelt\OneDrive\Documentos\PROYECTOS_PERSONALES\JavaScript\ApuntesDeClase\
 import {AppError} from "./utils/appError.js";
 import {globalErrorHandler} from "./controllers/errorController.js";
