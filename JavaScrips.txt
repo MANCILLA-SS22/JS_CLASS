@@ -263,8 +263,10 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
       
   > Constructor: El constructor de un objeto es una función que usamos para crear un nuevo objeto cada vez que sea necesario. Con función constructora podemos inicializar las propiedades del objeto al momento de ser instanciado con new.
     El constructor ejecutara asi mismo las funciones y/o variables que esten dentro de el UNICAMENTE cuando se cree una nueva instancia del objeto al u
-    A constructor is a special function that creates and initializes an object instance of a class. In JavaScript, a constructor gets called when an object is created using the new keyword. 
-    The purpose of a constructor is to create a new object and set values for any existing object properties.
+    
+    Constructor is a "special" prop returns a reference to the Object constructor function that created the instance object.
+    A constructor is a special function (prop) that creates and initializes an object instance of a class. It returns a reference to the Object constructor function that created the instance object. In JavaScript, a constructor gets called 
+    when an object is created using the new keyword. The purpose of a constructor is to create a new object and set values for any existing object properties.
       
         function Persona(nombre, edad, calle) {
            this.nombre = nombre;

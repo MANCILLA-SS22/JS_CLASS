@@ -25,7 +25,7 @@ function updateOne(Model){
 
 function createOne(Model){
     return catchFunc(async function(req, res, next){
-        const doc = await TourModel.create(req.body);
+        const doc = await Model.create(req.body);
         res.status(201).json({ status: "success", data: {tour: doc} });
     });
 };

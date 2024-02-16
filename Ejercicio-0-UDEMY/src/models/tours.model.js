@@ -33,7 +33,10 @@ const tourSchema = new Schema({
         type: Number,
         default: 4.5,
         min: [1, "Rating must be above 1.0"],
-        max: [5, "Rating must be above 5.0"]
+        max: [5, "Rating must be above 5.0"],
+        set: function(val){
+            return Math.round(val * 10) / 10
+        } //This function will be run each time that a new value is set for this field
     },
     ratingsQuantity: {
         type: Number,
