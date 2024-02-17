@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {getAllTours, getTour, postTour, updateTour, deleteTour, aliasTopTours, getTourStats, getMonthlyPlan} from "../controllers/tourController.js";
+import {getAllTours, getTour, postTour, updateTour, deleteTour, aliasTopTours, getTourStats, getMonthlyPlan, getToursWithin, getDistances} from "../controllers/tourController.js";
 import { protect, restrictTo } from "../controllers/authController.js";
 import reviewRoutes from "./review.routes.js"
 
@@ -13,6 +13,8 @@ router.route("/top-5-cheap").get(aliasTopTours).get(getAllTours);
 router.route("/tour-stats").get(getTourStats);
 router.route("/monthly-plan/:year").get(protect, restrictTo("admin", "lead-guide", "guide"), getMonthlyPlan);
 router.route("/:id").get(getTour).patch(protect, restrictTo("admin", "lead-guide"), updateTour).delete(protect, restrictTo("admin", "lead-guide"), deleteTour);
+router.route("/tours-within/:distance/center/:latlng/unit/:unit").get(getToursWithin);
+router.route("/distances/:latlng/unit/:unit").get(getDistances)
 
 router.use("/:tourId/reviews", reviewRoutes);
 

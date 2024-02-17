@@ -2,6 +2,7 @@ import {__dirname} from "../utils.js";
 import { TourModel } from "../models/tours.model.js";
 import {catchFunc} from "../utils/catchAsync.js";
 import { createOne, deleteOne, getAll, getOne, updateOne } from "./handlerFactory.js";
+import { AppError } from "../utils/appError.js";
 
 //This is a middleware belonging to the /top-5-cheap route in tourUdemyroutes.js
 async function aliasTopTours(req, res, next){ // http://localhost:5500/api/v1/tours/top-5-cheap
@@ -84,7 +85,61 @@ const getMonthlyPlan = catchFunc(async function(req, res, next){ //http://localh
     res.status(200).json({ data: plan });
 });
 
-export {getAllTours, getTour, postTour, updateTour, deleteTour, aliasTopTours, getTourStats, getMonthlyPlan}
+const getToursWithin = catchFunc(async function(req, res, next){
+    const {distance, latlng, unit} = req.params;
+    const [lat, lng] = latlng.split(","); //When we get the latlng variable, we get something like 34.456534,-118.53464. So we have to separate both numbers into a new array. The ".split()" method is the right one.
+    const radius  = unit === "mi" ? distance / 3963.2 : distance / 6378.1;
+
+    if (!lat || !lng) return new AppError("Please provide latitude and longitude in the format lat,lng !!", 400);
+
+    const tours = await TourModel.find( //We want to query for start location becauset the start location field is what holds the geospatial point where each tour starts.
+        {
+            startLocation: {$geoWithin: {$centerSphere: [ [lng, lat], radius ]  }}
+        }
+    ); 
+
+    res.status(200).json({
+        status: "success",
+        results: tours.length,
+        data: {tours}
+    });
+
+});
+
+const getDistances = catchFunc(async function(req, res, next){
+    const {latlng, unit} = req.params;
+    const [lat, lng] = latlng.split(","); //When we get the latlng variable, we get something like 34.456534,-118.53464. So we have to separate both numbers into a new array. The ".split()" method is the right one.
+    const multiplier = unit === "mi"? 0.000621371 : 0.001;
+
+    if (!lat || !lng) return new AppError("Please provide latitude and longitude in the format lat,lng !!", 400);
+
+    const distances = await TourModel.aggregate([
+        {
+            $geoNear: {
+                near: {
+                    type: "Point",
+                    coordinates: [lng*1, lat*1]
+                },
+                distanceField: "distance",
+                distanceMultiplier: multiplier
+            },
+        },
+        {
+            $project: {
+                distance: 1,
+                name: 1
+            }
+        }
+    ]);
+
+    res.status(200).json({
+        status: "success",
+        data: {distances}
+    });
+
+});
+
+export {getAllTours, getTour, postTour, updateTour, deleteTour, aliasTopTours, getTourStats, getMonthlyPlan, getToursWithin, getDistances}
 
 /* //Using handleFactory and error handler
 import {__dirname} from "../utils.js";

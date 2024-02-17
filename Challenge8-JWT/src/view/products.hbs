@@ -1,0 +1,23 @@
+<div id="products">
+
+    <header>
+        <button><a href={{res.prevLink}}>prevLink</a></button>
+        <button><a href={{res.nextLink}}>nextLink</a></button>
+    </header>    
+
+    
+    <div class="lista">
+        {{#each res.payload}}
+        <div class="user-info">
+        <span id="userInfo">
+        <h2>{{this.title}}</h2>
+        <p>price: {{this.price}}</p>
+        <button>
+            <a href={{../res.link}}{{this._id}}/>Product details</a>
+        </button>
+        <button>Add to card</button>
+        </span>
+    </div>
+        {{/each}}
+    </div>
+</div>

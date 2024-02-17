@@ -111,6 +111,7 @@ const tourSchema = new Schema({
 //INDEX PROPERTIE: This will help the database engine to scan through the needed documents and not all of them.
 tourSchema.index({ price: 1, ratingsAverage: -1 });
 tourSchema.index({ slug: 1 });
+tourSchema.index({ startLocation: "2dsphere" }); //For geospatial data, this index needs to be a 2D sphere index id the data describes real points on the earth like spheres. Or insted we can also use a @D index if we're using fictional points on a simple two dimensional plane.
 
 //VIRTUAL PROPERTIES: They are fields that we define on our schema but that will NOT be persisted (they'll not be saved into the database in order to save us some space there). virtual() --> Creates a virtual type with the given name
 tourSchema.virtual("durationWeeks").get(function(){ //durationWeeks is the property we're gonna look for without saving it into the database. We need to use a regular function because we need to use the "this" keyword so we can point to the current document
@@ -174,14 +175,14 @@ tourSchema.post(/^find/, function(docs, next){
 });
 
 //AGREGATION MIDDLEWARES: Here, "this" will point to the current aggregation object
-tourSchema.pre("aggregate", function(next){
-    this.pipeline().unshift({ 
-        $match: {secretTour: {$ne: true }}
-    });
+// tourSchema.pre("aggregate", function(next){
+//     this.pipeline().unshift({ 
+//         $match: {secretTour: {$ne: true }}
+//     });
 
-    console.log(this.pipeline());
-    next();
-});
+//     console.log(this.pipeline());
+//     next();
+// });
 
 const TourModel = model("Tours", tourSchema);
 export { TourModel };

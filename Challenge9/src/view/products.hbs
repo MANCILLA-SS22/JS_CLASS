@@ -1,0 +1,23 @@
+<div id="products">
+
+    <header>
+        <button><a href={{ans.prevLink}}>prevLink</a></button>
+        <button><a href={{ans.nextLink}}>nextLink</a></button>
+    </header>    
+
+    
+    <div class="lista">
+        {{#each ans.payload}}
+        <div class="user-info">
+        <span id="userInfo">
+        <h2>{{this.title}}</h2>
+        <p>price: {{this.price}}</p>
+        <button>
+            <a href={{../ans.link}}{{this._id}}/>Product details</a>
+        </button>
+        <button>Add to card</button>
+        </span>
+    </div>
+        {{/each}}
+    </div>
+</div>
