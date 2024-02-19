@@ -8,6 +8,8 @@ bin-release/
 
 # Other files and folders
 .settings/
+.env.production
+.env.development
 
 # Executables
 *.swf
