@@ -1,4 +1,4 @@
-// Ejercicio 46: Coder-eats food delivery para devs.
+// Ejercicio 46: Coder-eats food delivery para devs. (ES UN EJERCICIO DE REPASO Y NO CUENTA CON ALGO RELEVANTE PARA ESTUDIAR/REPASAR)
 // ¿Cómo lo hacemos? Se desarrollará un sistema completo con routing, controladores, dao y
 // servicios. Se recomienda realizar el proyecto en 4 etapas.
 // ✓ Etapa de routing y controladores.

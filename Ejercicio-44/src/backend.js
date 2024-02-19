@@ -1,7 +1,9 @@
-// Ejemplo 45: Uso de process, variables de entorno (dotenv) y child process. 
+// Ejemplo 45: 
+// Uso de process, variables de entorno (dotenv) y child process. 
 // Arquitectura de capas, servidor, diseno y persistencia. 
 // Patron Singleton (para una sola instancia en una clase)
 // Comunicación entre Frontend y Backend. Uso de "factory", "service" y DAO.
+// Mailer y mensajeria
 
 // Utilizando argumentos con dotenv
 // ✓ Realizar un servidor basado en node js con express, El cual reciba por flag de cli el comando --mode <modo> y sea procesado por commander.
@@ -27,10 +29,11 @@ import MongoSingleton from './config/mongodb-singleton.js';
 import program from './process.js';
 import cors from 'cors';
 
-import viewsRouter from "./routes/views.routes.js"
-import routerProduct from './routes/product.routes.js';
-import studentRouter from './routes/students.routes.js'
-import coursesRouter from './routes/courses.routes.js'
+import viewsRouter from "./router/views.routes.js";
+import studentRouter from './router/students.routes.js';
+import coursesRouter from './router/courses.routes.js';
+import emailRouter from './router/email.routes.js';
+import smsRouter from './router/sms.routes.js';
 
 const app = express();
 
@@ -57,9 +60,10 @@ app.use(cors(corsOptions)); //Si utilizamos unicamente cors(), quiere decir que 
 
 app.use("/", viewsRouter);
 app.get('/test', test);
-app.use("/api", routerProduct);
 app.use("/api/students", studentRouter);
 app.use("/api/courses", coursesRouter);
+app.use("/api/email", emailRouter);
+app.use("/api/sms", smsRouter);
 
 
 const SERVER_PORT = config.port;

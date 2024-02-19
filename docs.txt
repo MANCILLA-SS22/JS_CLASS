@@ -61,6 +61,7 @@ https://www.passportjs.org/packages/
 https://nodejs.org/api/process.html#process
 https://nodejs.org/api/child_process.html
 https://nodemailer.com
+https://www.twilio.com/docs/libraries/reference/twilio-node/5.0.0-rc.1/
 https://github.com/typicode/json-server
 https://github.com/expressjs/multer
 https://github.com/motdotla/dotenv
@@ -84,6 +85,7 @@ https://github.com/leizongmin/js-xss
 https://github.com/YahooArchive/xss-filters
 https://github.com/AhmedAdelFahim/express-xss-sanitizer
 https://github.com/analog-nico/hpp
+https://github.com/hapijs/joi
 
 https://bcrypt-generator.com/
 https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt/17238#17238
@@ -105,7 +107,6 @@ https://get.foundation
 https://getuikit.com/docs/introduction 
 https://tailwindcss.com/docs/installation 
 https://sass-lang.com/documentation/style-rules#nesting 
-https://www.npmjs.com/package/react-spinners?activeTab=readme 
 https://tobiasahlin.com/spinkit/ 
 https://momentjs.com 
 https://dashboard.emailjs.com/admin 
@@ -119,6 +120,7 @@ https://lodash.com
 https://parceljs.org 
 https://babeljs.io 
 https://www.npmjs.com/package/regenerator-runtime 
+https://popper.js.org/docs/v2/
 
 Api’s: 
 https://github.com/public-apis/public-apis 
@@ -144,12 +146,15 @@ https://firebase.google.com/docs/firestore/manage-data/add-data
 
  
 React: 
+https://github.com/facebook/react
+https://github.com/facebook/create-react-app
 https://vitejs.dev 
 https://react.useanimations.com 
 https://react-icons.github.io/react-icons/ 
 https://github.com/ults-io/vscode-react-javascript-snippets/blob/HEAD/docs/Snippets.md 
 https://chakra-ui.com 
 https://usehooks.com 
+https://www.npmjs.com/package/react-spinners?activeTab=readme
 https://reactrouter.com/en/main   https://www.npmjs.com/package/react-router-dom 
 https://formik.org/   https://react-hook-form.com    https://www.npmjs.com/package/yup 
 https://www.apollographql.com/docs/react/ 

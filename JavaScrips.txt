@@ -2395,6 +2395,23 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   relations based on the key attributes and their functional dependencies. It reduces the requirements of restructuring of tables.
     > Child referencing: The Child References pattern stores each tree node in a document; in addition to the tree node, document stores in an array the id(s) of the node's children. Each node contains a reference array to its children
     > Parent referencing: The Parent References pattern stores each tree node in a document; in addition to the tree node, the document stores the ID of the node's parent. Each node contains a reference to its parent.
+    
+- Difference between Normalization and Denormalization: The following table highlights the important differences between Normalization and Denormalization
+  > Normalization
+    + Implementation: Normalization is used to remove redundant data from the database and to store non-redundant and consistent data into it.	
+    + Focus: Normalization mainly focuses on clearing the database from unused data and to reduce the data redundancy and inconsistency.	
+    + Number of Tables: During Normalization, data is reduced, so there will be a decrease in the number of tables.	
+    + Memory consumption: Normalization uses optimized memory and hence faster in performance.	
+    + Data integrity: Normalization maintains data integrity, i.e., any addition or deletion of data from the table will not create any mismatch in the relationship of the tables.	
+    + Where to use: Normalization is generally used where a number of insert/update/delete operations are performed and joins of those tables are not expensive.	
+  
+  > Denormalization
+    + Implementation: Denormalization is the process of adding some redundant data to a database that has been normalized, so as to improve the read performance (execution time) of the database
+    + Focus: The real goal of denormalization is to achieve the faster execution of the queries by introducing redundancy.
+    + Number of Tables: During Denormalization, data is integrated into the same database and hence there will be an increase in the number of tables.
+    + Memory consumption: Denormalization introduces some sort of wastage of memory.
+    + Data integrity: Denormalization does not maintain any data integrity.
+    + Where to use: Denormalization is used where joins are expensive and frequent queries are executed on the tables.
 
 - Embedded Documents: Embedded documents store related data in a single document structure. A document can contain arrays and sub-documents with related data. These denormalized data models allow applications to retrieve related data in a 
   single database operation. For many use cases in MongoDB, the denormalized data model is optimal.
