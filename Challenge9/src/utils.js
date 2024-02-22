@@ -44,7 +44,7 @@ function passportCall(strategy){ // para manejo de errores
             if (err) return next(err);
             if (!user) return res.status(401).send({ error: info.messages ? info.messages : info.toString() });
 
-            console.log("Usuario obtenido del strategy: ", user);
+            // console.log("Usuario obtenido del strategy: ", user);
             req.user = user;
             next();
         })(req, res, next);

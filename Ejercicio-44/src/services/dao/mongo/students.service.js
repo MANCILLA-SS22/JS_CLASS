@@ -2,7 +2,7 @@ import {studentsModel} from "./models/students.js";
 
 class StudentServiceMongo {
     constructor() {
-        console.log("Working students with Database persistence in mongodb");
+        // console.log("Working students with Database persistence in mongodb");
     }
 
     async getAll (){

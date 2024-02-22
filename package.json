@@ -17,7 +17,6 @@
     "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^7.1.5",
     "express-session": "^1.17.3",
-    "faker": "^6.6.6",
     "fractional": "^1.0.0",
     "handlebars": "^4.7.8",
     "helmet": "^7.1.0",
@@ -58,6 +57,7 @@
   "type": "module",
   "version": "1.0.0",
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@parcel/transformer-sass": "^2.9.3"
   },
   "scripts": {

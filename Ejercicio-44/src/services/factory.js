@@ -18,18 +18,18 @@ switch (config.persistence) {
     case 'mongodb':
         initializeMongoService();
         const { default: StudentServiceMongo } = await import('./dao/mongo/students.service.js');
-        studentService = new StudentServiceMongo;   console.log("Servicio de estudiantes cargado: ", studentService);
+        studentService = new StudentServiceMongo;   // console.log("Servicio de estudiantes cargado: ", studentService);
 
         const { default: CoursesServiceMongo } = await import('./dao/mongo/courses.service.js');
-        coursesService = new CoursesServiceMongo;   console.log("Servicio de estudiantes cargado: ", coursesService);
+        coursesService = new CoursesServiceMongo;   // console.log("Servicio de estudiantes cargado: ", coursesService);
         break;
 
     case 'file':
         const { default: StudentServiceFileSystem } = await import('./dao/filesystem/students.service.js');
-        studentService = new StudentServiceFileSystem;  console.log("Servicio de estudiantes cargado: ", studentService);
+        studentService = new StudentServiceFileSystem;  // console.log("Servicio de estudiantes cargado: ", studentService);
 
         const { default: CoursesServiceFileSystem } = await import('./dao/filesystem/courses.service.js');
-        coursesService = new CoursesServiceFileSystem;  console.log("Servicio de estudiantes cargado: ", coursesService);
+        coursesService = new CoursesServiceFileSystem;  // console.log("Servicio de estudiantes cargado: ", coursesService);
         break;
 
     default:

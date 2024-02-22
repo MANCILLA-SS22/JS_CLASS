@@ -17,127 +17,144 @@ function logger(req, res, next){
 class CartRouter extends Route{
     init(){
         this.get("/", ['PUBLIC'], logger, async function(req, res){
-            const allCarts = await CartJSON.getCart();
-            res.sendSuccess(allCarts);
+            try {
+                const allCarts = await CartJSON.getCart();
+                allCarts ? res.sendSuccess(allCarts) : res.sendClientError({message: "Not cars found"});
+            } catch (error) {
+                res.sendServerError(`something went wrong ${error}`)
+            }
         });
 
-        this.post("/", ['PUBLIC'], logger, async function(request, response){ //En el endpoint POST '/' del controller cart estas creando el cart como un objeto vacío. El formato correcto debe incluir una key "products" con un array vacío.
+        this.post("/", ['PUBLIC'], logger, async function(req, res){ //En el endpoint POST '/' del controller cart estas creando el cart como un objeto vacío. El formato correcto debe incluir una key "products" con un array vacío.
             try {
                 const cart = {product: []}
                 const createdCart = await CartJSON.addCart(cart);
-                response.json({mesagge: createdCart});
+                res.sendSuccess(createdCart);
             } 
             catch (error) {
-                response.status(500).json({mesagge: "Server error"});
+                res.sendServerError(`something went wrong ${error}`)
             }
         });
 
-        this.get("/:id", ['PUBLIC'], logger, async function(request, response){
-            const {id} = request.params;
-            const getId = await CartJSON.getCartById(id);  console.log(getId)
-            if (!getId) {
-                response.status(404).json({message: "Cart not found"});
-            }else{
-                response.status(200).json({message: "Cart found", getId});
-        
-                // const carrito = {
-                //     id: id,
-                //     products: getId.products
-                // }
-                // response.status(200).json({message: "Cart found", carrito});
+        this.get("/:id", ['PUBLIC'], logger, async function(req, res){
+            try {
+                const {id} = req.params;
+                const getId = await CartJSON.getCartById(id);  console.log(getId);
+                !getId ? res.sendClientError({message: "Cart not found"}) : res.sendSuccess(getId);
+            } catch (error) {
+                res.sendServerError(`something went wrong ${error}`)
             }
         });
 
-        this.post("/:cid/products/:pid", ['PUBLIC'], logger, async function(request, response){ 
-            const {cid} = request.params;
-            const {pid} = request.params;
-            const getCartId = await CartJSON.getCartById(cid);
-            const getProductId = await ProductJSON.getProductById(pid);
-            let cartIdProducts = getCartId?.products;
-        
-            if (!getCartId){
-                response.status(404).json({message: "Not found cart id."});
-            }else{
-                if (!getProductId){
-                    response.status(404).json({message: "Not found product id."});
+        this.post("/:cid/products/:pid", ['PUBLIC'], logger, async function(req, res){ 
+            try {
+                const {cid} = req.params;
+                const {pid} = req.params;
+                const getCartId = await CartJSON.getCartById(cid);
+                const getProductId = await ProductJSON.getProductById(pid);
+                let cartIdProducts = getCartId?.products;
+            
+                if (!getCartId){
+                    res.sendClientError({message: "Not found cart id."});
                 }else{
-                    const verificarCartProduct = cartIdProducts.find((event) => event.product._id.toString() === pid);
-                    if (verificarCartProduct === undefined){
-                        const newObject = {
-                            product: pid,
-                            quantity: 1
-                        }
-                        // cartIdProducts.push(getProductId, newObject);
-                        cartIdProducts.push(newObject);
-                        const updateCartProducts = await CartJSON.updateCartProductsId(cid, cartIdProducts);
-                        response.status(200).json(updateCartProducts);
+                    if (!getProductId){
+                        res.sendClientError({message: "Not found product id."});
                     }else{
-                        const productsArrayPosition = cartIdProducts.findIndex(event => event.product.toString() === pid);
-                        cartIdProducts[productsArrayPosition].quantity += 1;
-        
-                        const updateCartProducts = await CartJSON.updateCartProductsId(cid, cartIdProducts);
-                        response.status(200).json(updateCartProducts);
+                        const verificarCartProduct = cartIdProducts.find((event) => event.product._id.toString() === pid);
+                        if (verificarCartProduct === undefined){
+                            const newObject = {
+                                product: pid,
+                                quantity: 1
+                            }
+                            // cartIdProducts.push(getProductId, newObject);
+                            cartIdProducts.push(newObject);
+                            const updateCartProducts = await CartJSON.updateCartProductsId(cid, cartIdProducts);
+                            res.sendSuccess(updateCartProducts);
+                        }else{
+                            const productsArrayPosition = cartIdProducts.findIndex(event => event.product.toString() === pid);
+                            cartIdProducts[productsArrayPosition].quantity += 1;
+            
+                            const updateCartProducts = await CartJSON.updateCartProductsId(cid, cartIdProducts);
+                            res.sendSuccess(updateCartProducts);
+                        }
                     }
                 }
+            } catch (error) {
+                res.sendServerError(`something went wrong ${error}`)
             }
         });
 
-        this.delete("/:cid/products/:pid", ['PUBLIC'], logger, async function(requset, response){ //deberá eliminar del carrito el producto seleccionado.
-            const {cid} = requset.params;
-            const {pid} = requset.params;
-            const getCartId = await CartJSON.getCartById(cid);
-        
-            const verify = getCartId.products.find(event => event.product._id.toString() === pid);
-        
-            if(verify){
-                const productPosition = getCartId.products.findIndex(event => event.product._id.toString() === pid); //Buscamos la posicion del producto a eliminar
-                getCartId.products.splice(productPosition, 1) //Una vez encontrado, eliminamos el producto (con la posicion obtenida)
-                const newArray = getCartId.products;
-                const deleteProduct = await CartJSON.deleteProductInCarById(cid, newArray);
-                response.status(200).json({messaje: deleteProduct})
-        
-            }else{
-                response.status(404).json({messaje: "Product not found"});
+        this.delete("/:cid/products/:pid", ['PUBLIC'], logger, async function(requset, res){ //deberá eliminar del carrito el producto seleccionado.
+            try {
+                const {cid} = requset.params;
+                const {pid} = requset.params;
+                const getCartId = await CartJSON.getCartById(cid);
+                const verify = getCartId.products.find(event => event.product._id.toString() === pid);
+            
+                if(verify){
+                    const productPosition = getCartId.products.findIndex(event => event.product._id.toString() === pid); //Buscamos la posicion del producto a eliminar
+                    getCartId.products.splice(productPosition, 1) //Una vez encontrado, eliminamos el producto (con la posicion obtenida)
+                    const newArray = getCartId.products;
+                    const deleteProduct = await CartJSON.deleteProductInCarById(cid, newArray);
+                    res.sendSuccess(deleteProduct);
+            
+                }else{
+                    res.sendClientError({messaje: "Product not found"});
+                }
+            } catch (error) {
+                res.sendServerError(`something went wrong ${error}`)
             }
         });
 
-        this.put("/:cid", ['PUBLIC'], logger, async function(request, response){ //  deberá actualizar el carrito con un arreglo de productos con el formato especificado arriba.
-            const {products} = request.body;
-            const {cid} = request.params;
-            const getCartId = await CartJSON.updateOneCart(cid, products);
-            response.json(200).status(getCartId);
-        });
-        
-        this.put("/:cid/products/:pid", ['PUBLIC'], logger, async function(requset, response){ //deberá poder actualizar SÓLO la cantidad de ejemplares del producto por cualquier cantidad pasada desde req.body
-            const {quantity} = requset.body;
-            const {cid} = requset.params;
-            const {pid} = requset.params;
-            
-            if (typeof quantity !== "number") return response.status(404).json({messaje: "Error"})
-            
-            const getCartId = await CartJSON.getCartById(cid);
-            const verify = getCartId.products.find(event => event.product._id.toString() === pid);
-            
-            if(verify){
-                let updateNumberOfProducts = await CartJSON.finder(cid);
-                const arrayPosition = updateNumberOfProducts.products.findIndex(event => event.product._id.toString() === pid);
-                updateNumberOfProducts.products[arrayPosition].quantity = quantity;
-                const ans = await CartJSON.updateCartByProductsId(cid, updateNumberOfProducts);
-                console.log("ans", ans)
-                response.status(200).json({messaje: "Product quntity updated"});
-            }else{
-                let updateNumberOfProducts = await CartJSON.finder(cid);
-                updateNumberOfProducts.products.push({product: pid, quantity: quantity});
-                const ans = await CartJSON.updateCartByProductsId(cid, updateNumberOfProducts);
-                console.log("ans", ans)
-                response.status(200).json({messaje: "Product quntity updated"});
+        this.put("/:cid", ['PUBLIC'], logger, async function(req, res){ //  deberá actualizar el carrito con un arreglo de productos con el formato especificado arriba.
+            try {
+                const {products} = req.body;
+                const {cid} = req.params;
+                const getCartId = await CartJSON.updateOneCart(cid, products);
+                res.sendSuccess(getCartId);
+            } catch (error) {
+                res.sendServerError(`something went wrong ${error}`)
             }
         });
         
-        this.delete("/:cid", ['PUBLIC'], logger, async function(requset, response){ //deberá eliminar todos los productos del carrito
-            const {cid} = requset.params;
-            const deleteProduct = await CartJSON.deleteProductsById(cid);
-            response.status(200).json({messaje: deleteProduct});
+        this.put("/:cid/products/:pid", ['PUBLIC'], logger, async function(req, res){ //deberá poder actualizar SÓLO la cantidad de ejemplares del producto por cualquier cantidad pasada desde req.body
+            try {
+                const {quantity} = req.body;
+                const {cid} = req.params;
+                const {pid} = req.params;
+                
+                if (typeof quantity !== "number") return res.sendClientError({messaje: "Error"});
+                
+                const getCartId = await CartJSON.getCartById(cid);
+                const verify = getCartId.products.find(event => event.product._id.toString() === pid);
+                
+                if(verify){
+                    let updateNumberOfProducts = await CartJSON.finder(cid);
+                    const arrayPosition = updateNumberOfProducts.products.findIndex(event => event.product._id.toString() === pid);
+                    updateNumberOfProducts.products[arrayPosition].quantity = quantity;
+                    const ans = await CartJSON.updateCartByProductsId(cid, updateNumberOfProducts);
+                    console.log("ans", ans)
+                    res.sendSuccess(ans);
+                }else{
+                    let updateNumberOfProducts = await CartJSON.finder(cid);
+                    updateNumberOfProducts.products.push({product: pid, quantity: quantity});
+                    const ans = await CartJSON.updateCartByProductsId(cid, updateNumberOfProducts);
+                    console.log("ans", ans)
+                    res.sendSuccess(ans);
+                }
+            } catch (error) {
+                res.sendServerError(`something went wrong ${error}`)
+            }
+        });
+        
+        this.delete("/:cid", ['PUBLIC'], logger, async function(requset, res){ //deberá eliminar todos los productos del carrito
+            try {
+                const {cid} = requset.params;
+                const deleteProduct = await CartJSON.deleteProductsById(cid);
+                res.sendSuccess(deleteProduct);
+            } catch (error) {
+                res.sendServerError(`something went wrong ${error}`)
+            }
         });
     }
 }

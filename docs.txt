@@ -29,7 +29,7 @@ https://dev.mysql.com/doc/refman/8.0/en/dynindex-statement.html
 https://www.postgresql.org/docs/current/ 
 https://docs.oracle.com/database/121/SQLRF/toc.htm 
 https://docs.github.com/en/get-started/getting-started-with-git/associating-text-editors-with-git 
-https://legacy.reactjs.org  https://react.dev  https://create-react-app.dev  https://react-bootstrap.github.io   
+https://react.dev   https://legacy.reactjs.org  https://create-react-app.dev  https://react-bootstrap.github.io
 https://jquery.com/download/ 
 https://angular.io/start 
 https://www.php.net/manual/en/
@@ -61,6 +61,7 @@ https://www.passportjs.org/packages/
 https://nodejs.org/api/process.html#process
 https://nodejs.org/api/child_process.html
 https://nodemailer.com
+https://fakerjs.dev/api/
 https://www.twilio.com/docs/libraries/reference/twilio-node/5.0.0-rc.1/
 https://github.com/typicode/json-server
 https://github.com/expressjs/multer
@@ -87,6 +88,7 @@ https://github.com/AhmedAdelFahim/express-xss-sanitizer
 https://github.com/analog-nico/hpp
 https://github.com/hapijs/joi
 
+https://swr.vercel.app 
 https://bcrypt-generator.com/
 https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt/17238#17238
 https://jwt.io    https://auth0.com/docs/secure/tokens/json-web-tokens
@@ -140,7 +142,6 @@ https://dev.to/ruppysuppy/7-free-public-apis-you-will-love-as-a-developer-166p
 https://blog.hubspot.es/website/que-es-api-rest 
 https://www.postman.com 
 https://www.npmjs.com/package/react-query 
-https://swr.vercel.app 
 https://firebaseopensource.com/projects/rakannimer/react-firebase/ 
 https://firebase.google.com/docs/firestore/manage-data/add-data 
 
