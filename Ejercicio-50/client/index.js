@@ -1,3 +1,5 @@
+import axios from "axios";
+console.log(axios)
 function testRequest(){
     console.log("Llamando API:");
     fetch('http://localhost:9090/api/users', {

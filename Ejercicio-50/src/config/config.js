@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import program from '../process.js';
 
 const environment = program.opts().mode; //nodemon backend.js --mode prod   -->   Servidor escuchando por el puerto: 3001
-dotenv.config({ path: environment === "prod" ? "./Ejercicio-45/src/config/.env.production" : "./Ejercicio-45/src/config/.env.development" });
+dotenv.config({ path: environment === "prod" ? "./Ejercicio-50/src/config/.env.production" : "./Ejercicio-50/src/config/.env.development" });
 
 console.log("environment --> ", environment);
 console.log("PERSISTENCE::: ", program.opts().persist);

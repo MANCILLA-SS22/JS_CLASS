@@ -2,12 +2,13 @@ import {AppError} from "../utils/appError.js";
 
 //If any of the funcions 
 function globalErrorHandler(err, req, res, next){ //Express recognizes an error handling middleware by working with 4 parameters
+    console.log("err --> ", err)
     err.statusCode = err.statusCode || 500;
     err.status = err.status || "error";
     // console.log("Error -->" ,err); //err.stack shows where the error is happening. The "err" parameter receives the error handling coming from, let's say, catchFunc() function. 
 
     if(process.env.NODE_ENV === "development"){
-        sendErrorDev(err, res);
+        sendErrorDev(err, req, res);
         
     }else if(process.env.NODE_ENV === "production"){
         // let error = {...err};                         // Option 1
@@ -15,7 +16,7 @@ function globalErrorHandler(err, req, res, next){ //Express recognizes an error 
         // let error = JSON.parse(JSON.stringify(err));  // Option 3
         // let error = Object.assign({}, err);           // Option 4
         let error = Object.create(err);                  // Option 5
-        console.log("Object error: ", error);
+        console.log("Error 💣", error);
 
         if(error.name === "CastError") error = handleCastErrorDb(error);
         if(error.code === 11000) error = handleDuplicateFieldsDB(error);
@@ -23,22 +24,36 @@ function globalErrorHandler(err, req, res, next){ //Express recognizes an error 
         if(error.name === "JsonWebTokenError") error = handleError();
         if(error.name === "TokenExpiredError: jwt expired") error = handleJWTexpired();
 
-        sendErrorProd(error, res);
+        sendErrorProd(error, req, res);
     }
 
 
-    function sendErrorDev(err, res){
-        return res.status(err.statusCode).json({status: err.status, error: err, message: err.message, stack: err.stack});
+    function sendErrorDev(err, req, res){
+        // console.error("Error 💣", err);
+        if (req.originalUrl.startsWith("/api")) {
+            return res.status(err.statusCode).json({status: err.status, error: err, message: err.message, stack: err.stack});
+        }
+
+        return res.status(err.statusCode).render("error", {title: "Something went wrong", msg: err.message});
     }
     
-    function sendErrorProd(err, res){
-        console.log(err)
-        if(err.isOperational){
-            res.status(err.statusCode).json({status: err.status, message: err.message});
-        }else{
+    function sendErrorProd(err, req, res){
+        console.error("Error 💣", err)
+        if(req.originalUrl.startsWith("/api")){
+            if(err.isOperational){
+                return res.status(err.statusCode).json({status: err.status, message: err.message});
+            }
             console.error("Error 💣", err)
-            res.status(500).json({status: 'error', message: "Something went very wrong!"})
+            return res.status(500).json({status: 'error', message: "Something went very wrong!"})
         }
+        
+        if(err.isOperational){
+            return res.status(err.statusCode).render("error", {title: "Something went wrong", msg: err.message});
+        }
+
+        console.error("Error 💣", err)
+        return res.status(err.statusCode).json({status: 'error', message: "Something went very wrong!"})
+        
     }
     
     function handleCastErrorDb(err){

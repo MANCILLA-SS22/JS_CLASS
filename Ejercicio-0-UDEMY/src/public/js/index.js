@@ -1,12 +1,12 @@
 // import "@babel/polyfill";
-// import "core-js/stable"
+// import "core-js/stable";
 // import "regenerator-runtime";
-import {login} from "./login.js"
+import {login, logout} from "./login.js"
 import {displayMap} from "./leaflet.js"
-console.log("Res")
 
 const mapLeaftlet = document.getElementById('map');
-const loginForm = document.querySelector(".form")
+const loginForm = document.querySelector(".form");
+const logOutBtn = document.querySelector('.nav__el--logout');
 
 if (mapLeaftlet){
     const locations = JSON.parse(mapLeaftlet.dataset.locations);
@@ -21,3 +21,5 @@ if(loginForm){
         login(email, password)
     });
 };
+
+if (logOutBtn) logOutBtn.addEventListener('click', logout);

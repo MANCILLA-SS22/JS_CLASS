@@ -14,41 +14,36 @@ import {__dirname} from "./dirname.js"; // --> C:\Users\xxelt\OneDrive\Documento
 import {globalErrorHandler} from "./controllers/errorController.js";
 import { all, limiter, requestTime } from "./config/middlewares/middlewares.js";
 
+const app = express();
+
 // console.log(process.env); //process.env now has the keys and values you defined in your .env file
 if(process.env.NODE_ENV === "development"){ //process.env.NODE_ENV === "development" or app.get('env') are the same. //In express, app.get('env') returns 'development' if NODE_ENV is not defined in "config.env". So you don't need the line to test its existence and set default.
     // console.log("1")
     app.use(morgan("dev"));
 }
 
-const scriptSrcUrls = [ 'https://*.mapbox.com', 'https://unpkg.com/', 'https://tile.openstreetmap.org', 'https://*.cloudflare.com/', 'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js', 'https://*.stripe.com'];
-const styleSrcUrls = [ 'https://unpkg.com/', 'https://tile.openstreetmap.org', 'https://fonts.googleapis.com/', 'https:'];
-const connectSrcUrls = [ 'https://unpkg.com/leaflet@1.9.3/dist/leaflet.js', 'https://unpkg.com', 'https://tile.openstreetmap.org', 'https://*.cloudflare.com/', 'http://127.0.0.1:3300', 'https://*.stripe.com', 'https://*.mapbox.com', 'https://bundle.js:*', 'ws://127.0.0.1:*/',];
-const fontSrcUrls = ['fonts.googleapis.com','fonts.gstatic.com'];
-const frameSrcUrls = ['https://*.stripe.com'];
 const directives = {
-    defaultSrc: ["'self'", 'https:', 'data:', 'blob:'],
+    defaultSrc: ["'self'", 'data:', 'blob:', 'https:', 'ws://localhost:1234/'],
     baseUri: ["'self'"],
-    connectSrc: ["'self'", ...connectSrcUrls],
-    scriptSrc: ["'self'", ...scriptSrcUrls],
-    styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-    workerSrc: ["'self'", 'data:', 'blob:'],
+    connectSrc: ["'self'", "'unsafe-inline'", 'data:', 'blob:'],
+    scriptSrc: [ "'self'", 'https:', 'http:', 'blob:', ],
+    styleSrc: ["'self'", 'https:', "'unsafe-inline'", 'https://tile.openstreetmap.org', 'https://fonts.googleapis.com/'],
+    workerSrc: ["'self'", 'data:', 'blob:', 'https://*.tiles.mapbox.com', 'https://api.mapbox.com', 'https://events.mapbox.com', 'https://m.stripe.network'],
     objectSrc: ["'none'"],
     imgSrc: ["'self'", 'blob:', 'data:', 'https:'],
-    fontSrc: ["'self'", ...fontSrcUrls],
+    fontSrc: ["'self'", 'https:', 'data:', 'fonts.googleapis.com','fonts.gstatic.com'],
+    formAction: ["'self'"],
     childSrc: ["'self'", 'blob:'],
-    frameSrc: ["'self'", ...frameSrcUrls],
+    frameSrc: ["'self'", 'https://js.stripe.com'],
     upgradeInsecureRequests: []
 }
-
-const app = express();
 
 //GLOBAL MIDDLEWARES
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public"))); //Serving static files
 app.use(express.static(`${__dirname}/public`)); //Serving static files
-app.use(helmet({ crossOriginResourcePolicy: false, crossOriginEmbedderPolicy: false })); // app.use(helmet());
-app.use(helmet.contentSecurityPolicy({directives}));
+app.use(helmet.contentSecurityPolicy({crossOriginResourcePolicy: false, crossOriginEmbedderPolicy: false, directives})); // app.use(helmet());
 app.use(cookieParser());
 app.use(express.json({limit: "10kb"})); //Body parser, reading data from body into req.body
 app.use(mongoSanitiza()); //Data sanitization against NoSQL query injection

@@ -63,11 +63,12 @@ https://nodejs.org/api/child_process.html
 https://nodemailer.com
 https://fakerjs.dev/api/
 https://www.twilio.com/docs/libraries/reference/twilio-node/5.0.0-rc.1/
+https://github.com/facebook/regenerator/tree/main
+https://github.com/zloirock/core-js
 https://github.com/typicode/json-server
 https://github.com/expressjs/multer
 https://github.com/motdotla/dotenv
 https://github.com/expressjs/morgan
-https://github.com/zloirock/core-js
 https://github.com/simov/slugify
 https://github.com/validatorjs/validator.js
 https://github.com/aravindnc/mongoose-paginate-v2?tab=readme-ov-file
@@ -122,7 +123,6 @@ https://moment.github.io/luxon/api-docs/index.html#interval
 https://animate.style 
 https://leafletjs.com/reference.html 
 https://lodash.com 
-https://www.npmjs.com/package/regenerator-runtime 
 https://popper.js.org/docs/v2/
 
 Api’s: 

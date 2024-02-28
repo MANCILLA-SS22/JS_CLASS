@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {getAllUsers, updateMe, deleteMe, deleteUser, updateUser, getUser, getMe, createUser} from "../controllers/userController.js";
-import {signup, login, forgotPassword, resetPassword, updatePassword, protect, restrictTo} from "../controllers/authController.js";
+import {signup, login, forgotPassword, resetPassword, updatePassword, protect, restrictTo, logout} from "../controllers/authController.js";
 
 const router = Router();
 
@@ -11,6 +11,7 @@ router.param("id", function(req, res, next, val){ //Param Middleware is a middle
 
 router.post("/signup", signup);
 router.post("/login", login);
+router.get("/logout", logout);
 router.post("/forgotPassword", forgotPassword);
 router.patch("/resetPassword/:token", resetPassword);
 

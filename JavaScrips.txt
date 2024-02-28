@@ -1,7 +1,3 @@
-    "build:js": "parcel build ./Ejercicio-0-UDEMY/src/public/js/index.js --dist-dir ./Ejercicio-0-UDEMY/src/public/js/bundled",
-    "watch:js": "parcel serve ./Ejercicio-0-UDEMY/src/public/js/index.js --dist-dir ./Ejercicio-0-UDEMY/src/public/js/bundled"
-
-
 - HTML <script> Tag: The <script> tag is used to embed a client-side script (JavaScript). The <script> element either contains scripting statements, or it points to an external script file through the src attribute. Common uses for 
   JavaScript are image manipulation, form validation, and dynamic changes of content.
 

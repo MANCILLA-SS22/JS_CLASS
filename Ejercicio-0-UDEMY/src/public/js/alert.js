@@ -1,6 +1,6 @@
 function hideAlert(){
-  const element = document.querySelector('.alert');
-  if(element) element.parentElement.removeChild(element);
+    const element = document.querySelector('.alert');
+    if(element) element.parentElement.removeChild(element);
 };
 
 // type is 'success' or 'error'

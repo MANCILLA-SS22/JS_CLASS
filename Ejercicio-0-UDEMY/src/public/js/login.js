@@ -1,5 +1,5 @@
 // import axios from 'axios';
-// import { showAlert } from './alert.js';
+import { showAlert } from './alert.js';
 async function login (email, password){
     try {
         const res = await axios({
@@ -12,7 +12,7 @@ async function login (email, password){
         });
         console.log(res)
     if (res.data.status === 'success') {
-        alert('success', 'Logged in successfully!');
+        showAlert('success', 'Logged in successfully!');
         window.setTimeout(() => {
             location.assign('/');
         }, 1500);
@@ -20,16 +20,9 @@ async function login (email, password){
 
     }catch (err) {
         console.log(err)
-        // alert('error', err.response.data.message);
+        showAlert('error', err.response.data.message);
     }
 };
-
-document.querySelector(".form").addEventListener("submit", function(e){
-        e.preventDefault();
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        login(email, password)
-    });
 
 async function logout(){
     try {
@@ -37,7 +30,11 @@ async function logout(){
             method: 'GET',
             url: 'http://localhost:5500/api/v1/users/logout'
         });
-        if ((res.data.status = 'success')) location.reload(true);
+        if ((res.data.status = 'success')){
+            //This location.reload(true) will force a reload from the server and not from browser cache. Otherwise, it might simply load the same page from the cache which would then still have our user 
+            //menu, and we really want a fresh page coming down from the server
+            location.reload(true);
+        }
     
     }catch (err) {
         console.log(err.response);
@@ -45,4 +42,4 @@ async function logout(){
     }
 };
 
-// export {login , logout};
+export {login , logout};

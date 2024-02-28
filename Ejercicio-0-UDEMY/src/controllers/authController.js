@@ -65,6 +65,14 @@ const login = catchFunc(async function(req, res, next){
     createSendToken(user, 200, res);
 });
 
+const logout = catchFunc(async function(req, res, next){
+    res.cookie("jwt", "loggedout", {
+        expiresIn: new Date(Date.now() + 10 * 1000),
+        httpOnly: true
+    });
+    res.status(200).json({status: "success"})
+});
+
 const protect = catchFunc(async function(req, res, next){
     //Method 1: promisify
     // 1) Getting token and check if it's there
@@ -128,7 +136,7 @@ const protect = catchFunc(async function(req, res, next){
     res(); */
 });
 
-const isLoggedIn = async function(req, res, next){ //Only for rendered pages, no errors!
+async function isLoggedIn(req, res, next){ //Only for rendered pages, no errors!
     if(req.cookies.jwt){
         try {
             // 1) Verify token  
@@ -222,4 +230,4 @@ const updatePassword = catchFunc(async function(req, res, next){
     createSendToken(user, 200, res);   
 });
 
-export {signup, login, protect, restrictTo, forgotPassword, resetPassword, updatePassword, isLoggedIn};
+export {signup, login, protect, restrictTo, forgotPassword, resetPassword, updatePassword, isLoggedIn, logout};
