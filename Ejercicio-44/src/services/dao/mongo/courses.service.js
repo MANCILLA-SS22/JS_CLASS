@@ -2,7 +2,7 @@ import {coursesModel} from "./models/courses.js";
 
 class CourseService {
     constructor() { 
-        console.log("Working courses with Database persistence in mongodb");
+        // console.log("Working courses with Database persistence in mongodb");
     }
 
     async getAll (){

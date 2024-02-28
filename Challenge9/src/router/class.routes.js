@@ -1,7 +1,8 @@
-// import { SECRET_KEY } from "../config/dotenvMain/env.config.js";
-// import jwt from "jsonwebtoken";
 import { Router } from "express";
 import passport from "passport";
+// import jwt from "jsonwebtoken";
+// import { SECRET_KEY } from "../config/dotenvMain/env.config.js";
+// import { authToken, passportCall, authorization } from "../../utils.js";
 
 class CustomRouter { //Esta es la clase padre, y CustomRouter es la clase que hereda de esta misma clase.
     constructor() {
@@ -40,18 +41,43 @@ class CustomRouter { //Esta es la clase padre, y CustomRouter es la clase que he
         return function(req, res, next){
             if(policies[0] === "PUBLIC") return next();
             
-            passport.authenticate("jwt", authJWT)(req, res, next); //Colocamos (req, res, next) para que se incoque la funcion a si misma sin necesidad de llamarla desde otro medio.
+            passport.authenticate("jwt", { session: false }, authJWT)(req, res, next); //Colocamos (req, res, next) para que se incoque la funcion a si misma sin necesidad de llamarla desde otro medio.
     
             function authJWT(err, user, info){ //La funcion interna en passport.authenticate(), por defecto tiene tres parametros que representan el error, el usuario y la informacion.
                 if (err) return next(err); // will generate a 500 error
                 if (!user) return res.status(401).send({ error: info.messages ? info.messages : info.toString() }); // Generate a JSON response reflecting authentication status
-                console.log("user.role", user.role)
-                if (user.role !== policies[0]) return res.status(403).send({ error: "Forbidden. You don`t have enough permissions" });
+                console.log("user.role", user.role.toUpperCase());
+                if (user.role.toUpperCase() !== policies[0]) return res.status(403).send({ error: "Forbidden. You don`t have enough permissions" });
 
-                console.log("Usuario obtenido del strategy: ", user);
+                // console.log("Usuario obtenido del strategy: ", user);
                 req.user = user;
                 next();
             }
+        // Diferentes metodos de autenticacion con passport
+        // Metodo 1: Usando Authorization Bearer Token (USAR POSTMAN O NO FUNCIONARA)
+        // this.get("/", ['PUBLIC'], authToken, async function(req, res){
+        //     const allProducts = await productManager.getProducts();
+        //     res.render('profile', {user: req.user, data: allProducts});
+        // });   
+
+        //Metodo 2: Usando JWT por Cookie
+        // this.get("/", ['PUBLIC'], init, passport.authenticate('jwt', { session: false }), async function(req, res){  //Colocamos session:false debido a que no ocupamos express-session para estos procesos.
+        //     const allProducts = await productManager.getProducts();
+        //     res.render('profile', {user: req.user, data: allProducts});
+        // });           
+
+        // Metodo 3: Usando passport-JWT por Cookie mediante customCall
+        // this.get("/", ['PUBLIC'], passportCall('jwt'), async function(req, res){ 
+        //     const allProducts = await productManager.getProducts();
+        //     res.render('profile', {user: req.user, data: allProducts});
+        // });
+
+        // Metodo 4authorization
+        // this.get("/", ['PUBLIC'], authorization('ADMIN'), async function(req, res){ 
+        //     const allProducts = await productManager.getProducts();
+        //     res.render('profile', {user: req.user, data: allProducts});
+        // }); 
+
         }
     }
 
@@ -63,7 +89,7 @@ class CustomRouter { //Esta es la clase padre, y CustomRouter es la clase que he
                 res.status(200).send({status: "Success", payload})
             }
 
-            res.sendInternalServerError = function(error){
+            res.sendServerError = function(error){
                 res.status(500).send({status: "Error", error})
             }
 

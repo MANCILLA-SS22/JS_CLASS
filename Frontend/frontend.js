@@ -5180,7 +5180,7 @@ console.log(count); */
 //     return allNames;
 // }, {});
 
-// console.log(countedNames);/*
+// console.log(countedNames);*/
 
 /* //Ejemplo 92: Write a JavaScript program to convert an array of objects to a single object keyed by id (with reduce and filter)
 const users = [

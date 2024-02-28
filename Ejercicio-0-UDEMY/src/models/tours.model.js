@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose";
 import slugify from "slugify"; //you can slugify a string by converting it to a URL-friendly format where any special characters and spaces are replaced with hyphens or underscores.
-// import { UserModel } from "./userModel.js";
 
 const tourSchema = new Schema({
     name: {
@@ -131,17 +130,6 @@ tourSchema.pre("save", function(next){
     next();
 });
 
-//EMBEDDED DOCUMENTS
-// tourSchema.pre("save", async function(next){
-//     const guidesPromises = this.guides.map(function(id){
-//         return UserModel.findById(id);
-//     });
-
-//     this.guides = await Promise.all(guidesPromises);// We need to do this because the result in guidesPromises returns an arraw full of promises and it'll be just run by using "Promise.all"
-
-//     next();
-// });
-
 tourSchema.pre("save", function(next){
     console.log("Will save document..."); 
     next();
@@ -174,15 +162,15 @@ tourSchema.post(/^find/, function(docs, next){
     next();
 });
 
-//AGREGATION MIDDLEWARES: Here, "this" will point to the current aggregation object
-// tourSchema.pre("aggregate", function(next){
-//     this.pipeline().unshift({ 
-//         $match: {secretTour: {$ne: true }}
-//     });
+// AGREGATION MIDDLEWARES: Here, "this" will point to the current aggregation object
+tourSchema.pre("aggregate", function(next){
+    this.pipeline().unshift({ 
+        $match: {secretTour: {$ne: true }}
+    });
 
-//     console.log(this.pipeline());
-//     next();
-// });
+    console.log(this.pipeline());
+    next();
+});
 
 const TourModel = model("Tours", tourSchema);
 export { TourModel };

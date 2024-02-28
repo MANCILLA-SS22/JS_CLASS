@@ -30,9 +30,9 @@ function initialPassport(){
 }
 
 async function jwt(jwt_payload, done){
-    console.log("Entrando a passport Strategy con JWT");
+    // console.log("Entrando a passport Strategy con JWT");
     try {
-        console.log("JWT obtenido del Payload: ", jwt_payload);
+        // console.log("JWT obtenido del Payload: ", jwt_payload);
         return done(null, jwt_payload.user);
     } catch (error) {
         return done(error)
@@ -107,7 +107,7 @@ function cookieExtractor(req){
     if (req && req.cookies){
         token = req.cookies['jwtCookieToken'];
     }
-    console.log("Token obtenido desde Cookie: ", token);
+    // console.log("Token obtenido desde Cookie: ", token);
     return token;
 };
 

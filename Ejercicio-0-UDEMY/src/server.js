@@ -1,3 +1,4 @@
+import mongoose from "mongoose"
 import dotenv from "dotenv";
 dotenv.config({path: "Ejercicio-0-UDEMY/src/config.env"}); //doent allow us to read our variables from the file (config.env) and save them into node JS environment variables
 import app from "./backend.js";
@@ -7,10 +8,6 @@ process.on("uncaughtException", function(err){
     console.log(err.name, err.message);
     process.exit(1);
 });
-
-import mongoose from "mongoose"
-
-// console.log(process.env); //process.env now has the keys and values you defined in your .env file
 
 const DB = process.env.DATABASE.replace('<password>', process.env.DATABASE_PASSWORD);
 async function mongo (DB){

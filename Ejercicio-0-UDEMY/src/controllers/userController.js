@@ -48,7 +48,7 @@ function createUser(req, res){
 }
 
 const getAllUsers = getAll(UserModel);
-const getUser = getOne(UserModel);;
+const getUser = getOne(UserModel);
 const updateUser = updateOne(UserModel);
 const deleteUser = deleteOne(UserModel);
 

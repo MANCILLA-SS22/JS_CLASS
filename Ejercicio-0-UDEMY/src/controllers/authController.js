@@ -24,7 +24,7 @@ function createSendToken(user, statusCode, res){
     res.cookie("jwt", token, cookieOptions);
 
     user.password = undefined;
-
+    
     res.status(statusCode).json({ status: "success", token, data: {user: user} })
 };
 
@@ -57,7 +57,7 @@ const login = catchFunc(async function(req, res, next){
     if(!email || !password) return next(new AppError("Please provide email and password!", 400));
 
     // 2) Check if user exists && password is correct;
-    const user = await UserModel.findOne({email}).select("+password"); console.log(user);
+    const user = await UserModel.findOne({email}).select("+password"); console.log("user --> ", user);
     const correct = await user.correctPassword(password, user.password); //The function "userSchema.methods.correctPassword" in userModel.js is an instanced method. So therefore it's available on all the user documents.
     if(!user || !correct) return next(new AppError("Incorrect email or password!", 401));
 
@@ -66,12 +66,15 @@ const login = catchFunc(async function(req, res, next){
 });
 
 const protect = catchFunc(async function(req, res, next){
-    console.log(req.headers);
-
     //Method 1: promisify
     // 1) Getting token and check if it's there
     let token;
-    if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")) token = req.headers.authorization.split(" ")[1];    
+    if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")){
+        token = req.headers.authorization.split(" ")[1];
+    }else if(req.cookies.jwt){
+        token = req.cookies.jwt;
+    }
+
     if(!token) return next(new AppError("You are not logged in. Please log in to get access!", 401))
     
     // 2) Verification token
@@ -86,10 +89,11 @@ const protect = catchFunc(async function(req, res, next){
     if(!currentUser.changedPasswordAfter(decoded.iat)) return next(new AppError("User recently changed password. Please log in again!", 401));
 
     //Grand access to protected route
-    // In the "protect" function, the purpose of assigning req.user = "decoded" is to make the "decoded" object available to other middleware functions or route handlers that are executed after the protect middleware.
-    // In this case, since req.user is assigned the value of "decoded", the "decoded" object will be available to any subsequent middleware functions or route handlers that need to access information about the authenticated user.
-    // This is a common pattern in middleware-based web frameworks, where information is passed between middleware functions using the req (request) and res (response) objects. By attaching data to the req object, that data can be accessed and used by other parts of the application that handle the request.
-    // In summary, the assignment req.user = decoded is necessary to make the authenticated user object available to subsequent middleware functions or route handlers that need to access it.
+    // In the "protect" function, the purpose of assigning req.user = "decoded" is to make the "decoded" object available to other middleware functions or route handlers that are executed after the 
+    // protect middleware. In this case, since req.user is assigned the value of "decoded", the "decoded" object will be available to any subsequent middleware functions or route handlers that need to 
+    // access information about the authenticated user. This is a common pattern in middleware-based web frameworks, where information is passed between middleware functions using the req (request) 
+    // and res (response) objects. By attaching data to the req object, that data can be accessed and used by other parts of the application that handle the request. In summary, the assignment 
+    // req.user = decoded is necessary to make the authenticated user object available to subsequent middleware functions or route handlers that need to access it.
     req.user = currentUser; console.log("req.user --> ", req.user)
     next();
     
@@ -123,6 +127,31 @@ const protect = catchFunc(async function(req, res, next){
     }
     res(); */
 });
+
+const isLoggedIn = async function(req, res, next){ //Only for rendered pages, no errors!
+    if(req.cookies.jwt){
+        try {
+            // 1) Verify token  
+            const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET); //This is function that we need to call, which will then return a promose. (token, process.env.JWT_SECRET) stands for --> call the function what is returned from promisify() immediately. THIS IS A SHORTER WAY TO USE PROMISES INSTEAD OF USING async-await OR .then() & .catch().
+            console.log("Decoded", decoded);
+    
+            // 2) Check if user still exists
+            const currentUser = await UserModel.findById(decoded.id); console.log("currentUser", currentUser)
+            if(!currentUser) return next();
+    
+            // 3) Check if user changed password after the token was issued
+            if(!currentUser.changedPasswordAfter(decoded.iat)) return next();
+    
+            //There's a logged in user
+            res.locals.user = currentUser;
+            return next();
+        } catch (error) {
+            return next();
+        }
+    }
+
+    next();
+};
 
 const forgotPassword = catchFunc(async function(req, res, next){
     // 1) Get user based on POSTed email
@@ -193,4 +222,4 @@ const updatePassword = catchFunc(async function(req, res, next){
     createSendToken(user, 200, res);   
 });
 
-export {signup, login, protect, restrictTo, forgotPassword, resetPassword, updatePassword};
+export {signup, login, protect, restrictTo, forgotPassword, resetPassword, updatePassword, isLoggedIn};

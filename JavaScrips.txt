@@ -1,3 +1,7 @@
+    "build:js": "parcel build ./Ejercicio-0-UDEMY/src/public/js/index.js --dist-dir ./Ejercicio-0-UDEMY/src/public/js/bundled",
+    "watch:js": "parcel serve ./Ejercicio-0-UDEMY/src/public/js/index.js --dist-dir ./Ejercicio-0-UDEMY/src/public/js/bundled"
+
+
 - HTML <script> Tag: The <script> tag is used to embed a client-side script (JavaScript). The <script> element either contains scripting statements, or it points to an external script file through the src attribute. Common uses for 
   JavaScript are image manipulation, form validation, and dynamic changes of content.
 
@@ -262,7 +266,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     Extends is used to denote the parent class that the child class will inherit its methods from, and super is used to reference the parent classes constructor method.
       
   > Constructor: El constructor de un objeto es una función que usamos para crear un nuevo objeto cada vez que sea necesario. Con función constructora podemos inicializar las propiedades del objeto al momento de ser instanciado con new.
-    El constructor ejecutara asi mismo las funciones y/o variables que esten dentro de el UNICAMENTE cuando se cree una nueva instancia del objeto al u
+    El constructor ejecutara asi mismo las funciones y/o variables que esten dentro de el UNICAMENTE cuando se cree una nueva instancia del objeto.
     
     Constructor is a "special" prop returns a reference to the Object constructor function that created the instance object.
     A constructor is a special function (prop) that creates and initializes an object instance of a class. It returns a reference to the Object constructor function that created the instance object. In JavaScript, a constructor gets called 
@@ -1651,7 +1655,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         allows them to suggest other items that might interest visitors. Gradually, a profile is built based on a user's browsing history on that site.      
   
   
-  - Application logic vs Business logic: 
+- Application logic vs Business logic: 
   
 - software architecture patterns: If you design software architectures, chances are that you come across the same goals and problems over and over again. Architectural patterns make it easier to solve these issues by providing repeatable 
   designs that address common situations.
@@ -1736,6 +1740,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
    ~ Easier maintenance: Solid principle-based systems are typically easier to maintain and understand, making them less time-consuming and expensive to keep up-to-date.
    ~ Better scalability: Another advantage of using solid principles is that systems designed this way are often more scalable, meaning they can be extended over time if needed.
 
+- Interpolation: 
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$        
 

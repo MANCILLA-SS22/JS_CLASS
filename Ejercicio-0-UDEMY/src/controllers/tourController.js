@@ -1,4 +1,4 @@
-import {__dirname} from "../utils.js";
+import {__dirname} from "../dirname.js";
 import { TourModel } from "../models/tours.model.js";
 import {catchFunc} from "../utils/catchAsync.js";
 import { createOne, deleteOne, getAll, getOne, updateOne } from "./handlerFactory.js";

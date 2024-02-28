@@ -5,15 +5,18 @@ class StudentsRepository {
     getAll(){
         return this.dao.getAll();
     }
+
     save(student){
         return this.dao.save(student);
     }
-    update(id, student){
-        return this.dao.update(id, student);
-    }
-    async findByUsername (username){
+
+    findByUsername (username){
         return this.dao.findByUsername(username);
     };
+
+    update(id, student){
+        return this.dao.update(id, student);
+    }    
 };
 
 export {StudentsRepository}

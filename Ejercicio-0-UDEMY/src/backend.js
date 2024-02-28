@@ -1,48 +1,62 @@
 import express from "express";
+import cookieParser from "cookie-parser";
 import morgan from "morgan";
-import rateLimit from "express-rate-limit";
+import path from "path";
 import helmet from "helmet";
 import mongoSanitiza from "express-mongo-sanitize"
 import xss from "xss-clean";
 import hpp from "hpp"
 import tourRouter from "./router/tour.routes.js";
 import userRouter from "./router/user.routes.js";
-import reviewRouter from "./router/review.routes.js"
-import {__dirname} from "./utils.js"; // --> C:\Users\xxelt\OneDrive\Documentos\PROYECTOS_PERSONALES\JavaScript\ApuntesDeClase\
-import {AppError} from "./utils/appError.js";
+import reviewRouter from "./router/review.routes.js";
+import viewsRouter from "./router/view.routes.js";
+import {__dirname} from "./dirname.js"; // --> C:\Users\xxelt\OneDrive\Documentos\PROYECTOS_PERSONALES\JavaScript\Ejercicio-0-UDEMY\src
 import {globalErrorHandler} from "./controllers/errorController.js";
+import { all, limiter, requestTime } from "./config/middlewares/middlewares.js";
 
-const app = express();
-
+// console.log(process.env); //process.env now has the keys and values you defined in your .env file
 if(process.env.NODE_ENV === "development"){ //process.env.NODE_ENV === "development" or app.get('env') are the same. //In express, app.get('env') returns 'development' if NODE_ENV is not defined in "config.env". So you don't need the line to test its existence and set default.
     // console.log("1")
     app.use(morgan("dev"));
 }
 
-const limiter = rateLimit({
-    limit: 100,
-    windowMs: 3600*1000, //This would allow 100 request from the same IP in one hour.
-    message: "Too many request from this IP, please ty again in an hour!"
-});
-
-function requestTime(req, res, next){
-    req.requstTime = new Date().toISOString(); //We can define any property on the "req" object. 
-    next();
+const scriptSrcUrls = [ 'https://*.mapbox.com', 'https://unpkg.com/', 'https://tile.openstreetmap.org', 'https://*.cloudflare.com/', 'https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js', 'https://*.stripe.com'];
+const styleSrcUrls = [ 'https://unpkg.com/', 'https://tile.openstreetmap.org', 'https://fonts.googleapis.com/', 'https:'];
+const connectSrcUrls = [ 'https://unpkg.com/leaflet@1.9.3/dist/leaflet.js', 'https://unpkg.com', 'https://tile.openstreetmap.org', 'https://*.cloudflare.com/', 'http://127.0.0.1:3300', 'https://*.stripe.com', 'https://*.mapbox.com', 'https://bundle.js:*', 'ws://127.0.0.1:*/',];
+const fontSrcUrls = ['fonts.googleapis.com','fonts.gstatic.com'];
+const frameSrcUrls = ['https://*.stripe.com'];
+const directives = {
+    defaultSrc: ["'self'", 'https:', 'data:', 'blob:'],
+    baseUri: ["'self'"],
+    connectSrc: ["'self'", ...connectSrcUrls],
+    scriptSrc: ["'self'", ...scriptSrcUrls],
+    styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+    workerSrc: ["'self'", 'data:', 'blob:'],
+    objectSrc: ["'none'"],
+    imgSrc: ["'self'", 'blob:', 'data:', 'https:'],
+    fontSrc: ["'self'", ...fontSrcUrls],
+    childSrc: ["'self'", 'blob:'],
+    frameSrc: ["'self'", ...frameSrcUrls],
+    upgradeInsecureRequests: []
 }
 
-function all(req, res, next){  
-    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-}
+const app = express();
 
 //GLOBAL MIDDLEWARES
-app.use(helmet())
-app.use("/api", limiter); //We want to limit access to our API route. So, we write "api" as a path because we want to affect the next routes that start with "api". In this case "/api/v1/tours" and "/api/v1/users"
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public"))); //Serving static files
 app.use(express.static(`${__dirname}/public`)); //Serving static files
+app.use(helmet({ crossOriginResourcePolicy: false, crossOriginEmbedderPolicy: false })); // app.use(helmet());
+app.use(helmet.contentSecurityPolicy({directives}));
+app.use(cookieParser());
 app.use(express.json({limit: "10kb"})); //Body parser, reading data from body into req.body
 app.use(mongoSanitiza()); //Data sanitization against NoSQL query injection
 app.use(xss()); //Data sanitization against XSS
 app.use(hpp()); //Prevent parameter pollution (use '{{URL}}api/v1/tours?sort=duration&sort=price' in postman. This will take only the last parameter. In this case, sort=price)
 app.use(requestTime); //Test middleware
+app.use("/", viewsRouter);
+app.use("/api", limiter); //We want to limit access to our API route. So, we write "api" as a path because we want to affect the next routes that start with "api". In this case "/api/v1/tours" and "/api/v1/users"
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reviewRouter);
