@@ -30,6 +30,7 @@ Una función de login (con usuarios hardcodeados user = coderUser , password = 1
 ✓ Si se pasa un usuario incorrecto, consologuear (“Credenciales incorrectas”)
 ✓ Si el usuario y contraseña coinciden, consologuear (“logueado”)*/
 
+
 import express from "express";
 import cors from 'cors';
 
@@ -89,18 +90,19 @@ app.listen(SERVER_PORT, function(){
     
 
     // ****** Uso de tests ****** 
-    // const executeTest = config.runTests; //Ejecutar --> nodemon run start --test true en la terminal 
-    // if (executeTest) {
-    //     console.log("Ejecutando set de pruebas de func suma()");
+    const executeTest = config.runTests; //Ejecutar --> nodemon run start --test true en la terminal 
+    if (executeTest) {
+        console.log("Ejecutando set de pruebas de func suma()");
 
-    //     //Escenarios
-    //     let testPasados = 0;
-    //     testPasados = escenario1(testPasados); //Test 1: Debe devolver null si algun parametro no es numérico.
-    //     testPasados = escenario2(testPasados); //Test 2: Debe devolver 0 si no se pasa ningún parámetro
-    //     testPasados = escenario3(testPasados); //Test 3: Debe poder realizar la suma correctamente.
-    //     testPasados = escenario4(testPasados); //Test 4: Debe poder realizar la suma con cualquier cantidad de numeros.
-    //     console.log(`Test a ejecutar: 4, pasados: ${testPasados}`);
-    // }
+        //Escenarios
+        let testPasados = 0;
+        testPasados = escenario1(testPasados); //Test 1: Debe devolver null si algun parametro no es numérico.
+        testPasados = escenario2(testPasados); //Test 2: Debe devolver 0 si no se pasa ningún parámetro
+        testPasados = escenario3(testPasados); //Test 3: Debe poder realizar la suma correctamente.
+        testPasados = escenario4(testPasados); //Test 4: Debe poder realizar la suma con cualquier cantidad de numeros.
+        console.log(`Test a ejecutar: 4, pasados: ${testPasados}`);
+    }
+
 });
 
 // ****** Uso de SERVICE ****** 
