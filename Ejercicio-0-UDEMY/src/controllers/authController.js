@@ -79,30 +79,26 @@ const protect = catchFunc(async function(req, res, next){
     let token;
     if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")){
         token = req.headers.authorization.split(" ")[1];
-    }else if(req.cookies.jwt){
+    }else if (req.cookies.jwt && req.cookies.jwt !== 'loggedout') {
         token = req.cookies.jwt;
     }
 
-    if(!token) return next(new AppError("You are not logged in. Please log in to get access!", 401))
+    if(!token) return next(new AppError("You are not logged in. Please log in to get access!", 401));
     
     // 2) Verification token
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET); //This is function that we need to call, which will then return a promose. (token, process.env.JWT_SECRET) stands for --> call the function what is returned from promisify() immediately. THIS IS A SHORTER WAY TO USE PROMISES INSTEAD OF USING async-await OR .then() & .catch().
     console.log("Decoded", decoded);
 
     // 3) Check if user still exists
-    const currentUser = await UserModel.findById(decoded.id); console.log("currentUser", currentUser)
+    const currentUser = await UserModel.findById(decoded.id); //console.log("currentUser", currentUser)
     if(!currentUser) return next(new AppError("The user belonging to this token does no longer exist!", 401));
 
     // 4) Check if user changed password after the token was issued
     if(!currentUser.changedPasswordAfter(decoded.iat)) return next(new AppError("User recently changed password. Please log in again!", 401));
 
     //Grand access to protected route
-    // In the "protect" function, the purpose of assigning req.user = "decoded" is to make the "decoded" object available to other middleware functions or route handlers that are executed after the 
-    // protect middleware. In this case, since req.user is assigned the value of "decoded", the "decoded" object will be available to any subsequent middleware functions or route handlers that need to 
-    // access information about the authenticated user. This is a common pattern in middleware-based web frameworks, where information is passed between middleware functions using the req (request) 
-    // and res (response) objects. By attaching data to the req object, that data can be accessed and used by other parts of the application that handle the request. In summary, the assignment 
-    // req.user = decoded is necessary to make the authenticated user object available to subsequent middleware functions or route handlers that need to access it.
-    req.user = currentUser; console.log("req.user --> ", req.user)
+    req.user = currentUser; //console.log("req.user --> ", req.user)
+    res.locals.user = currentUser; //We put the currentUser both on req.user and res.locals.user so that we can automatically use it in all the templates after it. 
     next();
     
 /*  //Method 2: async-await   
@@ -144,7 +140,7 @@ async function isLoggedIn(req, res, next){ //Only for rendered pages, no errors!
             console.log("Decoded", decoded);
     
             // 2) Check if user still exists
-            const currentUser = await UserModel.findById(decoded.id); console.log("currentUser", currentUser)
+            const currentUser = await UserModel.findById(decoded.id); //console.log("currentUser", currentUser)
             if(!currentUser) return next();
     
             // 3) Check if user changed password after the token was issued
@@ -231,3 +227,9 @@ const updatePassword = catchFunc(async function(req, res, next){
 });
 
 export {signup, login, protect, restrictTo, forgotPassword, resetPassword, updatePassword, isLoggedIn, logout};
+
+//4) Check if user changed password after the token was issued
+// In the "protect" function, the purpose of assigning req.user = "decoded" is to make the "decoded" object available to other middleware functions or route handlers that are executed after the protect middleware. In this case, since req.user 
+// is assigned the value of "decoded", the "decoded" object will be available to any subsequent middleware functions or route handlers that need to  access information about the authenticated user. This is a common pattern in middleware-based web 
+// frameworks, where information is passed between middleware functions using the req (request)  and res (response) objects. By attaching data to the req object, that data can be accessed and used by other parts of the application that handle the request. 
+// In summary, the assignment  req.user = decoded is necessary to make the authenticated user object available to subsequent middleware functions or route handlers that need to access it.

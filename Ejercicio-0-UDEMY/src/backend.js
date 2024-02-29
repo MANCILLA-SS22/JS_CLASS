@@ -46,6 +46,7 @@ app.use(express.static(`${__dirname}/public`)); //Serving static files
 app.use(helmet.contentSecurityPolicy({crossOriginResourcePolicy: false, crossOriginEmbedderPolicy: false, directives})); // app.use(helmet());
 app.use(cookieParser());
 app.use(express.json({limit: "10kb"})); //Body parser, reading data from body into req.body
+app.use(express.urlencoded({extended: true, limit: "10kb"}));
 app.use(mongoSanitiza()); //Data sanitization against NoSQL query injection
 app.use(xss()); //Data sanitization against XSS
 app.use(hpp()); //Prevent parameter pollution (use '{{URL}}api/v1/tours?sort=duration&sort=price' in postman. This will take only the last parameter. In this case, sort=price)

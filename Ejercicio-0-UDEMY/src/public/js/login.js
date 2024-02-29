@@ -1,5 +1,6 @@
 // import axios from 'axios';
 import { showAlert } from './alert.js';
+
 async function login (email, password){
     try {
         const res = await axios({
