@@ -23,12 +23,13 @@ router.get("/suma_02", function(req, res){
 
 });
 
+export default router;
+
 // (1) El padre realiza un fork al proceso hijo.
 // (2) El padre envía un mensaje al proceso hijo
 // (3) El proceso hijo tiene su propio listener, al recibir el mensaje del padre, entiende que tiene que comenzar con su cálculo.
 // (4) Una vez que el hijo termina de calcular, le reenvía un mensaje al padre, donde el contenido del mensaje será el resultado.
 // (5) Ese resultado se envía al cliente.
-
 
 /* //sin Child Process - Fork 
 let count = 0
@@ -49,5 +50,3 @@ function operacionCompleja(){
     }
     return result;
 };  */
-
-export default router

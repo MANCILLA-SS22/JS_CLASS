@@ -57,6 +57,7 @@ https://expressjs.com/en/guide/routing.html
 https://expressjs.com/en/resources/middleware.html
 https://expressjs.com/en/resources/middleware/cookie-parser.html
 https://expressjs.com/en/resources/middleware/cors.html
+https://expressjs.com/en/advanced/best-practice-performance.html#use-gzip-compression
 https://www.passportjs.org/packages/
 https://nodejs.org/api/process.html#process
 https://nodejs.org/api/child_process.html

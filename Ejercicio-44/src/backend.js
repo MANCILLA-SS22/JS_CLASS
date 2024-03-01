@@ -5,6 +5,7 @@
 // 4. Comunicación entre Frontend y Backend. Uso de "factory", "service" y DAO.
 // 5. Mailer y mensajeria
 // 6. Test y Mocks
+// 7. Optimizacion (gzip y brotli, error handling)
 
 /* Utilizando argumentos con dotenv
 ✓ Realizar un servidor basado en node js con express, El cual reciba por flag de cli el comando --mode <modo> y sea procesado por commander.
@@ -28,15 +29,15 @@ Una función de login (con usuarios hardcodeados user = coderUser , password = 1
 ✓ Si se pasa un usuario vacío, la función debe consologuear (“No se ha proporcionado un usuario”)
 ✓ Si se pasa un password incorrecto, consologuear (“Contraseña incorrecta”)
 ✓ Si se pasa un usuario incorrecto, consologuear (“Credenciales incorrectas”)
-✓ Si el usuario y contraseña coinciden, consologuear (“logueado”)*/
-
+✓ Si el usuario y contraseña coinciden, consologuear (“logueado”) */
 
 import express from "express";
 import cors from 'cors';
+import compression from "express-compression";
 
 import MongoSingleton from './config/mongodb-singleton.js';
 import program from './process.js';
-import {__dirname} from './utils/dirname.js';
+import {__dirname} from './dirname.js';
 import config from './config/config.js';
 import viewsRouter from "./router/views.routes.js";
 import studentRouter from './router/students.routes.js';
@@ -45,11 +46,12 @@ import emailRouter from './router/email.routes.js';
 import usersRouter from "./router/users.routes.js"
 import smsRouter from './router/sms.routes.js';
 import whatsappRouter from './router/whatsapp.routes.js';
+import compressionRouter from './router/compression.routes.js'
 import { escenario1, escenario2, escenario3, escenario4 } from "./utils/escenarios.js";
 
 const app = express();
 
-console.log("config: ", config)
+// console.log("config: ", config);
 // console.log(process);
 // console.log(process.argv); // npm run start
 // console.log(process.argv.slice(2)); // --> ["hello", "world"]
@@ -63,22 +65,24 @@ const corsOptions = { // Configura el middleware cors con opciones personalizada
 
 function test(req, res){
     res.send({ message: "success", payload: "Success!!" });
-}
+};
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(compression({brotli: { enabled: true, zlib: {} } }));  //app.use(compression());
 app.use(express.static(`${__dirname}/public`));
 app.use(cors(corsOptions)); //Si utilizamos unicamente cors(), quiere decir que cualquiera podra acceder al servidor. Pero al mandarle un objeto cors(corsOptions), este contiene la info de quien o quienes pueden acceder.
 
-app.use("/", viewsRouter);
 app.get('/test', test);
+app.use("/views", viewsRouter);
 app.use("/api/students", studentRouter);
 app.use("/api/courses", coursesRouter);
 app.use("/api/email", emailRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/sms", smsRouter);
 app.use("/api/whatsapp", whatsappRouter);
-
+app.use("/compression", compressionRouter);
+app.use("/api/users", usersRouter);
 
 const SERVER_PORT = config.port;
 app.listen(SERVER_PORT, function(){
@@ -115,3 +119,4 @@ app.listen(SERVER_PORT, function(){
 // }
 // mongoInstance();
 // mongoInstance(); //Al usar singleton este funcion no se ejecutara dos veces
+

@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import config from '../config/config.js';
-import {__dirname} from '../utils/dirname.js'
+import {__dirname} from '../dirname.js'
 
 //Link para crear verificacion en dos pasos en google (2-Step verification)
 //https://myaccount.google.com/security?rapt=AEjHL4NHiAg7dz1Oa3WNINWqadlcLoRgFKXYzA_ZMhOoZ_0q85aDj-zdsIuqOUiXDOYE-B0n4u9JXcALoXNnvJOLwHCvhRUCAgFFydKEGPcSf12iutsje90
