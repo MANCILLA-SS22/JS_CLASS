@@ -4,13 +4,17 @@ async function updateSettings(data, type){ //type is either password or data
     try {
         let url;
         type === 'password' ? url = 'http://localhost:5500/api/v1/users/updateMyPassword' : url = 'http://localhost:5500/api/v1/users/updateMe';
+        
         const res = await axios({
             method: "PATCH",
             url: url,
             data: data
         });
 
-        if(res.data.status === "success") showAlert("success", `${type.toUpperCase()} updated successfully!`)
+        if(res.data.status === "success"){
+            showAlert("success", `${type.toUpperCase()} updated successfully!`);
+            //window.setTimeout(() => location.reload(), 1000);
+        }
 
     } catch (error) {
         showAlert("error", error.response.data.message)

@@ -4,7 +4,7 @@ import { promisify } from "util";
 import { UserModel } from "../models/userModel.js";
 import { AppError } from "../utils/appError.js";
 import { catchFunc } from "../utils/catchAsync.js";
-import { sendEmails } from "./emailController.js";
+import { Email } from "../utils/email.js";
 
 function signToken(id){
     return jwt.sign({ id }, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN}); //That's the object that is the data, the payload that we want to put in our JWT
@@ -37,16 +37,10 @@ function restrictTo(...roles){ //let's remember that varaibles that are stored, 
 }
 
 const signup = catchFunc(async function(req, res, next){  //http://localhost:5500/api/v1/user
-    // const newUser = await UserModel.create({ //That's the way we can avoid someone to add new parameters as a role. With that being set up, we'll only store the following 4 parameters into the database
-    //     name: req.body.name,
-    //     email: req.body.email,
-    //     password: req.body.password,
-    //     passwordConfirm: req.body.passwordConfirm,
-    //     passwordChangedAt: req.body.passwordChangedAt,
-    //     role: req.body.role
-    // });
-
     const newUser = await UserModel.create(req.body);
+    const url = `${req.protocol}://${req.get("host")}/me`;
+    console.log(url);
+    await new Email(newUser, url).sendWelcome();
     createSendToken(newUser, 201, res);
 });
 
@@ -164,18 +158,13 @@ const forgotPassword = catchFunc(async function(req, res, next){
 
     // 2) Generate the random reset token
     const resetToken = user.createPasswordResetToken(); 
+    console.log("resetToken", resetToken)
     await user.save({validateModifiedOnly: true}); //We need to save it because before this line, we only MODIFY the document but we don't save it into the database. "validateBeforeSave: false" will deactivate all the validaters that we specify in our schema. If we don't use this field. then we'll find validation erros as we need to have an email or password.
 
     // 3) Send it to user's email
-    const resetURL = `${req.protocol}://${req.get("host")}/api/v1/users/resetPassword/${resetToken}`;
-    const objEmail = {
-        email: user.email,
-        subject: "Your password reset token (valid for 10 minutes)",
-        message: `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you didn't foget your password please ignore this email!!`
-    }
-
     try {
-        await sendEmails(objEmail);
+        const resetURL = `${req.protocol}://${req.get("host")}/api/v1/users/resetPassword/${resetToken}`;
+        await new Email(user, resetURL).sendPasswordReset();
         res.status(200).json({status: "success",message: "Token sent to email!"});
     } catch (error) {
         user.passwordResetToken = undefined;
@@ -204,7 +193,7 @@ const resetPassword = catchFunc(async function(req, res, next){
 
     // 3) Update changedPasswordAt property for the user
     // 4) Log the user in, send JWT
-    createSendToken(newUser, 200, res);
+    createSendToken(user, 200, res);
 
 });
 

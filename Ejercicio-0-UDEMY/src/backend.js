@@ -6,10 +6,13 @@ import helmet from "helmet";
 import mongoSanitiza from "express-mongo-sanitize"
 import xss from "xss-clean";
 import hpp from "hpp"
+
 import tourRouter from "./router/tour.routes.js";
 import userRouter from "./router/user.routes.js";
 import reviewRouter from "./router/review.routes.js";
 import viewsRouter from "./router/view.routes.js";
+import bookingRouter from "./router/booking.routes.js";
+
 import {__dirname} from "./dirname.js"; // --> C:\Users\xxelt\OneDrive\Documentos\PROYECTOS_PERSONALES\JavaScript\Ejercicio-0-UDEMY\src
 import {globalErrorHandler} from "./controllers/errorController.js";
 import { all, limiter, requestTime } from "./config/middlewares/middlewares.js";
@@ -26,7 +29,7 @@ const directives = {
     defaultSrc: ["'self'", 'data:', 'blob:', 'https:', 'ws://localhost:1234/'],
     baseUri: ["'self'"],
     connectSrc: ["'self'", "'unsafe-inline'", 'data:', 'blob:'],
-    scriptSrc: [ "'self'", 'https:', 'http:', 'blob:', ],
+    scriptSrc: [ "'self'", 'https:', 'http:', 'blob:', 'https://js.stripe.com', 'https://m.stripe.network',],
     styleSrc: ["'self'", 'https:', "'unsafe-inline'", 'https://tile.openstreetmap.org', 'https://fonts.googleapis.com/'],
     workerSrc: ["'self'", 'data:', 'blob:', 'https://*.tiles.mapbox.com', 'https://api.mapbox.com', 'https://events.mapbox.com', 'https://m.stripe.network'],
     objectSrc: ["'none'"],
@@ -56,6 +59,7 @@ app.use("/api", limiter); //We want to limit access to our API route. So, we wri
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reviewRouter);
+app.use("/api/v1/bookings", bookingRouter);
 app.use("*", all); //This middleware stands for the error handdling process. It'll be executed ONLY if the route in the line 28 are typed wronlgy. For example: /api/tours, /api/v1/tourss, etc. If the route in the line 28 is typed rigthly (/api/v1/tours) and the enpoint wrongly (for example, router.route("/:id")), then app.use("*") won't be executed but the app.use(globalErrorHandler);
 app.use(globalErrorHandler);
 

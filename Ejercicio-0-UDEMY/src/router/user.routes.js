@@ -1,6 +1,7 @@
 import { Router } from "express";
-import {getAllUsers, updateMe, deleteMe, deleteUser, updateUser, getUser, getMe, createUser} from "../controllers/userController.js";
+import {getAllUsers, updateMe, deleteMe, deleteUser, updateUser, getUser, getMe, createUser, uploadUserPhoto, resizeUserPhoto} from "../controllers/userController.js";
 import {signup, login, forgotPassword, resetPassword, updatePassword, protect, restrictTo, logout} from "../controllers/authController.js";
+import { __dirname } from "../dirname.js";
 
 const router = Router();
 
@@ -18,7 +19,7 @@ router.patch("/resetPassword/:token", resetPassword);
 router.use(protect); //Protect all routes after this middleware --> Middlewares run in sequence. So, instead of putting "protect" in every router below, we better create a middleware based on router.use(), which will contain all the "protect" parameter we used to use.
 router.patch("/updateMyPassword", updatePassword);
 router.get("/me", getMe, getUser);
-router.patch("/updateMe", updateMe);
+router.patch("/updateMe", uploadUserPhoto, resizeUserPhoto, updateMe);
 router.delete("/deleteMe", deleteMe);
 
 

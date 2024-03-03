@@ -9,7 +9,7 @@ const limiter = rateLimit({
 
 function requestTime(req, res, next){
     req.requstTime = new Date().toISOString(); //We can define any property on the "req" object.
-    console.log("req.cookies --> ", req.cookies);
+    // console.log("req.cookies --> ", req.cookies);
     next();
 }
 

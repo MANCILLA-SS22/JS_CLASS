@@ -1,8 +1,47 @@
+import multer from "multer";
+import sharp from "sharp";
 import {__dirname} from "../dirname.js";
 import { TourModel } from "../models/tours.model.js";
 import {catchFunc} from "../utils/catchAsync.js";
 import { createOne, deleteOne, getAll, getOne, updateOne } from "./handlerFactory.js";
 import { AppError } from "../utils/appError.js";
+
+
+const multerStorage = multer.memoryStorage(); //When doing image processing right after uploading a file, then it's always best not to even save the file to the disk, bu instead save it to memory. Now, by using memoryStorage(), the image will be stored as a buffer.
+
+function multerFilter(req, file, cb){ //The goal of this function is to test if the uploaded file is an image. If it is so, then we pass true into teh callback function and if it's not then we pass false.
+    file.mimetype.startsWith("image") ? cb(null, true) : cb(new AppError("Not an image! Please upload only images.", 404), false);
+};
+
+const upload = multer({  storage: multerStorage, fileFilter: multerFilter });
+const uploadTourPhoto = upload.fields([
+    {name: "imageCover", maxCount: 1},
+    {name: "images", maxCount: 3}
+]);
+
+const resizeTourPhoto = catchFunc(async function(req, res, next){ // req.file and req.files are the name of your file in the form. (These second parameters come from Multer)
+    if(!req.files.imageCover || !req.files.images) return next();
+    req.body.imageCover = `tour-${req.params.id}-${Date.now()}-cover.jpeg`; //We put the image's file name on req.file.filename, which doesn't exist yet. We use imageCover because it is the name used in our SchemaTours
+    await sharp(req.files.imageCover[0].buffer)
+        .resize(2000, 1333)
+        .toFormat("jpeg")
+        .jpeg({quality: 90})
+        .toFile(`${__dirname}/public/img/tours/${req.body.imageCover}`);
+
+    req.body.images = [];
+    await Promise.all( 
+        req.files.images.map(async function(event, i){
+            const filename = `tour-${req.params.id}-${Date.now()}-${i+1}.jpeg`;
+            await sharp(event.buffer).resize(2000, 1333).toFormat("jpeg").jpeg({quality: 90}).toFile(`${__dirname}/public/img/tours/${filename}`);
+            return req.body.images.push(filename);
+        })
+    );
+
+    next();
+});
+
+//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
 
 //This is a middleware belonging to the /top-5-cheap route in tourUdemyroutes.js
 async function aliasTopTours(req, res, next){ // http://localhost:5500/api/v1/tours/top-5-cheap
@@ -139,7 +178,7 @@ const getDistances = catchFunc(async function(req, res, next){
 
 });
 
-export {getAllTours, getTour, postTour, updateTour, deleteTour, aliasTopTours, getTourStats, getMonthlyPlan, getToursWithin, getDistances}
+export {getAllTours, getTour, postTour, updateTour, deleteTour, aliasTopTours, getTourStats, getMonthlyPlan, getToursWithin, getDistances, uploadTourPhoto, resizeTourPhoto}
 
 /* //Using handleFactory and error handler
 import {__dirname} from "../utils.js";

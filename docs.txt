@@ -1,5 +1,3 @@
-npm i eslint prettier eslint-config-prettier eslint-plugin-prettier eslint-config-airbnb eslint-plugin-node eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react --save-dev
-
 Documentaciones: 
 https://developer.mozilla.org/en-US/docs/Web/API/Event/target 
 https://devdocs.io/html/ 
@@ -58,12 +56,8 @@ https://expressjs.com/en/resources/middleware.html
 https://expressjs.com/en/resources/middleware/cookie-parser.html
 https://expressjs.com/en/resources/middleware/cors.html
 https://expressjs.com/en/advanced/best-practice-performance.html#use-gzip-compression
-https://www.passportjs.org/packages/
 https://nodejs.org/api/process.html#process
 https://nodejs.org/api/child_process.html
-https://nodemailer.com
-https://fakerjs.dev/api/
-https://www.twilio.com/docs/libraries/reference/twilio-node/5.0.0-rc.1/
 https://github.com/facebook/regenerator/tree/main
 https://github.com/zloirock/core-js
 https://github.com/typicode/json-server
@@ -90,15 +84,31 @@ https://github.com/AhmedAdelFahim/express-xss-sanitizer
 https://github.com/analog-nico/hpp
 https://github.com/hapijs/joi
 https://github.com/uuidjs/uuid
+https://github.com/html-to-text/node-html-to-text/blob/master/packages/html-to-text/README.md
+https://github.com/stripe/stripe-node
+https://dashboard.stripe.com/test/logs?exclude[0][error_type]=card_error&showIP=false
+https://docs.stripe.com/payments/checkout/how-checkout-works
+https://docs.stripe.com/api/
+https://docs.stripe.com/js
+
+https://www.passportjs.org/packages/
+https://bcrypt-generator.com/
+https://jwt.io    https://auth0.com/docs/secure/tokens/json-web-tokens    https://oauth.net/2/
+
+https://nodemailer.com
+https://www.twilio.com/docs/libraries/reference/twilio-node/5.0.0-rc.1/
+https://sendgrid.com/en-us
+https://app.brevo.com/settings/keys/smtp
+https://mailsac.com/inbox/german%40mailsac.com
+https://stripe.com/en-mx     https://docs.stripe.com/payments
 
 https://swr.vercel.app 
-https://bcrypt-generator.com/
 https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt/17238#17238
-https://jwt.io    https://auth0.com/docs/secure/tokens/json-web-tokens
-https://oauth.net/2/
 https://leafletjs.com/index.html --> This works for setting up maps
 https://parceljs.org/docs/
 https://babeljs.io/docs/babel-polyfill#installation
+https://sharp.pixelplumbing.com/api-resize
+https://fakerjs.dev/api/
 
 
 Librerias: 
@@ -239,6 +249,6 @@ https://app.daily.dev
 https://getemoji.com 
 
 
-
+npm i eslint prettier eslint-config-prettier eslint-plugin-prettier eslint-config-airbnb eslint-plugin-node eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react --save-dev
 - Its kind of interesting how animal like we are
 - my sister still tells my dad how messed up that was of him to do. 

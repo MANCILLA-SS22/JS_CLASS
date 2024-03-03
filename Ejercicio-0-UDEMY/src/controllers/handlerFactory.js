@@ -12,12 +12,8 @@ function deleteOne(Model){
 
 function updateOne(Model){
     return catchFunc(async function(req, res, next){    
-        // new --> if true, return the modified document rather than the original
-        // runValidators --> if true, runs update validators on this command. Update validators validate the update operation against the model's schema
         const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
-    
         if(!doc) return next(new AppError("No document found with that ID", 404));
-    
         res.status(200).json({ data: doc });
     });
 };
@@ -60,3 +56,7 @@ function getAll(Model){
 }
 
 export {deleteOne, updateOne, createOne, getOne, getAll};
+
+//{new: true, runValidators: true}
+// new --> if true, return the modified document rather than the original
+// runValidators --> if true, runs update validators on this command. Update validators validate the update operation against the model's schema
