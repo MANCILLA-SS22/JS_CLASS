@@ -6,6 +6,7 @@ import helmet from "helmet";
 import mongoSanitiza from "express-mongo-sanitize"
 import xss from "xss-clean";
 import hpp from "hpp"
+import compression from "compression";
 
 import tourRouter from "./router/tour.routes.js";
 import userRouter from "./router/user.routes.js";
@@ -54,6 +55,7 @@ app.use(mongoSanitiza()); //Data sanitization against NoSQL query injection
 app.use(xss()); //Data sanitization against XSS
 app.use(hpp()); //Prevent parameter pollution (use '{{URL}}api/v1/tours?sort=duration&sort=price' in postman. This will take only the last parameter. In this case, sort=price)
 app.use(requestTime); //Test middleware
+app.use(compression());
 app.use("/", viewsRouter);
 app.use("/api", limiter); //We want to limit access to our API route. So, we write "api" as a path because we want to affect the next routes that start with "api". In this case "/api/v1/tours" and "/api/v1/users"
 app.use("/api/v1/tours", tourRouter);

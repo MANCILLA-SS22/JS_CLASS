@@ -5,7 +5,7 @@ async function login (email, password){
     try {
         const res = await axios({
             method: 'POST',
-            url: 'http://localhost:5500/api/v1/users/login',
+            url: 'http://localhost:5500/api/v1/users/login', //  --> /api/v1/users/login <-- Usar esto cuando la app esta en produccion
             data: {
                 email,
                 password
@@ -29,7 +29,7 @@ async function logout(){
     try {
         const res = await axios({
             method: 'GET',
-            url: 'http://localhost:5500/api/v1/users/logout'
+            url: 'http://localhost:5500/api/v1/users/logout'  //  --> /api/v1/users/logout <-- Usar esto cuando la app esta en produccion
         });
         if ((res.data.status = 'success')){
             //This location.reload(true) will force a reload from the server and not from browser cache. Otherwise, it might simply load the same page from the cache which would then still have our user 

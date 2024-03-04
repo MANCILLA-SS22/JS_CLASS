@@ -48,7 +48,8 @@ https://docs.nestjs.com
 https://docs.docker.com/storage/volumes/#volumes
 https://axios-http.com/docs/intro  
 https://socket.io/docs/v4/tutorial/introduction 
-https://www.mongodb.com/docs/manual/tutorial/getting-started/ 
+https://www.mongodb.com/docs/manual/
+https://www.mongodb.com/docs/atlas/
 https://cloud.mongodb.com/v2/655f1475ba7fe502fcda39da#/clusters
 https://mongoosejs.com/docs/api/model.html#Model.updateOne()
 https://expressjs.com/en/guide/routing.html
@@ -116,13 +117,13 @@ https://cdnjs.com                   (para agregar librerías de fontawsome y otr
 https://www.npmjs.com   
 https://sweetalert2.github.io/#examples 
 https://www.sitepoint.com/beginners-guide-node-package-manager/ 
-https://getbootstrap.com/docs/5.3/utilities/spacing/#margin-and-padding 
-https://mui.com/material-ui/getting-started/overview/ 
-https://bulma.io/documentation/ 
 https://materializecss.com 
 https://get.foundation 
 https://getuikit.com/docs/introduction 
+https://getbootstrap.com/docs/5.3/utilities/spacing/#margin-and-padding 
+https://mui.com/material-ui/getting-started/overview/ 
 https://tailwindcss.com/docs/installation 
+https://bulma.io/documentation/ 
 https://sass-lang.com/documentation/style-rules#nesting 
 https://tobiasahlin.com/spinkit/ 
 https://momentjs.com 

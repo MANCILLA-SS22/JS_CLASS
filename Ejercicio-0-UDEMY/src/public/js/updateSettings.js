@@ -2,7 +2,7 @@ import { showAlert } from "./alert.js"
 
 async function updateSettings(data, type){ //type is either password or data
     try {
-        let url;
+        let url; //               --> /api/v1/users/updateMyPassword  o esto  /api/v1/users/updateMe <-- Usar esto cuando la app esta en produccion
         type === 'password' ? url = 'http://localhost:5500/api/v1/users/updateMyPassword' : url = 'http://localhost:5500/api/v1/users/updateMe';
         
         const res = await axios({
