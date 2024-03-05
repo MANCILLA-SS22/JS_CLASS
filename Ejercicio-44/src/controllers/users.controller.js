@@ -1,5 +1,5 @@
+import { faker } from "@faker-js/faker";
 import { generateUser } from "../utils/faker.js";
-
 import CustomError from "../services/errors/CustomError.js";
 import { generateUserErrorInfo } from "../services/errors/messages/user-creation-error.message.js";
 import {EErrors} from "../services/errors/errors-enum.js";
@@ -43,5 +43,13 @@ function saveUser(req, res){
     }
 }
 
+function fakeUser(req, res){
+    let first_name = faker.person.firstName();
+    let last_name = faker.person.lastName();
+    let email = faker.internet.email();
+    let age = faker.string.numeric(2);
+    let password = faker.internet.password();
+    res.send({first_name, last_name, email, age, password});
+};
 
-export {getUsers, saveUser};
+export {getUsers, saveUser, fakeUser};

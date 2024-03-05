@@ -59,6 +59,7 @@ https://expressjs.com/en/resources/middleware/cors.html
 https://expressjs.com/en/advanced/best-practice-performance.html#use-gzip-compression
 https://nodejs.org/api/process.html#process
 https://nodejs.org/api/child_process.html
+https://www.artillery.io/docs/get-started/get-artillery
 https://github.com/facebook/regenerator/tree/main
 https://github.com/zloirock/core-js
 https://github.com/typicode/json-server
@@ -87,6 +88,8 @@ https://github.com/hapijs/joi
 https://github.com/uuidjs/uuid
 https://github.com/html-to-text/node-html-to-text/blob/master/packages/html-to-text/README.md
 https://github.com/stripe/stripe-node
+https://github.com/Marak/colors.js
+https://github.com/winstonjs/winston
 https://dashboard.stripe.com/test/logs?exclude[0][error_type]=card_error&showIP=false
 https://docs.stripe.com/payments/checkout/how-checkout-works
 https://docs.stripe.com/api/

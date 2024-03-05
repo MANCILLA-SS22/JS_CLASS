@@ -56,6 +56,7 @@
     "stripe": "^14.19.0",
     "twilio": "^4.22.0",
     "validator": "^13.11.0",
+    "winston": "^3.12.0",
     "xss-clean": "^0.1.4"
   },
   "name": "ss22",

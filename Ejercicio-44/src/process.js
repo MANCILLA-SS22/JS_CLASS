@@ -11,13 +11,12 @@ program
 .option('--mode <mode>', 'Modo de trabajo', 'dev')
 .option('-1, --letters [letters...', 'specify letters')
 .requiredOption('-u <user>', 'Usuario que va a utilizar el aplicativo.', 'No se ha declarado un usuario.');//RequireOption usa un mensaje por defecto si no está presente la opción.
-
 program.parse(); //Parsea los comandos y valida si son correctos.
 
-// console.log("Options: ", program.opts());
-// console.log("Mode Option: ", program.opts().mode);
-// console.log("Test Mode on?: ", program.opts().test);
+console.log("Mode Option: ", program.opts().mode);
 // console.log("Persistence Mode Option: ", program.opts().persist);
+// console.log("Options: ", program.opts());
+// console.log("Test Mode on?: ", program.opts().test);
 // console.log("Remaining arguments: ", program.args);
 
 
