@@ -27,7 +27,8 @@ https://dev.mysql.com/doc/refman/8.0/en/dynindex-statement.html
 https://www.postgresql.org/docs/current/ 
 https://docs.oracle.com/database/121/SQLRF/toc.htm 
 https://docs.github.com/en/get-started/getting-started-with-git/associating-text-editors-with-git 
-https://react.dev   https://legacy.reactjs.org  https://create-react-app.dev  https://react-bootstrap.github.io
+https://react.dev   https://legacy.reactjs.org  https://create-react-app.dev  
+https://redux-toolkit.js.org  https://redux-saga.js.org 
 https://jquery.com/download/ 
 https://angular.io/start 
 https://www.php.net/manual/en/
@@ -36,7 +37,6 @@ https://dart.dev/guides
 https://vuejs.org/guide/introduction.html#what-is-vue 
 https://guides.rubyonrails.org/getting_started.html  
 https://spring.io       https://docs.spring.io/spring-framework/docs/current/reference/html/     
-https://react-redux.js.org  https://redux-toolkit.js.org  https://redux-saga.js.org 
 https://nextjs.org/docs/getting-started 
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values
@@ -45,7 +45,7 @@ https://www.geeksforgeeks.org/javascript-array-findindex-method/
 https://nodejs.org/en/about/ 
 https://nextui.org  
 https://docs.nestjs.com 
-https://docs.docker.com/storage/volumes/#volumes
+https://docs.docker.com/storage/volumes/#volumes      https://learn.microsoft.com/en-us/windows/wsl/install
 https://axios-http.com/docs/intro  
 https://socket.io/docs/v4/tutorial/introduction 
 https://www.mongodb.com/docs/manual/
@@ -59,7 +59,7 @@ https://expressjs.com/en/resources/middleware/cors.html
 https://expressjs.com/en/advanced/best-practice-performance.html#use-gzip-compression
 https://nodejs.org/api/process.html#process
 https://nodejs.org/api/child_process.html
-https://www.artillery.io/docs/get-started/get-artillery
+https://nodejs.org/api/os.html
 https://github.com/facebook/regenerator/tree/main
 https://github.com/zloirock/core-js
 https://github.com/typicode/json-server
@@ -67,6 +67,9 @@ https://github.com/expressjs/multer
 https://github.com/motdotla/dotenv
 https://github.com/expressjs/morgan
 https://github.com/simov/slugify
+https://github.com/jquense/yup
+https://github.com/moment/moment/
+https://github.com/moment/luxon/?tab=readme-ov-file
 https://github.com/validatorjs/validator.js
 https://github.com/aravindnc/mongoose-paginate-v2?tab=readme-ov-file
 https://github.com/jdesboeufs/connect-mongo
@@ -87,58 +90,66 @@ https://github.com/analog-nico/hpp
 https://github.com/hapijs/joi
 https://github.com/uuidjs/uuid
 https://github.com/html-to-text/node-html-to-text/blob/master/packages/html-to-text/README.md
+https://github.com/lovell/sharp
 https://github.com/stripe/stripe-node
 https://github.com/Marak/colors.js
 https://github.com/winstonjs/winston
-https://dashboard.stripe.com/test/logs?exclude[0][error_type]=card_error&showIP=false
-https://docs.stripe.com/payments/checkout/how-checkout-works
-https://docs.stripe.com/api/
-https://docs.stripe.com/js
+https://github.com/artilleryio/artillery
 
 https://www.passportjs.org/packages/
 https://bcrypt-generator.com/
 https://jwt.io    https://auth0.com/docs/secure/tokens/json-web-tokens    https://oauth.net/2/
-
 https://nodemailer.com
 https://www.twilio.com/docs/libraries/reference/twilio-node/5.0.0-rc.1/
 https://sendgrid.com/en-us
 https://app.brevo.com/settings/keys/smtp
 https://mailsac.com/inbox/german%40mailsac.com
-https://stripe.com/en-mx     https://docs.stripe.com/payments
+https://stripe.com/en-mx     
+https://docs.stripe.com/payments
+https://docs.stripe.com/payments/checkout/how-checkout-works
+https://docs.stripe.com/api/
+https://docs.stripe.com/js
 
-https://swr.vercel.app 
-https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt/17238#17238
-https://leafletjs.com/index.html --> This works for setting up maps
-https://parceljs.org/docs/
-https://babeljs.io/docs/babel-polyfill#installation
-https://sharp.pixelplumbing.com/api-resize
-https://fakerjs.dev/api/
-
-
-Librerias: 
-https://cdnjs.com                   (para agregar librerías de fontawsome y otros) 
-https://www.npmjs.com   
-https://sweetalert2.github.io/#examples 
-https://www.sitepoint.com/beginners-guide-node-package-manager/ 
-https://materializecss.com 
-https://get.foundation 
-https://getuikit.com/docs/introduction 
 https://getbootstrap.com/docs/5.3/utilities/spacing/#margin-and-padding 
 https://mui.com/material-ui/getting-started/overview/ 
 https://tailwindcss.com/docs/installation 
 https://bulma.io/documentation/ 
 https://sass-lang.com/documentation/style-rules#nesting 
-https://tobiasahlin.com/spinkit/ 
-https://momentjs.com 
-https://dashboard.emailjs.com/admin 
-https://apvarun.github.io/toastify-js/# 
-https://swiperjs.com/get-started#use-swiper-from-cdn 
-https://moment.github.io/luxon/#/formatting?id=presets 
-https://moment.github.io/luxon/api-docs/index.html#interval 
-https://animate.style 
-https://leafletjs.com/reference.html 
-https://lodash.com 
+https://getuikit.com/docs/introduction 
+
+https://github.com/facebook/react
+https://github.com/facebook/create-react-app
+https://vitejs.dev 
+https://react-bootstrap.github.io  
+https://react-redux.js.org  
+https://reactrouter.com/en/main   
+https://www.npmjs.com/package/react-router-dom 
+https://formik.org/   
+https://react-hook-form.com    
+https://react.useanimations.com
+https://react-icons.github.io/react-icons/
+https://github.com/davidhu2000/react-spinners
+https://github.com/r5n-dev/vscode-react-javascript-snippets
+https://github.com/TanStack/query
+https://chakra-ui.com/getting-started
+https://sweetalert2.github.io/#examples
+https://apvarun.github.io/toastify-js/#
 https://popper.js.org/docs/v2/
+https://tobiasahlin.com/spinkit/
+https://animate.style  
+https://swiperjs.com/get-started
+
+https://swr.vercel.app 
+https://parceljs.org/docs/
+https://babeljs.io/docs/babel-polyfill#installation
+
+GitHub: 
+https://github.com     
+https://training.github.com/downloads/github-git-cheat-sheet/ 
+https://git-scm.com/docs 
+https://dzone.com/articles/top-20-git-commands-with-examples 
+https://www.atlassian.com/git/glossary  
+https://docs.github.com/es/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax 
 
 Api’s: 
 https://github.com/public-apis/public-apis 
@@ -156,101 +167,23 @@ https://swapi.dev
 https://kinsta.com/es/blog/microservicios-vs-api/ 
 https://dev.to/ruppysuppy/7-free-public-apis-you-will-love-as-a-developer-166p 
 https://blog.hubspot.es/website/que-es-api-rest 
-https://www.postman.com 
-https://www.npmjs.com/package/react-query 
 https://firebaseopensource.com/projects/rakannimer/react-firebase/ 
 https://firebase.google.com/docs/firestore/manage-data/add-data 
 
- 
-React: 
-https://github.com/facebook/react
-https://github.com/facebook/create-react-app
-https://vitejs.dev 
-https://react.useanimations.com 
-https://react-icons.github.io/react-icons/ 
-https://github.com/ults-io/vscode-react-javascript-snippets/blob/HEAD/docs/Snippets.md 
-https://chakra-ui.com 
+Otros:
+https://cdnjs.com                   (para agregar librerías de fontawsome y otros) 
+https://www.npmjs.com   
+https://www.sitepoint.com/beginners-guide-node-package-manager/ 
+https://materializecss.com 
+https://get.foundation 
+https://dashboard.emailjs.com/admin 
+https://lodash.com
+https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt/17238#17238
+https://leafletjs.com/index.html --> This works for setting up maps
+https://fakerjs.dev/api/
 https://usehooks.com 
-https://www.npmjs.com/package/react-spinners?activeTab=readme
-https://reactrouter.com/en/main   https://www.npmjs.com/package/react-router-dom 
-https://formik.org/   https://react-hook-form.com    https://www.npmjs.com/package/yup 
 https://www.apollographql.com/docs/react/ 
 https://pandao.github.io/editor.md/en.html     https://readme.so 
-
-GitHub: 
-https://github.com     
-https://training.github.com/downloads/github-git-cheat-sheet/ 
-https://git-scm.com/docs 
-https://dzone.com/articles/top-20-git-commands-with-examples 
-https://www.atlassian.com/git/glossary  
-https://docs.github.com/es/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax 
-
-Descargar fuentes y simbolos: 
-https://fonts.google.com 
-https://fontawesome.com  
-https://fontawesome.com/v5/docs/web/use-with/wordpress/install-manually 
-https://developers.google.com/fonts 
-https://www.cssfontstack.com 
-
-Descargar iconos: 
-https://fonts.google.com/icons 
-https://developers.google.com/fonts 
-https://fontawesome.com/icons 
-https://boxicons.com/?query=menu 
-https://www.svgrepo.com/svg/473620/github 
-https://icons.getbootstrap.com/ 
-https://www.flaticon.com/ 
-https://iconmonstr.com/ 
-https://www.cssfontstack.com 
-https://icons8.com/icons/set/favicon  
-https://icons8.com/icon/set/logos/small 
-https://iconscout.com/unicons/getting-started/line 
-https://app.moqups.com// 
- 
-Descargar imágenes e ilustraciones, y almacenar en la nube: 
-https://www.pexels.com/es-es/ 
-https://unsplash.com/ 
-https://undraw.co/illustrations 
-https://www.manypixels.co/gallery 
-https://www.pinterest.com.mx 
-https://giphy.com 
-https://pixabay.com/es/ 
-https://console.cloudinary.com/console/c-4023da8b6dcc56f76f0f9fd2aef6e2/media_library/search?q=&sortField=displayName&sortDirection=asc 
-
-Inspiración: 
-https://dribbble.com/shots/popular/web-design 
-https://www.behance.net/galleries/ui-ux/ui-ux 
-https://webflow.com/blog/website-ideas 
-https://www.frontendmentor.io/challenges/space-tourism-multipage-website-gRWj1URZ3 
- 
-Colores, gradientes y sombras:  
-https://www.w3schools.com/css/css_colors.asp 
-https://color.adobe.com/es/create/color-wheel https://coolors.co/palettes/trending  
-https://htmlcolorcodes.com  
-https://mycolor.space/  
-https://www.w3schools.com/colors/colors_picker.asp  
-https://cssgradient.io/ 
-https://www.toptal.com/developers/css3maker/css3-rgba 
-https://www.colorzilla.com/gradient-editor/  
-https://mycolor.space/gradient?ori=circle&hex=%235B8DD7&hex2=%2398D809&sub=1 https://www.joshwcomeau.com/gradient-generator/ 
-https://imagecolorpicker.com/color-code/2596be 
-https://uigradients.com/#Poncho https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Images/Using_CSS_gradients  
-https://www.w3schools.com/cssref/css3_pr_box-shadow.php  
-https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Backgrounds_and_Borders/Box-shadow_generator https://box-shadow.dev  
-https://html-css-js.com/css/generator/box-shadow/  
-https://cssgenerator.org/box-shadow-css-generator.html 
- 
-
-Otros: 
-https://aws.amazon.com/amplify/?trk=7af50e68-4664-481e-80a3-736a0d23dd2a&sc_channel=sm 
-https://web.dev 
-https://appdividend.com 
-https://codepen.io/giana/pen/BZaGyP 
-https://www.codementor.io/projects 
-https://purecss.io 
-https://www.frontendmentor.io/challenges 
-https://app.daily.dev 
-https://getemoji.com 
 
 
 npm i eslint prettier eslint-config-prettier eslint-plugin-prettier eslint-config-airbnb eslint-plugin-node eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react --save-dev

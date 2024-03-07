@@ -1,6 +1,6 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import { PRIVATE_KEY } from '../utils.js';
+import { PRIVATE_KEY } from '../dirname.js';
 
 class CustomRouter { //Esta es la clase padre, y CustomRouter es la clase que hereda de esta misma clase.
     constructor() {
@@ -16,7 +16,7 @@ class CustomRouter { //Esta es la clase padre, y CustomRouter es la clase que he
 
     //GET
     get(path, policies, ...callbacks) { // (1)
-        console.log("Entrando por GET a custom router con Path: " + path, " y policies: ", policies); 
+        // console.log("Entrando por GET a custom router con Path: " + path, " y policies: ", policies); 
         this.router.get(path, this.handlePolicies(policies), this.generateCustomRespones(), this.applyCallbacks(callbacks)); // (2)
     }
 
