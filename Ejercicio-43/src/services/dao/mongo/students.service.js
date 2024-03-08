@@ -26,4 +26,4 @@ class StudentServiceMongo {
     }
 }
 
-export default StudentServiceMongo;
+export {StudentServiceMongo};

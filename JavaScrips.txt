@@ -2521,6 +2521,32 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 - Compresion: 
 
+- Escalamiento vertical: Mi servidor necesita ser más potente y necesito mejorar el hardware para tener un servidor más potente. Básicamente, significa mejorar el hardware del servidor, para que sea más potente, mucho más rápido y pueda 
+  atender una mayor cantidad de peticiones y, por lo tanto, mejorar el performance de los aplicativos. El escalamiento vertical requiere de grandes inversiones de recursos por parte de las empresas para poder contar con los equipos más 
+  actualizados posibles en el mundo de la tecnología. Además, llegará un punto en el que alcanzaremos un tope tecnológico, y tendremos que esperar a que se desarrollen mejores soluciones de hardware para poder comprarlas (un tiempo de espera 
+  que una empresa difícilmente puede contener).
+
+- Escalamiento horizontal: Dividamos las tareas en multi-instancias de servidores que alojen el aplicativo y se apoyen en las tareas complejas. Este modelo es más complejo, pero mucho más interesante y eficiente. La escalabilidad horizontal 
+  significa utilizar múltiples servidores, conocidos como nodos, los cuales trabajarán en equipo para resolver un problema en particular. A esta red de nodos trabajando juntos, se le conoce como cluster, haciendo referencia a que estos 
+  múltiples servidores se encuentran en un contexto general donde todos conocen cómo ayudarse a las tareas más complejas. Así, la diferencia radica en que, cuando necesitamos más recursos, no hace falta tirar el servidor que ya tenemos a la 
+  basura para comprar uno mejor, sino que podemos conectar otra instancia de otro servidor para que se una a la red de nodos y forme parte del cluster.
+  
+- Maquina virtual: 
+
+- Kernel: 
+  
+- Docker: Docker es una plataforma gestora de contenedores. Nos permitirá entonces empaquetar en un contenedor nuestro aplicativo, y posteriormente compartirlo a algún lado, para que al momento en el que tenga que ejecutarse, este pueda 
+  hacerlo dentro del contenedor aislado y asegurar que la ejecución será satisfactoria siempre. La lógica de Docker se basa en tres pasos generales: 
+    1) Un dockerfile: Este cuenta con las instrucciones paso a paso para que nuestro proyecto genere una imagen
+    2) Una imagen es el equivalente de una clase, pero con un proyecto completo. Cuando generamos la imagen de una aplicación, significa que podemos generar múltiples contenedores a partir de esa aplicación (como instancias) 
+    3) Contenedor: El punto final en el que ejecutamos el aplicativo, pero esta vez desde un entorno cerrado.  
+
+- Imagen base: Escribimos en nuestro código --> FROM node. Esto significa que estaremos tomand una imagen base del entorno de node, para poder configurar nuestra app. 
+
+- Contenedor: Un contenedor es un entorno de ejecución para un aplicativo en particular, el cual tiene todas las dependencias que necesita dicha aplicación para poder correr sin problemas de compatibilidad. La clave de un contenedor es el 
+  concepto del aislamiento, esto indicando que podemos tener múltiples contenedores, con diferentes entornos, con diferentes dependencias, y nunca habrá conflictos porque la instalación y uso de las dependencias se hace de manera interna. 
+  Además, ya que el entorno no ocupa utilizar todo el sistema operativo (sólo el kernel), se vuelven realmente livianos en comparación con mover todo un sistema operativo en cada aplicativo.
+
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 

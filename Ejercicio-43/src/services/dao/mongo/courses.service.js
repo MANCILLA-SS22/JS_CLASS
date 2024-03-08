@@ -15,4 +15,4 @@ class CourseService {
     }
 };
 
-export default CourseService;
+export {CourseService};

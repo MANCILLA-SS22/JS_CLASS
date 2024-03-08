@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import program from '../process.js';
+import program from './process.js';
 
 const environment = program.opts().mode;
 dotenv.config({ path: environment === "prod" ? "./Ejercicio-43/src/config/.env.production" : "./Ejercicio-43/src/config/.env.development" });

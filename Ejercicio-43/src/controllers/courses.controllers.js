@@ -1,8 +1,5 @@
-// Para trabajar Factory
-import { coursesService } from '../services/factory.js';
-
-// Para trabajar Repository
-// import { coursesService } from '../services/service.js';
+import { coursesService } from '../services/service.js'; // Para trabajar Repository
+// import { coursesService } from '../services/factory.js'; // Para trabajar Factory
 
 async function getAllCourses(req, res) {
     try {
@@ -12,8 +9,7 @@ async function getAllCourses(req, res) {
         console.error(error);
         res.status(500).send({ error: error, message: "No se pudo obtener los cursos." });
     }
-}
-
+};
 
 async function saveCourse(req, res) {
     try {
