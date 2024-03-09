@@ -1,4 +1,3 @@
-// Ejemplo 43: 
 // 1. Manejo de cookies
 // 2. Uso de passport avanzado con cookies y localstorage (sin sessions)
 // 3. Uso de process, variables de entorno (dotenv) y child process. 
@@ -18,13 +17,20 @@ import Handlebars from "handlebars";
 import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 import cors from 'cors';
 import morgan from "morgan";
+import {Server} from "socket.io"
 import compression from "express-compression";
 import cookieParser from "cookie-parser";
 
 import {__dirname} from './dirname.js';
+import { errorHandlerMiddleware, logger } from "./middlewares/middlewares.js";
+import { loggerDate } from "./middlewares/loggerDate.js";
 import { initialPassport } from "./config/passport.config.js";
 import config from './config/config.js';
-import helloRouter from "./router/hello.routes.js"
+import helloRouter from "./router/hello.routes.js";
+import paginationRouter from "./router/pagination.routes.js";
+import socketViewsRouter from "./router/views.routes.js";
+import postRouter from "./router/post.routes.js"
+import multerRouter from "../src/router/multer.routes.js"
 import cookieRouter from "./router/cookies.routes.js";
 import usersViewRouter from "./router/users.views.routes.js";
 import githubLoginViewRouter from "./router/github-login.views.routes.js";
@@ -46,6 +52,10 @@ import { tests } from "./methods/test.method.js";
 import { listens } from "./methods/listens.method.js";
 import { mongoInstance } from "./methods/mongoInstance.method.js";
 import { clusters } from "./methods/clusters.method.js";
+import { indexation1, indexation2, indexation3 } from "./MongoDB/indexation.js";
+import { aggregation1, aggregation2 } from "./MongoDB/aggregation.js";
+import { socket1, socket2, socket3, socket4 } from "./sockets/sockets.js";
+
 // import { addLogger } from "./config/logger_BASE.js";    //Logger 1
 // import { addLogger } from "./config/logger_CUSTOM.js";  //Logger 2
 
@@ -64,7 +74,7 @@ function backend(){
         defaultLayout: "main", //Plantilla principal
         handlebars: allowInsecurePrototypeAccess(Handlebars)
     };
-    
+
     initialPassport();
     
     app.set("views", `${__dirname}/views`); // Seteamos nuestro motor. Con app.set("views", ruta) indicamos en que parte del proyecto estaran las vistas. Recordar utilizar rutas absolutas para evitar asuntos de ruteo relativo.
@@ -77,11 +87,15 @@ function backend(){
     app.use(compression({brotli: { enabled: true, zlib: {} } }));  //app.use(compression());
     app.use(express.static(`${__dirname}/public`)); // Public. Sentamos de manera estatica la carpeta public
     app.use(cors(corsOptions)); //Si utilizamos unicamente cors(), quiere decir que cualquiera podra acceder al servidor. Pero al mandarle un objeto cors(corsOptions), este contiene la info de quien o quienes pueden acceder.
-    // app.use(addLogger); //Este es un middleware que contiene los loggers, el cual se ejecutara antes de los routers de abajo.
-    app.use("/", helloRouter);
+    // app.use(addLogger); //Este es un middleware de nivel de aplicación, que contiene los loggers, el cual se ejecutara antes de los routers de abajo.
+    app.use("/", logger, errorHandlerMiddleware, helloRouter); //"logger" representa un middleware de nivel de endpoint. Ejecutamos primero la ruta "/", despues se ejecuta la funcion middleware y, si todo sale bien, se ejecuta la funcion next, y pasamos al siguiente middleware, que es el Middleware de manejo de errores. Y finalmente, si todo sale bien nuevamente, pasamos a la ultima funcion.
+    app.use("/multer", multerRouter);
+    app.use("/pagination", paginationRouter);
     app.use("/fork", forkRouter);
     app.use("/cookie", cookieRouter);
     app.use('/users', usersViewRouter);
+    app.use("/socket", socketViewsRouter);
+    app.use("/api/post", loggerDate, postRouter);
     app.use("/github", githubLoginViewRouter);
     app.use("/api/jwt", jwtRouter);
     app.use("/api/pets", petsRouter);
@@ -98,18 +112,40 @@ function backend(){
     app.use("/logger", loggerRouter); //Al usar esta ruta, hay que COMENTAR los middlewares Logger 1 y Logger 2 para ver el resultado
     app.listen(SERVER_PORT, function(){
         console.log("Server listening on port " + SERVER_PORT);
-        listens();    // ****** Uso de listeners ******
-        tests();      // ****** Uso de tests ****** 
+
+        // ****** Uso de listeners ******
+        listens();    
+        
+        // ****** Uso de tests ******         
+        tests();      
     });
-    
-    mongoInstance(); // ****** Uso de REPOSITORTY (comentar lo referente a "factory" para que esto funcione) ****** 
-    // mongoInstance(); //Al usar singleton este funcion NO se ejecutara dos veces
+
+    // ****** Uso de REPOSITORTY (comentar lo referente a "factory" para que esto funcione) ****** 
+    mongoInstance(); 
+
+    // ****** Uso Websockets (Si usamos esto, DESCOMENTAR las 4 lineas de abajo y comentar "app.listen(SERVER_PORT, function(){}") ****** 
+    // const httpServer = app.listen(SERVER_PORT, () => console.log(`Server listening on port ${SERVER_PORT}`));
+    // const io = new Server(httpServer); //Instanciar websocket    
+    // socket1(io);
+    // socket2(io);
+    // socket3(io);
+    // socket4(io);
+
+    // ****** Uso de indexacion con mongoDB (Utilizar uno a la vez) ****** 
+    // indexation1();
+    // indexation2();
+    // indexation3();
+
+    // ****** Uso de aggregation con mongoDB (Utilizar uno a la vez) ****** 
+    // aggregation1();
+    // aggregation2();
+
 };
 backend();
+export {backend}
 
-// ****** Uso de clusters (Para trabajar con clusters, HABILITAR las 2 de abajo y COMENTAR "backend();". Si no, entonces comentarlas y habilidar "backend()" ****** 
+// ****** Uso de clusters (Para trabajar con clusters, HABILITAR la linea de abajo y COMENTAR "backend();". Si no, entonces comentarla y habilidar "backend()" ****** 
 // clusters();
-// export {backend}
 
 
 // ****** Uso de Artillery (Ejecutar en consola) ****** 

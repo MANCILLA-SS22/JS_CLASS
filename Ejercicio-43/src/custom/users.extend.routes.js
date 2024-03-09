@@ -54,7 +54,7 @@ class UsersExtendRouter extends CustomRouter { //Se exteinde la clase. Es decir,
                 const access_token = generateJWToken(tokenUser); console.log("access_token", access_token);
 
                 res.cookie('jwtCookieToken', access_token, { maxAge: 60000, httpOnly: true } ) //Aqui se almacena la cookie
-                res.send({ message: "Login successful!", access_token: access_token, id: user._id });
+                res.send({ message: "Login successful!", access_token: access_token, id: user._id }); //usamos _id porque mongodb lo genera de esa manera, con guin bajo
 
             } catch (error) {
                 console.error(error);

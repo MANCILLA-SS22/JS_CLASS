@@ -1,4 +1,4 @@
-import {coursesModel} from "./models/courses.js";
+import {coursesModel} from "./models/courses.model.js";
 
 class CourseService {
     constructor() { 
